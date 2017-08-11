@@ -1,0 +1,134 @@
+#!/usr/bin/env sh
+
+print_usage() {
+  cat <<USG
+
+Usage: ${1} <action> <domain> <locale>
+
+The cli command to compile/generate/update gettext catalog files.
+The lite version of linguine.
+
+Options:
+ -h, --help   display this help and exit
+
+Arguments:
+  <action>   {compile|c},{generate|g},{update|u}
+  <domain>   message
+  <locale>   en
+
+Actions:
+  compile    compile *.po to *.mo for application
+  generate   create new *.po file with latest *.pot
+  update     update *.po using *.pot (template)
+
+Examples:
+  % linguine u message en
+  % linguine c message en
+USG
+}
+
+KEYWORD="_"
+WIDTH=73
+
+ACTION=""
+DOMAIN=""
+LOCALE=""
+
+getopt --test > /dev/null
+if [ $? -ne 4 ]; then
+  echo "\`getout --test\` failed"
+fi
+
+set -e
+
+options=h
+longoptions=help
+
+_=`getopt --name "$0" \
+--options "$options" --longoptions "$longoptions" --unquoted -- "$@"`
+
+if [ $? -ne 0 ]; then
+  exit 2
+fi
+
+while [ $# -gt 0 ]; do
+  case $1 in
+    -h|--help)
+      print_usage `basename $0`
+      exit 0
+      ;;
+    "compile"|"c"|"generate"|"g"|"update"|"u")
+      ACTION="${1}"
+      shift
+      ;;
+    "message")
+      DOMAIN="${1}"
+      shift
+      ;;
+    "en")
+      LOCALE="${1}"
+      shift
+      ;;
+    *)
+      echo "Unknown option :'("
+      exit 2
+      ;;
+  esac
+done
+
+if [ "$ACTION" = "" ]; then
+  echo "<action> is missing"
+  print_usage `basename $0`
+  exit 2
+fi
+
+if [ "$DOMAIN" = "" ]; then
+  echo "<domain> is missing"
+  print_usage `basename $0`
+  exit 2
+fi
+
+if [ "$LOCALE" = "" ]; then
+  echo "<locale> is missing"
+  print_usage `basename $0`
+  exit 2
+fi
+
+run_compile_command() {
+  msgfmt --directory=${LOCALE}/LC_MESSAGES ${DOMAIN}.po \
+    --output-file=${LOCALE}/LC_MESSAGES/${DOMAIN}.mo \
+    --check --strict
+  [ -f ${LOCALE}/LC_MESSAGES/${DOMAIN}.mo ] && \
+    [ `stat -c %s ${LOCALE}/LC_MESSAGES/${DOMAIN}.mo` -ne 0 ]
+}
+
+run_generate_command() {
+  mkdir -p ${LOCALE}/LC_MESSAGES
+  xgettext --default-domain=${DOMAIN} --sort-output --width=$WIDTH \
+    --output-dir=. --output=${LOCALE}/LC_MESSAGES/${DOMAIN}.po \
+    --directory=. \
+    ${DOMAIN}.pot
+}
+
+run_update_command() {
+  msgmerge --directory=. \
+  --output-file=${LOCALE}/LC_MESSAGES/${DOMAIN}.po --previous \
+  --sort-output --width=$WIDTH \
+  ${LOCALE}/LC_MESSAGES/${DOMAIN}.po ${DOMAIN}.pot
+}
+
+case $ACTION in
+  "compile"|"c")
+    run_compile_command
+    ;;
+  "generate"|"g")
+    run_generate_command
+    ;;
+  "update"|"u")
+    run_update_command
+    ;;
+  *)
+    echo "unknown action :'("
+    exit 1
+    ;;
+esac
