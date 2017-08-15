@@ -129,7 +129,7 @@ Options:
 
 Positional arguments:
   <action>   {compile|c},{generate|g},{update|u}
-  <domain>   message
+  <domain>   {message,form}
   <locale>   en
 
 Actions:
@@ -139,7 +139,8 @@ Actions:
 
 Examples:
   % linguine-lite update message en
-  % linguine-lite c message en
+  % linguine-lite g message en
+  % linguine-lite c form en
 ```
 
 ### How to compile catalog same condition with CI on local machine
@@ -193,7 +194,7 @@ See documents.
 
 ## Support
 
-If you have any question, email us `feedback@lupine-software.com`, or
+If you have any question, email us `support@scrolliris.com`, or
 contact [@scrolliris](https://twitter.com/scrolliris) on Twitter.
 
 
@@ -221,9 +222,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 ### Text
 
-The text files for translation (`*.po` and `*.pot`), this `README.md` and
-`LICENSE` file are distributed as **GNU Free Documentation License**.
-(version 1.3)
+The text files for translation (`*.po` and `*.pot`), and other files (like
+`README.md` and `LICENSE`) are distributed as **GNU Free Documentation
+License**. (version 1.3)
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
