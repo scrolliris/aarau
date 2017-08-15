@@ -35,7 +35,7 @@ def test_signup(users, dummy_app):
         'name': 'Leo The Egg Twins',
         'username': 'leotheegg',
         'email': 'leo@example.org',
-        'password': 'Yes*2!',
+        'password': 'yesYes!*2',
     }
 
     form = res.forms['signup']

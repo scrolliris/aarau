@@ -208,7 +208,7 @@ def config(request, settings):
 
     from pyramid.events import BeforeRender, NewRequest
     from aarau.utils import set_cache_controls
-    from aarau.utils.template_util import add_template_util_renderer_globals
+    from aarau.utils.template import add_template_util_renderer_globals
     from aarau.utils.localization import (
         add_localizer,
         add_localizer_renderer_globals,
