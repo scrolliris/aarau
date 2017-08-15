@@ -1,0 +1,14 @@
+---
+articles:
+  - publication: !publication.name "'Sample Application'"
+    code: a9a11643e9b89a16a15cd735aef1780f05fa893b
+    slug: lorem-ipsum
+    title: Lorem ipsum
+    scope: public
+    license: !license.identifier "'CC-BY-NC-SA-4.0'"
+    progress_state: published
+    copyright: 2017 Copyright
+    published_at: !datetime.utcnow+timedelta -3600
+    created_at: !datetime.utcnow+timedelta -7200
+    updated_at: !datetime.utcnow+timedelta -7200
+    deleted_at:

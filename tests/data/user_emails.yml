@@ -1,0 +1,57 @@
+---
+user_emails:
+  - user: !user.username "'oswald'"
+    type: primary
+    email: oswald@example.org
+    activation_state: active
+    activation_token:
+    activation_token_expires_at:
+
+  - user: !user.username "'weenie'"
+    type: primary
+    email: weenie@example.org
+    activation_state: active
+    activation_token:
+    activation_token_expires_at:
+
+  - user: !user.username "'henry'"
+    type: primary
+    email: henry@example.org
+    activation_state: active
+    activation_token:
+    activation_token_expires_at:
+
+  - user: !user.username "'oswald'"
+    type: normal
+    email: oswald.private@example.org
+    activation_state: active
+    activation_token:
+    activation_token_expires_at:
+
+  - user: !user.username "'henry'"
+    type: normal
+    email: henry.expired@example.org
+    activation_state: pending
+    activation_token: !token.user_email_activation -3600
+    activation_token_expires_at: !datetime.utcnow+timedelta -3600
+
+  - user: !user.username "'weenie'"
+    type: normal
+    email: weenie.private@example.org
+    activation_state: pending
+    activation_token: !token.user_email_activation 3600
+    activation_token_expires_at: !datetime.utcnow+timedelta 3600
+
+  - user: !user.username "'daisy'"
+    type: primary
+    email: daisy@example.org
+    activation_state: active
+    activation_token:
+    activation_token_expires_at:
+
+  - user: !user.username "'johnny'"
+    type: primary
+    email: johnny@example.org
+    activation_state: pending
+    activation_token: !token.user_email_activation 3600
+    activation_token_expires_at: !datetime.utcnow+timedelta 3600

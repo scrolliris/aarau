@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+set -e
+
+app_name="aarau"
+root_dir=$(cd $(dirname $0)/../; pwd)
+
+export ENV=production
+
+if [ "$1" = "server" ]; then
+  #make catalog-compile
+  make db-migrate
+
+  $root_dir/bin/serve --env ${ENV} --install \
+    --config "${root_dir}/config/${ENV}.ini#${app_name}"
+elif [ "$1" = "worker" ]; then
+  #make catalog-compile
+
+  ${app_name}_worker "${root_dir}/config/${ENV}.ini#${app_name}"
+fi

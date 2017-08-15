@@ -1,0 +1,84 @@
+# https://docs.gitlab.com/ce/ci/yaml/
+stages:
+  - build-assets
+  - check-style
+  - run-test
+
+build:
+  stage: build-assets
+  image: node:7.10.1
+  services:
+  variables:
+    NODE_ENV: production
+  before_script:
+    - node --version
+    - npm --version
+    - npm install --global gulp-cli
+    - npm install --ignore-scripts
+  script:
+    - gulp
+  cache:
+    untracked: true
+    paths:
+      - node_modules
+  except:
+    - tags
+
+style:
+  stage: check-style
+  image: python:3.5
+  services:
+  variables:
+    ENV: development
+  before_script:
+    - apt-get -qq update
+    - apt-get -qq install -y --no-install-recommends gcc zlib1g zlib1g-dev
+    - apt-get -qq install -y --no-install-recommends
+      libmemcached11 libmemcached-dev
+    - python --version
+    - pip --version
+    - pip install --upgrade pip setuptools
+  script:
+    - make setup
+    - make check-style
+  cache:
+    untracked: true
+    paths:
+      - pip-cache
+  except:
+    - tags
+
+test:
+  stage: run-test
+  image: python:3.5
+  services:
+    - postgres:9.6
+    - redis:3.2
+  variables:
+    ENV: test
+    PIP_CACHE_DIR: pip-cache
+    POSTGRES_DB: aarau_test
+    POSTGRES_USER: aarau
+    POSTGRES_PASSWORD: aarau
+  before_script:
+    - apt-get -qq update
+    - apt-get -qq install -y --no-install-recommends gcc zlib1g zlib1g-dev
+    - apt-get -qq install -y --no-install-recommends
+      libmemcached11 libmemcached-dev
+    - apt-get -qq install -y --no-install-recommends gettext
+    - python --version
+    - pip --version
+    - pip install --upgrade pip setuptools
+  script:
+    - make setup
+    - make db-init
+    - make db-migrate
+    - make catalog-compile
+    - make clean
+    - make coverage
+  cache:
+    untracked: true
+    paths:
+      - pip-cache
+  except:
+    - tags

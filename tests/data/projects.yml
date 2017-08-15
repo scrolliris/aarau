@@ -1,0 +1,13 @@
+---
+projects:
+  - access_key_id: bBj6v9RRzMnk6WgRnuRVxWHuv6d8WcsCs
+    plan: !plan.name "'plan.free.name'"
+    subscription_id: 164567
+    namespace: piano-music-club
+    name: Oswald & Weenie's Piano Music Club
+    description: >-
+      Many articles about the music playing piano!
+    billing_state: none
+    created_at: !datetime.utcnow+timedelta -7200
+    updated_at: !datetime.utcnow+timedelta -7200
+    deleted_at:

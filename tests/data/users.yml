@@ -1,0 +1,32 @@
+---
+# https://en.wikipedia.org/wiki/Oswald_(TV_series)
+users:
+  - name: Oswald
+    email: oswald@example.org
+    username: oswald
+    password: 0PlayingPiano
+    activation_state: active
+
+  - name: Weenie-girl
+    email: weenie@example.org
+    username: weenie
+    password: Hot1Dog
+    activation_state: active
+
+  - name: Henry the Penguin
+    email: henry@example.org
+    username: henry
+    password: SlowAndSteady5
+    activation_state: active
+
+  - name: Daisy
+    email: daisy@example.org
+    username: daisy
+    password: Golly3Tamale
+    activation_state: active
+
+  - name:
+    email: johnny@example.org
+    username: johnny
+    password: 1ceCreame
+    activation_state: pending

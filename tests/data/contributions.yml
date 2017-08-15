@@ -1,0 +1,19 @@
+---
+contributions:
+  - user: !user.username "'oswald'"
+    article: !article.slug "'piano-lesson'"
+    role: primary_author
+    created_at: !datetime.utcnow+timedelta -7200
+    updated_at: !datetime.utcnow+timedelta -7200
+
+  - user: !user.username "'weenie'"
+    article: !article.slug "'piano-lesson'"
+    role: author
+    created_at: !datetime.utcnow+timedelta -7200
+    updated_at: !datetime.utcnow+timedelta -7200
+
+  - user: !user.username "'oswald'"
+    article: !article.slug "'music-stand'"
+    role: primary_author
+    created_at: !datetime.utcnow+timedelta -7200
+    updated_at: !datetime.utcnow+timedelta -7200

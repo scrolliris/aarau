@@ -1,0 +1,13 @@
+---
+memberships:
+  - user: !user.username "'oswald'"
+    project: !project.namespace "'piano-music-club'"
+    role: primary_owner
+    created_at: !datetime.utcnow+timedelta -7200
+    updated_at: !datetime.utcnow+timedelta -7200
+
+  - user: !user.username "'weenie'"
+    project: !project.namespace "'piano-music-club'"
+    role: owner
+    created_at: !datetime.utcnow+timedelta -7200
+    updated_at: !datetime.utcnow+timedelta -7200

@@ -1,0 +1,19 @@
+---
+classifications:
+  - parent: null
+    notation: '0'
+    name: Science and Knowledge. Organization. Computer Science. Information. Documentation. Librarianship. Institutions. Publications
+    created_at: !datetime.utcnow+timedelta -10800
+    updated_at: !datetime.utcnow+timedelta -10800
+
+  - parent: null
+    notation: '1'
+    name: Philosophy. Psychology
+    created_at: !datetime.utcnow+timedelta -10800
+    updated_at: !datetime.utcnow+timedelta -10800
+
+  - parent: null
+    notation: '2'
+    name: Religion. Theology
+    created_at: !datetime.utcnow+timedelta -10800
+    updated_at: !datetime.utcnow+timedelta -10800

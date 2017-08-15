@@ -1,0 +1,10 @@
+---
+pages:
+  - application: !application.name "'How to score music playing piano'"
+    code: jb2hE8a45dMp2Edj8Kp6GDbDt9LqCDGPCLa7
+    path: /posts/123
+    title: Piano Lesson
+    scope: public
+    created_at: !datetime.utcnow+timedelta -7200
+    updated_at: !datetime.utcnow+timedelta -7200
+    deleted_at:

@@ -1,0 +1,4 @@
+[run]
+source = aarau
+branch = True
+omit = ./tests*

@@ -1,0 +1,13 @@
+---
+projects:
+  - access_key_id: hj2v9RRzMnk6WgRnuRVxWHuv6d8WBsCs
+    plan: !plan.name "'plan.free.name'"
+    subscription_id: 164567
+    namespace: sample
+    name: Sample Project
+    description: >-
+      A sample project.
+    billing_state: none
+    created_at: !datetime.utcnow+timedelta -7200
+    updated_at: !datetime.utcnow+timedelta -7200
+    deleted_at:

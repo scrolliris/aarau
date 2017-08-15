@@ -1,0 +1,25 @@
+---
+sites:
+  - project: !project.name "'Sample Project'"
+    domain: example.com
+    hosting_id: !application.name "'Sample Application'"
+    hosting_type: Application
+    calculation_state: 'on'
+    read_key: omVf6c9gnGPbhxnhJyfoVtffrTOIbbX7
+    write_key: EYC4DfopPLWe17uODNGGumVd8oqARunA
+    is_pinned: true
+    created_at: !datetime.utcnow+timedelta -7200
+    updated_at: !datetime.utcnow+timedelta -7200
+    deleted_at:
+
+  - project: !project.name "'Sample Project'"
+    domain: example.org
+    hosting_id: !publication.name "'Sample Publication'"
+    hosting_type: Publication
+    calculation_state: 'on'
+    read_key: 23V3Fus6fkM1Rh9pAkrQLPhNoDtm6oNN
+    write_key: lnds5gmlGL0SQaXvXXVi1uZ8LsPCwHDv
+    is_pinned: false
+    created_at: !datetime.utcnow+timedelta -7200
+    updated_at: !datetime.utcnow+timedelta -7200
+    deleted_at:

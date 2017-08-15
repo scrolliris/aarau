@@ -1,0 +1,11 @@
+---
+publications:
+  - classification: !classification.notation "'0'"
+    name: How to score music playing piano
+    description: ->
+      We tell you how to score you created music playing piano
+    license: !license.identifier "'CC-BY-NC-SA-4.0'"
+    copyright: 2017 Oswald & Weenie
+    created_at: !datetime.utcnow+timedelta -7200
+    updated_at: !datetime.utcnow+timedelta -7200
+    deleted_at:

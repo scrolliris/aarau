@@ -1,0 +1,13 @@
+---
+users:
+  - name: Yasuhiro Asaka
+    email: yasuhiro.asaka@grauwoelfchen.net
+    username: yasuhiro
+    password: Yasuh1r0
+    activation_state: active
+
+  - name: Misaki Asaka
+    email: misaki.asaka@grauwoelfchen.net
+    username: misaki
+    password: M1sak1
+    activation_state: active

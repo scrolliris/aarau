@@ -1,0 +1,158 @@
+#!/usr/bin/env sh
+
+print_usage() {
+  cat <<USG
+
+Usage: ${1} <action> <domain> [locale]
+
+The cli command to generate/extract/update/compile gettext catalog files.
+As generally steps, 1.extract, 2.update, 3.(edit) and 4.compile it.
+
+Options:
+  -h, --help   display this help and exit
+
+Arguments:
+  <action>   {compile|c},{extract|e},{generate|g},{update|u}
+  <domain>   message
+  [locale]   en
+
+Actions:
+  compile    compile *.po to *.mo for application
+  extract    extract msgid(s) into *.pot
+  generate   create new *.po file with latest *.pot
+  update     update *.po using *.pot (template)
+
+Examples:
+  % linguine e message
+  % linguine u message en
+  % linguine c message en
+USG
+}
+
+PACKAGE_NAME="tirol"
+PACKAGE_VERSION="0.0"
+MSGID_BUGS_ADDRESS="feedback@lupine-software.com"
+COPYRIGHT="Lupine Software LLC"
+
+KEYWORD="_"
+WIDTH=73
+
+ACTION=""
+DOMAIN=""
+LOCALE=""
+
+getopt --test > /dev/null
+if [ $? -ne 4 ]; then
+  echo "\`getout --test\` failed"
+fi
+
+set -e
+
+options=h
+longoptions=help
+
+_=`getopt --name "$0" \
+--options "$options" --longoptions "$longoptions" --unquoted -- "$@"`
+
+if [ $? -ne 0 ]; then
+  exit 2
+fi
+
+while [ $# -gt 0 ]; do
+  case $1 in
+    -h|--help)
+      print_usage `basename $0`
+      exit 0
+      ;;
+    "compile"|"c"|"extract"|"e"|"generate"|"g"|"update"|"u")
+      ACTION="${1}"
+      shift
+      ;;
+    "message")
+      DOMAIN="${1}"
+      shift
+      ;;
+    "en")
+      LOCALE="${1}"
+      shift
+      ;;
+    *)
+      echo "Unknown option :'("
+      exit 2
+      ;;
+  esac
+done
+
+run_extract_command() {
+  # python file only
+  # FILE_LIST="`find ./tirol -name '*.py' -print`"
+  # xgettext --default-domain=${DOMAIN} --sort-output --keyword=$KEYWORD \
+  #   --output-dir=locale --output=${DOMAIN}.pot \
+  #   --from-code=UTF-8 --language=Python --width=$WIDTH \
+  #   --msgid-bugs-address=$MSGID_BUGS_ADDRESS \
+  #   --directory=. \
+  #   --package-name=$PACKAGE_NAME --package-version=$PACKAGE_VERSION \
+  #   $FILE_LIST
+
+  # use Babel, development only
+  python setup.py extract_messages --output locale/message.pot \
+    --charset="utf-8" --width=$WIDTH --keywords "$KEYWORD" \
+    --msgid-bugs-address "$MSGID_BUGS_ADDRESS" \
+    --copyright-holder "$COPYRIGHT" \
+    --strip-comments
+}
+
+run_generate_command() {
+  mkdir -p locale/${LOCALE}/LC_MESSAGES
+  xgettext --default-domain=${DOMAIN} --sort-output --width=$WIDTH \
+    --output-dir=locale --output=${LOCALE}/LC_MESSAGES/${DOMAIN}.po \
+    --directory=locale \
+    ${DOMAIN}.pot
+}
+
+run_update_command() {
+  msgmerge --directory=locale \
+  --output-file=locale/${LOCALE}/LC_MESSAGES/${DOMAIN}.po --previous \
+  --sort-output --width=$WIDTH \
+  ${LOCALE}/LC_MESSAGES/${DOMAIN}.po ${DOMAIN}.pot
+}
+
+run_compile_command() {
+  msgfmt --directory=locale/${LOCALE}/LC_MESSAGES ${DOMAIN}.po \
+    --output-file=locale/${LOCALE}/LC_MESSAGES/${DOMAIN}.mo \
+    --check --strict
+}
+
+case $ACTION in
+  "c") ACTION="compile"  ;;
+  "e") ACTION="extract"  ;;
+  "g") ACTION="generate" ;;
+  "u") ACTION="update"   ;;
+esac
+
+
+if [ "$ACTION" = "" ]; then
+  echo "<action> is missing"
+  print_usage `basename $0`
+  exit 2
+fi
+
+if [ "$DOMAIN" = "" ]; then
+  echo "<domain> is missing"
+  print_usage `basename $0`
+  exit 2
+fi
+
+if [ "$ACTION" != "extract" ] && [ "$LOCALE" = "" ]; then
+  echo "<locale> is missing"
+  print_usage `basename $0`
+  exit 2
+fi
+
+case $ACTION in
+  "compile")  run_compile_command  ;;
+  "extract")  run_extract_command  ;;
+  "generate") run_generate_command ;;
+  "update")   run_update_command   ;;
+  *)          echo 'unknown action'; exit 1 ;;
+esac

@@ -1,0 +1,8 @@
+---
+plans:
+  - payment_type_id: 1
+    name: plan.free.name
+    price: 0.0
+    description: plan.free.description
+    created_at: !datetime.utcnow+timedelta -10800
+    updated_at: !datetime.utcnow+timedelta -10800

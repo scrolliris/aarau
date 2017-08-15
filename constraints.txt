@@ -1,0 +1,46 @@
+bcrypt==3.1.2
+beaker==1.9.0
+celery==4.1.0
+colorlog==2.7.0
+google-cloud-datastore==1.2.0
+itsdengerous==0.24
+kombu==4.1.0
+mako==1.0.7
+Paste==2.0.3
+PasteScript==2.0.2
+peewee==2.9.1
+peewee-migrate==0.11.0
+psycopg2==2.6.2
+python-dotenv==0.6.0
+pylibmc==1.5.2
+pyramid==1.8.1
+pyramid_assetviews==1.0a3
+pyramid-beaker==0.8
+pyramid_celery==3.0.0
+pyramid-mako==1.0.2
+pyramid_mailer==0.15.1
+pyramid_services==0.4
+requests==2.18.3
+transaction==2.1.0
+WebOb==1.7.1
+WTForms==2.1
+
+# production
+CherryPy==8.1.2
+honcho==1.0.1
+
+# development
+flake8==3.2.1
+flake8_docstrings==1.0.3
+pylint==1.6.5
+waitress==1.0.0
+
+# development,testing
+PyYAML==3.12
+
+# testing
+mixier==5.5.8
+pytest==3.0.5
+pytest-cov==2.4.0
+pytest-cov==1.5.0
+WebTest==2.0.23

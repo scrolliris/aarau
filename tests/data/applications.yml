@@ -1,0 +1,8 @@
+---
+applications:
+  - name: How to score music playing piano
+    description: ->
+      (Blog Version)
+    created_at: !datetime.utcnow+timedelta -7200
+    updated_at: !datetime.utcnow+timedelta -7200
+    deleted_at:

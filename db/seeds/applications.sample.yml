@@ -1,0 +1,7 @@
+---
+applications:
+  - name: Sample Application
+    description: ...
+    created_at: !datetime.utcnow+timedelta -7200
+    updated_at: !datetime.utcnow+timedelta -7200
+    deleted_at:

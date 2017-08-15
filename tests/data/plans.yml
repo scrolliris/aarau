@@ -1,0 +1,29 @@
+---
+plans:
+  - payment_type_id: 1
+    name: plan.free.name
+    price: 0.0
+    description: plan.free.description
+    created_at: !datetime.utcnow+timedelta -10800
+    updated_at: !datetime.utcnow+timedelta -10800
+
+  - payment_type_id: 2
+    name: plan.personal.name
+    price: 15.0
+    description: plan.premier.description
+    created_at: !datetime.utcnow+timedelta -10800
+    updated_at: !datetime.utcnow+timedelta -10800
+
+  - payment_type_id: 3
+    name: plan.enterprise.name
+    price: 30.0
+    description: plan.enterprise.description
+    created_at: !datetime.utcnow+timedelta -10800
+    updated_at: !datetime.utcnow+timedelta -10800
+
+  - payment_type_id: 4
+    name: plan.academic.name
+    price: 0.0
+    description: plan.academic.description
+    created_at: !datetime.utcnow+timedelta -10800
+    updated_at: !datetime.utcnow+timedelta -10800
