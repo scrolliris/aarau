@@ -76,16 +76,19 @@ coverage:
 
 # translation
 
-catalog-compile:
-	./bin/linguine compile message en
-.PHONY: catalog-compile
-
 catalog-extract:
 	./bin/linguine extract message
+	./bin/linguine extract form
 .PHONY: catalog-extract
+
+catalog-compile:
+	./bin/linguine compile message en
+	./bin/linguine compile form en
+.PHONY: catalog-compile
 
 catalog-update:
 	./bin/linguine update message en
+	./bin/linguine update form en
 .PHONY: catalog-update
 
 catalog: | catalog-compile

@@ -14,6 +14,7 @@ with open(os.path.join(here, 'CHANGELOG')) as f:
 
 requires = [
     'beaker',
+    'bleach',
     'bcrypt',
     'celery[redis]',
     'colorlog',

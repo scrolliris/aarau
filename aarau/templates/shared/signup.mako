@@ -16,7 +16,7 @@
   <div class="signup grid">
     <div class="row">
       <div class="column-6 offset-3 column-v-8 offset-v-1 column-l-16">
-        <form id="signup" class="form${' error' if err_msg is not None else ''}" action="${req.route_url('signup')}" method="post">
+        <form id="signup" class="form${' error' if err_msg is not None else ''}" action="${req.route_path('signup')}" method="post">
           ${form.csrf_token}
           <h2 class="header">Create your user account</h2>
 
@@ -31,48 +31,52 @@
         % endif
 
           <div class="required field-13${' error' if form.email.errors else ''}">
-            <label class="label" for="email">Email address</label>
-            <p class="description">You need this to log in to your account.</p>
+            <label class="label" for="email">${__(form.email.label.text)}</label>
+            <p class="description">${_('signup.email.description')}</p>
 
-            ${form.email(class_='', placeholder='william.shakespeare@scrolliris.com')}
+            ${form.email(class_='', placeholder=_('signup.email.placeholder'))}
             ${render_errors(form.email)|n}
           </div>
 
           <div class="field-11${' error' if form.name.errors else ''}">
-            <label class="label" for="name">Name</label>
-            <p class="description">This is your fullname.</p>
+            <label class="label" for="name">${__(form.name.label.text)}</label>
+            <p class="description">${_('signup.name.description')}</p>
 
-            ${form.name(class_='', placeholder='William Shakespeare (optional)')}
+            ${form.name(class_='', placeholder=_('signup.name.placeholder'))}
             ${render_errors(form.name)|n}
           </div>
 
           <div class="field-8${' error' if form.username.errors else ''}">
-            <label class="label" for="username">Username</label>
-            <p class="description">This is your personal username.</p>
+            <label class="label" for="username">${__(form.username.label.text)}</label>
+            <p class="description">${_('signup.username.description')}</p>
 
-            ${form.username(class_='', placeholder='william (optional)')}
+            ${form.username(class_='', placeholder=_('signup.username.placeholder'))}
             ${render_errors(form.username)|n}
           </div>
 
           <div class="required field-16${' error' if form.password.errors else ''}">
-            <label class="label" for="password">Password</label>
-            <p class="description">At least, use one lower and one UPPER letter <code>A-z</code>, and one digit from: <code>0-9</code>. 8 characters are minimum length. Make it strong.</p>
+            <label class="label" for="password">${__(form.password.label.text)}</label>
+            <p class="description">${_('signup.password.description', mapping={
+              'letters': '<code>{}</code>'.format(_('misc.letters')),
+              'numbers': '<code>{}</code>'.format(_('misc.numbers'))
+            })|n,trim,clean(tags=['code'])}</p>
             <div class="field-11">
-              ${form.password(class_='', placeholder='Keep it secret :)')}
+              ${form.password(class_='', placeholder=_('signup.password.placeholder'))}
               ${render_errors(form.password)|n}
             </div>
           </div>
 
           <div class="field-16">
             <div class="petit info message">
-              <p class="content">
-              By clicking on <code>Create an account</code> below, you are agreeing to the <a href="#">Terms of Service</a> and the <a href="#">Privacy Policy</a>.
-              </p>
+              <p class="content">${_('signup.agreement', mapping={
+                'button': __(form.submit.label.text),
+                'tos': '<a href="{}">{}</a>'.format('/', _('link.text.tos')),
+                'pp': '<a href="{}">{}</a>'.format('/', _('link.text.pp'))})|n,trim,clean(tags=['a'], attributes=['href'])}</p>
             </div>
           </div>
 
           <div class="field-13">
-            ${form.submit(class_='ui large primary button')}
+            ${form.submit(class_='ui large primary button', value=__(form.submit.label.text))}
           </div>
         </form>
       </div>

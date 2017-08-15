@@ -13,7 +13,7 @@ Options:
 
 Arguments:
   <action>   {compile|c},{extract|e},{generate|g},{update|u}
-  <domain>   message
+  <domain>   {message,form}
   [locale]   en
 
 Actions:
@@ -24,14 +24,16 @@ Actions:
 
 Examples:
   % linguine e message
-  % linguine u message en
-  % linguine c message en
+  % linguine g message en
+  % linguine u form en
+  % linguine c form en
 USG
 }
 
-PACKAGE_NAME="tirol"
-PACKAGE_VERSION="0.0"
-MSGID_BUGS_ADDRESS="feedback@lupine-software.com"
+# see https://gitlab.com/lupine-software/neuchatel
+PACKAGE_NAME="Neuchâtel"
+PACKAGE_VERSION="0.1"
+MSGID_BUGS_ADDRESS="support@scrolliris.com"
 COPYRIGHT="Lupine Software LLC"
 
 KEYWORD="_"
@@ -68,7 +70,7 @@ while [ $# -gt 0 ]; do
       ACTION="${1}"
       shift
       ;;
-    "message")
+    "message"|"form")
       DOMAIN="${1}"
       shift
       ;;
@@ -83,23 +85,28 @@ while [ $# -gt 0 ]; do
   esac
 done
 
+
 run_extract_command() {
-  # python file only
-  # FILE_LIST="`find ./tirol -name '*.py' -print`"
-  # xgettext --default-domain=${DOMAIN} --sort-output --keyword=$KEYWORD \
-  #   --output-dir=locale --output=${DOMAIN}.pot \
-  #   --from-code=UTF-8 --language=Python --width=$WIDTH \
-  #   --msgid-bugs-address=$MSGID_BUGS_ADDRESS \
-  #   --directory=. \
-  #   --package-name=$PACKAGE_NAME --package-version=$PACKAGE_VERSION \
-  #   $FILE_LIST
+  if [ "${DOMAIN}" == "message" ]; then
+    FILE_LIST="`find ./aarau -type f \( -name '*.py' -or -name '*.mako' \) \
+      ! -path "./**/*/forms.py" -print`"
+  elif [ "${DOMAIN}" == "form" ]; then
+    FILE_LIST="`find ./aarau/**/*/forms.py -type f \( -name '*.py' \) -print`"
+  fi
+  xgettext --default-domain=${DOMAIN} --sort-output --keyword=$KEYWORD \
+    --output-dir=locale --output=${DOMAIN}.pot \
+    --from-code=UTF-8 --language=Python --width=$WIDTH \
+    --msgid-bugs-address=$MSGID_BUGS_ADDRESS \
+    --directory=. \
+    --package-name=$PACKAGE_NAME --package-version=$PACKAGE_VERSION \
+    $FILE_LIST
 
   # use Babel, development only
-  python setup.py extract_messages --output locale/message.pot \
-    --charset="utf-8" --width=$WIDTH --keywords "$KEYWORD" \
-    --msgid-bugs-address "$MSGID_BUGS_ADDRESS" \
-    --copyright-holder "$COPYRIGHT" \
-    --strip-comments
+  #python setup.py extract_messages --output locale/message.pot \
+  #  --charset="utf-8" --width=$WIDTH --keywords "$KEYWORD" \
+  #  --msgid-bugs-address "$MSGID_BUGS_ADDRESS" \
+  #  --copyright-holder "$COPYRIGHT" \
+  #  --strip-comments
 }
 
 run_generate_command() {

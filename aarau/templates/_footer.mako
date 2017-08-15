@@ -6,9 +6,9 @@
       </div>
       <div class="column-6">
         <ul class="list right">
-          <li class="item"><a href="">Term of Service</a></li>
-          <li class="item"><a href="">Privacy Policy</a></li>
-          <li class="item"><a href="">Cookies</a></li>
+          <li class="item"><a href="/">${_('link.text.tos')}</a></li>
+          <li class="item"><a href="/">${_('link.text.pp')}</a></li>
+          <li class="item"><a href="/">Cookies</a></li>
         </ul>
       </div>
       <div class="column-3">

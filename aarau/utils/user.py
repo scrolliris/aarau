@@ -15,7 +15,7 @@ def add_user_renderer_globals(evt):
     #     evt['user'] = None
 
 
-class User(object):
+class UserUtil(object):
     """
     The user utility/decorator for templates.
     """

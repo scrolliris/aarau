@@ -14,18 +14,22 @@ def get_translator_function(localizer):
 
 @subscriber(NewRequest)
 def add_localizer(event):
-    request = event.request
+    req = event.request
 
-    if request:
-        localizer = request.localizer
-        request.translate = get_translator_function(localizer)
+    if req:
+        req.translate = get_translator_function(req.localizer)
 
 
 @subscriber(BeforeRender)
 def add_localizer_renderer_globals(event):
-    request = event['request']
+    req = event['request']
 
-    if request and hasattr(request, 'translate'):
-        _ = request.translate
+    if req and hasattr(req, 'localizer'):
+        __ = req.localizer.translate
+        if __:
+            event['__'] = __  # util method for translation string
+
+    if req and hasattr(req, 'translate'):
+        _ = req.translate
         if _:
             event['_'] = _  # shortcut method for template

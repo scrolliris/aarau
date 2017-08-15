@@ -1,5 +1,10 @@
+"""Template utility class and helper functions.
+"""
 from os import path
 import json
+
+from bleach import clean as _clean
+from markupsafe import Markup
 
 from pyramid.decorator import reify
 from pyramid.events import subscriber
@@ -8,6 +13,8 @@ from pyramid.events import BeforeRender
 
 @subscriber(BeforeRender)
 def add_template_util_renderer_globals(evt):
+    """Adds template utility instance as `util`.
+    """
     ctx, req = evt['context'], evt['request']
     util = getattr(req, 'util', None)
 
@@ -16,11 +23,25 @@ def add_template_util_renderer_globals(evt):
 
         util = get_settings()['aarau.includes']['template_util'](ctx, req)
     evt['util'] = util
+    evt['clean'] = clean
+
+
+def clean(**kwargs) -> 'function':
+    """Returns sanitized value except allowed tags and attributes.
+
+    >>> ${'<a href="/"><em>link</em></a>'|n,clean(
+            tags=['a'], attributes=['href'])}
+    "<a href=\"/\">link</a>"
+    """
+    def __clean(text) -> Markup:
+        return Markup(_clean(text, **kwargs))
+
+    return __clean
+
 
 
 class TemplateUtil(object):
-    """
-    The utility for templates.
+    """The utility for templates.
     """
     def __init__(self, ctx, req, **kwargs):
         self.ctx, self.req = ctx, req

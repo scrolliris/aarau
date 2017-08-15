@@ -1,8 +1,12 @@
 """Forms
 """
 
+from pyramid.i18n import TranslationStringFactory
 from wtforms.form import Form
 from wtforms.csrf.core import CSRF as _CSRF
+
+
+_ = TranslationStringFactory('form')
 
 
 class CSRF(_CSRF):
@@ -35,7 +39,6 @@ PASSWORD_PATTERN = \
 class SecureForm(Form):
     """The form enables csrf protection.
     """
-
     # pylint: disable=too-few-public-methods
     class Meta:
         """Meta class of SecureForm.

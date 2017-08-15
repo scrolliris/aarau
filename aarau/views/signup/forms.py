@@ -7,32 +7,32 @@ from wtforms import validators as v
 from wtforms import ValidationError
 
 from ..forms import USERNAME_PATTERN, PASSWORD_PATTERN
-from ..forms import SecureForm, build_form
+from ..forms import _, SecureForm, build_form
 
 
 class SignupForm(SecureForm):
     """
     """
-    email = StringField('Email address', [
+    email = StringField(_('signup.label.email'), [
         v.Required(),
         v.Length(min=6, max=64),
         v.Email(),
     ])
-    name = StringField('Name', [
+    name = StringField(_('signup.label.name'), [
         v.Optional(),
         v.Length(min=2, max=64),
     ])
-    username = StringField('Username', [
+    username = StringField(_('signup.label.username'), [
         v.Optional(),
         v.Regexp(USERNAME_PATTERN, message=None),
         v.Length(min=4, max=16),
     ])
-    password = PasswordField('Password', [
+    password = PasswordField(_('signup.label.password'), [
         v.Required(),
         v.Regexp(PASSWORD_PATTERN),
         v.Length(min=6, max=32)
     ])
-    submit = SubmitField('Create an account')
+    submit = SubmitField(_('signup.submit.create'))
 
 
 def signup_form_factory(request):

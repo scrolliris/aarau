@@ -19,8 +19,8 @@ def resolve_settings(settings):
     s = settings.copy()
     settings_defaults = {
         'aarau.includes': {
-            'template_util': 'aarau.utils.template_util.TemplateUtil',
-            'user': 'aarau.utils.user.User',
+            'template_util': 'aarau.utils.template.TemplateUtil',
+            'user': 'aarau.utils.user.UserUtil',
         }
     }
     for k, v in settings_defaults.items():
@@ -79,7 +79,7 @@ def main(global_config, **settings):
     config.include('.route')
     config.include('.security')
 
-    #config.add_translation_dirs('aarau:../locale')
+    config.add_translation_dirs('aarau:../locale')
 
     # this calls db connect/close to recycle connection
     config.set_request_factory(CustomRequest)
