@@ -29,12 +29,19 @@ The application of [https://scrolliris.com/](https://scrolliris.com/).
 * Redis `>= 3.2.0`
 * Memcached `>= 1.4.33`
   * libmemcached (via pylibmc) (worker)
+* Datastore (emulator)
 * Node.js `>= 7.8.0` (build)
 * GNU gettext `>= 0.19.8.1` (translation)
+* [Neuchâtel](https://gitlab.com/lupine-software/neuchatel) as git subtree
 * Graphviz (document)
 
 
-## Setup environment
+## Integrations
+
+TODO
+
+
+## Setup
 
 ```zsh
 % cd /path/to/aarau
@@ -50,9 +57,32 @@ The application of [https://scrolliris.com/](https://scrolliris.com/).
 : re-activate for node.js at this time
 (venv) % source venv/bin/activate
 (venv) % npm update --global npm
+(venv) % npm --version
+5.3.0
 ```
 
-### PostgreSQl
+### Dependencies
+
+#### Neuchâtel
+
+See translation project [Neuchâtel](
+https://gitlab.com/lupine-software/neuchatel).
+
+Don't commit directly the changes on above translation project into this repo.
+
+```zsh
+: setup `locale`
+(venv) % git remote add neuchatel https://gitlab.com/lupine-software/neuchatel.git
+(venv) % git subtree add --prefix locale neuchatel master
+
+: synchronize with updates into specified branch
+(venv) % git  pull -s subtree neuchatel master
+
+: subtree list
+% git log | grep git-subtree-dir | tr -d ' ' | cut -d ":" -f2 | sort | uniq
+```
+
+#### PostgreSQl
 
 Setup PostgreSQL database.
 
@@ -69,34 +99,21 @@ Setup PostgreSQL database.
 (venv) % make db-migrate
 ```
 
-### DynamoDB
+#### Redis
 
-See amazon dynamodb [document](http://docs.aws.amazon.com/amazondynamodb/\
-latest/developerguide/Tools.DynamoDBLocal.html).
+TODO
+
+#### Memcached
+
+TODO
+
+#### Datastore
+
+See GCP datastore [document]().
 
 ```zsh
-: Put dynamodb-local from Amazon
-% bin/setup-dynamodb_local
-
-: Or latest dynamodb into lib/dynamodb_local_latest by yourself
-% cd lib
-% curl -sLO http://dynamodb-local.s3-website-us-west-2.amazonaws.com/\
-    dynamodb_local_latest.tar.gz
-% mkdir dynamodb_local_latest
-% tar zxvf dynamodb_local_latest.tar.gz -C dynamodb_local_latest
-% cp ./dynamodb_local ../bin/
-
-: run (on localhost using :8001)
-% ./bin/dynamodb_local
+TODO
 ```
-
-### Redis
-
-TODO
-
-### Memcached
-
-TODO
 
 
 ## Development
@@ -114,10 +131,6 @@ Check `Makefile`
 
 : install packages
 (venv) % make setup
-: or manually install packages
-(venv) % pip install -e ".[development]" -c constraints.txt
-: additional packages if you want
-(venv) % pip install -r requirements.txt -c constraints.txt
 
 : install node modules & run gulp task
 (venv) % npm install --global gulp-cli
@@ -130,10 +143,6 @@ Check `Makefile`
 
 : use runner script
 (venv) % make serve
-: see ./bin/serve --help
-(venv) % ./bin/serve -r
-: or just start server for development using pserve
-(venv) % aarau_pserve config/development.ini --reload
 ```
 
 ### Migration
@@ -147,7 +156,7 @@ Create migration file manually into `db/migrations`.
 
 #### Note
 
-You can generate with this command a migration file automatically.  
+You can generate a migration file with a command below, automatically.  
 But some custom fields are missing and the result doesn't match 
 our desired scheme.
 
@@ -159,7 +168,7 @@ Create manually by your self for now.
   --database 'postgresql://user:pass@localhost:5432/dbname' NAME
 ```
 
-### Style check & Lint
+### Style & Lint
 
 * flake8
 * flake8-docstrings (pep257)
@@ -171,7 +180,6 @@ Create manually by your self for now.
 ```zsh
 : add hook
 (venv) % flake8 --install-hook git
-
 (venv) % make style
 ```
 
@@ -224,6 +232,12 @@ E.g. Google App Engine
 (venv) % gcloud init
 ```
 
+```zs
+: publish website
+(venv) % source ./bin/load-gcloud
+(venv) % gcloud app deploy ./app.yaml --project <project-id> --verbosity=info
+```
+
 
 ## Testing
 
@@ -258,41 +272,14 @@ Check test coverage
 
 ### CI
 
-For debugging, run **gitlab-ci** localy using `gitlab-ci-multi-runner`.
-
-#### Setup
-
-Prepare `gitlab-ci-multi-runner` in your local machine.
+You can check it by yourself using `gitlab-ci-multi-runner` on local machine.
+It requires `docker`.
 
 ```zsh
-: gitlab-ci (localy)
-(venv) % curl -sL https://gitlab-ci-multi-runner-downloads.s3.amazonaws.com \
-  /latest/binaries/gitlab-ci-multi-runner-linux-amd64 \
-  -o bin/gitlab-ci-multi-runner
-(venv) % chmod +x bin/gitlab-ci-multi-runner
-: run runner container
-(venv) % docker run -d --name gitlab-runner --restart always \
-  -v /srv/gitlab-runner/config:/etc/gitlab-runner \
-  gitlab/gitlab-runner:latest
-```
+% ./bin/setup-gitlab-ci-multi-runner
 
-#### Run
-
-Start docker as service, then run `ci-runner`.
-
-```zsh
-: run test job in docker (via gitlab-ci-multi-runner)
-(venv) % ./bin/ci-runner test
-
-: this is equivalent as above command
-(venv) % mkdir -p tmp/_cache
-(venv) % ./bin/gitlab-ci-multi-runner exec docker \
-  --cache-dir /cache \
-  --docker-volumes `pwd`/tmp/_cache:/cache \
-  --env TEST_AUTH_SECRET=... \
-  --env TEST_DATABASE_URL=... \
-  ...
-  <JOB>
+: use script
+% ./bin/ci-runner test
 ```
 
 #### Links
@@ -303,7 +290,7 @@ See documents.
 * https://docs.gitlab.com/runner/install/linux-manually.html
 
 
-## Document
+## Documentation
 
 ```zsh
 (venv) % cd doc
@@ -314,7 +301,37 @@ See documents.
 
 ## Translation
 
-TODO
+See `./bin/linguine --help` and translation project [repository](
+https://gitlab.com/lupine-software/neuchatel)
+
+### Generate new catalog
+
+Generate `xxx.pot` file.
+
+```zsh
+: edit Makefile (see also `bin/linguine` script)
+(venv) % make catalog-extract
+```
+
+### Update and Compile translation catalog
+
+See `Makefile`.
+The translation catalog needs GNU gettext.
+
+```zsh
+(venv) % make catalog-update
+
+: alias `make catalog` is also available
+(venv) % make catalog-compile
+```
+
+### Work-flow
+
+0. extract
+1. generate
+2. update
+3. compile
+
 
 
 ## License
