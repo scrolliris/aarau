@@ -34,4 +34,4 @@ msgstr "Username"
 
 #: aarau/views/signup/forms.py:35
 msgid "signup.submit.create"
-msgstr "Create an Account"
+msgstr "Create an account"
