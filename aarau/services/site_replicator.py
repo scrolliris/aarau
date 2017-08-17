@@ -50,8 +50,9 @@ class SiteReplicator(object):
             return False
 
         project = self.site.project
+        kind = self.__class__.KIND
 
-        query = self.client.query(kind='Site')
+        query = self.client.query(kind=kind)
         query.add_filter('project_access_key_id', '=', project.access_key_id)
         query.add_filter('read_key', '=', self.site.read_key)
         query.add_filter('write_key', '=', self.site.write_key)
@@ -62,7 +63,6 @@ class SiteReplicator(object):
             return False
 
         site_key = self.client.key(
-            self.__class__.KIND,
-            '{}-{}'.format(project.id, self.site.id))
+            kind, '{}-{}'.format(project.id, self.site.id))
         _obj = sites[0]
         return _obj.key == site_key
