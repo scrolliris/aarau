@@ -1,4 +1,4 @@
-"""Utility script for database and document storage.
+"""Utility script for database management.
 """
 
 import os
