@@ -6,6 +6,7 @@ from google.cloud import datastore
 class SiteReplicator(object):
     """Service object for site replication.
     """
+    KIND = 'site'
 
     def __init__(self, *_args, **_kwargs):
         self.client = datastore.Client()
@@ -31,7 +32,8 @@ class SiteReplicator(object):
         # project.id + site.id
         with self.client.transaction():
             site_key = self.client.key(
-                'Site', '{}-{}'.format(project.id, self.site.id))
+                self.__class__.KIND,
+                '{}-{}'.format(project.id, self.site.id))
             obj = datastore.Entity(key=site_key)
             obj.update({
                 'project_access_key_id': project.access_key_id,
@@ -60,6 +62,7 @@ class SiteReplicator(object):
             return False
 
         site_key = self.client.key(
-            'Site', '{}-{}'.format(project.id, self.site.id))
+            self.__class__.KIND,
+            '{}-{}'.format(project.id, self.site.id))
         _obj = sites[0]
         return _obj.key == site_key
