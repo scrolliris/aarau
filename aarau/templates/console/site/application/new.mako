@@ -1,4 +1,4 @@
-<%inherit file='../_layout.mako'/>
+<%inherit file='../../_layout.mako'/>
 
 <%block name='title'>
  New Application | Scrolliris
@@ -18,7 +18,7 @@
   <div class="grid">
     <div class="row">
       <div class="column-9">
-        <%namespace name='msg' file='../../shared/_message.mako'/>
+        <%namespace name='msg' file='../../../shared/_message.mako'/>
         ${msg.form()}
         <h2 class="header">New Site</h2>
         <p class="description">Each sites in the project should have same contents or comparable articles which are written by you. Normally, you need only one site.</p>
@@ -28,7 +28,7 @@
           # FIXME
           err = ''
         %>
-        <%include file="_form.mako" args="f=form, act=act, ctx=ctx, err=err"/>
+        <%include file="../_form.mako" args="f=form, act=act, ctx=ctx, err=err"/>
       </div>
     </div>
   </div>

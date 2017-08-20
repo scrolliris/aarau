@@ -61,8 +61,7 @@ class CustomRequest(Request):
         env_dict = (new_args[0] or {})
         if not ASSET_PATH.match(env_dict['PATH_INFO']) and \
            not HEALTH_CHECK_PATH.match(env_dict['PATH_INFO']):
-            if db.is_closed():
-                db.connect()
+            self.__class__.open_db()
 
         # finished callbacks
         self.add_finished_callback(self.__class__.close_db)
@@ -80,11 +79,24 @@ class CustomRequest(Request):
         return env_dict
 
     @classmethod
-    def close_db(cls, _req):
-        """Closes database connection if it's not closed.
+    def open_db(cls):
+        """Opens database connections if it's not opened.
         """
-        if not db.is_closed():
-            db.close()
+        if db.cardinal.is_closed():
+            db.cardinal.connect()
+
+        if db.analysis.is_closed():
+            db.analysis.connect()
+
+    @classmethod
+    def close_db(cls, req):
+        """Closes database connections if it's not closed.
+        """
+        if not req.db.cardinal.is_closed():
+            req.db.cardinal.close()
+
+        if not req.db.analysis.is_closed():
+            req.db.analysis.close()
 
     @property
     def settings(self):

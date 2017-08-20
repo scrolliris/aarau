@@ -6,13 +6,13 @@ from peewee import (
 )
 
 from .base import (
-    Base,
+    CardinalBase,
     DeletedAtMixin,
     TimestampMixin,
 )
 
 
-class Application(TimestampMixin, DeletedAtMixin, Base):
+class Application(CardinalBase, TimestampMixin, DeletedAtMixin):
     """Application model class.
     """
     # pylint: disable=too-many-ancestors

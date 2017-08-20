@@ -7,7 +7,7 @@ from peewee import (
 )
 
 from .base import (
-    Base,
+    CardinalBase,
     EnumField,
     DeletedAtMixin,
     KeyMixin,
@@ -20,7 +20,7 @@ from .application import Application
 from .publication import Publication
 
 
-class Project(TimestampMixin, DeletedAtMixin, KeyMixin, Base):
+class Project(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
     """Project model class.
     """
     # pylint: disable=too-many-ancestors

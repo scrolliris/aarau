@@ -7,7 +7,7 @@ from peewee import (
 )
 
 from .base import (
-    Base,
+    CardinalBase,
     EnumField,
     CodeMixin,
     DeletedAtMixin,
@@ -17,7 +17,7 @@ from .base import (
 from .application import Application
 
 
-class Page(TimestampMixin, DeletedAtMixin, CodeMixin, Base):
+class Page(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
     """Page model class.
     """
     # pylint: disable=too-many-ancestors

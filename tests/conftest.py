@@ -84,9 +84,12 @@ def settings(raw_settings, resolve_settings):
 def db(settings):
     """Returns initialized db instance.
     """
-    from aarau.models import init_db
+    from aarau.models import DB, init_db
 
-    return init_db(settings)
+    return DB({
+        'cardinal': init_db(settings, 'cardinal'),
+        'analysis': init_db(settings, 'analysis'),
+    })
 
 
 @pytest.fixture(scope='function')
@@ -111,12 +114,16 @@ def get_mailer():
 def session_helper(db):
     """A helper function for session scope.
     """
-    db.connect()
+    db.cardinal.connect()
+    db.analysis.connect()
 
     yield
 
-    if not db.is_closed():
-        db.close()
+    if not db.cardinal.is_closed():
+        db.cardinal.close()
+
+    if not db.analysis.is_closed():
+        db.analysis.close()
 
 
 @pytest.yield_fixture(autouse=True, scope='module')
@@ -129,7 +136,9 @@ def module_helper(settings, db):
 
     models = sys.modules['aarau.models']
     # pylint: disable=protected-access
-    tables = [getattr(models, m)._meta.db_table for m in models.__all__]
+    tables = [m.db_table for m in
+              [getattr(models, k)._meta for k in models.__all__]
+              if m.database != db['analysis']]
 
     # NOTE:
     # `db.create_tabels` and `ModelClass.create_table` will lost
@@ -146,33 +155,33 @@ def module_helper(settings, db):
             q += ' CASCADE'
 
         for tbl in tables:
-            db.execute_sql(q.format(tbl))
+            db.cardinal.execute_sql(q.format(tbl))
 
     truncate_tables(tables, cascade=True)
 
-    with db.execution_context(with_transaction=True):
+    with db.cardinal.execution_context(with_transaction=True):
         import_data(settings)
 
     yield
 
     truncate_tables(tables, cascade=True)
 
-    if not db.is_closed():
-        db.close()
+    if not db.cardinal.is_closed():
+        db.cardinal.close()
 
 
 @pytest.yield_fixture(autouse=True, scope='function')
 def function_helper(db):
     """A helper function for function scope.
     """
-    with db.execution_context(with_transaction=True):
+    with db.cardinal.execution_context(with_transaction=True):
         yield
 
-        if db.is_closed():
-            db.connect()
+        if db.cardinal.is_closed():
+            db.cardinal.connect()
 
         # to not bring any change into next test case
-        db.rollback()
+        db.cardinal.rollback()
 
 
 # -- View tests

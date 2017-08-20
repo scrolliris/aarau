@@ -7,11 +7,14 @@ from peewee import (
     PrimaryKeyField,
 )
 
-from .base import Base, EnumField, TimestampMixin, TokenizerMixin
+from .base import (
+    CardinalBase,
+    EnumField, TimestampMixin, TokenizerMixin
+)
 from .user import User
 
 
-class UserEmail(TokenizerMixin, TimestampMixin, Base):
+class UserEmail(CardinalBase, TokenizerMixin, TimestampMixin):
     activation_states = ('pending', 'active')
     types = ('primary', 'normal')
 

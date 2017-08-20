@@ -1,4 +1,4 @@
-<%inherit file='../_layout.mako'/>
+<%inherit file='../../_layout.mako'/>
 
 <%block name='title'>
   Site | Project | Scrolliris
@@ -15,7 +15,7 @@
 </%block>
 
 <div id ="project" class="content">
-  <%namespace name='msg' file='../../shared/_message.mako'/>
+  <%namespace name='msg' file='../../../shared/_message.mako'/>
   ${msg.form()}
 
   <div class="grid">
@@ -28,7 +28,7 @@
     <div class="row">
       <div class="column-16">
         <div class="tab menu">
-          <a class="disabled item">Graphs</a>
+          <a class="item" href="${req.route_path('console.site.application.view.result', project_id=project.id, id=site.id, _query={'type': 'application'})}">Results</a>
           <a class="active item">Scripts</a>
           <a class="disabled item" disabled>Badges</a>
         </div>

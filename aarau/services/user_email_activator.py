@@ -15,7 +15,7 @@ class UserEmailActivator(ActivatorMixin):
         This method sends email for activation to user's new email address,
         as side effect.
         """
-        with self.request.db.atomic():
+        with self.request.db.cardinal.atomic():
             self.user_email.user = self.user
             # user_email must be saved once here to get id for token generation
             self.user_email.save()

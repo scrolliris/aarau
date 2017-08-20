@@ -8,20 +8,20 @@ from peewee import (
     PrimaryKeyField,
 )
 
-from aarau.models.base import Base
+from aarau.models.base import CardinalBase
 
 
-class Classification(Base):
+class Classification(CardinalBase):
     class Meta:
         db_table = 'classifications'
 
 
-class License(Base):
+class License(CardinalBase):
     class Meta:
         db_table = 'licenses'
 
 
-class Publication(Base):
+class Publication(CardinalBase):
     id = PrimaryKeyField()
     classification = ForeignKeyField(
         rel_model=Classification, db_column='classification_id', to_field='id',

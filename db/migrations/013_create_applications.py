@@ -7,10 +7,10 @@ from peewee import (
     PrimaryKeyField,
 )
 
-from aarau.models.base import Base
+from aarau.models.base import CardinalBase
 
 
-class Application(Base):
+class Application(CardinalBase):
     id = PrimaryKeyField()
     name = CharField(max_length=128, null=False)
     description = CharField(max_length=255, null=True)

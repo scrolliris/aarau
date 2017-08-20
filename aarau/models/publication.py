@@ -7,7 +7,7 @@ from peewee import (
 )
 
 from .base import (
-    Base,
+    CardinalBase,
     DeletedAtMixin,
     TimestampMixin,
 )
@@ -16,7 +16,7 @@ from .license import License
 from .classification import Classification
 
 
-class Publication(TimestampMixin, DeletedAtMixin, Base):
+class Publication(CardinalBase, TimestampMixin, DeletedAtMixin):
     """Publication model class.
     """
     # pylint: disable=too-many-ancestors

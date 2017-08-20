@@ -5,13 +5,16 @@ from peewee import (
     PrimaryKeyField,
 )
 
-from .base import Base, EnumField, TimestampMixin
+from .base import (
+    CardinalBase,
+    EnumField, TimestampMixin
+)
 
 from .article import Article
 from .user import User
 
 
-class Contribution(TimestampMixin, Base):
+class Contribution(CardinalBase, TimestampMixin):
     """Contribution model class.
     """
     # pylint: disable=too-few-public-methods

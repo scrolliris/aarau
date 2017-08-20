@@ -1,13 +1,13 @@
 ---
 users:
   - name: Yasuhiro Asaka
-    email: yasuhiro.asaka@grauwoelfchen.net
+    email: yasuhiro.asaka@lupine-software.com
     username: yasuhiro
-    password: Yasuh1r0
+    password: Passw0rd
     activation_state: active
 
   - name: Misaki Asaka
-    email: misaki.asaka@grauwoelfchen.net
+    email: misaki.asaka@lupine-software.com
     username: misaki
-    password: M1sak1
+    password: Passw0rd
     activation_state: active

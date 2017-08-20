@@ -8,15 +8,15 @@ from peewee import (
     PrimaryKeyField,
 )
 
-from aarau.models.base import Base, EnumField
+from aarau.models.base import CardinalBase, EnumField
 
 
-class User(Base):
+class User(CardinalBase):
     class Meta:
         db_table = 'users'
 
 
-class UserEmail(Base):
+class UserEmail(CardinalBase):
     activation_states = ('pending', 'active')
     types = ('primary', 'normal')
 

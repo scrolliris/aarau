@@ -11,7 +11,7 @@ from peewee import (
 from playhouse.signals import pre_save
 
 from .base import (
-    Base,
+    CardinalBase,
     EnumField,
     CodeMixin,
     DeletedAtMixin,
@@ -23,7 +23,7 @@ from .license import License
 from .publication import Publication
 
 
-class Article(TimestampMixin, DeletedAtMixin, CodeMixin, Base):
+class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
     """Article model class.
     """
     # pylint: disable=too-many-ancestors

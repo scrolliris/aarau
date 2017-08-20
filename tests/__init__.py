@@ -12,7 +12,8 @@ def test_vars():
         'DOMAIN',
         'ENV',
         # application
-        'DATABASE_URL',
+        'DATABASE_CARDINAL_URL',
+        'DATABASE_ANALYSIS_URL',
         'QUEUE_URL',
         'CACHE_URL',
         'CSRF_TRUSTED_ORIGINS',

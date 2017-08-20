@@ -5,12 +5,12 @@ from ..mailers.user_mailer import UserMailer
 
 
 @contextmanager
-def _db():
+def _db(db_kind):
     from .. import get_settings
     from ..models import init_db
 
     settings = get_settings()
-    db = init_db(settings)
+    db = init_db(settings, db_kind)
 
     if db.is_closed():
         db.connect()
@@ -31,7 +31,7 @@ class SendEmailTask(worker.Task):
 @worker.task(base=SendEmailTask, autoretry_for=(Exception,),
              retry_kwargs={'max_retries': 3})
 def send_account_activation_email(user_email_id):
-    with _db() as db, db.atomic():
+    with _db('cardinal') as db, db.atomic():
         from ..models.user_email import UserEmail
 
         user_email = UserEmail.select().where(
@@ -44,7 +44,7 @@ def send_account_activation_email(user_email_id):
 @worker.task(base=SendEmailTask, autoretry_for=(Exception,),
              retry_kwargs={'max_retries': 3})
 def send_email_activation_email(user_email_id):
-    with _db() as db, db.atomic():
+    with _db('cardinal') as db, db.atomic():
         from ..models.user_email import UserEmail
 
         user_email = UserEmail.select().where(
@@ -59,7 +59,7 @@ def send_email_activation_email(user_email_id):
 def send_reset_password_email(user_id):
     from datetime import datetime
 
-    with _db() as db, db.atomic():
+    with _db('cardinal') as db, db.atomic():
         from ..models.user import User
 
         user = User.select().where(User.id == user_id).get()

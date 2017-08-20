@@ -90,9 +90,12 @@ def includeme(config):
 
         c.add_route('console.site.new',
             '/project/{project_id:\d+}/site/new')
-        c.add_route('console.site.view',
-            '/project/{project_id:\d+}/site/{id:\d+}')
-        c.add_route('console.site.edit',
+        # application
+        c.add_route('console.site.application.view.result',
+            '/project/{project_id:\d+}/site/{id:\d+}/result')
+        c.add_route('console.site.application.view.script',
+            '/project/{project_id:\d+}/site/{id:\d+}/script')
+        c.add_route('console.site.application.edit',
             '/project/{project_id:\d+}/site/{id:\d+}/edit')
 
 

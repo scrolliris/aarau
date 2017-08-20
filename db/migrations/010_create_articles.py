@@ -8,20 +8,20 @@ from peewee import (
     PrimaryKeyField,
 )
 
-from aarau.models.base import Base, EnumField
+from aarau.models.base import CardinalBase, EnumField
 
 
-class Publication(Base):
+class Publication(CardinalBase):
     class Meta:
         db_table = 'publications'
 
 
-class License(Base):
+class License(CardinalBase):
     class Meta:
         db_table = 'licenses'
 
 
-class Article(Base):
+class Article(CardinalBase):
     scopes = ('public', 'private')
     progress_states = (
         'draft', 'wip', 'ready', 'accepted', 'scheduled', 'published',

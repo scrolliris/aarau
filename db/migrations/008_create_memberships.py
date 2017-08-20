@@ -7,20 +7,20 @@ from peewee import (
     PrimaryKeyField,
 )
 
-from aarau.models.base import Base, EnumField
+from aarau.models.base import CardinalBase, EnumField
 
 
-class User(Base):
+class User(CardinalBase):
     class Meta:
         db_table = 'users'
 
 
-class Project(Base):
+class Project(CardinalBase):
     class Meta:
         db_table = 'projects'
 
 
-class Membership(Base):
+class Membership(CardinalBase):
     roles = ('primary_owner', 'owner', 'member')
 
     id = PrimaryKeyField()

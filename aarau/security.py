@@ -15,7 +15,7 @@ def current_user(req):
     user_id = req.unauthenticated_userid
     if user_id is not None:
         try:
-            with req.db.atomic():
+            with req.db.cardinal.atomic():
                 user = User.select().where(
                     User.id == user_id,
                     User.activation_state == 'active').get()

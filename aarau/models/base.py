@@ -8,6 +8,8 @@ import uuid
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from peewee import Field, SQL, DateTimeField
 from playhouse.signals import Model, pre_save, pre_delete
+from playhouse.read_slave import ReadSlaveModel
+from psycopg2.extras import NumericRange
 from pyramid.decorator import reify
 
 # pylint: disable=import-self
@@ -63,14 +65,39 @@ class EnumField(Field):
         return SQL(self.__ddl__column_name__())
 
 
-class Base(Model):
-    """ Base model class
+class NumericRangeField(Field):
+    # pylint: disable=no-self-use
+    """Range type field definition for numeric value.
+    """
+    db_field = 'numrange'
+
+    def get_column_type(self):
+        """Returns column type name.
+        """
+        return 'numrange'
+
+    def db_value(self, value):
+        """Returns value for database
+        """
+        if isinstance(value, (list, tuple)) and len(value) == 2:
+            return NumericRange(lower=float(value[0]), upper=float(value[1]),
+                                bounds='[]', empty=False)
+        return value
+
+    def python_value(self, value):
+        """Returns value from database
+        """
+        return value
+
+
+class CardinalBase(Model):
+    """Main base model class
     """
     class Meta:
         # pylint: disable=too-few-public-methods
         """ The meta class
         """
-        database = db
+        database = db.cardinal
 
     @classmethod
     def get_by_id(cls, model_id):
@@ -103,7 +130,16 @@ class Base(Model):
         return newer_self
 
 
-class TimestampMixin(Base):
+class AnalysisBase(ReadSlaveModel):
+    """Analysis base model class. (read only)
+    """
+    class Meta:
+        database = db.analysis
+        # FIXME: use actual slave
+        read_slaves = [db.analysis]
+
+
+class TimestampMixin(Model):
     """ Adds timestamp fields as mixin
     """
     created_at = DateTimeField(null=False, default=datetime.utcnow)
@@ -118,7 +154,7 @@ def before_save_timestamp_mixin(model_class, instance, created):
     instance.updated_at = datetime.utcnow()
 
 
-class DeletedAtMixin(Base):
+class DeletedAtMixin(Model):
     """ Adds a deleted_at field as mixin
     """
     deleted_at = DateTimeField(null=True)
@@ -136,7 +172,7 @@ def before_delete_deleted_at_mixin(model_class, instance):
     instance.deleted_at = datetime.utcnow()
 
 
-class TokenizerMixin(Base):
+class TokenizerMixin(object):
     """ Adds token fiels and utilities for model mixed TokenizerMixin
     """
     @reify
@@ -169,7 +205,7 @@ class TokenizerMixin(Base):
             return {}
 
 
-class CodeMixin(Base):
+class CodeMixin(object):
     """ Adds utility methods to treat code field for model mixed CodeMixin
     """
     @classmethod
@@ -194,7 +230,7 @@ class CodeMixin(Base):
         return code
 
 
-class KeyMixin(Base):
+class KeyMixin(object):
     """The utility mixin to treat key fields for model.
     """
     @classmethod

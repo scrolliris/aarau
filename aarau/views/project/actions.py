@@ -32,7 +32,7 @@ def project_new(req):
     if 'submit' in req.POST:
         _ = req.translate
         if form.validate():
-            with req.db.atomic():
+            with req.db.cardinal.atomic():
                 project = Project(
                     name=form.name.data,
                     namespace=form.namespace.data,

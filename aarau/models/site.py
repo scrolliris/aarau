@@ -11,7 +11,7 @@ from peewee import (
 )
 
 from .base import (
-    Base,
+    CardinalBase,
     EnumField,
     DeletedAtMixin,
     KeyMixin,
@@ -24,7 +24,7 @@ from .publication import Publication
 DeferredProject = DeferredRelation()  # pylint: disable=invalid-name
 
 
-class Site(TimestampMixin, DeletedAtMixin, KeyMixin, Base):
+class Site(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
     """Site model class.
     """
     # pylint: disable=too-many-ancestors

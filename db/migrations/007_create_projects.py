@@ -8,15 +8,15 @@ from peewee import (
     PrimaryKeyField,
 )
 
-from aarau.models.base import Base, EnumField
+from aarau.models.base import CardinalBase, EnumField
 
 
-class Plan(Base):
+class Plan(CardinalBase):
     class Meta:
         db_table = 'plans'
 
 
-class Project(Base):
+class Project(CardinalBase):
     billing_states = ('none', 'pending', 'processing', 'valid')
 
     id = PrimaryKeyField()

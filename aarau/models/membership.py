@@ -5,13 +5,16 @@ from peewee import (
     PrimaryKeyField,
 )
 
-from .base import Base, EnumField, TimestampMixin
+from .base import (
+    CardinalBase,
+    EnumField, TimestampMixin
+)
 
 from .user import User
 from .project import Project
 
 
-class Membership(TimestampMixin, Base):
+class Membership(CardinalBase, TimestampMixin):
     """Membership model class.
     """
     # pylint: disable=too-many-ancestors

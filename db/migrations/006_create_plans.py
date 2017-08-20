@@ -9,18 +9,18 @@ from peewee import (
     SmallIntegerField,
 )
 
-from aarau.models.base import Base
+from aarau.models.base import CardinalBase
 
 
-class Plan(Base):
+class Plan(CardinalBase):
     id = PrimaryKeyField()
     payment_type_id = SmallIntegerField(null=False, index=True)
     name = CharField(max_length=32, null=False)
     price = FloatField(null=False, default=0.00)
     description = CharField(max_length=64, null=False)
 
-    created_at = DateTimeField(null=False, default=datetime.utcnow)
-    updated_at = DateTimeField(null=False, default=datetime.utcnow)
+    created_at = DateTimeField(null=True, default=datetime.utcnow)
+    updated_at = DateTimeField(null=True, default=datetime.utcnow)
 
     class Meta:
         db_table = 'plans'

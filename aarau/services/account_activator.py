@@ -15,7 +15,7 @@ class AccountActivator(ActivatorMixin):
         This method sends email for signup activation to new user, as side
         effect.
         """
-        with self.request.db.atomic():
+        with self.request.db.cardinal.atomic():
             # self.user is not saved yet
             self.user.save()
 
@@ -30,7 +30,7 @@ class AccountActivator(ActivatorMixin):
     def activate(self):
         """Activates user using activation token.
         """
-        with self.request.db.atomic():
+        with self.request.db.cardinal.atomic():
             result = self.user_email.activate(self.activation_token)
 
             self.user = self.user_email.user

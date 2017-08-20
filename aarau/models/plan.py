@@ -8,13 +8,13 @@ from peewee import (
 )
 
 from .base import (
-    Base,
+    CardinalBase,
     TimestampMixin,
     classproperty
 )
 
 
-class Plan(TimestampMixin, Base):
+class Plan(CardinalBase, TimestampMixin):
     """Plan model class.
     """
     # pylint: disable=too-many-ancestors

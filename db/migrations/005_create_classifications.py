@@ -8,10 +8,10 @@ from peewee import (
     PrimaryKeyField,
 )
 
-from aarau.models.base import Base
+from aarau.models.base import CardinalBase
 
 
-class Classification(Base):
+class Classification(CardinalBase):
     id = PrimaryKeyField()
     parent = ForeignKeyField(
         rel_model='self', db_column='parent_id', to_field='id',

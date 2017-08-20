@@ -5,10 +5,10 @@ from peewee import (
     PrimaryKeyField,
 )
 
-from .base import Base, TimestampMixin
+from .base import CardinalBase, TimestampMixin
 
 
-class License(TimestampMixin, Base):
+class License(CardinalBase, TimestampMixin):
     """License model class.
     """
     # pylint: disable=too-many-ancestors

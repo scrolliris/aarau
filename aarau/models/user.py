@@ -9,10 +9,10 @@ from peewee import (
     PrimaryKeyField,
 )
 
-from .base import Base, EnumField, TimestampMixin, TokenizerMixin
+from .base import CardinalBase, EnumField, TimestampMixin, TokenizerMixin
 
 
-class User(TokenizerMixin, TimestampMixin, Base):
+class User(CardinalBase, TokenizerMixin, TimestampMixin):
     """User model class.
     """
     # pylint: disable=too-many-ancestors

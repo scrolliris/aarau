@@ -44,11 +44,11 @@ class DbCli(object):
         self.migrate_dir = os.path.join(os.getcwd(), 'db', 'migrations')
 
     @contextmanager
-    def _raw_db(self):
+    def _raw_db(self, db_kind):
         from copy import copy
         from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
-        with self._db() as db:
+        with self._db(db_kind) as db:
             datname = copy(db.database)
             db.database = 'template1'
             conn = db.get_conn()
@@ -58,12 +58,12 @@ class DbCli(object):
             yield (db, datname)
 
     @contextmanager
-    def _db(self):
+    def _db(self, db_kind):
         from aarau.models import db, init_db
 
-        init_db(self.settings)
+        db[db_kind] = init_db(self.settings, db_kind)
 
-        yield db
+        yield db[db_kind]
 
     def help(self):  # pylint: disable=no-self-use
         """Prints usage.
@@ -74,7 +74,7 @@ class DbCli(object):
     def init(self):
         """Initializes database.
         """
-        with self._raw_db() as (db, datname):
+        with self._raw_db('cardinal') as (db, datname):
             q = "SELECT 1 FROM pg_database WHERE datname='{}'".format(datname)
             if db.execute_sql(q).rowcount != 0:
                 sys.exit(0)
@@ -91,7 +91,7 @@ class DbCli(object):
         """
         from peewee_migrate import Router
 
-        with self._db() as db, db.atomic():
+        with self._db('cardinal') as db, db.atomic():
             router = Router(db, migrate_table=self.migrate_table,
                             migrate_dir=self.migrate_dir)
             router.run()
@@ -101,7 +101,7 @@ class DbCli(object):
         """
         from peewee_migrate import Router
 
-        with self._db() as db, db.atomic():
+        with self._db('cardinal') as db, db.atomic():
             router = Router(db, migrate_table=self.migrate_table,
                             migrate_dir=self.migrate_dir)
             if router.done:
@@ -110,7 +110,7 @@ class DbCli(object):
     def seed(self):
         """Imports db seed records for development.
         """
-        with self._db() as db, db.atomic():
+        with self._db('cardinal') as db, db.atomic():
             with yaml_loader(self.settings) as loader:
                 def load_data(klass, attributes):
                     """Loads data into database.
@@ -152,7 +152,7 @@ class DbCli(object):
     def drop(self):
         """Drops database.
         """
-        with self._raw_db() as (db, datname):
+        with self._raw_db('cardinal') as (db, datname):
             q = "SELECT 1 FROM pg_database WHERE datname='{}'".format(datname)
             if db.execute_sql(q).rowcount == 0:
                 sys.exit(0)

@@ -7,10 +7,10 @@ from peewee import (
     PrimaryKeyField,
 )
 
-from aarau.models.base import Base
+from aarau.models.base import CardinalBase
 
 
-class License(Base):
+class License(CardinalBase):
     id = PrimaryKeyField()
     identifier = CharField(max_length=32, null=False, unique=True, index=True)
     fullname = CharField(max_length=64, null=False)

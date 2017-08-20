@@ -7,12 +7,12 @@ from peewee import (
 )
 
 from .base import (
-    Base,
+    CardinalBase,
     TimestampMixin,
 )
 
 
-class Classification(TimestampMixin, Base):
+class Classification(CardinalBase, TimestampMixin):
     """Classification model class.
     """
     # pylint: disable=too-many-ancestors

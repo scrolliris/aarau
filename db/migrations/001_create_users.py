@@ -7,17 +7,17 @@ from peewee import (
     PrimaryKeyField,
 )
 
-from aarau.models.base import Base, EnumField
+from aarau.models.base import CardinalBase, EnumField
 
 
-class User(Base):
+class User(CardinalBase):
     activation_states = ('pending', 'active')
 
     id = PrimaryKeyField()
     name = CharField(max_length=64, null=True)
     username = CharField(max_length=32, null=True, index=True)
     email = CharField(max_length=64, null=False, unique=True, index=True)
-    password = CharField(max_length=255, null=False)
+    password = CharField(max_length=255)
 
     activation_state = EnumField(
         choices=activation_states,

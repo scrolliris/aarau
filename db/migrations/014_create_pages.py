@@ -8,15 +8,15 @@ from peewee import (
     PrimaryKeyField,
 )
 
-from aarau.models.base import Base, EnumField
+from aarau.models.base import CardinalBase, EnumField
 
 
-class Application(Base):
+class Application(CardinalBase):
     class Meta:
         db_table = 'applications'
 
 
-class Page(Base):
+class Page(CardinalBase):
     scopes = ('public', 'private')
 
     id = PrimaryKeyField()

@@ -8,25 +8,25 @@ def login_required(f):
     @wraps(f)
     def authentication_user(*args, **kwargs):
         # TODO: check this is valid way
-        request = args[-1]
-        user = request.user
+        req = args[-1]
+        user = req.user
         if not user:
             raise HTTPForbidden
         # TODO check permission
         # TODO check joined_projects (reduce a query)
-        if request.subdomain == 'console' and not user.projects:
+        if req.subdomain == 'console' and not user.projects:
             raise HTTPForbidden
-        return f(request, **kwargs)
+        return f(req, **kwargs)
     return authentication_user
 
 
 @forbidden_view_config()
-def forbidden_redirect(request):
-    _ = request.translate
-    if request.authenticated_userid:
+def forbidden_redirect(req):
+    _ = req.translate
+    if req.authenticated_userid:
         # return Response('forbidden')
-        return HTTPFound(location=request.route_url('top', namespace=None))
+        return HTTPFound(location=req.route_url('top', namespace=None))
     else:
-        request.session.flash(_('login.needed'),
-                              queue='error', allow_duplicate=False)
-        return HTTPFound(location=request.route_url('login', namespace=None))
+        req.session.flash(_('login.needed'),
+                          queue='error', allow_duplicate=False)
+        return HTTPFound(location=req.route_url('login', namespace=None))

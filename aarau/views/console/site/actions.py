@@ -8,6 +8,7 @@ from aarau.models import (
     Application,
     Project,
     Membership,
+    ReadingResult,
     User,
     Site,
 )
@@ -32,7 +33,7 @@ def _fetch_project(project_id, user_id):
 
 
 @view_config(route_name='console.site.new',
-             renderer=tpl('new.application.mako'))
+             renderer=tpl('application/new.mako'))
 @login_required
 def application_site_new(req):
     """Renders a form or save new application site.
@@ -46,7 +47,7 @@ def application_site_new(req):
     if 'submit' in req.POST:
         _ = req.translate
         if form.validate():
-            with req.db.atomic():
+            with req.db.cardinal.atomic():
                 application = Application(
                     name=form.application.form.name.data,
                     description=form.application.form.description.data)
@@ -77,11 +78,35 @@ def application_site_new(req):
     return dict(form=form, project=project)
 
 
-@view_config(route_name='console.site.view',
-             renderer=tpl('view.application.mako'))
+@view_config(route_name='console.site.application.view.result',
+             renderer=tpl('application/view.result.mako'))
 @login_required
-def application_site_view(req):
-    """Renders a site by id.
+def application_site_view_result(req):
+    """Renders a site result by id.
+    """
+    if 'type' not in req.params or req.params['type'] != 'application':
+        raise HTTPNotFound
+
+    project_id = req.matchdict['project_id']
+    site_id = req.matchdict['id']
+
+    project = _fetch_project(project_id, req.user.id)
+    site = Site.by_type(req.params['type']).where(
+        Site.id == site_id,
+        Site.project_id == project_id).get()  # pylint: disable=no-member
+
+    results = ReadingResult.fetch_data_by_path(
+        project.access_key_id, site_id)
+
+    return dict(project=project, site=site,
+                application=site.application, results=results)
+
+
+@view_config(route_name='console.site.application.view.script',
+             renderer=tpl('application/view.script.mako'))
+@login_required
+def application_site_view_script(req):
+    """Renders a site script by id.
     """
     if 'type' not in req.params or req.params['type'] != 'application':
         raise HTTPNotFound
