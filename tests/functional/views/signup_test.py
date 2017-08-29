@@ -43,7 +43,8 @@ def test_signup(users, dummy_app):
     form['name'] = user['name']
     form['username'] = user['username']
     form['password'] = user['password']
-    res = form.submit('submit', value='Create an account')
+    # FIXME: locale
+    res = form.submit('submit', value='signup.submit.create')
 
     assert '302 Found' == res.status
     res = res.follow(status=200)
