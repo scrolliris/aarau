@@ -20,6 +20,7 @@ requires = [
     'colorlog',
     'google-cloud-datastore',
     'itsdangerous',
+    'MarkupSafe',
     'Paste',
     'PasteScript',
     'peewee',
