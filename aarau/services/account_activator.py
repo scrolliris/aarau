@@ -1,7 +1,7 @@
 """User account activation service.
 """
 
-from aarau.services.mixins import ActivatorMixin
+from aarau.services.mixin import ActivatorMixin
 from aarau.tasks.send_email import send_account_activation_email
 
 

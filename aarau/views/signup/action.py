@@ -6,7 +6,7 @@ from pyramid.security import remember
 from pyramid.view import view_config
 
 from aarau.models.user import User
-from aarau.services.interfaces import IActivator
+from aarau.services.interface import IActivator
 from aarau.views import tpl
 from aarau.views.signup.form import signup_form_factory
 

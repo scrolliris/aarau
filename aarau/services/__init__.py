@@ -1,7 +1,7 @@
 """The service package.
 """
 
-from aarau.services.interfaces import IActivator, IReplicator
+from aarau.services.interface import IActivator, IReplicator
 from aarau.services.account_activator import AccountActivator
 from aarau.services.site_replicator import SiteReplicator
 from aarau.services.user_email_activator import UserEmailActivator

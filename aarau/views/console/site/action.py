@@ -12,7 +12,7 @@ from aarau.models import (
     User,
     Site,
 )
-from aarau.services.interfaces import IReplicator
+from aarau.services.interface import IReplicator
 
 from .form import (
     edit_application_site_form,

@@ -5,7 +5,7 @@ from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 
 from aarau.models.user_email import UserEmail
-from aarau.services.interfaces import IActivator
+from aarau.services.interface import IActivator
 from aarau.views import tpl
 from aarau.views.filters import login_required
 from aarau.views.settings.form import (
