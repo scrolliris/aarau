@@ -20,7 +20,7 @@ def setup(request, config, mailer_outbox):
 
 def test_signup_with_valid_credentials(users, dummy_request):
     from webob.multidict import MultiDict
-    from aarau.views.signup.actions import signup
+    from aarau.views.signup.action import signup
 
     user = {  # The Egg Twins
         'name': 'Leo The Egg Twins',
