@@ -5,7 +5,7 @@ from wtforms import (
 )
 from wtforms import validators as v
 
-from ..forms import SecureForm, build_form
+from aarau.views.form import SecureForm, build_form
 
 
 class ResetPasswordRequestForm(SecureForm):

@@ -2,9 +2,10 @@ from datetime import datetime
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 
-from ...models.user import User
-from ...tasks.send_email import send_reset_password_email
-from .forms import (
+from aarau.models.user import User
+from aarau.tasks.send_email import send_reset_password_email
+
+from .form import (
     reset_password_request_form_factory,
     reset_password_form_factory,
 )

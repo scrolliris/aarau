@@ -6,8 +6,12 @@ from wtforms import (
 )
 from wtforms import ValidationError, validators as v
 
-from ..forms import PASSWORD_PATTERN
-from ..forms import SecureForm, FailureForm, build_form
+from aarau.views.form import (
+    SecureForm,
+    FailureForm,
+    build_form,
+    PASSWORD_PATTERN,
+)
 
 
 class ChangePasswordForm(SecureForm):

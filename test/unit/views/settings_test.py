@@ -9,7 +9,7 @@ def setup(config, mailer_outbox):
 
 
 def assert_user_email_forms(user_emails, email_forms):
-    from aarau.views.settings.forms import (
+    from aarau.views.settings.form import (
         FailureForm,
         ChangeEmailForm,
         DeleteEmailForm,
@@ -38,7 +38,7 @@ def test_settings_account(users, dummy_request):
 
 def test_settings_email_with_empty_params(users, dummy_request):
     from aarau.views.settings.action import settings_email
-    from aarau.views.settings.forms import NewEmailForm
+    from aarau.views.settings.form import NewEmailForm
     from webob.multidict import MultiDict
 
     user = users['oswald']
@@ -54,7 +54,7 @@ def test_settings_email_with_empty_params(users, dummy_request):
 
 def test_settings_email_with_missing_csrf(users, dummy_request):
     from aarau.views.settings.action import settings_email
-    from aarau.views.settings.forms import NewEmailForm
+    from aarau.views.settings.form import NewEmailForm
     from webob.multidict import MultiDict
 
     user = users['oswald']
@@ -75,7 +75,7 @@ def test_settings_email_with_missing_csrf(users, dummy_request):
 
 def test_settings_email_with_invalid_csrf(users, dummy_request):
     from aarau.views.settings.action import settings_email
-    from aarau.views.settings.forms import NewEmailForm
+    from aarau.views.settings.form import NewEmailForm
     from webob.multidict import MultiDict
 
     user = users['oswald']
@@ -116,7 +116,7 @@ def test_settings_email_with_pending_email(
 
 def test_settings_email_with_invalid_email(users, dummy_request):
     from aarau.views.settings.action import settings_email
-    from aarau.views.settings.forms import NewEmailForm
+    from aarau.views.settings.form import NewEmailForm
     from webob.multidict import MultiDict
 
     user = users['oswald']
@@ -291,7 +291,7 @@ def test_settings_email_delete_with_valid_email(
 
 def test_settings_password_with_empty_params(users, dummy_request):
     from aarau.views.settings.action import settings_password
-    from aarau.views.settings.forms import ChangePasswordForm
+    from aarau.views.settings.form import ChangePasswordForm
     from webob.multidict import MultiDict
 
     dummy_request.user = users['oswald']
@@ -303,7 +303,7 @@ def test_settings_password_with_empty_params(users, dummy_request):
 
 def test_settings_password_with_invalid_csrf(users, dummy_request):
     from aarau.views.settings.action import settings_password
-    from aarau.views.settings.forms import ChangePasswordForm
+    from aarau.views.settings.form import ChangePasswordForm
     from webob.multidict import MultiDict
 
     dummy_request.user = users['oswald']
@@ -324,7 +324,7 @@ def test_settings_password_with_invalid_csrf(users, dummy_request):
 def test_settings_password_with_wrong_current_password(
         users, dummy_request):
     from aarau.views.settings.action import settings_password
-    from aarau.views.settings.forms import ChangePasswordForm
+    from aarau.views.settings.form import ChangePasswordForm
     from webob.multidict import MultiDict
 
     dummy_request.user = users['oswald']
@@ -345,7 +345,7 @@ def test_settings_password_with_wrong_current_password(
 def test_settings_password_with_invalid_new_password(
         users, dummy_request):
     from aarau.views.settings.action import settings_password
-    from aarau.views.settings.forms import ChangePasswordForm
+    from aarau.views.settings.form import ChangePasswordForm
     from webob.multidict import MultiDict
 
     dummy_request.user = users['oswald']
@@ -368,7 +368,7 @@ def test_settings_password_with_invalid_new_password(
 def test_settings_password_with_invalid_new_password_confirmation(
         users, dummy_request):
     from aarau.views.settings.action import settings_password
-    from aarau.views.settings.forms import ChangePasswordForm
+    from aarau.views.settings.form import ChangePasswordForm
     from webob.multidict import MultiDict
 
     dummy_request.user = users['oswald']

@@ -8,7 +8,7 @@ from aarau.models.user_email import UserEmail
 from aarau.services.interfaces import IActivator
 from aarau.views import tpl
 from aarau.views.filters import login_required
-from aarau.views.settings.forms import (
+from aarau.views.settings.form import (
     change_password_form_factory,
     new_email_form_factory,
     delete_email_form_factory,

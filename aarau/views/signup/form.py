@@ -6,8 +6,13 @@ from wtforms import (
 from wtforms import validators as v
 from wtforms import ValidationError
 
-from ..forms import USERNAME_PATTERN, PASSWORD_PATTERN
-from ..forms import _, SecureForm, build_form
+from aarau.views.form import (
+    USERNAME_PATTERN,
+    PASSWORD_PATTERN,
+    _,
+    SecureForm,
+    build_form,
+)
 
 
 class SignupForm(SecureForm):

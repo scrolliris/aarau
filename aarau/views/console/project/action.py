@@ -10,7 +10,8 @@ from aarau.models import (
     Project,
     User
 )
-from .forms import edit_project_form, new_project_form
+
+from .form import edit_project_form, new_project_form
 
 
 def tpl(path, resource='project'):

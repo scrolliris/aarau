@@ -9,7 +9,8 @@ from aarau.models import (
     Plan,
     Project,
 )
-from .forms import new_project_form
+
+from .form import new_project_form
 
 
 def tpl(path, resource='project'):

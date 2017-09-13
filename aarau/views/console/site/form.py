@@ -7,7 +7,7 @@ from wtforms import (
 from wtforms import validators as v, ValidationError
 from wtforms.form import Form
 
-from aarau.views.forms import SecureForm, build_form
+from aarau.views.form import SecureForm, build_form
 
 
 class SiteFormBaseMixin(object):

@@ -1,15 +1,13 @@
-"""Forms and factory methods for console view actions
+"""Forms and factory methods for project view actions
 """
 from wtforms import (
-    SelectField,
     StringField,
     SubmitField,
     TextAreaField,
 )
 from wtforms import validators as v, ValidationError
 
-from aarau.models import Plan
-from aarau.views.forms import SecureForm, build_form
+from aarau.views.form import SecureForm, build_form
 
 
 NAMESPACE_PATTERN = '\A[a-z][a-z0-9\_\-]+[a-z0-9]\Z'
@@ -45,18 +43,3 @@ def new_project_form(req):
                 raise ValidationError('Namespace is already taken.')
 
     return build_form(ANewProjectForm, req)
-
-
-class EditProjectForm(ProjectFormBaseMixin, SecureForm):
-    plan = SelectField('Plan', [
-        v.Required(),
-    ], choices=Plan.as_choices)
-
-    submit = SubmitField('Update')
-
-
-def edit_project_form(req, project):
-    class AEditProjectForm(EditProjectForm):
-        pass
-
-    return build_form(AEditProjectForm, req, project)

@@ -8,7 +8,7 @@ from pyramid.view import view_config
 from aarau.models.user import User
 from aarau.services.interfaces import IActivator
 from aarau.views import tpl
-from aarau.views.signup.forms import signup_form_factory
+from aarau.views.signup.form import signup_form_factory
 
 
 @view_config(route_name='signup', request_method=('GET', 'POST'),
