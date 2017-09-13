@@ -15,12 +15,6 @@ cache:
     - apt-cache
     - pip-cache
 
-artifacts:
-  untracked: true
-  paths:
-    - locale
-    - static
-
 # -- stages
 
 check:
@@ -52,6 +46,10 @@ compile:
   script:
     - make clean
     - make catalog
+  artifacts:
+    untracked: true
+    paths:
+      - locale
   except:
     - tags
 
@@ -68,6 +66,10 @@ build:
   script:
     - make clean
     - gulp
+  artifacts:
+    untracked: true
+    paths:
+      - static
   except:
     - tags
 
