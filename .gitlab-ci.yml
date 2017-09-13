@@ -1,7 +1,6 @@
 # https://docs.gitlab.com/ce/ci/yaml/
 stages:
   - check-style
-  - setup-deps
   - compile-catalog
   - build-assets
   - test-code
@@ -15,12 +14,18 @@ cache:
   paths:
     - apt-cache
     - pip-cache
-    - node_modules
+
+artifacts:
+  untracked: true
+  paths:
+    - locale
+    - static
+
+# -- stages
 
 check:
   stage: check-style
   image: python:3.5
-  services:
   variables:
     ENV: development
   before_script:
@@ -33,33 +38,15 @@ check:
   except:
     - tags
 
-setup:
-  stage: setup-deps
+compile:
+  stage: compile-catalog
   image: python:3.5
-  services:
   variables:
     ENV: production
   before_script:
     - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
     - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
-      gettext make
-      gcc zlib1g zlib1g-dev libmemcached11 libmemcached-dev
-    - python --version
-    - pip --version
-    - pip install --upgrade pip setuptools
-  script:
-    - make clean
-    - make setup
-  except:
-    - tags
-
-compile:
-  stage: compile-catalog
-  image: python:3.5
-  services:
-  variables:
-    ENV: production
-  before_script:
+      gettext
     - python --version
     - pip --version
   script:
@@ -71,7 +58,6 @@ compile:
 build:
   stage: build-assets
   image: node:7.10.1
-  services:
   variables:
     NODE_ENV: production
   before_script:
@@ -97,10 +83,14 @@ test:
     POSTGRES_USER: aarau
     POSTGRES_PASSWORD: aarau
   before_script:
+    - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
+    - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
+      gcc zlib1g zlib1g-dev libmemcached11 libmemcached-dev
     - python --version
     - pip --version
   script:
     - make clean
+    - make setup
     - make db-init
     - make db-migrate
     - make coverage
