@@ -3,7 +3,7 @@
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 
-from aarau.views.filters import login_required
+from aarau.views.filter import login_required
 from aarau.models import (
     Application,
     Project,

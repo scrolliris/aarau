@@ -15,7 +15,7 @@ def test_forbidden_redirect_as_logged_in_user(users, dummy_request):
     """Test redirect by forbidden error.
     """
     from pyramid.httpexceptions import HTTPFound
-    from aarau.views.filters import forbidden_redirect
+    from aarau.views.filter import forbidden_redirect
 
     dummy_request.user = users['oswald']
     res = forbidden_redirect(dummy_request)
@@ -29,7 +29,7 @@ def test_forbidden_redirect(dummy_request):
     """Test redirect by forbidden error.
     """
     from pyramid.httpexceptions import HTTPFound
-    from aarau.views.filters import forbidden_redirect
+    from aarau.views.filter import forbidden_redirect
 
     dummy_request.user = None
     res = forbidden_redirect(dummy_request)

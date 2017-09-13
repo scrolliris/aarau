@@ -1,6 +1,6 @@
 from pyramid.view import view_config
 
-from ..filters import login_required
+from aarau.views.filter import login_required
 
 
 @view_config(route_name='console.top',

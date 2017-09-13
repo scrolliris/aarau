@@ -7,7 +7,7 @@ from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from aarau.models.user_email import UserEmail
 from aarau.services.interface import IActivator
 from aarau.views import tpl
-from aarau.views.filters import login_required
+from aarau.views.filter import login_required
 from aarau.views.settings.form import (
     change_password_form_factory,
     new_email_form_factory,

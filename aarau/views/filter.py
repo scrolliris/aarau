@@ -1,3 +1,5 @@
+"""View filter module
+"""
 from functools import wraps
 
 from pyramid.httpexceptions import HTTPFound, HTTPForbidden
