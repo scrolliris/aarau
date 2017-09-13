@@ -1,4 +1,4 @@
-""" Error actions
+"""Error view aciton module
 """
 
 from pyramid.httpexceptions import HTTPMovedPermanently

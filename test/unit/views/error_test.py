@@ -7,7 +7,7 @@ def setup(config):
 
 
 def test_notfound_error(users, dummy_request):
-    from aarau.views.errors import notfound
+    from aarau.views.error import notfound
 
     dummy_request.user = users['oswald']
     res = notfound(dummy_request)
