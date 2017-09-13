@@ -39,6 +39,6 @@ def test_vars():
         'SESSION_PASSWORD',
         'SESSION_COOKIE_DOMAIN',
         # datastore
-        'TEST_DATASTORE_EMULATOR_HOST',
-        'TEST_DATASTORE_PROJECT_ID',
+        'DATASTORE_EMULATOR_HOST',
+        'DATASTORE_PROJECT_ID',
     ]

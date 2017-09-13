@@ -104,10 +104,10 @@ style: | check-style
 .PHONY: style
 
 clean:
-	find . ! -readable -prune \
+	find . ! -readable -prune -o -print \
 	       ! -path "./.git/*" ! -path "./node_modules/*" ! -path "./venv*" \
-	       ! -path "./doc/*"  ! -path "./locale/*" \
-	       ! -path "./build-output*" | \
+	       ! -path "./doc/*"  ! -path "./locale/*" ! -path "./tmp/*" \
+	       ! -path "./lib/*" | \
 	  grep -E "(__pycache__|\.pyc|\.pyo)" | xargs rm -rf
 ifeq (, $(shell which gulp))
 ifneq (test, $(ENV))

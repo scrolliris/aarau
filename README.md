@@ -241,7 +241,7 @@ E.g. Google App Engine
 
 ## Testing
 
-Run unit tests and functional tests.
+Run unit and functional tests.
 See also `.gitlab-ci.yml`.
 
 ```zsh
@@ -260,7 +260,7 @@ See also `.gitlab-ci.yml`.
 
 : run a test case
 (venv) % ENV=test py.test -c config/testing.ini \
-  aarau/tests/unit/views/settings_test.py \
+  aarau/test/unit/views/settings_test.py \
   -k test_view_settings_account -v
 ```
 

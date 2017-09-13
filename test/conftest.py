@@ -1,52 +1,65 @@
-"""Configuration for testing.
+"""Configuration for testing
 """
 # pylint: disable=redefined-outer-name,unused-argument
-from contextlib import contextmanager
 import os
 
 import pytest
 
+from pyramid.config import Configurator
+from pyramid.request import Request
+from pyramid.router import Router
+from webtest.app import TestApp
 
 # NOTE:
 # The request variable in py.test is special context of testing.
 # See http://doc.pytest.org/en/latest/fixture.html#request-context
 
+TEST_DIR = os.path.dirname(__file__)
+INI_FILE = os.path.join(TEST_DIR, '..', 'config', 'testing.ini')
+
+
 # -- Shared fixtures
 
 @pytest.fixture(scope='session')
-def dotenv():
-    """Loads dotenv file.
+def dotenv() -> None:
+    """Loads dotenv file
     """
     from aarau.env import Env
 
     # same as aarau:main
-    dotenv_file = os.path.join(os.getcwd(), '.env')
+    dotenv_file = os.path.join(TEST_DIR, '..', '.env')
     Env.load_dotenv_vars(dotenv_file)
-
     return
 
 
 @pytest.fixture(scope='session')
-def env(dotenv):
-    """Returns env object.
+def env(dotenv) -> dict:
+    """Returns env object
     """
     from aarau.env import Env
+
     return Env()
 
 
 @pytest.fixture(scope='session')
-def raw_settings(dotenv):
-    """Returns raw setting dict.
+def raw_settings(dotenv) -> dict:
+    """Returns raw setting dict
     """
     from pyramid.paster import get_appsettings
 
-    ini_file = os.path.join(os.getcwd(), 'config', 'testing.ini#aarau')
-    return get_appsettings(ini_file)
+    return get_appsettings('{0:s}#{1:s}'.format(INI_FILE, 'aarau'))
 
 
 @pytest.fixture(scope='session')
-def resolve_settings():
-    """Returns resolving function for settings.
+def settings(raw_settings, resolve_settings) -> 'function':
+    """Returns (environ) resolved settings
+    """
+    return resolve_settings(raw_settings)
+
+
+@pytest.fixture(scope='session')
+def resolve_settings() -> 'function':
+    """Returns resolving function for settings
     """
     from aarau import resolve_settings
 
@@ -57,8 +70,8 @@ def resolve_settings():
 
 
 @pytest.fixture(scope='session')
-def extra_environ(env):
-    """Returns extra environ object.
+def extra_environ(env) -> dict:
+    """Returns extra environ object
     """
     domain = env.get('DOMAIN', 'example.org')
 
@@ -74,15 +87,8 @@ def extra_environ(env):
 
 
 @pytest.fixture(scope='session')
-def settings(raw_settings, resolve_settings):
-    """Returns (environ) resolved settings.
-    """
-    return resolve_settings(raw_settings)
-
-
-@pytest.fixture(scope='session')
 def db(settings):
-    """Returns initialized db instance.
+    """Returns initialized db instance
     """
     from aarau.models import DB, init_db
 
@@ -94,7 +100,7 @@ def db(settings):
 
 @pytest.fixture(scope='function')
 def get_mailer():
-    """Returns getting mailer function.
+    """Returns getting mailer function
     """
     def _get_mailer(request_or_registry):
         from pyramid_mailer import get_mailer
@@ -112,7 +118,7 @@ def get_mailer():
 
 @pytest.yield_fixture(autouse=True, scope='session')
 def session_helper(db):
-    """A helper function for session scope.
+    """A helper function for session scope
     """
     db.cardinal.connect()
     db.analysis.connect()
@@ -128,7 +134,7 @@ def session_helper(db):
 
 @pytest.yield_fixture(autouse=True, scope='module')
 def module_helper(settings, db):
-    """A helper function for module scope.
+    """A helper function for module scope
     """
     import sys
 
@@ -148,7 +154,7 @@ def module_helper(settings, db):
     #    db.drop_tables(tables, safe=True)
 
     def truncate_tables(tables, cascade=False):
-        """Truncates database tables.
+        """Truncates database tables
         """
         q = 'TRUNCATE table {0:s}'
         if cascade:
@@ -172,7 +178,7 @@ def module_helper(settings, db):
 
 @pytest.yield_fixture(autouse=True, scope='function')
 def function_helper(db):
-    """A helper function for function scope.
+    """A helper function for function scope
     """
     with db.cardinal.execution_context(with_transaction=True):
         yield
@@ -187,8 +193,8 @@ def function_helper(db):
 # -- View tests
 
 @pytest.fixture(scope='session')
-def config(request, settings):
-    """Returns the testing config.
+def config(request, settings) -> Configurator:
+    """Returns the testing config
     """
     from pyramid import testing
 
@@ -231,7 +237,7 @@ def config(request, settings):
     config.add_subscriber(add_console_renderer_globals, BeforeRender)
 
     def teardown():
-        """The teardown function.
+        """The teardown function
         """
         testing.tearDown()
 
@@ -241,8 +247,8 @@ def config(request, settings):
 
 
 @pytest.fixture(scope='function')
-def dummy_request(db, extra_environ):
-    """Returns Dummy request object.
+def dummy_request(db, extra_environ) -> Request:
+    """Returns Dummy request object
     """
     from pyramid import testing
     from pyramid_services import find_service
@@ -271,7 +277,7 @@ def dummy_request(db, extra_environ):
 
 @pytest.fixture(scope='function')
 def projects():
-    """Returns test projects.
+    """Returns test projects
     """
     from aarau.models.project import Project
 
@@ -280,7 +286,7 @@ def projects():
 
 @pytest.fixture(scope='function')
 def users():
-    """Returns test users.
+    """Returns test users
     """
     from aarau.models.user import User
 
@@ -289,7 +295,7 @@ def users():
 
 @pytest.fixture(scope='function')
 def publications():
-    """Returns test publications.
+    """Returns test publications
     """
     from aarau.models.publication import Publication
 
@@ -298,7 +304,7 @@ def publications():
 
 @pytest.fixture(scope='function')
 def articles():
-    """Returns test articles.
+    """Returns test articles
     """
     from aarau.models.article import Article
 
@@ -307,7 +313,7 @@ def articles():
 
 @pytest.fixture(scope='function')
 def plans():
-    """Returns test plans.
+    """Returns test plans
     """
     from aarau.models.plan import Plan
 
@@ -316,7 +322,7 @@ def plans():
 
 @pytest.fixture(scope='function')
 def mailer_outbox(dummy_request, get_mailer):
-    """Returns dummy mailbox for out going emails.
+    """Returns dummy mailbox for out going emails
     """
     return get_mailer(dummy_request).outbox
 
@@ -324,30 +330,30 @@ def mailer_outbox(dummy_request, get_mailer):
 # -- Functional tests
 
 @pytest.fixture(scope='session')
-def _app(raw_settings):
-    """Returns the internal app of app for testing.
+def _app(raw_settings) -> Router:
+    """Returns the internal app of app for testing
     """
     from aarau import main
+
     global_config = {
-        '__file__': raw_settings['__file__']
+        '__file__': INI_FILE
     }
-    del raw_settings['__file__']
+    if '__file__' in raw_settings:
+        del raw_settings['__file__']
 
     return main(global_config, **raw_settings)
 
 
 @pytest.fixture(scope='session')
-def dummy_app(_app, extra_environ):
-    """Returns a dummy test app.
+def dummy_app(_app, extra_environ) -> TestApp:
+    """Returns a dummy test app
     """
-    from webtest import TestApp
-
     return TestApp(_app, extra_environ=extra_environ)
 
 
 @pytest.fixture(scope='function')
 def mailbox(dummy_app, get_mailer):
-    """Returns mailbox user interface for out going emails.
+    """Returns mailbox user interface for out going emails
     """
     # FIXME: mock `http` type.
     class Mailbox(object):
@@ -359,13 +365,13 @@ def mailbox(dummy_app, get_mailer):
 
         @property
         def sent_messages(self):
-            """Fetches sent messages from mailbox.
+            """Fetches sent messages from mailbox
             """
             # pylint: disable=no-member
             return self._mailer.outbox
 
         def clean(self):
-            """Clears all messages in mailbox.
+            """Clears all messages in mailbox
             """
             # pylint: disable=no-member
             del self._mailer.outbox[:]
@@ -375,7 +381,7 @@ def mailbox(dummy_app, get_mailer):
 
 @pytest.fixture(scope='function')
 def login(dummy_app):
-    """Login utility function.
+    """Login utility function
     """
     def _login(user, password=None):
         from os import path
@@ -411,7 +417,7 @@ def login(dummy_app):
 
 @pytest.fixture(scope='function')
 def logout(dummy_app):
-    """Logout ulitity function.
+    """Logout ulitity function
     """
     def _logout():
         res = dummy_app.get('/logout', status=302)
@@ -423,8 +429,10 @@ def logout(dummy_app):
 
 @pytest.fixture(scope='function')
 def login_as(login, logout):
-    """Login utility for specified user.
+    """Login utility for specified user
     """
+    from contextlib import contextmanager
+
     @contextmanager
     def _login_as(user):
         login(user)
