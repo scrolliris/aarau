@@ -76,7 +76,7 @@ Don't commit directly the changes on above translation project into this repo.
 (venv) % git subtree add --prefix locale neuchatel master
 
 : synchronize with updates into specified branch
-(venv) % git  pull -s subtree neuchatel master
+(venv) % git  pull -s subtree -Xsubtree=locale neuchatel master
 
 : subtree list
 % git log | grep git-subtree-dir | tr -d ' ' | cut -d ":" -f2 | sort | uniq
