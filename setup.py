@@ -17,7 +17,6 @@ requires = [
     'bleach',
     'bcrypt',
     'celery[redis]',
-    'colorlog',
     'google-cloud-datastore',
     'itsdangerous',
     'MarkupSafe',
@@ -44,6 +43,7 @@ requires = [
 ]
 
 development_requires = [
+    'colorlog',
     'flake8',
     'flake8_docstrings',
     'pylint',
@@ -52,6 +52,7 @@ development_requires = [
 ]
 
 testing_requires = [
+    'colorlog',
     'mixer',
     'pytest',
     'pytest-cov',

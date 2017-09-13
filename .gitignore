@@ -23,8 +23,8 @@ app.yaml
 /static/*
 !/static/**/*/.gitignore
 
-/tmp/logs/*.log
-!/tmp/logs/.gitignore
+/tmp/log/*.log
+!/tmp/log/.gitignore
 /tmp/builds/*
 /tmp/_cache
 /tmp/_data
