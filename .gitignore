@@ -4,11 +4,8 @@
 /**/*.mo
 
 /tmp
-
 /venv*
 
-# CI
-/build-output
 /.env.ci
 /bin/gitlab-ci-multi-runner
 
