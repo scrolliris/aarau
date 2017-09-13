@@ -14,10 +14,9 @@ check:
   before_script:
     - python --version
     - pip --version
-    - pip install --upgrade pip setuptools
+    - pip install flake8 flake8-docstrings -c constraints.txt
   script:
     - make clean
-    - make setup
     - make check
   cache:
     untracked: true
