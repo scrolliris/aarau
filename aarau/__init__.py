@@ -13,7 +13,7 @@ def get_settings():
     return get_current_registry().settings
 
 
-def resolve_settings(settings):
+def resolve_settings(settings: dict) -> dict:
     """ Resolving settings.
     """
     s = settings.copy()
@@ -67,7 +67,7 @@ def main(global_config, **settings):
     """
     from aarau.request import CustomRequest
 
-    config = Configurator(settings=resolve_settings(settings))
+    config = Configurator(settings=resolve_settings(dict(settings)))
     config.configure_celery(global_config['__file__'])
 
     config.include('.mailers')

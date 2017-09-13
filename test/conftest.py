@@ -64,7 +64,7 @@ def resolve_settings() -> 'function':
     from aarau import resolve_settings
 
     def _resolve_settings(raw_s):
-        return resolve_settings(raw_s)
+        return resolve_settings(dict(raw_s))
 
     return _resolve_settings
 
@@ -209,8 +209,7 @@ def config(request, settings) -> Configurator:
     config.include('pyramid_mailer.testing')
     config.include('pyramid_services')
 
-    config.configure_celery(settings['__file__'])
-
+    config.configure_celery(INI_FILE)
     config.include('aarau.mailers')
     config.include('aarau.models')
     config.include('aarau.views')

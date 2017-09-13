@@ -26,7 +26,7 @@ def init_worker(settings={}):  # pylint: disable=dangerous-default-value
         config_uri = '{0!s}/config/{1!s}.ini#aarau'.format(
             os.path.dirname(__file__) + '/../..', env.name)
         settings = get_appsettings(config_uri)
-        settings = resolve_env_vars(settings)
+        settings = resolve_env_vars(dict(settings))
 
     options = {  # duplicated for consistency
         'broker_url': settings['queue.url'],

@@ -2,7 +2,6 @@ bcrypt==3.1.2
 bleach==2.0.0
 beaker==1.9.0
 celery==4.1.0
-colorlog==2.7.0
 google-cloud-datastore==1.2.0
 itsdengerous==0.24
 kombu==4.1.0
@@ -15,7 +14,7 @@ peewee-migrate==0.11.0
 psycopg2==2.6.2
 python-dotenv==0.6.0
 pylibmc==1.5.2
-pyramid==1.8.1
+pyramid==1.9.1
 pyramid_assetviews==1.0a3
 pyramid-beaker==0.8
 pyramid_celery==3.0.0
@@ -39,6 +38,7 @@ waitress==1.0.0
 
 # development,testing
 PyYAML==3.12
+colorlog==2.7.0
 
 # testing
 mixier==5.5.8
