@@ -14,8 +14,8 @@ compile:
   stage: compile-catalog
   image: debian:latest
   before_script:
-    - mkdir -pv $APT_CACHE && apt-get -qq update
-    - apt-get -qq -o dir::cache::archives="$APT_CACHE" install -y
+    - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
+    - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
       gettext make
   script:
     - make catalog
