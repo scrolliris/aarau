@@ -13,7 +13,10 @@ from aarau.models import (
     Site,
 )
 from aarau.services.interfaces import IReplicator
-from .forms import new_application_site_form
+from .forms import (
+    edit_application_site_form,
+    new_application_site_form
+)
 
 
 def tpl(path, resource='site'):
@@ -76,6 +79,52 @@ def application_site_new(req):
                               queue='error', allow_duplicate=False)
 
     return dict(form=form, project=project)
+
+
+@view_config(route_name='console.site.application.edit',
+             renderer=tpl('application/edit.mako'))
+@login_required
+def application_site_edit(req):
+    """Renders a form for site to update
+    """
+    if 'type' not in req.params or req.params['type'] != 'application':
+        raise HTTPNotFound
+
+    project_id = req.matchdict['project_id']
+    site_id = req.matchdict['id']
+
+    project = _fetch_project(project_id, req.user.id)
+    site = Site.by_type(req.params['type']).where(
+        Site.id == site_id,
+        Site.project_id == project_id).get()  # pylint: disable=no-member
+
+    form = edit_application_site_form(req, project, site)
+    if 'submit' in req.POST:
+        _ = req.translate
+        if form.validate():
+            with req.db.cardinal.atomic():
+                site.application.name = form.application.form.name.data
+                site.application.description = \
+                  form.application.form.description.data
+                site.application.save()
+
+                site.domain = form.domain.data
+                site.save()
+
+            replicator = req.find_service(iface=IReplicator, name='site')
+            replicator.assign(obj=site)
+            replicator.replicate()
+
+            req.session.flash(_('site.application.update.success'),
+                              queue='success', allow_duplicate=False)
+            next_path = req.route_path('console.project.view', id=project.id)
+            return HTTPFound(location=next_path)
+        else:
+            req.session.flash(_('site.application.update.failure'),
+                              queue='error', allow_duplicate=False)
+
+    return dict(form=form, project=project, site=site,
+                application=site.application)
 
 
 @view_config(route_name='console.site.application.view.result',

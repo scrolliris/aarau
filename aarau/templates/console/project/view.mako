@@ -42,7 +42,7 @@
           <a href="${req.route_path('console.site.application.view.result', project_id=project.id, id=site.id, _query={'type':'application'})}"><h6 class="header">${util.truncate(site.application.name, 25)}</h6></a>
           <label class="secondary label">${site.domain}</label>
           <p class="text">${util.truncate(site.application.description, 30)}</p>
-          <p class="link"><a class="petit flat button" href="${req.route_path('console.site.application.edit', project_id=project.id, id=site.id)}">Edit</a></p>
+          <p class="link"><a class="petit flat button" href="${req.route_path('console.site.application.edit', project_id=project.id, id=site.id, _query={'type':'application'})}">Edit</a></p>
         </div>
       </div>
     % endfor

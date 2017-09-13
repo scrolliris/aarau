@@ -46,3 +46,15 @@ def new_application_site_form(req, project):
                 raise ValidationError('Domain already exists.')
 
     return build_form(ANewSiteForm, req)
+
+
+class EditSiteForm(SiteFormBaseMixin, SecureForm):
+    application = FormField(ApplicationForm)
+    submit = SubmitField('Update')
+
+
+def edit_application_site_form(req, project, site):
+    class AnEditSiteForm(EditSiteForm):
+        pass
+
+    return build_form(AnEditSiteForm, req, site)
