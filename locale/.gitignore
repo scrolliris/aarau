@@ -1,2 +1,25 @@
+.cache
+.env
+
+/**/*.mo
+
 /tmp
-!/tmp/.gitignore
+/venv*
+
+/.env.ci
+/bin/gitlab-ci-multi-runner
+
+# Windows
+*.lnk
+Thumbs.db
+Desktop.ini
+
+# macOS
+*.DS_Store
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+Network Trash Folder
+Temporary Items
