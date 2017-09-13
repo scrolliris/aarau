@@ -1,19 +1,22 @@
+# https://docs.gitlab.com/ce/ci/yaml/
 stages:
   - compile-catalog
 
+variables:
+  APT_CACHE_DIR: apt-cache
+
 cache:
-  key: apt-cache
   untracked: true
   paths:
-    - apt-cache/
+    - apt-cache
 
 compile:
   stage: compile-catalog
   image: debian:latest
   before_script:
-    - export APT_CACHE=`pwd`/apt-cache && mkdir -pv $APT_CACHE
-    - apt-get update -yq && apt-get -o dir::cache::archives="$APT_CACHE"
-      install -y gettext make
+    - mkdir -pv $APT_CACHE && apt-get -qq update
+    - apt-get -qq -o dir::cache::archives="$APT_CACHE" install -y
+      gettext make
   script:
     - make catalog
   except:
