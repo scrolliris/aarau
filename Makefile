@@ -96,12 +96,9 @@ catalog: | catalog-compile
 
 # utilities
 
-check-style:
+check:
 	flake8
-.PHONY: check-style
-
-style: | check-style
-.PHONY: style
+.PHONY: check
 
 clean:
 	find . ! -readable -prune -o -print \
@@ -110,9 +107,7 @@ clean:
 	       ! -path "./lib/*" | \
 	  grep -E "(__pycache__|\.pyc|\.pyo)" | xargs rm -rf
 ifeq (, $(shell which gulp))
-ifneq (test, $(ENV))
-	$(error gulp command not found. run `npm install -g gulp-cli`)
-endif
+	$(info gulp command not found. run `npm install -g gulp-cli`)
 else
 	gulp clean
 endif

@@ -1,8 +1,55 @@
 # https://docs.gitlab.com/ce/ci/yaml/
 stages:
-  - build-assets
   - check-style
-  - run-test
+  - compile-catalog
+  - build-assets
+  - test-code
+
+check:
+  stage: check-style
+  image: python:3.5
+  services:
+  variables:
+    ENV: development
+  before_script:
+    - python --version
+    - pip --version
+    - pip install --upgrade pip setuptools
+  script:
+    - make clean
+    - make setup
+    - make check
+  cache:
+    untracked: true
+    paths:
+      - pip-cache
+  except:
+    - tags
+
+compile:
+  stage: compile-catalog
+  image: python:3.5
+  services:
+  variables:
+    ENV: development
+  before_script:
+    - apt-get -qq update
+    - apt-get -qq install -y --no-install-recommends gcc zlib1g zlib1g-dev
+    - apt-get -qq install -y --no-install-recommends
+      libmemcached11 libmemcached-dev
+    - python --version
+    - pip --version
+    - pip install --upgrade pip setuptools
+  script:
+    - make clean
+    - make setup
+    - make catalog
+  cache:
+    untracked: true
+    paths:
+      - pip-cache
+  except:
+    - tags
 
 build:
   stage: build-assets
@@ -25,33 +72,8 @@ build:
   except:
     - tags
 
-style:
-  stage: check-style
-  image: python:3.5
-  services:
-  variables:
-    ENV: development
-  before_script:
-    - apt-get -qq update
-    - apt-get -qq install -y --no-install-recommends gcc zlib1g zlib1g-dev
-    - apt-get -qq install -y --no-install-recommends
-      libmemcached11 libmemcached-dev
-    - python --version
-    - pip --version
-    - pip install --upgrade pip setuptools
-  script:
-    - make clean
-    - make setup
-    - make check-style
-  cache:
-    untracked: true
-    paths:
-      - pip-cache
-  except:
-    - tags
-
 test:
-  stage: run-test
+  stage: test-code
   image: python:3.5
   services:
     - postgres:9.6
@@ -63,11 +85,6 @@ test:
     POSTGRES_USER: aarau
     POSTGRES_PASSWORD: aarau
   before_script:
-    - apt-get -qq update
-    - apt-get -qq install -y --no-install-recommends gcc zlib1g zlib1g-dev
-    - apt-get -qq install -y --no-install-recommends
-      libmemcached11 libmemcached-dev
-    - apt-get -qq install -y --no-install-recommends gettext
     - python --version
     - pip --version
     - pip install --upgrade pip setuptools
@@ -76,7 +93,6 @@ test:
     - make setup
     - make db-init
     - make db-migrate
-    - make catalog-compile
     - make coverage
   cache:
     untracked: true

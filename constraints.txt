@@ -33,7 +33,7 @@ honcho==1.0.1
 
 # development
 flake8==3.2.1
-flake8_docstrings==1.0.3
+flake8_docstrings==1.1.0
 pylint==1.6.5
 waitress==1.0.0
 
