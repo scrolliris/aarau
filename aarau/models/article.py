@@ -1,4 +1,4 @@
-"""The article model.
+"""The article model
 """
 from datetime import datetime
 
@@ -24,7 +24,7 @@ from .publication import Publication
 
 
 class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
-    """Article model class.
+    """Article model class
     """
     # pylint: disable=too-many-ancestors
     scopes = ('public', 'private')
@@ -52,7 +52,7 @@ class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
     published_at = DateTimeField(null=True)
 
     class Meta:
-        """The meta class of article.
+        """The meta class of article
         """
         # pylint: disable=too-few-public-methods
         db_table = 'articles'
@@ -78,7 +78,7 @@ class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
 
     @classproperty
     def progress_state_as_choices(cls):
-        """Returns choice pair as list for progress_state.
+        """Returns choice pair as list for progress_state
 
         See classproperty implementation
         """
@@ -87,7 +87,7 @@ class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
 
     @classmethod
     def published_on(cls, publication):
-        """Provides scope by publication.
+        """Provides scope by publication
         """
         # pylint: disable=no-member
         return Article.select().join(Publication).where(
@@ -95,7 +95,7 @@ class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
 
     @classmethod
     def get_by_slug(cls, slug):
-        """Fetches a article by unique slug string.
+        """Fetches a article by unique slug string
         """
         # pylint: disable=no-member
         return cls.select().where(
@@ -104,9 +104,10 @@ class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
             cls.progress_state == 'published'
         ).get()
 
+
 @pre_save(sender=Article)
 def on_save_handler(sender, instance, created):
-    """Evaluated before save as hook.
+    """Evaluated before save as hook
 
     Updates published_at property, appropriately
     """

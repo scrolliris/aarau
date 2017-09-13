@@ -50,11 +50,9 @@ class Site(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
         # pylint: disable=too-few-public-methods
         db_table = 'sites'
 
-
     def __repr__(self):
         return '<Site id:{} project_id:{} namespace:{}>'.format(
             self.id, self.project_id, self.namespace)
-
 
     @reify
     def application(self):

@@ -67,6 +67,7 @@ def test_grab_unique_code_repeats_until_to_grab_unique_code(
     assert 'brand-new-sha1-code' == code
     assert article.code != code
 
+
 def test_published_at_assignment_by_save(users):
     """Test newly created article has published_at.
     """

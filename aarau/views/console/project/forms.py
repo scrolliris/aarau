@@ -1,3 +1,5 @@
+"""Forms and factory methods for console view actions
+"""
 from wtforms import (
     SelectField,
     StringField,
@@ -5,14 +7,12 @@ from wtforms import (
     TextAreaField,
 )
 from wtforms import validators as v, ValidationError
-from wtforms.widgets import TextInput
 
 from aarau.models import Plan
 from aarau.views.forms import SecureForm, build_form
 
 
-NAMESPACE_PATTERN = \
-    '\A[a-z][a-z0-9\_\-]+[a-z0-9]\Z'
+NAMESPACE_PATTERN = '\A[a-z][a-z0-9\_\-]+[a-z0-9]\Z'
 
 
 class ProjectFormBaseMixin(object):

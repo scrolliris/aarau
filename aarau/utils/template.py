@@ -1,4 +1,4 @@
-"""Template utility class and helper functions.
+"""Template utility class and helper functions
 """
 from os import path
 import json
@@ -31,13 +31,12 @@ def clean(**kwargs) -> 'function':
 
     >>> ${'<a href="/"><em>link</em></a>'|n,clean(
             tags=['a'], attributes=['href'])}
-    "<a href=\"/\">link</a>"
+    "<a href="/">link</a>"
     """
     def __clean(text) -> Markup:
         return Markup(_clean(text, **kwargs))
 
     return __clean
-
 
 
 class TemplateUtil(object):
@@ -89,5 +88,5 @@ class TemplateUtil(object):
         if not isinstance(str_val, str):
             return ''
         if len(str_val) > limit:
-            str_val = str_val[:limit-3] + '...'
+            str_val = str_val[:limit - 3] + '...'
         return str_val

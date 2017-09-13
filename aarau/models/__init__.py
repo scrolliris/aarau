@@ -6,12 +6,14 @@ from playhouse.pool import PooledPostgresqlDatabase
 
 PooledPostgresqlDatabase.register_fields({'enum': 'enum'})
 
+
 class DB(dict):
-    """Database connections.
+    """Database connections
     """
     __getattr__ = dict.get
     __setattr__ = dict.__setitem__
     __delattr__ = dict.__delitem__
+
 
 # pylint: disable=invalid-name
 db = DB({  # proxies

@@ -70,7 +70,6 @@ class Project(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
             cls.access_key_id_key == access_key_id,
             cls.billing_state == 'none' or cls.billing_state == 'valid').get()
 
-
     def application_sites(self):
         """Returns site objects to fetch applications of this project.
         """
@@ -79,7 +78,6 @@ class Project(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
             (Site.hosting_type == 'Application') &
             (Site.hosting_id == Application.id))).where(
                 Site.project_id == self.id)
-
 
     def publication_sites(self):
         """Returns site objects to fetch publications of this project.

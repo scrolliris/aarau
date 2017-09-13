@@ -1,6 +1,6 @@
 """Tasks package.
 """
-import ssl
+import ssl  # noqa
 
 from pyramid_celery import celery_app as worker
 from pyramid.threadlocal import get_current_registry

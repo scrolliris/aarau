@@ -84,29 +84,28 @@ def includeme(config):
 
     with subdomain('console') as c:
         c.add_route('console.top', '/')
-        c.add_route('console.project.new',  '/project/new')
+        c.add_route('console.project.new', '/project/new')
         c.add_route('console.project.view', '/project/{id:\d+}')
         c.add_route('console.project.edit', '/project/{id:\d+}/edit')
 
         c.add_route('console.site.new',
-            '/project/{project_id:\d+}/site/new')
+                    '/project/{project_id:\d+}/site/new')
         # application
         c.add_route('console.site.application.view.result',
-            '/project/{project_id:\d+}/site/{id:\d+}/result')
+                    '/project/{project_id:\d+}/site/{id:\d+}/result')
         c.add_route('console.site.application.view.script',
-            '/project/{project_id:\d+}/site/{id:\d+}/script')
+                    '/project/{project_id:\d+}/site/{id:\d+}/script')
         c.add_route('console.site.application.edit',
-            '/project/{project_id:\d+}/site/{id:\d+}/edit')
-
+                    '/project/{project_id:\d+}/site/{id:\d+}/edit')
 
     with subdomain(None) as c:
         c.add_route('top', '/')
 
-        c.add_route('login',  '/login')
+        c.add_route('login', '/login')
         c.add_route('logout', '/logout')
 
         c.add_route('reset_password.request', '/password/reset')
-        c.add_route('reset_password',         '/password/reset/{token}')
+        c.add_route('reset_password', '/password/reset/{token}')
 
         c.add_route('signup', '/signup')
         c.add_route('signup.activate', '/user/activate/{token}')
@@ -114,7 +113,7 @@ def includeme(config):
         # login_required
         c.add_route('project.new', '/project/new')
 
-        c.add_route('settings',         '/settings')
+        c.add_route('settings', '/settings')
         c.add_route('settings.section', '/settings/{section}')
 
         c.add_route('settings.email_delete',
