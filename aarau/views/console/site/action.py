@@ -106,7 +106,7 @@ def application_site_edit(req):
             with req.db.cardinal.atomic():
                 site.application.name = form.application.form.name.data
                 site.application.description = \
-                  form.application.form.description.data
+                    form.application.form.description.data
                 site.application.save()
 
                 site.domain = form.domain.data
