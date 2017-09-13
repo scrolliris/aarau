@@ -1,9 +1,21 @@
 # https://docs.gitlab.com/ce/ci/yaml/
 stages:
   - check-style
+  - setup-deps
   - compile-catalog
   - build-assets
   - test-code
+
+variables:
+  APT_CACHE_DIR: apt-cache
+  PIP_CACHE_DIR: pip-cache
+
+cache:
+  untracked: true
+  paths:
+    - apt-cache
+    - pip-cache
+    - node_modules
 
 check:
   stage: check-style
@@ -18,10 +30,26 @@ check:
   script:
     - make clean
     - make check
-  cache:
-    untracked: true
-    paths:
-      - pip-cache
+  except:
+    - tags
+
+setup:
+  stage: setup-deps
+  image: python:3.5
+  services:
+  variables:
+    ENV: production
+  before_script:
+    - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
+    - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
+      gettext make
+      gcc zlib1g zlib1g-dev libmemcached11 libmemcached-dev
+    - python --version
+    - pip --version
+    - pip install --upgrade pip setuptools
+  script:
+    - make clean
+    - make setup
   except:
     - tags
 
@@ -30,23 +58,13 @@ compile:
   image: python:3.5
   services:
   variables:
-    ENV: development
+    ENV: production
   before_script:
-    - apt-get -qq update
-    - apt-get -qq install -y --no-install-recommends gcc zlib1g zlib1g-dev
-    - apt-get -qq install -y --no-install-recommends
-      libmemcached11 libmemcached-dev
     - python --version
     - pip --version
-    - pip install --upgrade pip setuptools
   script:
     - make clean
-    - make setup
     - make catalog
-  cache:
-    untracked: true
-    paths:
-      - pip-cache
   except:
     - tags
 
@@ -64,10 +82,6 @@ build:
   script:
     - make clean
     - gulp
-  cache:
-    untracked: true
-    paths:
-      - node_modules
   except:
     - tags
 
@@ -79,23 +93,16 @@ test:
     - redis:3.2
   variables:
     ENV: test
-    PIP_CACHE_DIR: pip-cache
     POSTGRES_DB: aarau_test
     POSTGRES_USER: aarau
     POSTGRES_PASSWORD: aarau
   before_script:
     - python --version
     - pip --version
-    - pip install --upgrade pip setuptools
   script:
     - make clean
-    - make setup
     - make db-init
     - make db-migrate
     - make coverage
-  cache:
-    untracked: true
-    paths:
-      - pip-cache
   except:
     - tags
