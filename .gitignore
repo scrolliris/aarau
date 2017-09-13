@@ -9,7 +9,7 @@ __pycache__/
 
 app.yaml
 
-/bin/publish
+/bin/*.sh
 /bin/gitlab-ci-multi-runner
 
 /db/seeds/*.yml
