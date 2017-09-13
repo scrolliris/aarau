@@ -1,47 +1,47 @@
 ifeq (, $(ENV))
-	extra := development
+	env := development
 else ifeq (test, $(ENV))
-	extra := testing
+	env := testing
 else
-	extra := $(ENV)
+	env := $(ENV)
 endif
 
-section := aarau
+app := aarau
 
 # installation
 
 setup:
-	pip install -e '.[${extra}]' -c constraints.txt
+	pip install -e '.[${env}]' -c constraints.txt
 .PHONY: setup
 
 # database
 
 db-init:
-	aarau_manage 'config/${extra}.ini#${section}' db init
+	aarau_manage 'config/${env}.ini#${app}' db init
 .PHONY: db-init
 
 db-migrate:
-	aarau_manage 'config/${extra}.ini#${section}' db migrate
+	aarau_manage 'config/${env}.ini#${app}' db migrate
 .PHONY: db-migrate
 
 db-rollback:
-	aarau_manage 'config/${extra}.ini#${section}' db rollback
+	aarau_manage 'config/${env}.ini#${app}' db rollback
 .PHONY: db-rollback
 
 db-seed:
-	aarau_manage 'config/${extra}.ini#${section}' db seed
+	aarau_manage 'config/${env}.ini#${app}' db seed
 .PHONY: db-seed
 
 db-drop:
-	aarau_manage 'config/${extra}.ini#${section}' db drop
+	aarau_manage 'config/${env}.ini#${app}' db drop
 .PHONY: db-drop
 
 db-reset:
-	aarau_manage 'config/${extra}.ini#${section}' db drop
-	aarau_manage 'config/${extra}.ini#${section}' db init
-	aarau_manage 'config/${extra}.ini#${section}' db migrate
+	aarau_manage 'config/${env}.ini#${app}' db drop
+	aarau_manage 'config/${env}.ini#${app}' db init
+	aarau_manage 'config/${env}.ini#${app}' db migrate
 ifneq (test, $(ENV))
-	aarau_manage 'config/${extra}.ini#${section}' db seed
+	aarau_manage 'config/${env}.ini#${app}' db seed
 endif
 .PHONY: db-reset
 
@@ -55,7 +55,7 @@ serve:
 
 # worker
 worker:
-	aarau_worker 'config/${extra}.ini#${section}'
+	aarau_worker 'config/${env}.ini#${app}'
 .PHONY: worker
 
 # use `bin/start` via honcho. see Procfile
@@ -71,15 +71,15 @@ test:
 
 coverage:
 	ENV=test py.test -c 'config/testing.ini' -s -q --cov=aarau --cov-report \
-	  term-missing:skip-covered
+	 term-missing:skip-covered
 .PHONY: coverage
 
 # translation
 
-catalog-extract:
-	./bin/linguine extract message
-	./bin/linguine extract form
-.PHONY: catalog-extract
+catalog-envct:
+	./bin/linguine envct message
+	./bin/linguine envct form
+.PHONY: catalog-envct
 
 catalog-compile:
 	./bin/linguine compile message en
@@ -102,12 +102,13 @@ check:
 
 clean:
 	find . ! -readable -prune -o -print \
-	       ! -path "./.git/*" ! -path "./node_modules/*" ! -path "./venv*" \
-	       ! -path "./doc/*"  ! -path "./locale/*" ! -path "./tmp/*" \
-	       ! -path "./lib/*" | \
-	  grep -E "(__pycache__|\.pyc|\.pyo)" | xargs rm -rf
-ifeq (, $(shell which gulp))
+	 ! -path "./.git/*" ! -path "./node_modules/*" ! -path "./venv*" \
+	 ! -path "./doc/*"  ! -path "./locale/*" ! -path "./tmp/*" \
+	 ! -path "./lib/*" | \
+	 grep -E "(__pycache__|\.pyc|\.pyo)" | xargs rm -rf
+ifeq (, $(shell which gulp 2>/dev/null))
 	$(info gulp command not found. run `npm install -g gulp-cli`)
+	$(info )
 else
 	gulp clean
 endif
