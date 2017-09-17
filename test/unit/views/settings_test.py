@@ -2,10 +2,20 @@ import pytest
 
 
 @pytest.fixture(autouse=True)
-def setup(config, mailer_outbox):
+def setup(request, config, mailer_outbox):
     def clean_outbox():
         del mailer_outbox[:]
     clean_outbox()
+
+    # eager task (emulation)
+    from aarau.tasks import worker
+    worker.conf.update(task_always_eager=True)
+
+    def teardown():
+        worker.conf.update(task_always_eager=False, task_eager_propagates=True)
+        clean_outbox()
+
+    request.addfinalizer(teardown)
 
 
 def assert_user_email_forms(user_emails, email_forms):

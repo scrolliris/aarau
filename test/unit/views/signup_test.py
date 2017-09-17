@@ -12,7 +12,7 @@ def setup(request, config, mailer_outbox):
     worker.conf.update(task_always_eager=True)
 
     def teardown():
-        worker.conf.update(task_always_eager=False)
+        worker.conf.update(task_always_eager=False, task_eager_propagates=True)
         clean_outbox()
 
     request.addfinalizer(teardown)
