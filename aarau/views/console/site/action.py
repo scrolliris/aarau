@@ -175,3 +175,27 @@ def application_site_view_script(req):
     return dict(project=project, site=site,
                 application=site.application,
                 replication_state=replicator.validate())
+
+
+@view_config(route_name='console.site.application.view.badge',
+             renderer=tpl('application/view.badge.mako'))
+@login_required
+def application_site_view_badge(req):
+    """Renders badge view for this site
+    """
+    if 'type' not in req.params or req.params['type'] != 'application':
+        raise HTTPNotFound
+
+    project_id = req.matchdict['project_id']
+    site_id = req.matchdict['id']
+
+    project = _fetch_project(project_id, req.user.id)
+    try:
+        site = Site.by_type(req.params['type']).where(
+            Site.id == site_id,
+            Site.project_id == project_id).get()  # pylint: disable=no-member
+    except Site.DoesNotExist:  # pylint: disable=no-member
+        raise HTTPNotFound
+
+    return dict(project=project, site=site,
+                application=site.application)

@@ -69,13 +69,10 @@ def resolve_settings() -> 'function':
     return _resolve_settings
 
 
-@pytest.fixture(scope='session')
-def extra_environ(env) -> dict:
-    """Returns extra environ object
+def new_extra_environ(domain) -> dict:
+    """Test utility method just generate new extra_environ dict
     """
-    domain = env.get('DOMAIN', 'example.org')
-
-    environ = {
+    return {
         'HTTP_HOST': domain + ':80',
         'SERVER_NAME': domain,
         'SERVER_HOST': domain,
@@ -83,7 +80,14 @@ def extra_environ(env) -> dict:
         'REMOTE_ADDR': '127.0.0.1',
         'wsgi.url_scheme': 'http',
     }
-    return environ
+
+
+@pytest.fixture(scope='session')
+def extra_environ(env) -> dict:
+    """Returns extra environ object
+    """
+    domain = env.get('DOMAIN', 'example.org')
+    return new_extra_environ(domain)
 
 
 @pytest.fixture(scope='session')
@@ -329,7 +333,7 @@ def mailer_outbox(dummy_request, get_mailer):
 # -- Functional tests
 
 @pytest.fixture(scope='session')
-def _app(raw_settings) -> Router:
+def router(raw_settings) -> Router:
     """Returns the internal app of app for testing
     """
     from aarau import main
@@ -344,10 +348,56 @@ def _app(raw_settings) -> Router:
 
 
 @pytest.fixture(scope='session')
-def dummy_app(_app, extra_environ) -> TestApp:
+def dummy_app(router, env, extra_environ) -> 'function':
     """Returns a dummy test app
     """
-    return TestApp(_app, extra_environ=extra_environ)
+    class DummyAppProxy():
+        """The wrapper for actual dummy app
+
+        Adds `switch_target()` to change subdomain via extra_environ.
+        """
+        def __init__(self, extra_environ) -> None:
+            self.extra_environ = extra_environ
+            self._app = None
+
+            self._format()  # default example.org (not console.example.org)
+
+        def _format(self, subdomain=None) -> None:
+            if self._app is None:
+                self._app = TestApp(router, extra_environ=self.extra_environ)
+            domain = env.get('DOMAIN', 'example.org')
+            if subdomain is not None:
+                domain = ('{}.' + domain).format(subdomain)  # replace
+                self._app.extra_environ = new_extra_environ(domain)
+            else:
+                self._app.extra_environ = new_extra_environ(domain)
+
+        def switch_target(self, target=None) -> 'self':
+            """Target subdomain switch utility
+
+            >>> app = dummy_app.switch_target('console')
+            >>> app.get('/', status=200)
+            """
+            self._format(subdomain=target)
+            return self
+
+        @property
+        def app(self):
+            """Wrapper of app property
+            """
+            return self._app.app
+
+        def get(self, *args, **kwargs):
+            """Wrapper to actual get method
+            """
+            return self._app.get(*args, **kwargs)
+
+        def post(self, *args, **kwargs):
+            """Wrapper to actual post method
+            """
+            return self._app.post(*args, **kwargs)
+
+    return DummyAppProxy(extra_environ)
 
 
 @pytest.fixture(scope='function')
@@ -395,7 +445,8 @@ def login(dummy_app):
         if not password:
             password = user_passwords.get(user.username, None)
 
-        res = dummy_app.get('/login', status=200)
+        app = dummy_app.switch_target()
+        res = app.get('/login', status=200)
         # TODO:
         #   See https://github.com/Pylons/webtest/issues/164
         #   To avoid warning for now. Remove `res.charset = None` in tests.
@@ -407,7 +458,7 @@ def login(dummy_app):
             'password': password,
             'submit': '1',
         }
-        res = dummy_app.post('/login', params, status=302)
+        res = app.post('/login', params, status=302)
         res.follow(status=200)
         return res
 
@@ -419,7 +470,8 @@ def logout(dummy_app):
     """Logout ulitity function
     """
     def _logout():
-        res = dummy_app.get('/logout', status=302)
+        app = dummy_app.switch_target()
+        res = app.get('/logout', status=302)
         res.follow(status=200)
         return res
 

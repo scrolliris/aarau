@@ -95,6 +95,8 @@ def includeme(config):
                     '/project/{project_id:\d+}/site/{id:\d+}/result')
         c.add_route('console.site.application.view.script',
                     '/project/{project_id:\d+}/site/{id:\d+}/script')
+        c.add_route('console.site.application.view.badge',
+                    '/project/{project_id:\d+}/site/{id:\d+}/badge')
         c.add_route('console.site.application.edit',
                     '/project/{project_id:\d+}/site/{id:\d+}/edit')
 

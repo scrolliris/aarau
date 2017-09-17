@@ -36,7 +36,7 @@
       </div>
     </div>
     <div class="row">
-    % for site in project.application_sites():
+    % for site in project.application_sites:
       <div class="column-4 column-v-8 column-l-16">
         <div class="blue flat box">
           <a href="${req.route_path('console.site.application.view.result', project_id=project.id, id=site.id, _query={'type':'application'})}"><h6 class="header">${util.truncate(site.application.name, 25)}</h6></a>
@@ -46,7 +46,7 @@
         </div>
       </div>
     % endfor
-    % for site in project.publication_sites():
+    % for site in project.publication_sites:
       <div class="column-4 column-v-8 column-l-16">
         <div class="gray flat box">
           <h6 class="header">${util.truncate(site.publication.name, 25)}</h6>

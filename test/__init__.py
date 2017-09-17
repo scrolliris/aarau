@@ -41,4 +41,5 @@ def test_vars():
         # datastore
         'DATASTORE_EMULATOR_HOST',
         'DATASTORE_PROJECT_ID',
+        'GOOGLE_CLOUD_PROJECT',
     ]

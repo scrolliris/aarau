@@ -30,7 +30,7 @@
         <div class="tab menu">
           <a class="item" href="${req.route_path('console.site.application.view.result', project_id=project.id, id=site.id, _query={'type': 'application'})}">Results</a>
           <a class="active item">Scripts</a>
-          <a class="disabled item" disabled>Badges</a>
+          <a class="item" href="${req.route_path('console.site.application.view.badge', project_id=project.id, id=site.id, _query={'type': 'application'})}">Badges</a>
         </div>
       </div>
       <div class="column-16">
