@@ -24,13 +24,13 @@ The application of [https://scrolliris.com/](https://scrolliris.com/).
 
 ## Requirements
 
-* Python `>= 3.5.3`
+* Python `>= 3.5.4`
 * PostgreSQL `>= 9.6.3`
 * Redis `>= 3.2.0`
 * Memcached `>= 1.4.33`
   * libmemcached (via pylibmc) (worker)
 * Datastore (emulator)
-* Node.js `>= 7.8.0` (build)
+* Node.js `>= 7.10.1` (build)
 * GNU gettext `>= 0.19.8.1` (translation)
 * [Neuchâtel](https://gitlab.com/lupine-software/neuchatel) as git subtree
 * Graphviz (document)
