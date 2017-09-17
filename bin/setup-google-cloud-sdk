@@ -1,0 +1,54 @@
+#!/bin/sh
+set -eu
+
+root_dir=$(dirname $(dirname $(readlink -f "${0}")))
+name="google-cloud-sdk"
+arch="linux-x86_64"
+
+# https://cloud.google.com/sdk/docs/quickstart-linux
+version="171.0.0"
+checksum="25461c08e8c4e235d83ab1a5b00690e14b837e06a10b25102d1682d138c4392d"
+
+package_base_url="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads"
+package_file="${name}-${version}-${arch}.tar.gz"
+
+indent() {
+  sed -u 's/^/       /'
+}
+
+echo "Platform: ${arch}"
+echo "Version: ${version}"
+echo ""
+
+mkdir -p $root_dir/lib
+cd $root_dir/lib
+
+echo "-----> Fetching into: ${root_dir}/lib"
+curl -sL $package_base_url/$package_file -o $package_file
+
+# check sha256 checksum
+echo "${checksum}" "" ./$package_file | sha256sum -c - | indent
+
+echo "-----> Deleting old sdk (if exists)"
+rm -fr "./${name}"
+
+echo "-----> Extracting new sdk"
+tar zxf $package_file | indent
+
+# setup lib/ as a root for sdk
+echo ""
+echo "{{{"
+CLOUDSDK_ROOT_DIR=. ./$name/install.sh
+echo "}}}"
+echo ""
+
+cd $root_dir
+
+echo "-----> Done"
+
+# print instructions
+source_cmd="source ./bin/load-gcloud"
+update_cmd="gcloud components update && gcloud components install beta"
+
+echo "Run \`${source_cmd}\`" | indent
+echo "And then, update \`${update_cmd}\`" | indent
