@@ -5,6 +5,7 @@ import pytest
 
 from aarau.views.console.site.action import application_site_view_badge
 
+
 @pytest.fixture(autouse=True)
 def setup(config):
     """Setup

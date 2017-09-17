@@ -1,7 +1,6 @@
 # pylint: disable=invalid-name
 """Route Tests.
 """
-import os
 import pytest
 
 
@@ -71,6 +70,7 @@ def test_routing_to_robots_as_logged_in_user(dummy_app, login_as, users):
         app = dummy_app.switch_target('console')
         res = app.get('/robots.txt', status=200)
         assert 200 == res.status_code
+
 
 def test_routing_to_console_application_site_badge(dummy_app, login_as, users):
     """Test touting to badge view as logged in user.
