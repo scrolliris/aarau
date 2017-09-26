@@ -1,9 +1,9 @@
 # https://docs.gitlab.com/ce/ci/yaml/
 stages:
-  - check-style
-  - compile-catalog
-  - build-assets
-  - test-code
+  - check
+  - compile
+  - build
+  - test
 
 variables:
   APT_CACHE_DIR: apt-cache
@@ -18,7 +18,7 @@ cache:
 # -- stages
 
 check:
-  stage: check-style
+  stage: check
   image: python:3.5
   variables:
     ENV: development
@@ -33,7 +33,7 @@ check:
     - tags
 
 compile:
-  stage: compile-catalog
+  stage: compile
   image: python:3.5
   variables:
     ENV: production
@@ -54,7 +54,7 @@ compile:
     - tags
 
 build:
-  stage: build-assets
+  stage: build
   image: node:7.10.1
   variables:
     NODE_ENV: production
@@ -74,7 +74,7 @@ build:
     - tags
 
 test:
-  stage: test-code
+  stage: test
   image: python:3.5
   services:
     - postgres:9.6
