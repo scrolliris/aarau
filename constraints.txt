@@ -12,8 +12,8 @@ PasteScript==2.0.2
 peewee==2.9.1
 peewee-migrate==0.11.0
 psycopg2==2.6.2
-python-dotenv==0.6.0
 pylibmc==1.5.2
+python-dotenv==0.6.0
 pyramid==1.9.1
 pyramid_assetviews==1.0a3
 pyramid-beaker==0.8
@@ -33,7 +33,7 @@ honcho==1.0.1
 # development
 flake8==3.2.1
 flake8_docstrings==1.1.0
-pylint==1.6.5
+pylint==1.7.1
 waitress==1.0.0
 
 # development,testing
@@ -44,5 +44,5 @@ colorlog==2.7.0
 mixier==5.5.8
 pytest==3.0.5
 pytest-cov==2.4.0
-pytest-cov==1.5.0
+pytest-mock==1.6.2
 WebTest==2.0.23
