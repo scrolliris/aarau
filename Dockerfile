@@ -19,13 +19,14 @@ ADD . app/
 
 WORKDIR app/
 
-RUN pip install -r requirements.txt
-RUN make catalog-compile
-
 ENV HOST 0.0.0.0
 ENV PORT 8080
 ENV ENV production
 ENV WSGI_URL_SCHEME http
+
+RUN make setup
+RUN make catalog-compile
+
 EXPOSE 8080
 
 CMD honcho start
