@@ -1,7 +1,8 @@
 """Template utility class and helper functions
 """
-from os import path
+import os
 import json
+from typing import Union
 
 from bleach import clean as _clean
 from markupsafe import Markup
@@ -10,10 +11,12 @@ from pyramid.decorator import reify
 from pyramid.events import subscriber
 from pyramid.events import BeforeRender
 
+from aarau.request import CustomRequest
+
 
 @subscriber(BeforeRender)
-def add_template_util_renderer_globals(evt):
-    """Adds template utility instance as `util`.
+def add_template_util_renderer_globals(evt) -> None:
+    """Adds template utility instance as `util`
     """
     ctx, req = evt['context'], evt['request']
     util = getattr(req, 'util', None)
@@ -27,7 +30,7 @@ def add_template_util_renderer_globals(evt):
 
 
 def clean(**kwargs) -> 'function':
-    """Returns sanitized value except allowed tags and attributes.
+    """Returns sanitized value except allowed tags and attributes
 
     >>> ${'<a href="/"><em>link</em></a>'|n,clean(
             tags=['a'], attributes=['href'])}
@@ -40,9 +43,11 @@ def clean(**kwargs) -> 'function':
 
 
 class TemplateUtil(object):
-    """The utility for templates.
+    """The utility for templates
+
+    In some cases, no-self-use is disabled for convenience at templates
     """
-    def __init__(self, ctx, req, **kwargs):
+    def __init__(self, ctx: dict, req: CustomRequest, **kwargs: dict) -> None:
         self.ctx, self.req = ctx, req
 
         if getattr(req, 'util', None) is None:
@@ -50,41 +55,61 @@ class TemplateUtil(object):
         self.__dict__.update(kwargs)
 
     @reify
-    def route_name(self):
+    def route_name(self) -> Union[None, str]:
+        """Returns matched route name
+        """
         route = self.req.matched_route
         if route:
             return route.name
 
     @reify
-    def manifest_json(self):
-        manifest_file = path.join(
-            path.dirname(__file__), '..', '..', 'static', 'manifest.json')
+    def manifest_json(self) -> dict:  # pylint: disable=no-self-use
+        """Reads manifest.json as dict
+        """
+        manifest_file = os.path.join(
+            os.path.dirname(__file__), '..', '..', 'static', 'manifest.json')
         data = {}
-        if path.isfile(manifest_file):
-            with open(manifest_file) as data_file:
-                data = json.load(data_file)
+        if os.path.isfile(manifest_file):
+            try:
+                with open(manifest_file) as data_file:
+                    data = json.load(data_file)
+            except (IOError, ValueError):
+                pass
+
         return data
 
     @reify
-    def typekit_id(self):
+    def typekit_id(self) -> str:  # pylint: disable=no-self-use
+        """Return typekit id from env
+        """
         from ..env import Env
         env = Env()
-        return env.get('TYPEKIT_ID', '')
+        return str(env.get('TYPEKIT_ID', ''))
 
-    def is_matched(self, matchdict):
+    def is_matched(self, matchdict) -> bool:
+        """Returns bool if dict matches or not
+        """
         return self.req.matchdict == matchdict
 
-    def static_url(self, path):
+    def static_url(self, path) -> str:
+        """Returns whole url for static file
+        """
         return self.req.static_url('aarau:../static/' + path)
 
-    def static_path(self, path):
+    def static_path(self, path) -> str:
+        """Returns url path for static file
+        """
         return self.req.static_path('aarau:../static/' + path)
 
-    def built_asset_url(self, path):
+    def built_asset_url(self, path) -> str:
+        """Returns url path for static file with built hash from manifest.json
+        """
         path = self.manifest_json.get(path, path)
         return self.static_url(path)
 
-    def truncate(self, str_val, limit):
+    def truncate(self, str_val, limit) -> str:  # pylint: disable=no-self-use
+        """Returns new truncated string and appends '...'
+        """
         if not isinstance(str_val, str):
             return ''
         if len(str_val) > limit:
