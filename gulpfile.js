@@ -1,7 +1,7 @@
 'use strict';
 
-var path = require('path')
-  , fs = require('fs')
+var fs = require('fs')
+  , path = require('path')
   ;
 
 var gulp = require('gulp')
