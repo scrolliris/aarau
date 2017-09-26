@@ -5,9 +5,9 @@
 %>
 % if msg:
   <div class="warning message" role="alert">
-  <div class="header">NOTICE</div>
-  <p>${msg}</p>
-</div>
+    <div class="header">NOTICE</div>
+    <p>${msg}</p>
+  </div>
 % endif
 </%block>
 
