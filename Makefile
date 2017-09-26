@@ -17,31 +17,31 @@ setup:
 # database
 
 db-init:
-	aarau_manage 'config/${env}.ini#${app}' db init
+	${app}_manage 'config/${env}.ini#${app}' db init
 .PHONY: db-init
 
 db-migrate:
-	aarau_manage 'config/${env}.ini#${app}' db migrate
+	${app}_manage 'config/${env}.ini#${app}' db migrate
 .PHONY: db-migrate
 
 db-rollback:
-	aarau_manage 'config/${env}.ini#${app}' db rollback
+	${app}_manage 'config/${env}.ini#${app}' db rollback
 .PHONY: db-rollback
 
 db-seed:
-	aarau_manage 'config/${env}.ini#${app}' db seed
+	${app}_manage 'config/${env}.ini#${app}' db seed
 .PHONY: db-seed
 
 db-drop:
-	aarau_manage 'config/${env}.ini#${app}' db drop
+	${app}_manage 'config/${env}.ini#${app}' db drop
 .PHONY: db-drop
 
 db-reset:
-	aarau_manage 'config/${env}.ini#${app}' db drop
-	aarau_manage 'config/${env}.ini#${app}' db init
-	aarau_manage 'config/${env}.ini#${app}' db migrate
+	${app}_manage 'config/${env}.ini#${app}' db drop
+	${app}_manage 'config/${env}.ini#${app}' db init
+	${app}_manage 'config/${env}.ini#${app}' db migrate
 ifneq (test, $(ENV))
-	aarau_manage 'config/${env}.ini#${app}' db seed
+	${app}_manage 'config/${env}.ini#${app}' db seed
 endif
 .PHONY: db-reset
 
@@ -55,7 +55,7 @@ serve:
 
 # worker
 worker:
-	aarau_worker 'config/${env}.ini#${app}'
+	${app}_worker 'config/${env}.ini#${app}'
 .PHONY: worker
 
 # use `bin/start` via honcho. see Procfile
@@ -70,7 +70,7 @@ test:
 .PHONY: test
 
 coverage:
-	ENV=test py.test -c 'config/testing.ini' -s -q --cov=aarau --cov-report \
+	ENV=test py.test -c 'config/testing.ini' -s -q --cov=${app} --cov-report \
 	 term-missing:skip-covered
 .PHONY: coverage
 
@@ -103,9 +103,9 @@ check:
 clean:
 	find . ! -readable -prune -o -print \
 	 ! -path "./.git/*" ! -path "./node_modules/*" ! -path "./venv*" \
-	 ! -path "./doc/*"  ! -path "./locale/*" ! -path "./tmp/*" \
+	 ! -path "./doc/*" ! -path "./locale/*" ! -path "./tmp/*" \
 	 ! -path "./lib/*" | \
-	 grep -E "(__pycache__|\.pyc|\.pyo)" | xargs rm -rf
+	 grep -E "(__pycache__|\.egg-info|\.pyc|\.pyo)" | xargs rm -rf
 ifeq (, $(shell which gulp 2>/dev/null))
 	$(info gulp command not found. run `npm install -g gulp-cli`)
 	$(info )
