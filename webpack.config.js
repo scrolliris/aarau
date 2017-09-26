@@ -17,6 +17,9 @@ if (nodeEnv === 'production') {
 var stylusBundler = new ExtractTextPlugin(filename + '.css')
   ;
 
+var appName = 'aarau'
+  ;
+
 var config = {
   output: {
     path: path.resolve(__dirname, 'tmp/builds/')
@@ -31,13 +34,13 @@ var config = {
       test: /\.styl$/
     , loader: stylusBundler.extract(['css', 'stylus'])
     , include: [
-        path.resolve(__dirname, 'aarau/assets')
+        path.resolve(__dirname, appName + '/assets')
       ]
     }, {
       test: /\.js$/
     , loader: 'babel-loader'
     , include: [
-        path.resolve(__dirname, 'aarau/assets')
+        path.resolve(__dirname, appName + '/assets')
       ]
     }]
   }
