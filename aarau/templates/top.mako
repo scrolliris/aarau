@@ -29,7 +29,7 @@
           <div class="header"><h3>How it works</h3></div>
           <div class="description">
             <p>Learn how our readability analysis works.</p>
-            <a class="flat disabled button">Read the Docs</a>
+            <a class="flat button" href="https://doc.scrolliris.com/">Read the Doc</a>
           </div>
         </div>
       </div>
