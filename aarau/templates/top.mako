@@ -14,9 +14,9 @@
           <h1 class="header">Beyond the Scroll</h1>
           <p>Extend your publication readability beyond the scroll with Scrolliris</p>
         % if req.user and req.user.projects:
-          <a class="flat button" href="${req.route_url('console.top')}">Go to console</a>
+          <a class="flat button" href="${req.route_url('console.top')}">Go to Console</a>
         % else:
-          <a class="primary button" href="${req.route_url('project.new', namespace=None)}">Create a project</a>
+          <a class="primary button" href="${req.route_url('project.new', namespace=None)}">Create a Project</a>
         % endif
         </div>
         <div id="ticker" class="pride"></div>
@@ -47,7 +47,7 @@
           <div class="header"><h3>Release Note</h3></div>
           <div class="description">
             <p>Scrolliris is currently under the development as public BETA.</p>
-            <a class="flat disabled button" href="">Check Notes</a>
+            <a class="flat disabled button" href="">Check the Note</a>
           </div>
         </div>
       </div>
