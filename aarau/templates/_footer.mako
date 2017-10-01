@@ -8,7 +8,7 @@
         <ul class="list right">
           <li class="item"><a href="https://doc.scrolliris.com/terms.html">${_('link.text.tos')}</a></li>
           <li class="item"><a href="https://doc.scrolliris.com/policy.html">${_('link.text.pp')}</a></li>
-          <li class="item"><a href="/">Cookies</a></li>
+          <li class="item"><a href="https://doc.scrolliris.com/cookie.html">${_('link.text.cookie')}</a></li>
         </ul>
       </div>
       <div class="column-3">
