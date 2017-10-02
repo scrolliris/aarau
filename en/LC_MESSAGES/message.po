@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Neuchâtel 0.1\n"
 "Report-Msgid-Bugs-To: support@scrolliris.com\n"
-"POT-Creation-Date: 2017-08-16 05:00+0900\n"
+"POT-Creation-Date: 2017-10-02 23:04+0900\n"
 "PO-Revision-Date: 2017-06-16 01:09+0900\n"
 "Last-Translator: Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>\n"
 "Language-Team: Scrolliris Translation Team <support@scrolliris.com>\n"
@@ -15,6 +15,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: aarau/templates/_footer.mako:11
+msgid "link.text.cookie"
+msgstr "Cookie"
 
 #: aarau/templates/_footer.mako:10 aarau/templates/shared/signup.mako:74
 msgid "link.text.pp"
@@ -28,7 +32,7 @@ msgstr "Term of Service"
 msgid "login.error"
 msgstr ""
 
-#: aarau/views/filters.py:30
+#: aarau/views/filter.py:32
 msgid "login.needed"
 msgstr ""
 
@@ -40,105 +44,105 @@ msgstr "A-z"
 msgid "misc.numbers"
 msgstr "0-9"
 
-#: aarau/views/project/actions.py:60
-#: aarau/views/console/project/actions.py:79
+#: aarau/views/project/action.py:61
+#: aarau/views/console/project/action.py:80
 msgid "project.creation.failure"
 msgstr ""
 
-#: aarau/views/project/actions.py:54
-#: aarau/views/console/project/actions.py:74
+#: aarau/views/project/action.py:55
+#: aarau/views/console/project/action.py:75
 msgid "project.creation.success"
 msgstr ""
 
-#: aarau/views/console/project/actions.py:114
+#: aarau/views/console/project/action.py:115
 msgid "project.update.failure"
 msgstr ""
 
-#: aarau/views/console/project/actions.py:109
+#: aarau/views/console/project/action.py:110
 msgid "project.update.success"
 msgstr ""
 
-#: aarau/views/reset_password/actions.py:38
+#: aarau/views/reset_password/action.py:39
 msgid "reset_password.request.failure"
 msgstr ""
 
-#: aarau/views/reset_password/actions.py:32
+#: aarau/views/reset_password/action.py:33
 msgid "reset_password.request.success"
 msgstr ""
 
-#: aarau/views/reset_password/actions.py:63
+#: aarau/views/reset_password/action.py:64
 msgid "reset_password.update.expired"
 msgstr ""
 
-#: aarau/views/reset_password/actions.py:75
+#: aarau/views/reset_password/action.py:76
 msgid "reset_password.update.failure"
 msgstr ""
 
-#: aarau/views/reset_password/actions.py:71
+#: aarau/views/reset_password/action.py:72
 msgid "reset_password.update.success"
 msgstr ""
 
-#: aarau/views/settings/actions.py:59
+#: aarau/views/settings/action.py:59
 msgid "settings.email.addition.failure"
 msgstr ""
 
-#: aarau/views/settings/actions.py:47
+#: aarau/views/settings/action.py:47
 msgid "settings.email.addition.pending"
 msgstr ""
 
-#: aarau/views/settings/actions.py:55
+#: aarau/views/settings/action.py:55
 msgid "settings.email.addition.success"
 msgstr ""
 
-#: aarau/views/settings/actions.py:143
+#: aarau/views/settings/action.py:143
 msgid "settings.email.change.failure"
 msgstr ""
 
-#: aarau/views/settings/actions.py:140
+#: aarau/views/settings/action.py:140
 msgid "settings.email.change.success"
 msgstr ""
 
-#: aarau/views/settings/actions.py:87
+#: aarau/views/settings/action.py:87
 msgid "settings.email.confirmation.expired"
 msgstr ""
 
-#: aarau/views/settings/actions.py:90
+#: aarau/views/settings/action.py:90
 msgid "settings.email.confirmation.failure"
 msgstr ""
 
-#: aarau/views/settings/actions.py:93
+#: aarau/views/settings/action.py:93
 msgid "settings.email.confirmation.success"
 msgstr ""
 
-#: aarau/views/settings/actions.py:118
+#: aarau/views/settings/action.py:118
 msgid "settings.email.deletion.failure"
 msgstr ""
 
-#: aarau/views/settings/actions.py:115
+#: aarau/views/settings/action.py:115
 msgid "settings.email.deletion.success"
 msgstr ""
 
-#: aarau/views/settings/actions.py:174
+#: aarau/views/settings/action.py:174
 msgid "settings.password.change.failure"
 msgstr ""
 
-#: aarau/views/settings/actions.py:171
+#: aarau/views/settings/action.py:171
 msgid "settings.password.change.invalid"
 msgstr ""
 
-#: aarau/views/settings/actions.py:166
+#: aarau/views/settings/action.py:166
 msgid "settings.password.change.success"
 msgstr ""
 
-#: aarau/views/signup/actions.py:62
+#: aarau/views/signup/action.py:62
 msgid "signup.activation.expired"
 msgstr ""
 
-#: aarau/views/signup/actions.py:65
+#: aarau/views/signup/action.py:65
 msgid "signup.activation.failure"
 msgstr ""
 
-#: aarau/views/signup/actions.py:68
+#: aarau/views/signup/action.py:68
 msgid "signup.activation.success"
 msgstr ""
 
@@ -147,11 +151,11 @@ msgid "signup.agreement"
 msgstr ""
 "By clicking on $button below, you are agreeing to the $tos and the $pp"
 
-#: aarau/views/signup/actions.py:39
+#: aarau/views/signup/action.py:39
 msgid "signup.creation.failure"
 msgstr ""
 
-#: aarau/views/signup/actions.py:35
+#: aarau/views/signup/action.py:35
 msgid "signup.creation.success"
 msgstr ""
 
@@ -189,10 +193,18 @@ msgstr "This is your personal username."
 msgid "signup.username.placeholder"
 msgstr "william (optional)"
 
-#: aarau/views/console/site/actions.py:74
+#: aarau/views/console/site/action.py:79
 msgid "site.application.creation.failure"
 msgstr ""
 
-#: aarau/views/console/site/actions.py:69
+#: aarau/views/console/site/action.py:74
 msgid "site.application.creation.success"
+msgstr ""
+
+#: aarau/views/console/site/action.py:124
+msgid "site.application.update.failure"
+msgstr ""
+
+#: aarau/views/console/site/action.py:119
+msgid "site.application.update.success"
 msgstr ""
