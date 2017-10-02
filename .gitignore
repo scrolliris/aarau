@@ -11,7 +11,8 @@ __pycache__/
 
 app.yaml
 
-/bin/*.sh
+/bin/deliver
+/bin/sql-proxy
 /bin/gitlab-ci-multi-runner
 
 /db/seeds/*.yml
