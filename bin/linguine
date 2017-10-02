@@ -89,9 +89,9 @@ done
 run_extract_command() {
   if [ "${DOMAIN}" == "message" ]; then
     FILE_LIST="`find ./aarau -type f \( -name '*.py' -or -name '*.mako' \) \
-      ! -path "./**/*/forms.py" -print`"
+      ! -path "./**/*/form.py" -print`"
   elif [ "${DOMAIN}" == "form" ]; then
-    FILE_LIST="`find ./aarau/**/*/forms.py -type f \( -name '*.py' \) -print`"
+    FILE_LIST="`find ./aarau/**/*/form.py -type f \( -name '*.py' \) -print`"
   fi
   xgettext --default-domain=${DOMAIN} --sort-output --keyword=$KEYWORD \
     --output-dir=locale --output=${DOMAIN}.pot \
