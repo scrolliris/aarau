@@ -16,7 +16,8 @@ https://gitlab.com/lupine-software/aarau) (code name).
 
 ## Repository
 
-https://gitlab.com/lupine-software/neuchatel.git
+[https://gitlab.com/lupine-software/neuchatel](
+https://gitlab.com/lupine-software/neuchatel)
 
 
 ## Requirements
