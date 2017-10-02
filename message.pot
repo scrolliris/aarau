@@ -17,6 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: aarau/templates/_footer.mako:11
+msgid "link.text.cookie"
+msgstr ""
+
 #: aarau/templates/_footer.mako:10 aarau/templates/shared/signup.mako:74
 msgid "link.text.pp"
 msgstr ""
@@ -193,4 +197,12 @@ msgstr ""
 
 #: aarau/views/console/site/action.py:74
 msgid "site.application.creation.success"
+msgstr ""
+
+#: aarau/views/console/site/action.py:124
+msgid "site.application.update.failure"
+msgstr ""
+
+#: aarau/views/console/site/action.py:119
+msgid "site.application.update.success"
 msgstr ""
