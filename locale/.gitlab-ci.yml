@@ -2,10 +2,8 @@
 stages:
   - compile-catalog
 
-variables:
-  APT_CACHE_DIR: apt-cache
-
 cache:
+  key: apt-cache
   untracked: true
   paths:
     - apt-cache
@@ -13,6 +11,8 @@ cache:
 compile:
   stage: compile-catalog
   image: debian:latest
+  variables:
+    APT_CACHE_DIR: apt-cache
   before_script:
     - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
     - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
