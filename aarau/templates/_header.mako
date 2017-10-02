@@ -5,6 +5,7 @@
       <img class="logo" width="32" height="32" src="${util.static_url('img/scrolliris-logo-32x32.png')}">
     </h1></a>
     <a class="item" href="https://about.scrolliris.com/">About</a>
+    <a class="item" href="https://log.scrolliris.com/">Changelog</a>
 
     <nav class="right menu">
     % if req.user:
