@@ -2,12 +2,10 @@
 
 `/ɑ́ːràu/`
 
-[![build status](https://gitlab.com/lupine-software/aarau/badges/master/build.svg)](
-https://gitlab.com/lupine-software/aarau/commits/master) [![coverage report](
-https://gitlab.com/lupine-software/aarau/badges/master/coverage.svg)](
-https://gitlab.com/lupine-software/aarau/commits/master)
+[![pipeline status][ci-build]][commit] [
+![coverage report][ci-cov]][commit]
 
-![Scrolliris](https://gitlab.com/lupine-software/aarau/raw/master/aarau/assets/img/scrolliris-logo-300x300.png)
+![Scrolliris](aarau/assets/img/scrolliris-logo-300x300.png)
 
 ```txt
   ___,
@@ -20,6 +18,12 @@ Aarau; An Application of scRolliris As User interface
 ```
 
 The application of [https://scrolliris.com/](https://scrolliris.com/).
+
+
+## Repository
+
+[https://gitlab.com/lupine-software/aarau](
+https://gitlab.com/lupine-software/aarau)
 
 
 ## Requirements
@@ -72,11 +76,11 @@ Don't commit directly the changes on above translation project into this repo.
 
 ```zsh
 : setup `locale`
-(venv) % git remote add neuchatel https://gitlab.com/lupine-software/neuchatel.git
-(venv) % git subtree add --prefix locale neuchatel master
+% git remote add neuchatel https://gitlab.com/lupine-software/neuchatel.git
+% git subtree add --prefix locale neuchatel master
 
 : synchronize with updates into specified branch
-(venv) % git  pull -s subtree -Xsubtree=locale neuchatel master
+% git  pull -s subtree -Xsubtree=locale neuchatel master
 
 : subtree list
 % git log | grep git-subtree-dir | tr -d ' ' | cut -d ":" -f2 | sort | uniq
@@ -218,7 +222,7 @@ E.g. Google App Engine
   downloads/google-cloud-sdk-<VERSION>-linux-x86_64.tar.gz
 
 : check sha256 checksum
-(venv) % echo "<CHECKSUM>" "" ./google-cloud-sdk-<VERSION>-linux-x86_64.tar.gz \
+(venv) % echo "CHECKSUM" "" ./google-cloud-sdk-<VERSION>-linux-x86_64.tar.gz \
   | sha256sum -c -
 ./google-cloud-sdk-<VERSION>-linux-x86_64.tar.gz: OK
 (venv) % tar zxvf google-cloud-sdk-<VERSION>-linux-x86_64.tar.gz
@@ -336,10 +340,67 @@ The translation catalog needs GNU gettext.
 
 ## License
 
-Aarau; Copyright (c) 2017 Lupine Software LLC
+This project is distributed as various licenses by parts.
 
-This is free software;  
+### Documentation
+
+`GFDL-1.3`
+
+The files in the `aarau/doc` directory are distributed as
+GNU Free Documentation License. (version 1.3)
+
+```txt
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+```
+
+Check the [GNU Free Documentation License](
+https://www.gnu.org/licenses/fdl-1.3.en.html).
+
+### Resource (image)
+
+`CC-BY-NC-SA-4.0`
+
+The files in the `aarau/assets/img` directory are licensed under the
+Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+Public License.
+
+[![Creative Commons License](
+https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)](
+http://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+Check the [Legalcode](
+https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode).
+
+### Software (program)
+
+`AGPL-3.0`
+
+```
+Aarau
+Copyright (c) 2017 Lupine Software LLC
+
+This is free software:  
 You can redistribute it and/or modify it under the terms of the
-GNU Affero General Public License (AGPL).
+GNU Affero General Public License as published by the
+Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+```
 
 See [LICENSE](LICENSE).
+
+[ci-build]: https://gitlab.com/lupine-software/aarau/badges/master/build.svg
+[ci-cov]:https://gitlab.com/lupine-software/aarau/badges/master/coverage.svg
+[commit]: https://gitlab.com/lupine-software/aarau/commits/master
