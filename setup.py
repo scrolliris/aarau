@@ -44,20 +44,25 @@ requires = [
 
 development_requires = [
     'colorlog',
-    'flake8',
-    'flake8_docstrings',
-    'pylint',
     'PyYAML',
     'waitress',
+
+    'flake8',
+    'flake8_docstrings',
+    'pydocstyle',
+    'pycodestyle',
+    'pyflakes',
+    'pylint',
 ]
 
 testing_requires = [
     'colorlog',
+    'PyYAML',
+
     'mixer',
     'pytest',
     'pytest-cov',
     'pytest-mock',
-    'PyYAML',
     'WebTest',
 ]
 
@@ -72,10 +77,10 @@ setup(
     description='aarau',
     long_description=DESCRIPTION + '\n\n' + CHANGELOG,
     classifiers=[
-        "Programming Language :: Python",
-        "Framework :: Pyramid",
-        "Topic :: Internet :: WWW/HTTP",
-        "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+        'Programming Language :: Python',
+        'Framework :: Pyramid',
+        'Topic :: Internet :: WWW/HTTP',
+        'Topic :: Internet :: WWW/HTTP :: WSGI :: Application',
     ],
     author='',
     author_email='',
