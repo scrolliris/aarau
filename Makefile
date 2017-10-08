@@ -108,6 +108,15 @@ check-pylint:
 check: | check-flake8
 .PHONY: check
 
+build:
+ifeq (, $(shell which gulp 2>/dev/null))
+	$(info gulp command not found. run `npm install -g gulp-cli`)
+	$(info )
+else
+	gulp
+endif
+.PHONY: build
+
 clean:
 	find . ! -readable -prune -o -print \
 	 ! -path "./.git/*" ! -path "./node_modules/*" ! -path "./venv*" \
