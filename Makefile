@@ -96,8 +96,16 @@ catalog: | catalog-compile
 
 # utilities
 
-check:
+check-flake8:
 	flake8
+.PHONY: check-flake8
+
+check-pylint:
+	pylint
+.PHONY: check-pylint
+
+# TODO: add `check-pylint`
+check: | check-flake8
 .PHONY: check
 
 clean:
