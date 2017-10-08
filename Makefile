@@ -8,13 +8,21 @@ endif
 
 app := aarau
 
-# installation
+# -- installation
 
 setup:
 	pip install -e '.[${env}]' -c constraints.txt
 .PHONY: setup
 
-# database
+setup-force:
+	pip install --upgrade --force-reinstall -e '.[${env}]' -c constraints.txt
+.PHONY: setup-force
+
+update:
+	pip install --upgrade -e '.[${env}]' -c constraints.txt
+.PHONY: update
+
+# -- database
 
 db-init:
 	${app}_manage 'config/${env}.ini#${app}' db init
@@ -45,8 +53,7 @@ ifneq (test, $(ENV))
 endif
 .PHONY: db-reset
 
-
-# application
+# -- application
 
 # server
 serve:
@@ -63,7 +70,7 @@ start:
 	honcho start
 .PHONY: start
 
-# testing
+# -- testing
 
 test:
 	ENV=test py.test -c 'config/testing.ini' -s -q
@@ -74,7 +81,7 @@ coverage:
 	 term-missing:skip-covered
 .PHONY: coverage
 
-# translation
+# -- translation
 
 catalog-envct:
 	./bin/linguine envct message
@@ -94,7 +101,7 @@ catalog-update:
 catalog: | catalog-compile
 .PHONY: catalog
 
-# utilities
+# -- utility
 
 check-flake8:
 	flake8
@@ -130,6 +137,7 @@ else
 	gulp clean
 endif
 .PHONY: clean
+
 
 .DEFAULT_GOAL = coverage
 default: coverage
