@@ -50,7 +50,7 @@ def test_signup_with_validation_error(users, dummy_request):
     user = {
         'name': 'Hennnry the Penguin',
         'username': 'hennnry',
-        'email': 'henry@example.org', # alredy exists!
+        'email': 'henry@example.org',  # alredy exists!
         'password': 'SloooowAndSteady5',
     }
 
