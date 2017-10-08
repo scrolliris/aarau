@@ -44,10 +44,10 @@
       </div>
       <div class="column-3 column-v-8 offset-v-4 column-l-16" align="center">
         <div class="box">
-          <div class="header"><h3>Changelog</h3></div>
+          <div class="header"><h3>Our Updates</h3></div>
           <div class="description">
             <p>Scrolliris is currently under the development as public BETA.</p>
-            <a class="flat secondary button" href="https://log.scrolliris.com/">Check the Note</a>
+            <a class="flat secondary button" href="https://log.scrolliris.com/">Check the Log</a>
           </div>
         </div>
       </div>
