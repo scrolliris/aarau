@@ -154,14 +154,14 @@ Check `Makefile`
 Create migration file manually into `db/migrations`.
 
 ```zsh
-(venv) % make db-migrate   # migrate remains all migrations
+(venv) % make db-migrate # migrate remains all migrations
 (venv) % make db-rollback  # rollback latest migration
 ```
 
 #### Note
 
 You can generate a migration file with a command below, automatically.  
-But some custom fields are missing and the result doesn't match 
+But some custom fields are missing and the result doesn't match  
 our desired scheme.
 
 Create manually by your self for now.
@@ -172,7 +172,7 @@ Create manually by your self for now.
   --database 'postgresql://user:pass@localhost:5432/dbname' NAME
 ```
 
-### Style & Lint
+### Check & Lint
 
 * flake8
 * flake8-docstrings (pep257)
@@ -184,7 +184,12 @@ Create manually by your self for now.
 ```zsh
 : add hook
 (venv) % flake8 --install-hook git
-(venv) % make style
+
+(venv) % make check
+(venv) % make lint
+
+: run both
+(venv) % make vet
 ```
 
 #### JavaScript
@@ -335,7 +340,6 @@ The translation catalog needs GNU gettext.
 1. generate
 2. update
 3. compile
-
 
 
 ## License
