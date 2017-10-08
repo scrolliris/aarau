@@ -2,10 +2,8 @@
 
 `/ɑ́ːràu/`
 
-[![pipeline status][ci-build]][commit] [
-![coverage report][ci-cov]][commit]
+[![pipeline status][ci-build]][commit] [![coverage report][ci-cov]][commit]
 
-![Scrolliris](aarau/assets/img/scrolliris-logo-300x300.png)
 
 ```txt
   ___,
@@ -346,6 +344,11 @@ The translation catalog needs GNU gettext.
 
 This project is distributed as various licenses by parts.
 
+```txt
+Aarau
+Copyright (c) 2017 Lupine Software LLC
+```
+
 ### Documentation
 
 `GFDL-1.3`
@@ -384,10 +387,7 @@ https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode).
 
 `AGPL-3.0`
 
-```
-Aarau
-Copyright (c) 2017 Lupine Software LLC
-
+```txt
 This is free software:  
 You can redistribute it and/or modify it under the terms of the
 GNU Affero General Public License as published by the
@@ -405,6 +405,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 See [LICENSE](LICENSE).
 
+
 [ci-build]: https://gitlab.com/lupine-software/aarau/badges/master/build.svg
-[ci-cov]:https://gitlab.com/lupine-software/aarau/badges/master/coverage.svg
+[ci-cov]: https://gitlab.com/lupine-software/aarau/badges/master/coverage.svg
 [commit]: https://gitlab.com/lupine-software/aarau/commits/master
