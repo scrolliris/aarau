@@ -1,4 +1,4 @@
-"""The Contribution model.
+"""The Contribution model
 """
 from peewee import (
     ForeignKeyField,
@@ -15,9 +15,8 @@ from .user import User
 
 
 class Contribution(CardinalBase, TimestampMixin):
-    """Contribution model class.
+    """Relationship between user and article
     """
-    # pylint: disable=too-few-public-methods
     roles = ('primary_author', 'author', 'proofreader', 'cooperator',
              'translator', 'translator_supervisor', 'compiler', 'supervisor')
 
@@ -30,9 +29,7 @@ class Contribution(CardinalBase, TimestampMixin):
         related_name='contributions', null=False)
     role = EnumField(choices=roles, null=False, default='primary_author')
 
-    class Meta:
-        """The meta class of Contribution.
-        """
+    class Meta:  # pylint: disable=missing-docstring
         db_table = 'contributions'
 
     def __repr__(self):

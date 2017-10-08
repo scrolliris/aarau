@@ -21,7 +21,7 @@ from .publication import Publication
 
 
 class Project(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
-    """Project model class.
+    """Publishing project as workspace
     """
     # pylint: disable=too-many-ancestors
     billing_states = ('none', 'pending', 'processing', 'valid')
@@ -38,10 +38,7 @@ class Project(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
     billing_state = EnumField(
         choices=billing_states, null=False, default='none')
 
-    class Meta:
-        """The meta class of project.
-        """
-        # pylint: disable=too-few-public-methods
+    class Meta:  # pylint: disable=missing-docstring
         db_table = 'projects'
 
     def __init__(self, *args, **kwargs):
@@ -63,7 +60,7 @@ class Project(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
 
     @classmethod
     def get_by_access_key_id(cls, access_key_id):
-        """Fetches a project by unique access_key_id string.
+        """Fetches a project by unique access_key_id string
         """
         # pylint: disable=no-member
         return cls.select().where(
@@ -72,7 +69,7 @@ class Project(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
 
     @property
     def application_sites(self):
-        """Returns site objects to fetch applications of this project.
+        """Fetches external application sites
         """
         # pylint: disable=no-member
         return Site.select().join(Application, on=(
@@ -82,7 +79,7 @@ class Project(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
 
     @property
     def publication_sites(self):
-        """Returns site objects to fetch publications of this project.
+        """Returns internal publication sites
         """
         # pylint: disable=no-member
         return Site.select().join(Publication, on=(
@@ -92,7 +89,7 @@ class Project(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
 
     @property
     def primary_owner(self):
-        """Returns user as primary owner of this publication.
+        """Returns user as primary owner of this project
         """
         from .membership import Membership
         from .user import User

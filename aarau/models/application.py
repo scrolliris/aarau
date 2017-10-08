@@ -1,4 +1,4 @@
-"""The application model.
+"""The application model
 """
 from peewee import (
     CharField,
@@ -13,17 +13,14 @@ from .base import (
 
 
 class Application(CardinalBase, TimestampMixin, DeletedAtMixin):
-    """Application model class.
+    """User's external site
     """
     # pylint: disable=too-many-ancestors
     id = PrimaryKeyField()
     name = CharField(max_length=128, null=False)
     description = CharField(max_length=255, null=True)
 
-    class Meta:
-        """The meta class of application.
-        """
-        # pylint: disable=too-few-public-methods
+    class Meta:  # pylint: disable=missing-docstring
         db_table = 'applications'
 
     def __repr__(self):

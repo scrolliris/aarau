@@ -1,4 +1,4 @@
-"""The membership model.
+"""The membership model
 """
 from peewee import (
     ForeignKeyField,
@@ -15,7 +15,7 @@ from .project import Project
 
 
 class Membership(CardinalBase, TimestampMixin):
-    """Membership model class.
+    """Relationship between user and project
     """
     # pylint: disable=too-many-ancestors
     roles = ('primary_owner', 'owner', 'member')
@@ -30,9 +30,6 @@ class Membership(CardinalBase, TimestampMixin):
     role = EnumField(choices=roles, null=False, default='member')
 
     class Meta:
-        """The meta class of membership.
-        """
-        # pylint: disable=too-few-public-methods
         db_table = 'memberships'
 
     def __repr__(self):

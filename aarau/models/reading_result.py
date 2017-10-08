@@ -13,7 +13,7 @@ from peewee import (
 from .base import AnalysisBase, NumericRangeField
 
 
-class ReadingResult(AnalysisBase):  # pylint: disable=too-few-public-methods
+class ReadingResult(AnalysisBase):
     """Result model class.
     """
     # pylint: disable=too-many-ancestors
@@ -37,10 +37,7 @@ class ReadingResult(AnalysisBase):  # pylint: disable=too-few-public-methods
     created_at = DateTimeField(null=False, default=datetime.utcnow)
     updated_at = DateTimeField(null=False, default=datetime.utcnow)
 
-    class Meta:
-        """The meta class of site.
-        """
-        # pylint: disable=too-few-public-methods
+    class Meta:  # pylint: disable=missing-docstring
         db_table = 'reading_results'
 
     def __repr__(self):

@@ -1,4 +1,4 @@
-"""The user model.
+"""The user model
 """
 from datetime import datetime, timedelta
 
@@ -13,7 +13,7 @@ from .base import CardinalBase, EnumField, TimestampMixin, TokenizerMixin
 
 
 class User(CardinalBase, TokenizerMixin, TimestampMixin):
-    """User model class.
+    """User account has a primary email for authentication
     """
     # pylint: disable=too-many-ancestors
     activation_states = ('pending', 'active')
@@ -32,10 +32,7 @@ class User(CardinalBase, TokenizerMixin, TimestampMixin):
     reset_password_token_sent_at = DateTimeField(
         null=True, default=None)
 
-    class Meta:
-        """The meta class of user.
-        """
-        # pylint: disable=too-few-public-methods
+    class Meta:  # pylint: disable=missing-docstring
         db_table = 'users'
 
     @classmethod

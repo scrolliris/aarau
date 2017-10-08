@@ -1,4 +1,4 @@
-"""The classification model.
+"""The classification model
 """
 from peewee import (
     CharField,
@@ -13,7 +13,7 @@ from .base import (
 
 
 class Classification(CardinalBase, TimestampMixin):
-    """Classification model class.
+    """Classification identifier
     """
     # pylint: disable=too-many-ancestors
     id = PrimaryKeyField()
@@ -23,10 +23,7 @@ class Classification(CardinalBase, TimestampMixin):
     notation = CharField(max_length=64, null=False)
     name = CharField(max_length=128, null=False)
 
-    class Meta:
-        """The meta class of classification.
-        """
-        # pylint: disable=too-few-public-methods
+    class Meta:  # pylint: disable=missing-docstring
         db_table = 'classifications'
 
     def __repr__(self):

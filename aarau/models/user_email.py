@@ -15,6 +15,10 @@ from .user import User
 
 
 class UserEmail(CardinalBase, TokenizerMixin, TimestampMixin):
+    """Email belong to a user
+
+    A user has multiple emails. User object has primary email.
+    """
     activation_states = ('pending', 'active')
     types = ('primary', 'normal')
 

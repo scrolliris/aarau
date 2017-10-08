@@ -1,4 +1,4 @@
-"""The site model.
+"""The site model
 """
 from pyramid.decorator import reify
 from peewee import (
@@ -25,7 +25,7 @@ DeferredProject = DeferredRelation()  # pylint: disable=invalid-name
 
 
 class Site(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
-    """Site model class.
+    """Website belongs to project, which has type as application or publication
     """
     # pylint: disable=too-many-ancestors
     calculation_states = ('off', 'on')
@@ -44,10 +44,7 @@ class Site(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
     write_key = CharField(max_length=128, null=False)
     is_pinned = BooleanField(default=False)
 
-    class Meta:
-        """The meta class of site.
-        """
-        # pylint: disable=too-few-public-methods
+    class Meta:  # pylint: disable=missing-docstring
         db_table = 'sites'
 
     def __repr__(self):

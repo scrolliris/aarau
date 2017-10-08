@@ -29,7 +29,7 @@ HEALTH_CHECK_PATH = re.compile(r'^\/_ah\/health\/?$')
 
 
 class CustomRequest(Request):
-    """The custom request class has some utilities and callbacks.
+    """Custom request class has some utilities and callbacks
     """
     def __init__(self, *args, **kwargs):
         env_dict = (args[0] or {})
@@ -69,7 +69,7 @@ class CustomRequest(Request):
 
     @classmethod
     def trim_port(cls, env_dict):
-        """Removes port from links.
+        """Removes port from links
         """
         http_host = env_dict.get('HTTP_HOST', '')
         http_host = re.sub(':[0-9]+$', '', http_host)
@@ -80,7 +80,7 @@ class CustomRequest(Request):
 
     @classmethod
     def open_db(cls):
-        """Opens database connections if it's not opened.
+        """Opens database connections if it's not opened
         """
         if db.cardinal.is_closed():
             db.cardinal.connect()
@@ -90,7 +90,7 @@ class CustomRequest(Request):
 
     @classmethod
     def close_db(cls, req):
-        """Closes database connections if it's not closed.
+        """Closes database connections if it's not closed
         """
         if not req.db.cardinal.is_closed():
             req.db.cardinal.close()
@@ -100,7 +100,7 @@ class CustomRequest(Request):
 
     @property
     def settings(self):
-        """Gets settings dict.
+        """Returns settings dict
         """
         from aarau import get_settings
 
@@ -109,7 +109,7 @@ class CustomRequest(Request):
     # see https://github.com/Pylons/webob/issues/77
     @reify
     def remote_ip(self):
-        """Calculates client's ip address.
+        """Returns calcurated client's ip address
         """
         from collections import OrderedDict
         import itertools
@@ -145,14 +145,14 @@ class CustomRequest(Request):
         return ips[0] if found_trusted_ips else remote_addr
 
     def _ips_at(self, header):
-        """Returns valid ip address only.
+        """Returns only valid ip addresses from Header
         """
         value = self.environ.get(header, None)  # pylint: disable=no-member
         ips = re.split(r'[,\s]+', value) if value else []
         return [ip for ip in ips if IPV4_ADDR.match(ip) or IPV6_ADDR.match(ip)]
 
     def _set_hsts(self, req):
-        """Sets HSTS Header based on `X-Forwarded-Proto`.
+        """Sets HSTS header based on `X-Forwarded-Proto`
         """
         criteria = [
             (not self.env.is_production),
@@ -165,7 +165,7 @@ class CustomRequest(Request):
                 "max-age={};{}".format(hsts_max_age, hsts_options)
 
     def _force_ssl(self, env_dict):
-        """Set url schema forcing https for next request links.
+        """Sets url schema forcing https for next request links
         """
         env_dict['wsgi.url_scheme'] = self.settings.get(
             'wsgi.url_scheme', 'https')

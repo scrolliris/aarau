@@ -1,4 +1,4 @@
-"""The page model.
+"""The page model
 """
 from peewee import (
     CharField,
@@ -18,7 +18,7 @@ from .application import Application
 
 
 class Page(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
-    """Page model class.
+    """Web page belong to user's application, which is recorded via script
     """
     # pylint: disable=too-many-ancestors
     scopes = ('public', 'private')
@@ -32,10 +32,7 @@ class Page(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
     title = CharField(max_length=128, null=True)
     scope = EnumField(choices=scopes, null=False, default='public')
 
-    class Meta:
-        """The meta class of page.
-        """
-        # pylint: disable=too-few-public-methods
+    class Meta:  # pylint: disable=missing-docstring
         db_table = 'pages'
 
     def __repr__(self):

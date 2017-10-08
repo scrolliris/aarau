@@ -1,4 +1,4 @@
-"""The license model.
+"""The license model
 """
 from peewee import (
     CharField,
@@ -9,7 +9,7 @@ from .base import CardinalBase, TimestampMixin
 
 
 class License(CardinalBase, TimestampMixin):
-    """License model class.
+    """Open or proprietry license identifier
     """
     # pylint: disable=too-many-ancestors
     id = PrimaryKeyField()
@@ -17,10 +17,7 @@ class License(CardinalBase, TimestampMixin):
     fullname = CharField(max_length=64, null=False)
     url = CharField(max_length=128, null=False)
 
-    class Meta:
-        """The meta class of license.
-        """
-        # pylint: disable=too-few-public-methods
+    class Meta:  # pylint: disable=missing-docstring
         db_table = 'licenses'
 
     def __repr__(self):
@@ -29,7 +26,7 @@ class License(CardinalBase, TimestampMixin):
 
     @classmethod
     def get_by_identifier(cls, identifier):
-        """Get a license by identifier string.
+        """Fetches a license by identifier string
         """
         return cls.select().where(
             cls.identifier == identifier).get()

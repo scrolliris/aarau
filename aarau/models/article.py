@@ -24,7 +24,7 @@ from .publication import Publication
 
 
 class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
-    """Article model class
+    """Article is posted text
     """
     # pylint: disable=too-many-ancestors
     scopes = ('public', 'private')
@@ -51,10 +51,7 @@ class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
         choices=progress_states, null=False, default='draft')
     published_at = DateTimeField(null=True)
 
-    class Meta:
-        """The meta class of article
-        """
-        # pylint: disable=too-few-public-methods
+    class Meta:  # pylint: disable=missing-docstring
         db_table = 'articles'
 
     def __init__(self, *args, **kwargs):

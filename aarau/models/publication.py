@@ -1,4 +1,4 @@
-"""The publication model.
+"""The publication model
 """
 from peewee import (
     CharField,
@@ -17,7 +17,7 @@ from .classification import Classification
 
 
 class Publication(CardinalBase, TimestampMixin, DeletedAtMixin):
-    """Publication model class.
+    """Internal publication
     """
     # pylint: disable=too-many-ancestors
     id = PrimaryKeyField()
@@ -31,10 +31,7 @@ class Publication(CardinalBase, TimestampMixin, DeletedAtMixin):
         related_name='publications', null=True)
     copyright = CharField(max_length=64, null=False)
 
-    class Meta:
-        """The meta class of publication.
-        """
-        # pylint: disable=too-few-public-methods
+    class Meta:  # pylint: disable=missing-docstring
         db_table = 'publications'
 
     def __repr__(self):

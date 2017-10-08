@@ -1,4 +1,4 @@
-"""The plan model.
+"""The plan model
 """
 from peewee import (
     CharField,
@@ -15,7 +15,7 @@ from .base import (
 
 
 class Plan(CardinalBase, TimestampMixin):
-    """Plan model class.
+    """Payment plan
     """
     # pylint: disable=too-many-ancestors
     id = PrimaryKeyField()
@@ -24,10 +24,7 @@ class Plan(CardinalBase, TimestampMixin):
     price = FloatField(null=False, default=0.00)
     description = CharField(max_length=64, null=False)
 
-    class Meta:
-        """The meta class of plan.
-        """
-        # pylint: disable=too-few-public-methods
+    class Meta:  # pylint: disable=missing-docstring
         db_table = 'plans'
 
     def __repr__(self):
@@ -35,13 +32,13 @@ class Plan(CardinalBase, TimestampMixin):
 
     @classmethod
     def get_free_plan(cls):
-        """Returns free plan.
+        """Fetches free plan
         """
         return cls.select().where(cls.name == 'plan.free.name').get()
 
     @classproperty
     def as_choices(cls):  # pylint: disable=no-self-argument
-        """Returns plans as choices.
+        """Returns plans as choices
         """
         return [(str(p.id), p.name) for p in cls.select(
             cls.id, cls.name).order_by(cls.id.asc())]

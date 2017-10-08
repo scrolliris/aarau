@@ -154,7 +154,8 @@ disable=
   xrange-builtin,
   unichr-builtin,
   misplaced-comparison-constant,
-  cell-var-from-loop
+  cell-var-from-loop,
+  too-few-public-methods
 
 
 [REPORTS]
