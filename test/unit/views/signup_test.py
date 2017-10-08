@@ -1,4 +1,5 @@
 import pytest
+from webob.multidict import MultiDict
 
 
 @pytest.fixture(autouse=True)
@@ -18,8 +19,57 @@ def setup(request, config, mailer_outbox):
     request.addfinalizer(teardown)
 
 
+def test_signup_with_logged_in_user(users, dummy_request):
+    from aarau.views.signup.action import signup
+
+    dummy_request.user = users['oswald']
+    res = signup(dummy_request)
+
+    assert '302 Found' == res.status
+    assert '/' == res.location
+    assert not dummy_request.session.pop_flash('error')
+    assert 'Set-Cookie' not in res.headers
+
+
+def test_signup_with_none_submitted_request(dummy_request):
+    from aarau.views.signup.action import signup
+    from aarau.views.signup.form import SignupForm
+
+    dummy_request.user = None
+    dummy_request.params = dummy_request.POST = MultiDict()
+    res = signup(dummy_request)
+
+    assert isinstance(res['form'], SignupForm)
+    assert not dummy_request.session.pop_flash('error')
+
+
+def test_signup_with_validation_error(users, dummy_request):
+    from aarau.views.signup.action import signup
+    from aarau.views.signup.form import SignupForm
+
+    user = {
+        'name': 'Hennnry the Penguin',
+        'username': 'hennnry',
+        'email': 'henry@example.org', # alredy exists!
+        'password': 'SloooowAndSteady5',
+    }
+
+    dummy_request.user = None
+    dummy_request.params = dummy_request.POST = MultiDict({
+        'submit': '1',
+        'csrf_token': dummy_request.session.get_csrf_token(),
+        'name': user['name'],
+        'username': user['username'],
+        'email': user['email'],
+        'password': user['password'],
+    })
+    res = signup(dummy_request)
+
+    assert isinstance(res['form'], SignupForm)
+    assert dummy_request.session.pop_flash('error')
+
+
 def test_signup_with_valid_credentials(users, dummy_request):
-    from webob.multidict import MultiDict
     from aarau.views.signup.action import signup
 
     user = {  # The Egg Twins
@@ -40,9 +90,7 @@ def test_signup_with_valid_credentials(users, dummy_request):
     })
     res = signup(dummy_request)
 
-    assert not dummy_request.session.pop_flash('error')
     assert '302 Found' == res.status
     assert '/login' == res.location
-
-    # doesn't login yet
+    assert not dummy_request.session.pop_flash('error')
     assert 'Set-Cookie' not in res.headers
