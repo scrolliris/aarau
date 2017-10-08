@@ -65,7 +65,7 @@ build:
     - npm install --ignore-scripts
   script:
     - make clean
-    - gulp
+    - make build
   artifacts:
     untracked: true
     paths:
@@ -92,6 +92,7 @@ test:
     - pip --version
   script:
     - make clean
+    - make build
     - make setup
     - make db-init
     - make db-migrate
