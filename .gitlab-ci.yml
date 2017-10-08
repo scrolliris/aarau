@@ -19,7 +19,7 @@ cache:
 
 check:
   stage: check
-  image: python:3.5
+  image: python:3.5.4
   variables:
     ENV: development
   before_script:
@@ -34,7 +34,7 @@ check:
 
 compile:
   stage: compile
-  image: python:3.5
+  image: python:3.5.4
   variables:
     ENV: production
   before_script:
@@ -75,7 +75,7 @@ build:
 
 test:
   stage: test
-  image: python:3.5
+  image: python:3.5.4
   services:
     - postgres:9.6
     - redis:3.2
