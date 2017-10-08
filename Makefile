@@ -103,17 +103,17 @@ catalog: | catalog-compile
 
 # -- utility
 
-check-flake8:
+check:
 	flake8
-.PHONY: check-flake8
-
-check-pylint:
-	pylint
-.PHONY: check-pylint
-
-# TODO: add `check-pylint`
-check: | check-flake8
 .PHONY: check
+
+lint:
+	pylint aarau
+	pylint test
+.PHONY: lint
+
+vet: | check lint
+.PHONY: vet
 
 build:
 ifeq (, $(shell which gulp 2>/dev/null))
