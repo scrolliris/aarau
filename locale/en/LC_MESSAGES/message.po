@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Neuchâtel 0.1\n"
 "Report-Msgid-Bugs-To: support@scrolliris.com\n"
-"POT-Creation-Date: 2017-10-02 23:04+0900\n"
+"POT-Creation-Date: 2017-10-15 16:42+0900\n"
 "PO-Revision-Date: 2017-06-16 01:09+0900\n"
 "Last-Translator: Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>\n"
 "Language-Team: Scrolliris Translation Team <support@scrolliris.com>\n"
@@ -16,31 +16,31 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: aarau/templates/_footer.mako:11
+#: aarau/templates/_footer.mako:9
 msgid "link.text.cookie"
 msgstr "Cookie"
 
-#: aarau/templates/_footer.mako:10 aarau/templates/shared/signup.mako:74
+#: aarau/templates/_footer.mako:8 aarau/templates/shared/signup.mako:60
 msgid "link.text.pp"
 msgstr "Privacy Policy"
 
-#: aarau/templates/_footer.mako:9 aarau/templates/shared/signup.mako:73
+#: aarau/templates/_footer.mako:7 aarau/templates/shared/signup.mako:59
 msgid "link.text.tos"
 msgstr "Term of Service"
 
 #: aarau/views/auth.py:34
-msgid "login.error"
-msgstr ""
+msgid "login.failure"
+msgstr "The credential you've entered is incorrect"
 
 #: aarau/views/filter.py:32
 msgid "login.needed"
 msgstr ""
 
-#: aarau/templates/shared/signup.mako:60
+#: aarau/templates/shared/signup.mako:46
 msgid "misc.letters"
 msgstr "A-z"
 
-#: aarau/templates/shared/signup.mako:61
+#: aarau/templates/shared/signup.mako:47
 msgid "misc.numbers"
 msgstr "0-9"
 
@@ -146,7 +146,7 @@ msgstr ""
 msgid "signup.activation.success"
 msgstr ""
 
-#: aarau/templates/shared/signup.mako:71
+#: aarau/templates/shared/signup.mako:57
 msgid "signup.agreement"
 msgstr ""
 "By clicking on $button below, you are agreeing to the $tos and the $pp"
@@ -159,37 +159,37 @@ msgstr ""
 msgid "signup.creation.success"
 msgstr ""
 
-#: aarau/templates/shared/signup.mako:35
+#: aarau/templates/shared/signup.mako:21
 msgid "signup.email.description"
 msgstr "You need this to log in to your account."
 
-#: aarau/templates/shared/signup.mako:37
+#: aarau/templates/shared/signup.mako:23
 msgid "signup.email.placeholder"
 msgstr "william.shakespeare@scrolliris.com"
 
-#: aarau/templates/shared/signup.mako:43
+#: aarau/templates/shared/signup.mako:29
 msgid "signup.name.description"
 msgstr "This is your fullname."
 
-#: aarau/templates/shared/signup.mako:45
+#: aarau/templates/shared/signup.mako:31
 msgid "signup.name.placeholder"
 msgstr "William Shakespeare (optional)"
 
-#: aarau/templates/shared/signup.mako:59
+#: aarau/templates/shared/signup.mako:45
 msgid "signup.password.description"
 msgstr ""
 "At least, use one lower and one UPPER letter from: $letters, and one "
 "digit from: $numbers. 8 characters are minimum length."
 
-#: aarau/templates/shared/signup.mako:64
+#: aarau/templates/shared/signup.mako:50
 msgid "signup.password.placeholder"
 msgstr "Keep it secret :)"
 
-#: aarau/templates/shared/signup.mako:51
+#: aarau/templates/shared/signup.mako:37
 msgid "signup.username.description"
 msgstr "This is your personal username."
 
-#: aarau/templates/shared/signup.mako:53
+#: aarau/templates/shared/signup.mako:39
 msgid "signup.username.placeholder"
 msgstr "william (optional)"
 
