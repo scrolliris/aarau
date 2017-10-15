@@ -2,7 +2,7 @@
 
 `/nøʃatɛl/`
 
-[![pipelinestatus][ci-build]][commit]
+[![pipeline status][pipeline]][commit]
 
 ```txt
  , _                     _                   _
@@ -254,5 +254,5 @@ Free Documentation License".
 See [LICENSE](LICENSE).
 
 
-[ci-build]: https://gitlab.com/lupine-software/neuchatel/badges/master/build.svg
+[pipeline]: https://gitlab.com/lupine-software/neuchatel/badges/master/pipeline.svg
 [commit]: https://gitlab.com/lupine-software/neuchatel/commits/master
