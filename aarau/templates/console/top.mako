@@ -1,8 +1,8 @@
-<%inherit file='_layout.mako'/>
+<%namespace file='aarau:templates/macro/_title.mako' import="render_title"/>
 
-<%block name='title'>
-  Console | Scrolliris
-</%block>
+<%inherit file='aarau:templates/console/_layout.mako'/>
+
+<%block name='title'>${render_title('Console')}</%block>
 
 <%block name='breadcrumb'>
 </%block>

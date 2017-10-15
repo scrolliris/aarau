@@ -31,8 +31,8 @@ def login(req):
             headers = remember(req, user.id)
             return HTTPFound(location=next_path, headers=headers)
         _ = req.translate
-        req.session.flash(_('login.error'),
-                          queue='error',
+        req.session.flash(_('login.failure'),
+                          queue='failure',
                           allow_duplicate=False)
 
     return dict(next_path=next_path, email=email)

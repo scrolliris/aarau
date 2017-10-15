@@ -1,15 +1,15 @@
-<%inherit file='../_layout.mako'/>
+<%namespace file='aarau:templates/macro/_title.mako' import="render_title"/>
 
-<%block name='title'>
-  Settings - Account | Scrolliris
-</%block>
+<%inherit file='aarau:templates/_layout.mako'/>
+
+<%block name='title'>${render_title('Settings - Account')}</%block>
 
 <div class="content">
   <div id="settings">
     <div class="grid">
       <div class="row">
         <div class="column-3 offset-2 column-v-4 offset-v-1 column-l-16">
-          <%include file='_menu.mako'/>
+          <%include file='aarau:templates/settings/_menu.mako'/>
         </div>
 
         <div class="column-8 column-v-10 column-l-16">

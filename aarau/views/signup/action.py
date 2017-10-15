@@ -37,7 +37,7 @@ def signup(request):
             return HTTPFound(location=request.route_path('login'))
         else:
             request.session.flash(_('signup.creation.failure'),
-                                  queue='error', allow_duplicate=False)
+                                  queue='failure', allow_duplicate=False)
 
     return dict(form=form)
 
@@ -60,10 +60,10 @@ def signup_activate(request):
 
         if activator.has_token_expired():
             request.session.flash(_('signup.activation.expired'),
-                                  queue='error', allow_duplicate=False)
+                                  queue='failure', allow_duplicate=False)
         elif not activator.activate():
             request.session.flash(_('signup.activation.failure'),
-                                  queue='error', allow_duplicate=False)
+                                  queue='failure', allow_duplicate=False)
         else:
             request.session.flash(_('signup.activation.success'),
                                   queue='success', allow_duplicate=False)

@@ -77,7 +77,7 @@ def application_site_new(req):
             return HTTPFound(location=next_path)
         else:
             req.session.flash(_('site.application.creation.failure'),
-                              queue='error', allow_duplicate=False)
+                              queue='failure', allow_duplicate=False)
 
     return dict(form=form, project=project)
 
@@ -122,14 +122,14 @@ def application_site_edit(req):
             return HTTPFound(location=next_path)
         else:
             req.session.flash(_('site.application.update.failure'),
-                              queue='error', allow_duplicate=False)
+                              queue='failure', allow_duplicate=False)
 
     return dict(form=form, project=project, site=site,
                 application=site.application)
 
 
 @view_config(route_name='console.site.application.view.result',
-             renderer=tpl('application/view.result.mako'))
+             renderer=tpl('application/view_result.mako'))
 @login_required
 def application_site_view_result(req):
     """Renders a site result by id.
@@ -153,7 +153,7 @@ def application_site_view_result(req):
 
 
 @view_config(route_name='console.site.application.view.script',
-             renderer=tpl('application/view.script.mako'))
+             renderer=tpl('application/view_script.mako'))
 @login_required
 def application_site_view_script(req):
     """Renders a site script by id.
@@ -178,7 +178,7 @@ def application_site_view_script(req):
 
 
 @view_config(route_name='console.site.application.view.badge',
-             renderer=tpl('application/view.badge.mako'))
+             renderer=tpl('application/view_badge.mako'))
 @login_required
 def application_site_view_badge(req):
     """Renders badge view for this site

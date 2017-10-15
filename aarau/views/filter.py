@@ -30,5 +30,5 @@ def forbidden_redirect(req):
         return HTTPFound(location=req.route_url('top', namespace=None))
     else:
         req.session.flash(_('login.needed'),
-                          queue='error', allow_duplicate=False)
+                          queue='failure', allow_duplicate=False)
         return HTTPFound(location=req.route_url('login', namespace=None))

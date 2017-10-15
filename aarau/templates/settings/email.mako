@@ -1,24 +1,14 @@
-<%inherit file='../_layout.mako'/>
+<%namespace file='aarau:templates/macro/_error_message.mako' import="render_error_message"/>
+<%namespace file='aarau:templates/macro/_flash_message.mako' import="render_notice"/>
+<%namespace file='aarau:templates/macro/_title.mako' import="render_title"/>
 
-<%block name='title'>
-  Settings - Email | Scrolliris
-</%block>
+<%inherit file='aarau:templates/_layout.mako'/>
+
+<%block name='title'>${render_title('Email - Settings')}</%block>
 
 <%
-  err_msg = (req.session.pop_flash('error') or [None])[0]
-  wrn_msg = (req.session.pop_flash('warning') or [None])[0]
-  suc_msg = (req.session.pop_flash('success') or [None])[0]
-
-  def render_errors(field):
-      return ''.join(['<span class="small text">{}</span>'.format(e) for e in field.errors])
-
-
-  def t(text, length=25, suffix='...'):
-      txt = str(text)
-      if len(txt) <= length:
-          return txt
-      else:
-          return txt[:length - len(suffix)] + suffix
+  is_failure = (len(req.session.peek_flash('failure')) > 0)
+  is_success = (len(req.session.peek_flash('success')) > 0)
 %>
 
 <%def name="delete_email_form(f, ue)">
@@ -50,18 +40,11 @@
     <div class="grid">
       <div class="row">
         <div class="column-3 offset-2 column-v-4 offset-v-1 column-l-16">
-          <%include file='_menu.mako'/>
+          <%include file='aarau:templates/settings/_menu.mako'/>
         </div>
 
         <div class="column-8 column-v-10 column-l-16">
-
-          % if err_msg:
-          <div class="error message" role="alert">${err_msg}</div>
-          % elif wrn_msg:
-          <div class="warning message" role="alert">${wrn_msg}</div>
-          % elif suc_msg:
-          <div class="success message" role="alert">${suc_msg}</div>
-          % endif
+          ${render_notice()}
 
           <div class="attached header"><h6>Email</h6></div>
           <div class="attached box">
@@ -69,7 +52,7 @@
               <tbody>
                 % for ue in user_emails:
                   <%
-                    email = t(ue.email, length=35)
+                    email = req.util.truncate(ue.email, length=35)
                     email_form = email_forms[ue.id]
                   %>
                   <tr>
@@ -111,14 +94,14 @@
               </tbody>
             </table>
 
-            <form id="add_new_email" class="form${' error' if err_msg else ' success' if suc_msg else ''}" action="${req.route_url('settings.section', section='email')}" method="post">
+            <form id="add_new_email" class="form${' error' if is_failure else ' success' if is_success else ''}" action="${req.route_url('settings.section', section='email')}" method="post">
               ${form.csrf_token}
               <div class="row">
                 <div class="required field-10 ${' error' if form.new_email.errors else ''}">
                   <label class="label" for="new_email">New email address</label>
 
                   ${form.new_email(class_='', placeholder='new@example.org')}
-                  ${render_errors(form.new_email)|n}
+                  ${render_error_message(form.new_email)}
                 </div>
               </div>
               ${form.submit(class_='primary button')}

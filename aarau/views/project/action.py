@@ -59,5 +59,5 @@ def project_new(req):
             return HTTPFound(location=next_path)
         else:
             req.session.flash(_('project.creation.failure'),
-                              queue='error', allow_duplicate=False)
+                              queue='failure', allow_duplicate=False)
     return dict(form=form)

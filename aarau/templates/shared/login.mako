@@ -1,16 +1,9 @@
-<%inherit file='../_layout-basic.mako'/>
+<%namespace file='aarau:templates/macro/_flash_message.mako' import="render_notice"/>
+<%namespace file='aarau:templates/macro/_title.mako' import="render_title"/>
 
-<%block name='title'>
-  Log in |
-</%block>
+<%inherit file='aarau:templates/_layout-basic.mako'/>
 
-<%
-  err_msg = (req.session.pop_flash('error') or [None])[0]
-  suc_msg = (req.session.pop_flash('success') or [None])[0]
-
-  def render_errors(field):
-      return ''.join(['<span class="error">{}</span>'.format(e) for e in field.errors])
-%>
+<%block name='title'>${render_title('Log in')}</%block>
 
 <div class="content">
   <div class="login grid">
@@ -20,13 +13,10 @@
           <div class="header">
             <a href="${req.route_url('top', namespace=None)}"><img class="logo" width="32" height="32" src="${util.static_url('img/scrolliris-logo-32x32.png')}"></a>
           </div>
+
           <form id="login" class="form${' error' if err_msg  else ' success' if suc_msg else ''}" action="${req.route_url('login')}" method="post">
             <h4 class="header">Log in to Scrolliris</h4>
-          % if err_msg:
-            <div class="error message" role="alert">${err_msg}</div>
-          % elif suc_msg:
-            <div class="positive message" role="alert">${suc_msg}</div>
-          % endif
+            ${render_notice()}
             <input type="hidden" name="csrf_token" value="${request.session.get_csrf_token()}">
             <input type="hidden" name="next" value="${next_path}">
 

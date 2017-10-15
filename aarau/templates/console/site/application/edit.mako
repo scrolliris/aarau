@@ -1,8 +1,9 @@
-<%inherit file='../../_layout.mako'/>
+<%namespace file='aarau:templates/macro/_flash_message.mako' import="render_notice"/>
+<%namespace file='aarau:templates/macro/_title.mako' import="render_title"/>
 
-<%block name='title'>
-  Edit Application | Scrolliris
-</%block>
+<%inherit file='aarau:templates/console/_layout.mako'/>
+
+<%block name='title'>${render_title('Edit Application')}</%block>
 
 <%block name='breadcrumb'>
 <div class="breadcrumb">
@@ -18,8 +19,8 @@
   <div class="grid">
     <div class="row">
       <div class="column-9">
-        <%namespace name='msg' file='../../../shared/_message.mako'/>
-        ${msg.form()}
+        ${render_notice()}
+
         <h2 class="header">Edit Site</h2>
         <p class="description"></p>
         <%
@@ -28,7 +29,7 @@
           # FIXME
           err = ''
         %>
-        <%include file="../_form.mako" args="f=form, act=act, ctx=ctx, err=err"/>
+        <%include file="aarau:templates/console/site/_form.mako" args="f=form, act=act, ctx=ctx, err=err"/>
       </div>
     </div>
   </div>

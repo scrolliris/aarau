@@ -94,7 +94,7 @@ def test_settings_email_with_pending_email(users, login_as, dummy_app):
         # FIXME: locale
         res.charset = None
         assert ('settings.email.addition.pending'
-                '') in res.html.select_one('.warning.message')
+                '') in res.html.select_one('.warning.message p')
 
 
 def test_settings_email_with_invalid_email(users, login_as, dummy_app):
@@ -118,7 +118,7 @@ def test_settings_email_with_invalid_email(users, login_as, dummy_app):
         # FIXME: locale
         res.charset = None
         assert ('settings.email.addition.failure'
-                '') in res.html.select_one('.error.message')
+                '') in res.html.select_one('.failure.message p')
 
         user_emails = user.emails.order_by(
             UserEmail.type.asc(), UserEmail.id.asc())
@@ -149,7 +149,7 @@ def test_settings_email_with_valid_email(users, login_as, dummy_app):
         # FIXME: locale
         res.charset = None
         assert ('settings.email.addition.success'
-                '') in res.html.select_one('.success.message')
+                '') in res.html.select_one('.success.message p')
 
         user_emails = user.emails.order_by(
             UserEmail.type.asc(), UserEmail.id.asc())
@@ -185,7 +185,7 @@ def test_settings_email_activate_with_expired_token(
         # FIXME: locale
         res.charset = None
         assert ('settings.email.confirmation.expired'
-                '') in res.html.select_one('.error.message')
+                '') in res.html.select_one('.warning.message p')
 
 
 def test_settings_email_activate_with_unexpected_error(
@@ -218,7 +218,7 @@ def test_settings_email_activate_with_unexpected_error(
         # FIXME: locale
         res.charset = None
         assert ('settings.email.confirmation.failure'
-                '') in res.html.select_one('.error.message')
+                '') in res.html.select_one('.failure.message p')
 
 
 def test_settings_email_activate_with_valid_token(users, login_as, dummy_app):
@@ -242,7 +242,7 @@ def test_settings_email_activate_with_valid_token(users, login_as, dummy_app):
         # FIXME: locale
         res.charset = None
         assert ('settings.email.confirmation.success'
-                '') in res.html.select_one('.success.message')
+                '') in res.html.select_one('.success.message p')
 
         user_email.refresh()
         assert 'active' == user_email.activation_state
@@ -275,7 +275,7 @@ def test_settings_email_delete_with_invalid_email(
         # FIXME: locale
         res.charset = None
         assert ('settings.email.deletion.failure'
-                '') in res.html.select_one('.error.message')
+                '') in res.html.select_one('.failure.message p')
 
 
 def test_settings_email_delete_with_valid_email(
@@ -307,7 +307,7 @@ def test_settings_email_delete_with_valid_email(
         # FIXME: locale
         res.charset = None
         assert ('settings.email.deletion.success'
-                '') in res.html.select_one('.success.message')
+                '') in res.html.select_one('.success.message p')
 
         # pylint: disable=no-member
         with pytest.raises(UserEmail.DoesNotExist):
@@ -364,7 +364,7 @@ def test_settings_password_with_validation_errors(
         # FIXME: locale
         res.charset = None
         assert ('settings.password.change.failure'
-                '') in res.html.select_one('.error.message')
+                '') in res.html.select_one('.failure.message p')
         assert 'Field must be between 6 and 32 characters long.' in \
             res.html.form.text
         assert 'Password' in res.html.select_one('.header > h6')
@@ -391,5 +391,5 @@ def test_settings_password_with_valid_credentials(
         # FIXME: locale
         res.charset = None
         assert ('settings.password.change.success'
-                '') in res.html.select_one('.success.message')
+                '') in res.html.select_one('.success.message p')
         assert 'Password' in res.html.select_one('.header > h6')

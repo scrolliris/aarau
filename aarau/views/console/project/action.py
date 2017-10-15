@@ -78,7 +78,7 @@ def project_new(req):
             return HTTPFound(location=next_path)
         else:
             req.session.flash(_('project.creation.failure'),
-                              queue='error', allow_duplicate=False)
+                              queue='failure', allow_duplicate=False)
     return dict(form=form)
 
 
@@ -113,5 +113,5 @@ def project_edit(req):
                 'console.project.view', id=project.id))
         else:
             req.session.flash(_('project.update.failure'),
-                              queue='error', allow_duplicate=False)
+                              queue='failure', allow_duplicate=False)
     return dict(form=form, project=project)

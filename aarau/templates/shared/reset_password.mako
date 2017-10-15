@@ -1,15 +1,10 @@
-<%inherit file='../_layout-basic.mako'/>
+<%namespace file='aarau:templates/macro/_error_message.mako' import="render_error_message"/>
+<%namespace file='aarau:templates/macro/_flash_message.mako' import="render_notice"/>
+<%namespace file='aarau:templates/macro/_title.mako' import="render_title"/>
 
-<%block name='title'>
-  Reset password | Scrolliris
-</%block>
+<%inherit file='aarau:templates/_layout-basic.mako'/>
 
-<%
-  err_msg = (req.session.pop_flash('error') or [None])[0]
-
-  def render_errors(field):
-      return ''.join(['<span class="error text">{}</span>'.format(e) for e in field.errors])
-%>
+<%block name='title'>${render_title('Reset password')}</%block>
 
 <div class="content">
   <div class="reset-password grid">
@@ -21,21 +16,21 @@
           </div>
           <form id="reset_password" class="form${' error' if err_msg else ''}" action="${req.route_url('reset_password', token=token)}" method="post">
             ${form.csrf_token}
+
             <h4 class="header">Reset password</h4>
-            % if err_msg:
-            <div class="error message" role="alert">${err_msg}</div>
-            % endif
+            ${render_notice()}
+
             <p class="description">At least, use one lower and one UPPER letter <code>A-z</code>, and one digit from: <code>0-9</code>. 8 characters are minimum length. Make it strong.</p>
             <div class="required field${' error' if form.new_password.errors else ''}">
               <label class="label" for="new_password">New password</label>
               ${form.new_password(class_='', placeholder='Don\'t foget :)')}
-              ${render_errors(form.new_password)|n}
+              ${render_error_message(form.new_password)}
             </div>
 
             <div class="required field${' error' if form.new_password_confirmation.errors else ''}">
               <label class="label" for="new_password_confirmation">New password confirmation</label>
               ${form.new_password_confirmation(class_='')}
-              ${render_errors(form.new_password_confirmation)|n}
+              ${render_error_message(form.new_password_confirmation)}
             </div>
 
             ${form.submit(class_='secondary button')}

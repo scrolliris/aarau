@@ -107,11 +107,11 @@ class TemplateUtil(object):
         path = self.manifest_json.get(path, path)
         return self.static_url(path)
 
-    def truncate(self, str_val, limit) -> str:  # pylint: disable=no-self-use
-        """Returns new truncated string and appends '...'
+    def truncate(self, str_val, length=25, suffix='...') -> str:  # pylint: disable=no-self-use
+        """Returns new truncated string and appends suffix
         """
         if not isinstance(str_val, str):
             return ''
-        if len(str_val) > limit:
-            str_val = str_val[:limit - 3] + '...'
+        if len(str_val) > length:
+            str_val = str_val[:length - len(suffix)] + suffix
         return str_val

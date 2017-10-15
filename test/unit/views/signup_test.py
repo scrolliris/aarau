@@ -27,7 +27,7 @@ def test_signup_with_logged_in_user(users, dummy_request):
 
     assert '302 Found' == res.status
     assert '/' == res.location
-    assert not dummy_request.session.pop_flash('error')
+    assert not dummy_request.session.pop_flash('failure')
     assert 'Set-Cookie' not in res.headers
 
 
@@ -40,7 +40,7 @@ def test_signup_with_none_submitted_request(dummy_request):
     res = signup(dummy_request)
 
     assert isinstance(res['form'], SignupForm)
-    assert not dummy_request.session.pop_flash('error')
+    assert not dummy_request.session.pop_flash('failure')
 
 
 def test_signup_with_validation_error(users, dummy_request):
@@ -66,7 +66,7 @@ def test_signup_with_validation_error(users, dummy_request):
     res = signup(dummy_request)
 
     assert isinstance(res['form'], SignupForm)
-    assert dummy_request.session.pop_flash('error')
+    assert dummy_request.session.pop_flash('failure')
 
 
 def test_signup_with_valid_credentials(users, dummy_request):
@@ -92,5 +92,5 @@ def test_signup_with_valid_credentials(users, dummy_request):
 
     assert '302 Found' == res.status
     assert '/login' == res.location
-    assert not dummy_request.session.pop_flash('error')
+    assert not dummy_request.session.pop_flash('failure')
     assert 'Set-Cookie' not in res.headers

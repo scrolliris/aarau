@@ -1,8 +1,9 @@
-<%inherit file='../_layout.mako'/>
+<%namespace file='aarau:templates/macro/_flash_message.mako' import="render_notice"/>
+<%namespace file='aarau:templates/macro/_title.mako' import="render_title"/>
 
-<%block name='title'>
-  New Project | Scrolliris
-</%block>
+<%inherit file='aarau:templates/console/_layout.mako'/>
+
+<%block name='title'>${render_title('New Project')}</%block>
 
 <%block name='breadcrumb'>
 <div class="breadcrumb">
@@ -16,8 +17,8 @@
   <div class="grid">
     <div class="row">
       <div class="column-8">
-        <%namespace name='msg' file='../../shared/_message.mako'/>
-        ${msg.form()}
+        ${render_notice()}
+
         <%
           act = req.route_path('console.project.new')
           ctx = 'new'
@@ -25,7 +26,7 @@
           err = ''
           obj = None
         %>
-        <%include file="_form.mako" args="f=form, act=act, ctx=ctx, err=err, obj=obj"/>
+        <%include file="aarau:templates/console/project/_form.mako" args="f=form, act=act, ctx=ctx, err=err, obj=obj"/>
       </div>
     </div>
   </div>

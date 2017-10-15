@@ -1,8 +1,9 @@
-<%inherit file='../_layout.mako'/>
+<%namespace file='aarau:templates/macro/_flash_message.mako' import="render_notice"/>
+<%namespace file='aarau:templates/macro/_title.mako' import="render_title"/>
 
-<%block name='title'>
-  Project | Scrolliris
-</%block>
+<%inherit file='aarau:templates/console/_layout.mako'/>
+
+<%block name='title'>${render_title('Project')}</%block>
 
 <%block name='breadcrumb'>
 <div class="breadcrumb">
@@ -12,9 +13,11 @@
 </div>
 </%block>
 
+<%block name='footer'>
+</%block>
+
 <div id ="publication" class="content">
-  <%namespace name='msg' file='../../shared/_message.mako'/>
-  ${msg.form()}
+  ${render_notice()}
 
   <div class="grid">
     <div class="row">
@@ -58,6 +61,3 @@
     </div>
   </div>
 </div>
-
-<%block name='footer'>
-</%block>

@@ -57,7 +57,7 @@ def settings_email(request):
             return HTTPFound(location=next_path)
         else:
             request.session.flash(_('settings.email.addition.failure'),
-                                  queue='error', allow_duplicate=False)
+                                  queue='failure', allow_duplicate=False)
 
     email_forms = {}
     for user_email in user_emails:
@@ -85,10 +85,10 @@ def settings_email_activate(request):
 
         if activator.has_token_expired():
             request.session.flash(_('settings.email.confirmation.expired'),
-                                  queue='error', allow_duplicate=False)
+                                  queue='warning', allow_duplicate=False)
         elif not activator.activate():
             request.session.flash(_('settings.email.confirmation.failure'),
-                                  queue='error', allow_duplicate=False)
+                                  queue='failure', allow_duplicate=False)
         else:
             request.session.flash(_('settings.email.confirmation.success'),
                                   queue='success', allow_duplicate=False)
@@ -116,7 +116,7 @@ def settings_email_delete(request):
                                   queue='success', allow_duplicate=False)
         else:
             request.session.flash(_('settings.email.deletion.failure'),
-                                  queue='error', allow_duplicate=False)
+                                  queue='failure', allow_duplicate=False)
 
     return HTTPFound(location=request.route_path(
         'settings.section', section='email'))
@@ -141,7 +141,7 @@ def settings_email_change(request):
                                   queue='success', allow_duplicate=False)
         else:
             request.session.flash(_('settings.email.change.failure'),
-                                  queue='error', allow_duplicate=False)
+                                  queue='failure', allow_duplicate=False)
 
     return HTTPFound(location=request.route_path(
         'settings.section', section='email'))
@@ -169,8 +169,8 @@ def settings_password(request):
                     'settings.section', section='password'))
             else:
                 request.session.flash(_('settings.password.change.invalid'),
-                                      queue='error', allow_duplicate=False)
+                                      queue='failure', allow_duplicate=False)
         else:
             request.session.flash(_('settings.password.change.failure'),
-                                  queue='error', allow_duplicate=False)
+                                  queue='failure', allow_duplicate=False)
     return dict(form=form)

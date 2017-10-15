@@ -1,15 +1,16 @@
-<%inherit file='_layout.mako'/>
+<%namespace file='aarau:templates/macro/_flash_message.mako' import="render_notice"/>
+<%namespace file='aarau:templates/macro/_title.mako' import="render_title"/>
 
-<%block name='title'>
-  Scrolliris
-</%block>
+<%inherit file='aarau:templates/_layout.mako'/>
+
+<%block name='title'>${render_title('')}</%block>
 
 <div class="content">
   <div class="grid">
     <div class="row">
       <div class="column-16" align="center">
-        <%namespace name='msg' file='./shared/_message.mako'/>
-        ${msg.form()}
+        ${render_notice()}
+
         <div class="banner">
           <h1 class="header">Beyond the Scroll</h1>
           <p>Extend your publication readability beyond the scroll with Scrolliris</p>

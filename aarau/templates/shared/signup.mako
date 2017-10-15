@@ -1,16 +1,10 @@
-<%inherit file='../_layout.mako'/>
+<%namespace file='aarau:templates/macro/_error_message.mako' import="render_error_message"/>
+<%namespace file='aarau:templates/macro/_flash_message.mako' import="render_notice"/>
+<%namespace file='aarau:templates/macro/_title.mako' import="render_title"/>
 
-<%block name='title'>
- Sign up | Scrolliris
-</%block>
+<%inherit file='aarau:templates/_layout.mako'/>
 
-<%
-  err_msg = (req.session.pop_flash('error') or [None])[0]
-  suc_msg = (req.session.pop_flash('success') or [None])[0]
-
-  def render_errors(field):
-      return ''.join(['<p class="error text">{}</p>'.format(e) for e in field.errors])
-%>
+<%block name='title'>${render_title('Sign up')}</%block>
 
 <div class="content">
   <div class="signup grid">
@@ -20,22 +14,14 @@
           ${form.csrf_token}
           <h2 class="header">Create your user account</h2>
 
-        % if err_msg or suc_msg:
-          % if err_msg:
-            <div class="error message" role="alert">
-            <p>${err_msg}</p>
-          </div>
-          % elif suc_msg:
-            <div class="succsess message" role="alert">${suc_msg}</div>
-          % endif
-        % endif
+          ${render_notice()}
 
           <div class="required field-13${' error' if form.email.errors else ''}">
             <label class="label" for="email">${__(form.email.label.text)}</label>
             <p class="description">${_('signup.email.description')}</p>
 
             ${form.email(class_='', placeholder=_('signup.email.placeholder'))}
-            ${render_errors(form.email)|n}
+            ${render_error_message(form.email)}
           </div>
 
           <div class="field-11${' error' if form.name.errors else ''}">
@@ -43,7 +29,7 @@
             <p class="description">${_('signup.name.description')}</p>
 
             ${form.name(class_='', placeholder=_('signup.name.placeholder'))}
-            ${render_errors(form.name)|n}
+            ${render_error_message(form.name)}
           </div>
 
           <div class="field-8${' error' if form.username.errors else ''}">
@@ -51,7 +37,7 @@
             <p class="description">${_('signup.username.description')}</p>
 
             ${form.username(class_='', placeholder=_('signup.username.placeholder'))}
-            ${render_errors(form.username)|n}
+            ${render_error_message(form.username)}
           </div>
 
           <div class="required field-16${' error' if form.password.errors else ''}">
@@ -62,7 +48,7 @@
             })|n,trim,clean(tags=['code'])}</p>
             <div class="field-11">
               ${form.password(class_='', placeholder=_('signup.password.placeholder'))}
-              ${render_errors(form.password)|n}
+              ${render_error_message(form.password)}
             </div>
           </div>
 
@@ -83,7 +69,7 @@
 
       <div class="column-4 offset-1 column-v-5 offset-v-1 column-l-16">
         <div class="primary box">
-          <h6>You'll love Scrolliris</h6>
+          <h6>You&apos;ll love Scrolliris</h6>
           <div class="list">
             <div class="item">
               <div class="content">

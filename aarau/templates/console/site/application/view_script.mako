@@ -1,8 +1,9 @@
-<%inherit file='../../_layout.mako'/>
+<%namespace file='aarau:templates/macro/_flash_message.mako' import="render_notice"/>
+<%namespace file='aarau:templates/macro/_title.mako' import="render_title"/>
 
-<%block name='title'>
-  Site | Project | Scrolliris
-</%block>
+<%inherit file='aarau:templates/console/_layout.mako'/>
+
+<%block name='title'>${render_title('Site | Project')}</%block>
 
 <%block name='breadcrumb'>
 <div class="breadcrumb">
@@ -14,9 +15,11 @@
 </div>
 </%block>
 
+<%block name='footer'>
+</%block>
+
 <div id ="project" class="content">
-  <%namespace name='msg' file='../../../shared/_message.mako'/>
-  ${msg.form()}
+  ${render_notice()}
 
   <div class="grid">
     <div class="row">
@@ -69,7 +72,7 @@
           <div class="row">
             <div class="column-16">
               <h5>Readability Analysis Tracker</h5>
-              <p class="description">Set <code>PROJECT_ID</code> and configure <label class="negative label">WRITE_KEY</label> as `apiKey` with yours. You can just paste this snippet at the bottom of body of your article. The script will work based on user's scroll. At least, you need to include this for readability analysis of your texts.</p>
+              <p class="description">Set <code>PROJECT_ID</code> and configure <label class="negative label">WRITE_KEY</label> as `apiKey` with yours. You can just paste this snippet at the bottom of body of your article. The script will work based on user&apos;s scroll. At least, you need to include this for readability analysis of your texts.</p>
               <p class="description">The source code is available from also <a href="https://gitlab.com/lupine-software/siret" target="_blank">our repository</a>. (codename: siret)</p>
               <pre class="inverted">(function(d, w) {
   var config = {
@@ -111,6 +114,3 @@
     </div>
   </div>
 </div>
-
-<%block name='footer'>
-</%block>

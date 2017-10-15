@@ -38,5 +38,5 @@ def test_forbidden_redirect(dummy_request):
     assert '302 Found' == res.status
     # FIXME: locale
     assert 'login.needed' == \
-           dummy_request.session.pop_flash('error')[0]
+           dummy_request.session.pop_flash('failure')[0]
     assert 'http://example.org/login' == res.location

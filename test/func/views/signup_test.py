@@ -50,7 +50,7 @@ def test_signup(users, dummy_app):
     res.charset = None
     # FIXME: locale
     assert ('signup.creation.success'
-            '') in res.html.select_one('div.message')
+            '') in res.html.select_one('.success.message p')
 
     mailer = get_mailer(dummy_app.app.registry)
     message = mailer.outbox[0]

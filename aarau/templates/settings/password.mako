@@ -1,31 +1,20 @@
-<%inherit file='../_layout.mako'/>
+<%namespace file='aarau:templates/macro/_error_message.mako' import="render_error_message"/>
+<%namespace file='aarau:templates/macro/_flash_message.mako' import="render_notice"/>
+<%namespace file='aarau:templates/macro/_title.mako' import="render_title"/>
 
-<%block name='title'>
-  Settings - Password | Scrolliris
-</%block>
+<%inherit file='aarau:templates/_layout.mako'/>
 
-<%
-  err_msg = (req.session.pop_flash('error') or [None])[0]
-  suc_msg = (req.session.pop_flash('success') or [None])[0]
-
-  def render_errors(field):
-      return ''.join(['<span class="small text">{}</span>'.format(e) for e in field.errors])
-%>
+<%block name='title'>${render_title('Password - Settings')}</%block>
 
 <div class="content">
   <div id="settings">
     <div class="grid">
       <div class="column-3 offset-2 column-v-4 offset-v-1 column-l-16">
-        <%include file='_menu.mako'/>
+        <%include file='aarau:templates/settings/_menu.mako'/>
       </div>
 
       <div class="column-8 column-v-10 column-l-16">
-
-        % if err_msg:
-        <div class="error message" role="alert">${err_msg}</div>
-        % elif suc_msg:
-        <div class="success message">${suc_msg}</div>
-        % endif
+        ${render_notice()}
 
         <div class="attached header"><h6>Password</h6></div>
         <div class="attached box">
@@ -36,19 +25,19 @@
               <div class="required field-10${' error' if form.current_password.errors else ''}">
                 <label class="label" for="current_password">Current password</label>
                 ${form.current_password(class_='')}
-                ${render_errors(form.current_password)|n}
+                ${render_error_message(form.current_password)}
               </div>
 
               <div class="required field-10${' error' if form.new_password.errors else ''}">
                 <label class="label" for="new_password">New password</label>
                 ${form.new_password(class_='')}
-                ${render_errors(form.new_password)|n}
+                ${render_error_message(form.new_password)}
               </div>
 
               <div class="required field-10${' error' if form.new_password_confirmation.errors else ''}">
                 <label class="label" for="new_password_confirmation">New password confirmation</label>
                 ${form.new_password_confirmation(class_='')}
-                ${render_errors(form.new_password_confirmation)|n}
+                ${render_error_message(form.new_password_confirmation)}
               </div>
             </div>
             ${form.submit(class_='primary button')}

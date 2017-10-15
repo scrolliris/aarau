@@ -68,8 +68,8 @@ def test_login_with_wrong_email(users, dummy_request):
     res = login(dummy_request)
 
     # FIXME: locale
-    assert 'login.error' == \
-           dummy_request.session.pop_flash('error')[0]
+    assert 'login.failure' == \
+           dummy_request.session.pop_flash('failure')[0]
     assert 'unknown' == res['email']
 
 
@@ -87,8 +87,8 @@ def test_login_with_wrong_password(users, dummy_request):
     res = login(dummy_request)
 
     # FIXME: locale
-    assert 'login.error' == \
-           dummy_request.session.pop_flash('error')[0]
+    assert 'login.failure' == \
+           dummy_request.session.pop_flash('failure')[0]
     assert user.email == res['email']
 
 
@@ -106,8 +106,8 @@ def test_login_as_pending_user(users, dummy_request):
     res = login(dummy_request)
 
     # FIXME: locale
-    assert 'login.error' == \
-           dummy_request.session.pop_flash('error')[0]
+    assert 'login.failure' == \
+           dummy_request.session.pop_flash('failure')[0]
     assert user.email == res['email']
 
 
@@ -125,7 +125,7 @@ def test_login_with_valid_credentials(users, dummy_request):
     }
     res = login(dummy_request)
 
-    assert not dummy_request.session.pop_flash('error')
+    assert not dummy_request.session.pop_flash('failure')
     assert '302 Found' == res.status
     assert '/' == res.location
 

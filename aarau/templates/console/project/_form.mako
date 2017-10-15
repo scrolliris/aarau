@@ -1,9 +1,6 @@
-<%page args="f, act, ctx, err, obj"/>
+<%namespace file='aarau:templates/macro/_error_message.mako' import='render_error_message'/>
 
-<%
-  def render_errors(field):
-      return ''.join(['<p class="error text">{}</p>'.format(e) for e in field.errors])
-%>
+<%page args="f, act, ctx, err, obj"/>
 
 <form id="${ctx}_project" class="form${' error' if err is not None else ''}" action="${act}" method="post">
   ${f.csrf_token}
@@ -13,7 +10,7 @@
     <div class="required field-9${' error' if f.name.errors else ''}">
       <label class="label" for="name">Name</label>
       ${f.name(class_='', placeholder='My Project')}
-      ${render_errors(f.name)|n}
+      ${render_error_message(f.name)}
     </div>
   </div>
 
@@ -22,7 +19,7 @@
       <label class="label" for="namespace">Namespace</label>
       <p class="description">It must be unique in our system.</p>
       ${f.namespace(class_='', placeholder='sample-project')}
-      ${render_errors(f.namespace)|n}
+      ${render_error_message(f.namespace)}
     </div>
   </div>
 
@@ -37,7 +34,7 @@
         ${p()}
       % endfor
       </select>
-      ${render_errors(f.plan)|n}
+      ${render_error_message(f.plan)}
     </div>
   </div>
 
@@ -46,7 +43,7 @@
     <div class="field-16${' error' if f.description.errors else ''}">
       <label class="label" for="description">Description</label>
       ${f.description(class_='', rows=2, cols=50, placeholder='A note for collaborators...')}
-      ${render_errors(f.description)|n}
+      ${render_error_message(f.description)}
     </div>
   </div>
 

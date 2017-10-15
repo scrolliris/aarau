@@ -79,7 +79,7 @@ def test_settings_email_with_missing_csrf(users, dummy_request):
     assert user.emails == res['user_emails']
     assert_user_email_forms(res['user_emails'], res['email_forms'])
     assert {'csrf_token': ['Invalid CSRF']} == res['form'].errors
-    assert dummy_request.session.peek_flash('error')
+    assert dummy_request.session.peek_flash('failure')
 
 
 def test_settings_email_with_invalid_csrf(users, dummy_request):
@@ -99,7 +99,7 @@ def test_settings_email_with_invalid_csrf(users, dummy_request):
     assert user.emails == res['user_emails']
     assert_user_email_forms(res['user_emails'], res['email_forms'])
     assert {'csrf_token': ['Invalid CSRF']} == res['form'].errors
-    assert dummy_request.session.peek_flash('error')
+    assert dummy_request.session.peek_flash('failure')
 
 
 def test_settings_email_with_pending_email(
@@ -140,7 +140,7 @@ def test_settings_email_with_invalid_email(users, dummy_request):
     ] == [ue.email for ue in res['user_emails']]
     assert_user_email_forms(res['user_emails'], res['email_forms'])
     assert {'new_email': ['Invalid email address.']} == res['form'].errors
-    assert dummy_request.session.peek_flash('error')
+    assert dummy_request.session.peek_flash('failure')
 
 
 def test_settings_email_with_valid_email(users, dummy_request):
@@ -192,7 +192,7 @@ def test_settings_email_activate_with_expired_token(
     }
     res = settings_email_activate(dummy_request)
 
-    assert dummy_request.session.peek_flash('error')
+    assert dummy_request.session.peek_flash('warning')
     assert '302 Found' == res.status
     assert '/settings/email' == res.location
 
@@ -219,7 +219,7 @@ def test_settings_email_activate_with_unexpected_error(
 
         res = settings_email_activate(dummy_request)
 
-        assert dummy_request.session.peek_flash('error')
+        assert dummy_request.session.peek_flash('failure')
         assert '302 Found' == res.status
         assert '/settings/email' == res.location
     finally:
@@ -319,7 +319,7 @@ def test_settings_password_with_invalid_csrf(users, dummy_request):
 
     assert isinstance(res['form'], ChangePasswordForm)
     assert {'csrf_token': ['Invalid CSRF']} == res['form'].errors
-    assert dummy_request.session.peek_flash('error')
+    assert dummy_request.session.peek_flash('failure')
 
 
 def test_settings_password_with_wrong_current_password(
@@ -339,7 +339,7 @@ def test_settings_password_with_wrong_current_password(
 
     assert isinstance(res['form'], ChangePasswordForm)
     assert {} == res['form'].errors
-    assert dummy_request.session.peek_flash('error')
+    assert dummy_request.session.peek_flash('failure')
 
 
 def test_settings_password_with_invalid_new_password(
@@ -361,7 +361,7 @@ def test_settings_password_with_invalid_new_password(
     assert {'new_password': [
         'Field must be between 6 and 32 characters long.',
     ]} == res['form'].errors
-    assert dummy_request.session.peek_flash('error')
+    assert dummy_request.session.peek_flash('failure')
 
 
 def test_settings_password_with_invalid_new_password_confirmation(
@@ -383,7 +383,7 @@ def test_settings_password_with_invalid_new_password_confirmation(
     assert {'new_password_confirmation': [
         'Passwords must match',
     ]} == res['form'].errors
-    assert dummy_request.session.peek_flash('error')
+    assert dummy_request.session.peek_flash('failure')
 
 
 def test_settings_password_with_valid_params(users, dummy_request):

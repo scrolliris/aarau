@@ -37,7 +37,7 @@ def reset_password_request(request):
                 'reset_password.request'))
         else:
             request.session.flash(_('reset_password.request.failure'),
-                                  queue='error',
+                                  queue='failure',
                                   allow_duplicate=False)
     return dict(form=form)
 
@@ -62,7 +62,7 @@ def reset_password(request):
     _ = request.translate
     if user.reset_password_token_expires_at < datetime.utcnow():
         request.session.flash(_('reset_password.update.expired'),
-                              queue='error', allow_duplicate=False)
+                              queue='failure', allow_duplicate=False)
         return HTTPFound(location=request.route_path('reset_password'))
 
     form = reset_password_form_factory(request)
@@ -74,5 +74,5 @@ def reset_password(request):
             return HTTPFound(location=request.route_path('login'))
         else:
             request.session.flash(_('reset_password.update.failure'),
-                                  queue='error', allow_duplicate=False)
+                                  queue='failure', allow_duplicate=False)
     return dict(token=token, form=form)
