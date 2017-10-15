@@ -30,7 +30,7 @@ msgstr "Term of Service"
 
 #: aarau/views/auth.py:34
 msgid "login.failure"
-msgstr ""
+msgstr "The credential you've entered is incorrect"
 
 #: aarau/views/filter.py:32
 msgid "login.needed"
