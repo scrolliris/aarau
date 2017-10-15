@@ -83,10 +83,10 @@ coverage:
 
 # -- translation
 
-catalog-envct:
-	./bin/linguine envct message
-	./bin/linguine envct form
-.PHONY: catalog-envct
+catalog-extract:
+	./bin/linguine extract message
+	./bin/linguine extract form
+.PHONY: catalog-extract
 
 catalog-compile:
 	./bin/linguine compile message en
