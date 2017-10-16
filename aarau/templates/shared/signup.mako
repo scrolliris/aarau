@@ -6,16 +6,28 @@
 
 <%block name='title'>${render_title('Sign up')}</%block>
 
+<%
+  is_failure = (len(req.session.peek_flash('failure')) > 0)
+  is_success = (len(req.session.peek_flash('success')) > 0)
+%>
+
 <div class="content">
   <div class="signup grid">
     <div class="row">
       <div class="column-6 offset-3 column-v-8 offset-v-1 column-l-16">
-        <form id="signup" class="form${' error' if err_msg is not None else ''}" action="${req.route_path('signup')}" method="post">
+        <form id="signup" class="form${' error' if is_failure is not None else ''}" action="${req.route_path('signup')}" method="post">
           ${form.csrf_token}
           <h2 class="header">Create your user account</h2>
 
           ${render_notice()}
 
+        % if is_success:
+          <div class="note">
+            <p>We sent an instruction email to you.
+               Please check your inbox for the account activation!</p>
+             After that, go to <a class="link" href="${req.route_url('login')}">Log in</a>
+          </div>
+        % else:
           <div class="required field-13${' error' if form.email.errors else ''}">
             <label class="label" for="email">${__(form.email.label.text)}</label>
             <p class="description">${_('signup.email.description')}</p>
@@ -56,14 +68,15 @@
             <div class="petit info message">
               <p class="content">${_('signup.agreement', mapping={
                 'button': __(form.submit.label.text),
-                'tos': '<a href="{}">{}</a>'.format('/', _('link.text.tos')),
-                'pp': '<a href="{}">{}</a>'.format('/', _('link.text.pp'))})|n,trim,clean(tags=['a'], attributes=['href'])}</p>
+                'tos': '<a href="{}" target="_blank">{}</a>'.format('https://doc.scrolliris.com/terms.html', _('link.text.tos')),
+                'pp': '<a href="{}" target="_blank">{}</a>'.format('https://doc.scrolliris.com/policy.html', _('link.text.pp'))})|n,trim,clean(tags=['a'], attributes=['href', 'target'])}</p>
             </div>
           </div>
 
           <div class="field-13">
             ${form.submit(class_='ui large primary button', value=__(form.submit.label.text))}
           </div>
+        % endif
         </form>
       </div>
 

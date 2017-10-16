@@ -39,8 +39,7 @@ def test_reset_password_with_valid_email(  # pylint: disable=invalid-name
 
     res = res.follow(status=200)
     res.charset = None
-    # FIXME: locale
-    assert 'reset_password.request.success' \
+    assert 'Password reset has been successfully requested' \
            '' in res.html.select_one('.success.message p')
     assert 'Reset password' in res.html.select_one('h4.header')
 

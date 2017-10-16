@@ -34,7 +34,7 @@ def signup(request):
 
             request.session.flash(_('signup.creation.success'),
                                   queue='success', allow_duplicate=False)
-            return HTTPFound(location=request.route_path('login'))
+            return HTTPFound(location=request.route_path('signup'))
         else:
             request.session.flash(_('signup.creation.failure'),
                                   queue='failure', allow_duplicate=False)

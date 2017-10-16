@@ -24,19 +24,19 @@
             <div class="row">
               <div class="required field-10${' error' if form.current_password.errors else ''}">
                 <label class="label" for="current_password">Current password</label>
-                ${form.current_password(class_='')}
+                ${form.current_password(class_='', autocomplete='current-password')}
                 ${render_error_message(form.current_password)}
               </div>
 
               <div class="required field-10${' error' if form.new_password.errors else ''}">
                 <label class="label" for="new_password">New password</label>
-                ${form.new_password(class_='')}
+                ${form.new_password(class_='', autocomplete='new-password')}
                 ${render_error_message(form.new_password)}
               </div>
 
               <div class="required field-10${' error' if form.new_password_confirmation.errors else ''}">
                 <label class="label" for="new_password_confirmation">New password confirmation</label>
-                ${form.new_password_confirmation(class_='')}
+                ${form.new_password_confirmation(class_='', autocomplete='off')}
                 ${render_error_message(form.new_password_confirmation)}
               </div>
             </div>

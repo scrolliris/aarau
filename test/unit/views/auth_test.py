@@ -67,8 +67,7 @@ def test_login_with_wrong_email(users, dummy_request):
     }
     res = login(dummy_request)
 
-    # FIXME: locale
-    assert 'login.failure' == \
+    assert 'The credential you\'ve entered is incorrect' == \
            dummy_request.session.pop_flash('failure')[0]
     assert 'unknown' == res['email']
 
@@ -86,8 +85,7 @@ def test_login_with_wrong_password(users, dummy_request):
     }
     res = login(dummy_request)
 
-    # FIXME: locale
-    assert 'login.failure' == \
+    assert 'The credential you\'ve entered is incorrect' == \
            dummy_request.session.pop_flash('failure')[0]
     assert user.email == res['email']
 
@@ -105,8 +103,7 @@ def test_login_as_pending_user(users, dummy_request):
     }
     res = login(dummy_request)
 
-    # FIXME: locale
-    assert 'login.failure' == \
+    assert 'The credential you\'ve entered is incorrect' == \
            dummy_request.session.pop_flash('failure')[0]
     assert user.email == res['email']
 

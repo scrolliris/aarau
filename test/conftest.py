@@ -222,7 +222,7 @@ def config(request, settings) -> Configurator:
     config.include('aarau.security')
     config.include('aarau.route')
 
-    # config.add_translation_dirs('aarau:../locale')
+    config.add_translation_dirs('aarau:../locale')
 
     from pyramid.events import BeforeRender, NewRequest
     from aarau.utils import set_cache_controls

@@ -91,9 +91,8 @@ def test_settings_email_with_pending_email(users, login_as, dummy_app):
         assert 'http://example.org/settings/email' == res.location
         res = res.follow(status=200)
         assert '200 OK' == res.status
-        # FIXME: locale
         res.charset = None
-        assert ('settings.email.addition.pending'
+        assert ('You have already a pending verification for new email address'
                 '') in res.html.select_one('.warning.message p')
 
 
@@ -115,9 +114,8 @@ def test_settings_email_with_invalid_email(users, login_as, dummy_app):
 
         res = dummy_app.post('/settings/email', params=params, status=200)
         assert '200 OK' == res.status
-        # FIXME: locale
         res.charset = None
-        assert ('settings.email.addition.failure'
+        assert ('Email address could not been added'
                 '') in res.html.select_one('.failure.message p')
 
         user_emails = user.emails.order_by(
@@ -146,9 +144,8 @@ def test_settings_email_with_valid_email(users, login_as, dummy_app):
         res = dummy_app.post('/settings/email', params=params, status=302)
         res = res.follow(status=200)
         assert '200 OK' == res.status
-        # FIXME: locale
         res.charset = None
-        assert ('settings.email.addition.success'
+        assert ('New email address has been successfully added'
                 '') in res.html.select_one('.success.message p')
 
         user_emails = user.emails.order_by(
@@ -182,9 +179,8 @@ def test_settings_email_activate_with_expired_token(
         res = res.follow(status=200)
 
         assert '200 OK' == res.status
-        # FIXME: locale
         res.charset = None
-        assert ('settings.email.confirmation.expired'
+        assert ('New email verification token has been already expired'
                 '') in res.html.select_one('.warning.message p')
 
 
@@ -215,9 +211,8 @@ def test_settings_email_activate_with_unexpected_error(
         res = res.follow(status=200)
 
         assert '200 OK' == res.status
-        # FIXME: locale
         res.charset = None
-        assert ('settings.email.confirmation.failure'
+        assert ('New email could not been verified'
                 '') in res.html.select_one('.failure.message p')
 
 
@@ -239,9 +234,8 @@ def test_settings_email_activate_with_valid_token(users, login_as, dummy_app):
         res = res.follow(status=200)
 
         assert '200 OK' == res.status
-        # FIXME: locale
         res.charset = None
-        assert ('settings.email.confirmation.success'
+        assert ('New email address has been successfully verified'
                 '') in res.html.select_one('.success.message p')
 
         user_email.refresh()
@@ -272,9 +266,8 @@ def test_settings_email_delete_with_invalid_email(
         res = res.follow(status=200)
 
         assert '200 OK' == res.status
-        # FIXME: locale
         res.charset = None
-        assert ('settings.email.deletion.failure'
+        assert ('Email address could not been deleted'
                 '') in res.html.select_one('.failure.message p')
 
 
@@ -304,9 +297,8 @@ def test_settings_email_delete_with_valid_email(
         res = res.follow(status=200)
 
         assert '200 OK' == res.status
-        # FIXME: locale
         res.charset = None
-        assert ('settings.email.deletion.success'
+        assert ('Email address has been successfully deleted'
                 '') in res.html.select_one('.success.message p')
 
         # pylint: disable=no-member
@@ -361,9 +353,8 @@ def test_settings_password_with_validation_errors(
         res = form.submit('submit', value='Change')
 
         assert '200 OK' == res.status
-        # FIXME: locale
         res.charset = None
-        assert ('settings.password.change.failure'
+        assert ('Password could not been changed'
                 '') in res.html.select_one('.failure.message p')
         assert 'Field must be between 6 and 32 characters long.' in \
             res.html.form.text
@@ -388,8 +379,7 @@ def test_settings_password_with_valid_credentials(
         assert 'http://example.org/settings/password' == res.location
 
         res = res.follow(status=200)
-        # FIXME: locale
         res.charset = None
-        assert ('settings.password.change.success'
+        assert ('Password has been successfully changed'
                 '') in res.html.select_one('.success.message p')
         assert 'Password' in res.html.select_one('.header > h6')

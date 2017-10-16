@@ -48,8 +48,7 @@ def test_signup(users, dummy_app):
     assert '302 Found' == res.status
     res = res.follow(status=200)
     res.charset = None
-    # FIXME: locale
-    assert ('signup.creation.success'
+    assert ('Your signup has been successfully requested'
             '') in res.html.select_one('.success.message p')
 
     mailer = get_mailer(dummy_app.app.registry)

@@ -22,12 +22,12 @@
 
             <div class="field">
               <label class="label" for="emai">Email</label>
-              <input type="text" id="email" name="email" value="${email}" placeholder="Email address">
+              <input type="text" id="email" name="email" value="${email}" title="Email address" placeholder="Email address" autocomplete="email">
             </div>
 
             <div class="field">
               <label class="label" for="password">Password</label>
-              <input type="password" id="password" name="password" placeholder="Secret password">
+              <input type="password" id="password" name="password" title="Secret password" placeholder="Secret password" autocomplete="off">
             </div>
             <button class="primary button" type="submit" name="submit" value="1">Log in</button>
           </form>

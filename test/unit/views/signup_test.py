@@ -91,6 +91,6 @@ def test_signup_with_valid_credentials(users, dummy_request):
     res = signup(dummy_request)
 
     assert '302 Found' == res.status
-    assert '/login' == res.location
+    assert '/signup' == res.location
     assert not dummy_request.session.pop_flash('failure')
     assert 'Set-Cookie' not in res.headers
