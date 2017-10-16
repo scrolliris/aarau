@@ -34,7 +34,7 @@ msgstr "The credential you've entered is incorrect"
 
 #: aarau/views/filter.py:32
 msgid "login.needed"
-msgstr ""
+msgstr "Please log in"
 
 #: aarau/templates/shared/signup.mako:46
 msgid "misc.letters"
@@ -64,87 +64,87 @@ msgstr ""
 
 #: aarau/views/reset_password/action.py:39
 msgid "reset_password.request.failure"
-msgstr ""
+msgstr "Reset password request has been failed"
 
 #: aarau/views/reset_password/action.py:33
 msgid "reset_password.request.success"
-msgstr ""
+msgstr "Password reset has been successfully requested"
 
 #: aarau/views/reset_password/action.py:64
 msgid "reset_password.update.expired"
-msgstr ""
+msgstr "Reset password token has been already expired"
 
 #: aarau/views/reset_password/action.py:76
 msgid "reset_password.update.failure"
-msgstr ""
+msgstr "Password could not been updated"
 
 #: aarau/views/reset_password/action.py:72
 msgid "reset_password.update.success"
-msgstr ""
+msgstr "Password has been successfully updated"
 
 #: aarau/views/settings/action.py:59
 msgid "settings.email.addition.failure"
-msgstr ""
+msgstr "Email address could not been added"
 
 #: aarau/views/settings/action.py:47
 msgid "settings.email.addition.pending"
-msgstr ""
+msgstr "You have already a pending verification for new email address"
 
 #: aarau/views/settings/action.py:55
 msgid "settings.email.addition.success"
-msgstr ""
+msgstr "New email address has been successfully added"
 
 #: aarau/views/settings/action.py:143
 msgid "settings.email.change.failure"
-msgstr ""
+msgstr "Primary email address could not been changed"
 
 #: aarau/views/settings/action.py:140
 msgid "settings.email.change.success"
-msgstr ""
+msgstr "Primary email address successfully changed"
 
 #: aarau/views/settings/action.py:87
 msgid "settings.email.confirmation.expired"
-msgstr ""
+msgstr "New email verification token has been already expired"
 
 #: aarau/views/settings/action.py:90
 msgid "settings.email.confirmation.failure"
-msgstr ""
+msgstr "New email could not been verified"
 
 #: aarau/views/settings/action.py:93
 msgid "settings.email.confirmation.success"
-msgstr ""
+msgstr "New email address has been successfully verified"
 
 #: aarau/views/settings/action.py:118
 msgid "settings.email.deletion.failure"
-msgstr ""
+msgstr "Email address could not been deleted"
 
 #: aarau/views/settings/action.py:115
 msgid "settings.email.deletion.success"
-msgstr ""
+msgstr "Email address has been successfully deleted"
 
 #: aarau/views/settings/action.py:174
 msgid "settings.password.change.failure"
-msgstr ""
+msgstr "Password could not been changed"
 
 #: aarau/views/settings/action.py:171
 msgid "settings.password.change.invalid"
-msgstr ""
+msgstr "Invalid password"
 
 #: aarau/views/settings/action.py:166
 msgid "settings.password.change.success"
-msgstr ""
+msgstr "Password has been successfully changed"
 
 #: aarau/views/signup/action.py:62
 msgid "signup.activation.expired"
-msgstr ""
+msgstr "Activation token has been already expired"
 
 #: aarau/views/signup/action.py:65
 msgid "signup.activation.failure"
-msgstr ""
+msgstr "Your account could not been activated"
 
 #: aarau/views/signup/action.py:68
 msgid "signup.activation.success"
-msgstr ""
+msgstr "Your account has been successfully activated"
 
 #: aarau/templates/shared/signup.mako:57
 msgid "signup.agreement"
@@ -153,11 +153,11 @@ msgstr ""
 
 #: aarau/views/signup/action.py:39
 msgid "signup.creation.failure"
-msgstr ""
+msgstr "Your signup has been failed"
 
 #: aarau/views/signup/action.py:35
 msgid "signup.creation.success"
-msgstr ""
+msgstr "Your signup has been successfully requested"
 
 #: aarau/templates/shared/signup.mako:21
 msgid "signup.email.description"
@@ -195,16 +195,16 @@ msgstr "william (optional)"
 
 #: aarau/views/console/site/action.py:79
 msgid "site.application.creation.failure"
-msgstr ""
+msgstr "Site could not been created"
 
 #: aarau/views/console/site/action.py:74
 msgid "site.application.creation.success"
-msgstr ""
+msgstr "Site has been successfully created"
 
 #: aarau/views/console/site/action.py:124
 msgid "site.application.update.failure"
-msgstr ""
+msgstr "Site could not been updated"
 
 #: aarau/views/console/site/action.py:119
 msgid "site.application.update.success"
-msgstr ""
+msgstr "Site has been successfully updated"
