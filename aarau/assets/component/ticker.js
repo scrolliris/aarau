@@ -18,10 +18,6 @@ class Ticker extends Component {
   render() {
     return h('p', null, [
       h('span', null, [(new Date()).toUTCString()])
-    , h('span', null, [
-      this.state.publications, ' publications, '
-    , this.state.articles, ' articles;'
-    ])
     , 'Scrolliris — Found 2017'
     ])
   }
