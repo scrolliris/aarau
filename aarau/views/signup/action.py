@@ -8,7 +8,7 @@ from pyramid.view import view_config
 from aarau.models.user import User
 from aarau.services.interface import IActivator
 from aarau.views import tpl
-from aarau.views.signup.form import signup_form_factory
+from aarau.views.signup.form import build_signup_form
 
 
 @view_config(route_name='signup', request_method=('GET', 'POST'),
@@ -21,7 +21,7 @@ def signup(request):
         return HTTPFound(location=request.route_path('top'))
 
     _ = request.translate
-    form = signup_form_factory(request)
+    form = build_signup_form(request)
     if 'submit' in request.POST:
         if form.validate():
             user = User(email=form.email.data, name=form.name.data,

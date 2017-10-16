@@ -1,3 +1,7 @@
+""" Signup form
+"""
+from datetime import datetime
+
 from wtforms import (
     StringField,
     PasswordField,
@@ -15,8 +19,8 @@ from aarau.views.form import (
 )
 
 
-class SignupForm(SecureForm):
-    """
+class SignupFormBase(SecureForm):
+    """ Base signup form definition
     """
     email = StringField(_('signup.label.email'), [
         v.Required(),
@@ -40,20 +44,33 @@ class SignupForm(SecureForm):
     submit = SubmitField(_('signup.submit.create'))
 
 
-def signup_form_factory(request):
-    class ASignupForm(SignupForm):
-        def validate_email(self, field):
-            from ...models.user_email import UserEmail
-            user_email = UserEmail.select().where(
-                UserEmail.email == field.data).first()
-            if user_email:
-                raise ValidationError('Email address is already registered.')
+class SignupForm(SignupFormBase):
+    """ Signup form
+    """
+    # pylint: disable=no-self-use
 
-        def validate_username(self, field):
-            from ...models.user import User
-            user = User.select().where(
-                User.username == field.data).first()
-            if user:
-                raise ValidationError('This username is already taken.')
+    def validate_email(self, field):
+        """ Valites email address
+        """
+        from ...models.user_email import UserEmail
+        user_email = UserEmail.select().where(
+            (UserEmail.email == field.data) &
+            ((UserEmail.activation_token_expires_at >= datetime.utcnow()) |
+             (UserEmail.activation_state == 'active'))).first()
+        if user_email:
+            raise ValidationError('Email address is already registered')
 
-    return build_form(ASignupForm, request)
+    def validate_username(self, field):
+        """ Validates username
+        """
+        from ...models.user import User
+        user = User.select().where(
+            User.username == field.data).first()
+        if user:
+            raise ValidationError('This username is already taken')
+
+
+def build_signup_form(request):
+    """ Builds signup form
+    """
+    return build_form(SignupForm, request)
