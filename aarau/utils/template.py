@@ -43,6 +43,7 @@ def clean(**kwargs) -> 'function':
 
 
 class TemplateUtil(object):
+    # pylint: disable=no-self-use
     """The utility for templates
 
     In some cases, no-self-use is disabled for convenience at templates
@@ -63,7 +64,7 @@ class TemplateUtil(object):
             return route.name
 
     @reify
-    def manifest_json(self) -> dict:  # pylint: disable=no-self-use
+    def manifest_json(self) -> dict:
         """Reads manifest.json as dict
         """
         manifest_file = os.path.join(
@@ -79,7 +80,7 @@ class TemplateUtil(object):
         return data
 
     @reify
-    def typekit_id(self) -> str:  # pylint: disable=no-self-use
+    def typekit_id(self) -> str:
         """Return typekit id from env
         """
         from ..env import Env
@@ -107,7 +108,7 @@ class TemplateUtil(object):
         path = self.manifest_json.get(path, path)
         return self.static_url(path)
 
-    def truncate(self, str_val, length=25, suffix='...') -> str:  # pylint: disable=no-self-use
+    def truncate(self, str_val, length=25, suffix='...') -> str:
         """Returns new truncated string and appends suffix
         """
         if not isinstance(str_val, str):
