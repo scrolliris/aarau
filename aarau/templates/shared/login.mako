@@ -18,7 +18,7 @@
             <h4 class="header">Log in to Scrolliris</h4>
             ${render_notice()}
             <input type="hidden" name="csrf_token" value="${request.session.get_csrf_token()}">
-            <input type="hidden" name="next" value="${next_path}">
+            <input type="hidden" name="next_path" value="${next_path}">
 
             <div class="field">
               <label class="label" for="emai">Email</label>

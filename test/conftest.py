@@ -250,7 +250,7 @@ def config(request, settings) -> Configurator:
 
 
 @pytest.fixture(scope='function')
-def dummy_request(db, extra_environ) -> Request:
+def dummy_request(db, settings, extra_environ) -> Request:
     """Returns Dummy request object
     """
     from pyramid import testing
@@ -266,7 +266,7 @@ def dummy_request(db, extra_environ) -> Request:
         _LOCALE_=locale_name,
         locale_name=locale_name,
         matched_route=None,
-        settings={},
+        settings=settings,
     )
     # for service objects
     req.service_cache = AdapterRegistry()

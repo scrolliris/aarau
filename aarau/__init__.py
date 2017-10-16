@@ -45,19 +45,25 @@ def resolve_names(settings, directive='aarau.includes'):
 def resolve_env_vars(settings):
     """ Overrides settings with vars from os.environ.
     """
+    def get_new_v(env, value, expected_type):
+        """Gets expected value from environ variable
+        """
+        new_v = env.get(value, None)
+        if not isinstance(new_v, expected_type):
+            return None
+        # split, but ignore empty string
+        if ',' in new_v:
+            new_v = [v for v in new_v.split(',') if v != '']
+        return new_v
+
     env = Env()
     s = settings.copy()
-    for k, v in env.settings_mappings.items():
+    for k, v in Env.settings_mappings().items():
         # ignores missing key or it has a already value in config
         if k not in s or s[k]:
             continue
-        new_v = env.get(v, None)
-        if not isinstance(new_v, str):
-            continue
-        # ignores empty string
-        if ',' in new_v:
-            s[k] = [nv for nv in new_v.split(',') if nv != '']
-        elif new_v:
+        new_v = get_new_v(env, v, str)
+        if new_v:
             s[k] = new_v
     return s
 

@@ -9,8 +9,12 @@ class Env():
     VALUES = ('development', 'test', 'production')
 
     def __init__(self):
+        self._value = self.__class__.env_name()
+
+    @classmethod
+    def env_name(cls):
         v = str(os.environ.get('ENV', None))
-        self._value = v if v in self.VALUES else 'production'
+        return v if v in cls.VALUES else 'production'
 
     @classmethod
     def load_dotenv_vars(cls, dotenv_file=None):
@@ -22,13 +26,47 @@ class Env():
             from dotenv import load_dotenv
             load_dotenv(dotenv_file)
 
-        if os.environ.get('ENV', None) == 'test':  # maps test_
-            from test import test_vars
+        # update vars using prefix such as {TEST_|DEVELOPMENT_|PRODUCTION_}
+        for _, v in cls.settings_mappings().items():
+            prefix = '{}_'.format(cls.env_name().upper())
+            env_v = os.environ.get(prefix + v, None)
+            if env_v is not None:
+                os.environ[v] = env_v
 
-            for v in test_vars():
-                test_v = os.environ.get('TEST_' + v, None)
-                if test_v is not None:
-                    os.environ[v] = test_v
+    @classmethod
+    def settings_mappings(self):
+        return {
+            # Note: these values are updated if exist but not empty
+            'auth.secret': 'AUTH_SECRET',
+            'token.secret': 'TOKEN_SECRET',
+            'domain': 'DOMAIN',
+            'env': 'ENV',
+            'mail.host': 'MAIL_HOST',
+            'mail.port': 'MAIL_PORT',
+            'mail.username': 'MAIL_USERNAME',
+            'mail.password': 'MAIL_PASSWORD',
+            'mail.sender': 'MAIL_SENDER',
+            'mailer.type': 'MAILER_TYPE',
+            'mailer.url': 'MAILER_URL',
+            'mailer.domain': 'MAILER_DOMAIN',
+            'mailer.api_key': 'MAILER_API_KEY',
+            'session.secret': 'SESSION_SECRET',
+            'session.key': 'SESSION_KEY',
+            'session.url': 'SESSION_URL',
+            'session.username': 'SESSION_USERNAME',
+            'session.password': 'SESSION_PASSWORD',
+            'session.cookie_domain': 'SESSION_COOKIE_DOMAIN',
+            'queue.url': 'QUEUE_URL',
+            'cache.url': 'CACHE_URL',
+            'database.cardinal.url': 'DATABASE_CARDINAL_URL',
+            'database.analysis.url': 'DATABASE_ANALYSIS_URL',
+            'pyramid.csrf_trusted_origins': 'CSRF_TRUSTED_ORIGINS',
+            'wsgi.url_scheme': 'WSGI_URL_SCHEME',
+            'wsgi.auth_credentials': 'WSGI_AUTH_CREDENTIALS',
+            'datastore.emulator_host': 'DATASTORE_EMULATOR_HOST',
+            'datastore.project_id': 'DATASTORE_PROJECT_ID',
+            'google_cloud.project': 'GOOGLE_CLOUD_PROJECT',
+        }
 
     def get(self, key, default=None):
         return os.environ.get(key, default)
@@ -61,29 +99,3 @@ class Env():
     @reify
     def is_production(self):
         return self._value == 'production'
-
-    @reify
-    def settings_mappings(self):
-        return {
-            # Note: these values are updated if exist but not empty
-            'auth.secret': 'AUTH_SECRET',
-            'token.secret': 'TOKEN_SECRET',
-            'domain': 'DOMAIN',
-            'mail.host': 'MAIL_HOST',
-            'mail.port': 'MAIL_PORT',
-            'mail.username': 'MAIL_USERNAME',
-            'mail.password': 'MAIL_PASSWORD',
-            'mail.sender': 'MAIL_SENDER',
-            'session.secret': 'SESSION_SECRET',
-            'session.key': 'SESSION_KEY',
-            'session.url': 'SESSION_URL',
-            'session.username': 'SESSION_USERNAME',
-            'session.password': 'SESSION_PASSWORD',
-            'session.cookie_domain': 'SESSION_COOKIE_DOMAIN',
-            'queue.url': 'QUEUE_URL',
-            'database.cardinal.url': 'DATABASE_CARDINAL_URL',
-            'database.analysis.url': 'DATABASE_ANALYSIS_URL',
-            'pyramid.csrf_trusted_origins': 'CSRF_TRUSTED_ORIGINS',
-            'wsgi.url_scheme': 'WSGI_URL_SCHEME',
-            'wsgi.auth_credentials': 'WSGI_AUTH_CREDENTIALS',
-        }
