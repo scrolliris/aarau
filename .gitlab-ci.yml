@@ -44,7 +44,6 @@ compile:
     - python --version
     - pip --version
   script:
-    - make clean
     - make catalog
   artifacts:
     untracked: true
@@ -64,7 +63,6 @@ build:
     - npm install --global gulp-cli
     - npm install --ignore-scripts
   script:
-    - make clean
     - make build
   artifacts:
     untracked: true
@@ -91,8 +89,6 @@ test:
     - python --version
     - pip --version
   script:
-    - make clean
-    - make build
     - make setup
     - make db-init
     - make db-migrate
