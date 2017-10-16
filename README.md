@@ -138,7 +138,8 @@ Check `Makefile`
 (venv) % npm install --global gulp-cli
 (venv) % npm install
 
-(venv) % gulp
+: run gulp
+(venv) % make build
 
 : import seed data into database for development
 (venv) % make db-seed
@@ -258,7 +259,9 @@ See also `.gitlab-ci.yml`.
 
 (venv) % ENV=test make db-init
 (venv) % ENV=test make db-migrate
-(venv) % ENV=test make db-clean
+
+: build assets
+(venv) % make build
 
 : use make
 (venv) % make test

@@ -1,4 +1,5 @@
 ifeq (, $(ENV))
+	ENV := development
 	env := development
 else ifeq (test, $(ENV))
 	env := testing
@@ -25,23 +26,23 @@ update:
 # -- database
 
 db-init:
-	${app}_manage 'config/${env}.ini#${app}' db init
+	ENV=$(ENV) ${app}_manage 'config/${env}.ini#${app}' db init
 .PHONY: db-init
 
 db-migrate:
-	${app}_manage 'config/${env}.ini#${app}' db migrate
+	ENV=$(ENV) ${app}_manage 'config/${env}.ini#${app}' db migrate
 .PHONY: db-migrate
 
 db-rollback:
-	${app}_manage 'config/${env}.ini#${app}' db rollback
+	ENV=$(ENV) ${app}_manage 'config/${env}.ini#${app}' db rollback
 .PHONY: db-rollback
 
 db-seed:
-	${app}_manage 'config/${env}.ini#${app}' db seed
+	ENV=$(ENV) ${app}_manage 'config/${env}.ini#${app}' db seed
 .PHONY: db-seed
 
 db-drop:
-	${app}_manage 'config/${env}.ini#${app}' db drop
+	ENV=$(ENV) ${app}_manage 'config/${env}.ini#${app}' db drop
 .PHONY: db-drop
 
 db-reset:
@@ -55,17 +56,17 @@ endif
 
 # -- application
 
-# server
+# server (development)
 serve:
 	./bin/serve --env development --config config/development.ini --reload
 .PHONY: serve
 
-# worker
+# worker (development)
 worker:
-	${app}_worker 'config/${env}.ini#${app}'
+	ENV=$(ENV) ${app}_worker 'config/${env}.ini#${app}'
 .PHONY: worker
 
-# use `bin/start` via honcho. see Procfile
+# both, use `bin/start` via honcho. see Procfile
 start:
 	honcho start
 .PHONY: start

@@ -9,7 +9,7 @@ from pyramid.paster import get_appsettings, setup_logging
 from pyramid.scripts.common import parse_vars
 
 from aarau import resolve_env_vars
-from aarau.env import Env
+from aarau.env import load_dotenv_vars
 from aarau.models import (
     Project, Membership, Plan,
     Site,
@@ -172,7 +172,7 @@ def main(argv=sys.argv):
     options = parse_vars(argv[4:])
 
     setup_logging(config_uri)
-    Env.load_dotenv_vars()
+    load_dotenv_vars()
 
     # TODO: parse command and actions
     if command not in ('db',):

@@ -24,11 +24,11 @@ INI_FILE = os.path.join(TEST_DIR, '..', 'config', 'testing.ini')
 def dotenv() -> None:
     """Loads dotenv file
     """
-    from aarau.env import Env
+    from aarau.env import load_dotenv_vars
 
     # same as aarau:main
     dotenv_file = os.path.join(TEST_DIR, '..', '.env')
-    Env.load_dotenv_vars(dotenv_file)
+    load_dotenv_vars(dotenv_file)
     return
 
 
@@ -51,13 +51,6 @@ def raw_settings(dotenv) -> dict:
 
 
 @pytest.fixture(scope='session')
-def settings(raw_settings, resolve_settings) -> 'function':
-    """Returns (environ) resolved settings
-    """
-    return resolve_settings(raw_settings)
-
-
-@pytest.fixture(scope='session')
 def resolve_settings() -> 'function':
     """Returns resolving function for settings
     """
@@ -67,6 +60,13 @@ def resolve_settings() -> 'function':
         return resolve_settings(dict(raw_s))
 
     return _resolve_settings
+
+
+@pytest.fixture(scope='session')
+def settings(raw_settings, resolve_settings) -> 'function':
+    """Returns (environ) resolved settings
+    """
+    return resolve_settings(raw_settings)
 
 
 def new_extra_environ(domain) -> dict:

@@ -6,7 +6,7 @@ from pyramid.paster import (
     setup_logging
 )
 
-from aarau.env import Env
+from aarau.env import Env, load_dotenv_vars
 
 
 def usage(argv):
@@ -22,7 +22,7 @@ def main(argv=sys.argv, quiet=False):
     if len(argv) < 2:
         usage(argv)
 
-    Env.load_dotenv_vars()
+    load_dotenv_vars()
     env = Env()
 
     config_uri = argv[1]

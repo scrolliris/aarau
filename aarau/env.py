@@ -3,6 +3,23 @@ import os
 from pyramid.decorator import reify
 
 
+def load_dotenv_vars(dotenv_file=None):
+    # loads .env
+    if dotenv_file is None:
+        dotenv_file = os.path.join(os.getcwd(), '.env')
+    if os.path.isfile(dotenv_file):
+        print('loading environment variables from .env')
+        from dotenv import load_dotenv
+        load_dotenv(dotenv_file)
+
+    # update vars using prefix such as {TEST_|DEVELOPMENT_|PRODUCTION_}
+    for _, v in Env.settings_mappings().items():
+        prefix = '{}_'.format(Env.env_name().upper())
+        env_v = os.environ.get(prefix + v, None)
+        if env_v is not None:
+            os.environ[v] = env_v
+
+
 # OS's environ handler (wrapper)
 # This class has utilities to treat environment variables.
 class Env():
@@ -17,30 +34,12 @@ class Env():
         return v if v in cls.VALUES else 'production'
 
     @classmethod
-    def load_dotenv_vars(cls, dotenv_file=None):
-        # loads .env
-        if dotenv_file is None:
-            dotenv_file = os.path.join(os.getcwd(), '.env')
-        if os.path.isfile(dotenv_file):
-            print('loading environment variables from .env')
-            from dotenv import load_dotenv
-            load_dotenv(dotenv_file)
-
-        # update vars using prefix such as {TEST_|DEVELOPMENT_|PRODUCTION_}
-        for _, v in cls.settings_mappings().items():
-            prefix = '{}_'.format(cls.env_name().upper())
-            env_v = os.environ.get(prefix + v, None)
-            if env_v is not None:
-                os.environ[v] = env_v
-
-    @classmethod
     def settings_mappings(self):
         return {
             # Note: these values are updated if exist but not empty
             'auth.secret': 'AUTH_SECRET',
             'token.secret': 'TOKEN_SECRET',
             'domain': 'DOMAIN',
-            'env': 'ENV',
             'mail.host': 'MAIL_HOST',
             'mail.port': 'MAIL_PORT',
             'mail.username': 'MAIL_USERNAME',
