@@ -21,6 +21,8 @@ ratings:
     - "**.js"
     - "**.py"
 exclude_paths:
+  - apt-cache/
+  - pip-cache/
   - .cache/
   - __pycache__/
   - \*.egg-info/
