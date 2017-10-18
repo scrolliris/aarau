@@ -1,6 +1,7 @@
 # https://docs.gitlab.com/ce/ci/yaml/
 stages:
   - check
+  - lint
   - compile
   - build
   - test
@@ -29,6 +30,22 @@ check:
   script:
     - make clean
     - make check
+  except:
+    - tags
+
+lint:
+  stage: lint
+  image: python:3.5.4
+  before_script:
+    - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
+    - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
+      gcc zlib1g zlib1g-dev libmemcached11 libmemcached-dev
+    - python --version
+    - pip --version
+  script:
+    - ENV=development make setup
+    - ENV=test make setup
+    - make lint
   except:
     - tags
 
