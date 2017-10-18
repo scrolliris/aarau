@@ -127,12 +127,12 @@ codequality:
       --volume "$PWD":/code
       --volume /var/run/docker.sock:/var/run/docker.sock
       --volume /tmp/cc:/tmp/cc
-      codeclimate/codeclimate engines:install
+      codeclimate/codeclimate validate-config
     - docker run --env CODECLIMATE_CODE="$PWD"
       --volume "$PWD":/code
       --volume /var/run/docker.sock:/var/run/docker.sock
       --volume /tmp/cc:/tmp/cc
-      codeclimate/codeclimate validate-config
+      codeclimate/codeclimate engines:install
   script:
     - docker run --env CODECLIMATE_CODE="$PWD"
       --volume "$PWD":/code

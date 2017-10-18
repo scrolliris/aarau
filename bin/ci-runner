@@ -18,5 +18,6 @@ done < "${ENV_FILE}"
 echo "${ENV_OPTS} ${1}" | \
   xargs $DIR_NAME/bin/gitlab-ci-multi-runner exec docker \
   --cache-dir /cache \
+  --docker-privileged \
   --docker-volumes $DIR_NAME/tmp/_cache:/cache \
   --docker-volumes /var/run/docker.sock:/var/run/docker.sock

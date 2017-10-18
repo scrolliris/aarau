@@ -8,7 +8,7 @@ engines:
         - python
   pep8:
     enabled: true
-  schellcheck:
+  shellcheck:
     enabled: true
   eslint:
     enabled: true

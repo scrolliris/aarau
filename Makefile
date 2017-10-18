@@ -118,8 +118,8 @@ vet: | check lint
 analyze:
 	docker run --interactive --tty --rm --env CODECLIMATE_CODE="${PWD}" \
 	  --volume "${PWD}":/code \
-	  --volume /tmp/cc:/tmp/cc \
 	  --volume /var/run/docker.sock:/var/run/docker.sock \
+	  --volume /tmp/cc:/tmp/cc \
 	  codeclimate/codeclimate analyze -f text > tmp/codequality.txt
 	cat tmp/codequality.txt
 .PHONY: analyze
