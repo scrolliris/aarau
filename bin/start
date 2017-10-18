@@ -4,7 +4,9 @@ set -e
 app_name="aarau"
 root_dir=$(cd $(dirname $0)/../; pwd)
 
-export ENV=production
+if [ "$ENV" = "" ]; then
+  export ENV=production
+fi
 
 if [ "$1" = "server" ]; then
   make db-migrate

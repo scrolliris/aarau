@@ -118,6 +118,9 @@ case "${env_name}" in
   "development"|"production")
     echo -en "${text_banner}"
     print_context
+
+    export ENV=$ENV
+
     if [ "yes" = "${with_install}" ]; then
       run_install_command $env_name
     fi
@@ -129,6 +132,7 @@ case "${env_name}" in
     if [ "yes" = "${with_reload}" ]; then
       cmd="${cmd} --reload"
     fi
+
     echo
     echo "<command>"
     echo "% ${cmd} ${config_file}"
