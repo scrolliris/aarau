@@ -3,7 +3,6 @@ from ast import literal_eval
 from datetime import datetime, timedelta
 from contextlib import contextmanager
 import importlib
-import yaml
 
 from aarau.models import (  # noqa,pylint: disable=unused-import
     Project, Plan,
@@ -92,6 +91,8 @@ def ref_functions():
 
 @contextmanager
 def yaml_loader(settings=None):
+    import yaml
+
     def load_yaml(yml_file):
         data = {}
         if os.path.isfile(yml_file):
