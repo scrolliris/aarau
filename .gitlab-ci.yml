@@ -122,7 +122,6 @@ codequality:
   services:
     - docker:dind
   before_script:
-    - unset DOCKER_HOST
     - docker pull codeclimate/codeclimate
     - docker run --env CODECLIMATE_CODE="$PWD"
       --volume "$PWD":/code
