@@ -1,0 +1,37 @@
+---
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript
+      - python
+  eslint:
+    enabled: true
+  fixme:
+    enabled: false
+  vint:
+    enabled: true
+  radon:
+    enabled: true
+ratings:
+  paths:
+  - "**.js"
+  - "**.py"
+exclude_paths:
+  - .cache/
+  - __pycache__/
+  - \*.egg-info/
+  - config/
+  - doc/
+  - tmp/
+  - lib/
+  - static/
+  - vendor/
+  - venv*/
+  - node_modules/
+  - .*rc
+  - .env*
+  - \*.md
+  - \*.txt
+  - \*.json

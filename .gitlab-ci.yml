@@ -5,6 +5,7 @@ stages:
   - compile
   - build
   - test
+  - codequality
 
 variables:
   APT_CACHE_DIR: apt-cache
@@ -112,3 +113,28 @@ test:
     - make coverage
   except:
     - tags
+
+codequality:
+  stage: codequality
+  image: docker:latest
+  variables:
+    DOCKER_DRIVER: overlay
+  services:
+    - docker:dind
+  before_script:
+    - unset DOCKER_HOST
+    - docker pull codeclimate/codeclimate
+    - docker run --env CODECLIMATE_CODE="$PWD"
+      --volume "$PWD":/code
+      --volume /var/run/docker.sock:/var/run/docker.sock
+      --volume /tmp/cc:/tmp/cc
+      codeclimate/codeclimate init
+  script:
+    - docker run --env CODECLIMATE_CODE="$PWD"
+      --volume "$PWD":/code
+      --volume /var/run/docker.sock:/var/run/docker.sock
+      --volume /tmp/cc:/tmp/cc
+      codeclimate/codeclimate analyze -f json > codequality.json
+  artifacts:
+    paths:
+      - codequality.json

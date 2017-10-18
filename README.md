@@ -171,12 +171,13 @@ Create manually by your self for now.
   --database 'postgresql://user:pass@localhost:5432/dbname' NAME
 ```
 
-### Check & Lint
+### Check, Lint and Analyze
 
 * flake8
 * flake8-docstrings (pep257)
 * pylint
 * eslint
+* codeclimate
 
 #### Python
 
@@ -198,6 +199,13 @@ Create manually by your self for now.
 
 (venv) % eslint gulpfile.js
 (venv) % eslint aarau/assets
+```
+
+#### Codequality
+
+```zsh
+: run codeclimate in docker
+(venv) % make analyze
 ```
 
 
