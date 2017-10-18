@@ -8,8 +8,6 @@ engines:
         - python
   pep8:
     enabled: true
-  shellcheck:
-    enabled: true
   eslint:
     enabled: true
     config:
@@ -20,7 +18,6 @@ engines:
     enabled: true
 ratings:
   paths:
-    - "bin/*"
     - "**.js"
     - "**.py"
 exclude_paths:
@@ -28,15 +25,24 @@ exclude_paths:
   - __pycache__/
   - \*.egg-info/
   - config/
+  - bin/
+  - db/seeds/
   - doc/
   - tmp/
   - lib/
+  - locale/
   - static/
   - vendor/
   - venv*/
   - node_modules/
   - .*rc
+  - .git*
   - .env*
   - \*.md
   - \*.txt
   - \*.json
+  - \*.yaml
+  - Dockerfile
+  - Makefile
+  - CHANGELOG
+  - LICENSE
