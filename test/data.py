@@ -8,6 +8,7 @@ from aarau.yaml import (
     set_password
 )
 
+# pylint:disable=unused-wildcard-import,wildcard-import
 from aarau.models import *
 
 
@@ -15,11 +16,10 @@ def import_data(settings):
     mixer = Mixer()
 
     with yaml_loader(settings) as loader:
-
-        def blend_data(Klass, attributes):
+        def blend_data(klass, attributes):
             with tokenize(attributes) as (tokens, attrs):
 
-                fixture = mixer.blend(Klass, **attrs)
+                fixture = mixer.blend(klass, **attrs)
                 fixture.save()
 
                 with set_password(fixture, attrs) as fixture:

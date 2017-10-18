@@ -1,30 +1,27 @@
-"""Base class and extensions for model class
-"""
 from datetime import datetime
 import hashlib
 import re
 import uuid
 
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from itsdangerous import BadSignature, SignatureExpired
 from peewee import Field, SQL, DateTimeField
 from playhouse.signals import Model, pre_save, pre_delete
 from playhouse.read_slave import ReadSlaveModel
 from psycopg2.extras import NumericRange
 from pyramid.decorator import reify
 
-# pylint: disable=import-self
-from . import db
+from aarau.models import db
 
 
 class EnumField(Field):
-    """Custom field as Enum
-    """
+    """Custom field as Enum."""
+
     db_field = 'enum'
 
     # https://www.postgresql.org/docs/9.5/static/datatype-enum.html
-    def pre_field_create(self, model):
-        """A hook before field creation
-        """
+    def pre_field_create(self, _model):
+        """A hook before field creation."""
         field = self.__ddl__column_name__()
 
         _db = self.get_database()
@@ -36,23 +33,19 @@ class EnumField(Field):
         q = 'CREATE TYPE {0:s} AS ENUM ({1:s});'.format(field, tail)
         _db.execute_sql(q)
 
-    def post_field_create(self, model):
-        """A hook after field creation
-        """
+    def post_field_create(self, _model):
+        """A hook after field creation."""
         self.db_field = self.__ddl__column_name__()
 
     # https://github.com/coleifer/peewee/blob/\
     #     dc0ac68f3a596e27e117698393b4ab64d2f92617/peewee.py#L888
     def coerce(self, value):
-        """Validates as valid choice & sanitize as string
-        """
+        """Validates as valid choice & sanitize as string."""
         if value not in self.choices:
             raise Exception("Invalid Enum value `%s`", value)
         return str(value)
 
     def get_column_type(self):
-        """Returns column type name
-        """
         return 'enum'
 
     def __ddl__column_name__(self):
@@ -67,58 +60,50 @@ class EnumField(Field):
 
 class NumericRangeField(Field):
     # pylint: disable=no-self-use
-    """Range type field definition for numeric value
-    """
+    """Range type field definition for numeric value."""
+
     db_field = 'numrange'
 
     def get_column_type(self):
-        """Returns column type name
-        """
         return 'numrange'
 
     def db_value(self, value):
-        """Returns value for database
-        """
+        """Returns value for database."""
         if isinstance(value, (list, tuple)) and len(value) == 2:
             return NumericRange(lower=float(value[0]), upper=float(value[1]),
                                 bounds='[]', empty=False)
         return value
 
     def python_value(self, value):
-        """Returns value from database
-        """
         return value
 
 
 class CardinalBase(Model):
-    """Main base model class
-    """
-    class Meta:  # pylint: disable=missing-string
+    """Main base model class."""
+
+    class Meta:
         database = db.cardinal
 
     @classmethod
     def get_by_id(cls, model_id):
-        """Fetches objects via its id attribute
-        """
+        """Fetches objects via its id attribute."""
         # pylint: disable=no-member
         return cls.get(cls.id == model_id)
 
     @classmethod
-    def create_table(cls, *args, **kwargs):
-        """Creates database table for class itself
-        """
+    def create_table(cls, fail_silently=False):
+        """Creates database table for class itself."""
         # pylint: disable=no-member
         for field in cls._meta.declared_fields:
             if hasattr(field, 'pre_field_create'):
                 field.pre_field_create(cls)
-        super().create_table(*args, **kwargs)
+        super().create_table(fail_silently)
         for field in cls._meta.declared_fields:
             if hasattr(field, 'post_field_create'):
                 field.post_field_create(cls)
 
     def refresh(self):
-        """Refetches object attributes from database
-        """
+        """Refetches object attributes from database."""
         newer_self = type(self).get(self._pk_expr())
         for field_name in self._meta.fields.keys():
             val = getattr(newer_self, field_name)
@@ -128,17 +113,17 @@ class CardinalBase(Model):
 
 
 class AnalysisBase(ReadSlaveModel):
-    """Analysis base model class. (read only)
-    """
-    class Meta:  # pylint: disable=missing-docstring
+    """Analysis base model class. (read only)."""
+
+    class Meta:
         database = db.analysis
-        # FIXME: use actual slave
+        # TODO: Use actual slave
         read_slaves = [db.analysis]
 
 
 class TimestampMixin(Model):
-    """Mixin for timestamp fields
-    """
+    """Mixin for timestamp fields."""
+
     created_at = DateTimeField(null=False, default=datetime.utcnow)
     updated_at = DateTimeField(null=False, default=datetime.utcnow)
 
@@ -146,41 +131,37 @@ class TimestampMixin(Model):
 @pre_save(sender=TimestampMixin)
 def before_save_timestamp_mixin(model_class, instance, created):
     # pylint: disable=unused-argument
-    """A hook before save for model mixed TimestampMixin
-    """
+    """A hook before save for model mixed TimestampMixin."""
     instance.updated_at = datetime.utcnow()
 
 
 class DeletedAtMixin(Model):
-    """Mixin adding a deleted_at field
-    """
+    """Mixin adding a deleted_at field."""
+
     deleted_at = DateTimeField(null=True)
 
     def delete_instance(self, *args, **kwargs):
-        # TODO: nullify columns :'(
+        # TODO: Nullify columns :'(
         return self.save(*args, **kwargs)
 
 
 @pre_delete(sender=DeletedAtMixin)
 def before_delete_deleted_at_mixin(model_class, instance):
     # pylint: disable=unused-argument
-    """A hook before delete for model mixed DeletedAtMixin
-    """
+    """A hook before delete for model mixed DeletedAtMixin."""
     instance.deleted_at = datetime.utcnow()
 
 
 class TokenizerMixin(object):
-    """Mixin for token fiels and utilities
-    """
+    """Mixin for token fiels and utilities."""
+
     @reify
-    def _settings(self):
-        # pylint: disable=no-self-use
+    def _settings(self):  # pylint: disable=no-self-use
         from aarau import get_settings
         return get_settings()
 
     def generate_token(self, key, secret=None, salt='token', expiration=3600):
-        """Generates new token with secret and salt
-        """
+        """Generates new token with secret and salt."""
         if not secret:
             secret = self._settings['token.secret']
 
@@ -188,8 +169,7 @@ class TokenizerMixin(object):
         return s.dumps({key: self.id}).decode('utf8')
 
     def decode_token(self, token, secret=None, salt='token'):
-        """Extracts data in token as decode
-        """
+        """Extracts data in token as decode."""
         if not secret:
             secret = self._settings['token.secret']
 
@@ -197,26 +177,23 @@ class TokenizerMixin(object):
         try:
             data = s.loads(token)
             return data
-        except Exception as e:
-            # TODO: handle exception `itsdangerous.SignatureExpired`
+        except (TypeError, BadSignature, SignatureExpired):
             return {}
 
 
 class CodeMixin(object):
-    """Mixin has utility methods to treat code field
-    """
+    """Mixin has utility methods to treat code field."""
+
     @classmethod
     def generate_code(cls):
-        """Generates hashed UUID4 with SHA1 as code
-        """
+        """Generates hashed UUID4 with SHA1 as code."""
         m = hashlib.sha1()
         m.update(uuid.uuid4().bytes)
         return m.hexdigest()
 
     @classmethod
     def grab_unique_code(cls):
-        """Returns generated new code as attribute after check it isn't in db
-        """
+        """Returns generated new code after check it isn't in db."""
         code = None
         while True:
             code = cls.generate_code()
@@ -228,20 +205,18 @@ class CodeMixin(object):
 
 
 class KeyMixin(object):
-    """Mixin has has key fields which are generated with UUID
-    """
+    """Mixin has has key fields which are generated with UUID."""
+
     @classmethod
     def generate_key(cls):
-        """Generates hashed UUID4 with SHA1 as key
-        """
+        """Generates hashed UUID4 with SHA1 as key."""
         m = hashlib.sha1()
         m.update(uuid.uuid4().bytes)
         return m.hexdigest()
 
     @classmethod
     def grab_unique_key(cls, field):
-        """Returns generated new key as attribute after check it isn't in db
-        """
+        """Returns generated new key after check it isn't in db."""
         key = None
         while True:
             key = cls.generate_key()
@@ -253,10 +228,11 @@ class KeyMixin(object):
 
 
 class ClassProperty:
-    """Decorator as classproperty
+    """Decorator as classproperty.
 
     Use like `@classproperty`
     """
+
     def __init__(self, f):
         self._f = f
 

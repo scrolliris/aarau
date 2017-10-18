@@ -1,5 +1,3 @@
-""" Signup form
-"""
 from datetime import datetime
 
 from wtforms import (
@@ -20,8 +18,8 @@ from aarau.views.form import (
 
 
 class SignupFormBase(SecureForm):
-    """ Base signup form definition
-    """
+    """Base signup form definition."""
+
     email = StringField(_('signup.label.email'), [
         v.Required(),
         v.Length(min=6, max=64),
@@ -45,13 +43,10 @@ class SignupFormBase(SecureForm):
 
 
 class SignupForm(SignupFormBase):
-    """ Signup form
-    """
     # pylint: disable=no-self-use
 
     def validate_email(self, field):
-        """ Valites email address
-        """
+        """Valites email address existing."""
         from ...models.user_email import UserEmail
         user_email = UserEmail.select().where(
             (UserEmail.email == field.data) &
@@ -61,8 +56,7 @@ class SignupForm(SignupFormBase):
             raise ValidationError('Email address is already registered')
 
     def validate_username(self, field):
-        """ Validates username
-        """
+        """Validates username existing."""
         from ...models.user import User
         user = User.select().where(
             User.username == field.data).first()
@@ -71,6 +65,4 @@ class SignupForm(SignupFormBase):
 
 
 def build_signup_form(request):
-    """ Builds signup form
-    """
     return build_form(SignupForm, request)

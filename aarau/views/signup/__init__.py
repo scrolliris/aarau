@@ -1,5 +1,2 @@
-def includeme(config):
-    """
-    Initializes signup view.
-    """
+def includeme(config):  # pylint: disable=unused-argument
     pass

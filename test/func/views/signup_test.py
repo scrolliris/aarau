@@ -1,13 +1,8 @@
-# pylint: disable=unused-argument
-"""Signup functionality tests.
-"""
 import pytest
 
 
 @pytest.fixture(autouse=True)
-def setup(request, config, mailbox):
-    """Setup.
-    """
+def setup(request, config, mailbox):  # pylint: disable=unused-argument
     mailbox.clean()
 
     # eager task (emulation)
@@ -15,17 +10,13 @@ def setup(request, config, mailbox):
     worker.conf.update(task_always_eager=True)
 
     def teardown():
-        """Teardown.
-        """
         worker.conf.update(task_always_eager=False)
         mailbox.clean()
 
     request.addfinalizer(teardown)
 
 
-def test_signup(users, dummy_app):
-    """Test signup action.
-    """
+def test_signup(dummy_app):
     from pyramid_mailer import get_mailer
 
     res = dummy_app.get('/signup', status=200)

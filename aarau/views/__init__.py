@@ -1,19 +1,13 @@
-""" View action package
-"""
-
-
 def tpl(path, namespace=None):
-    """ Returns template path from package root
-    """
+    """Returns template path from package root."""
     if namespace:
         return 'aarau:templates/{0:s}/{1:s}'.format(namespace, path)
-    else:
-        return 'aarau:templates/{0:s}'.format(path)
+
+    return 'aarau:templates/{0:s}'.format(path)
 
 
 def subdomain(request):
-    """ Returns subdomain from `request.domain`
-    """
+    """Returns subdomain from `request.domain`."""
     if request.domain == request.settings.get('domain.application', None):
         return None
 
@@ -24,7 +18,7 @@ def subdomain(request):
 
 
 def includeme(config):
-    """ Initializes the view for a aarau app
+    """Initializes views for aarau app.
 
     Activate this setup using ``config.include('aarau.views')``.
     """

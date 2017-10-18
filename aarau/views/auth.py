@@ -1,6 +1,3 @@
-"""View actions for login/logout.
-"""
-
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import remember, forget
 from pyramid.view import view_config
@@ -10,14 +7,13 @@ from aarau.views import tpl
 
 
 def get_next_path(req, except_paths=()):
-    """Returns next_path which is extracted params or referrer if possible
-    """
+    """Returns next_path which is extracted params or referrer if possible."""
     path = (req.params.get('next_path', req.referrer) or '')
 
     scheme = req.settings.get('wsgi.url_scheme', 'https')
     domain = req.settings.get('domain', 'localhost')
-    if not path.startswith('{0!s}://{1!s}'.format(scheme, domain)) and \
-       not path.startswith('{0!s}://console.{1!s}'.format(scheme, domain)):
+    if not path.startswith('{0:s}://{1:s}'.format(scheme, domain)) and \
+       not path.startswith('{0:s}://console.{1:s}'.format(scheme, domain)):
         path = req.route_path('top')
 
     if [p for p in except_paths if p in path]:
@@ -29,8 +25,7 @@ def get_next_path(req, except_paths=()):
 @view_config(route_name='login', request_method=('GET', 'POST'),
              renderer=tpl('shared/login.mako'))
 def login(req):
-    """Renders login view and authenticate user via POST.
-    """
+    """Renders login view and authenticate user via POST."""
     next_path = get_next_path(req, except_paths=('/login', '/logout'))
     user = req.user
     if user is not None:
@@ -55,8 +50,7 @@ def login(req):
 
 @view_config(route_name='logout')
 def logout(req):
-    """Sets user as logged out and redirects to top view.
-    """
+    """Sets user as logged out and redirects to top view."""
     headers = forget(req)
     return HTTPFound(
         location=req.route_url('top', namespace=None), headers=headers)

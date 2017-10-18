@@ -8,9 +8,7 @@ from wtforms import validators as v
 from aarau.views.form import SecureForm, build_form
 
 
-class ResetPasswordRequestForm(SecureForm):
-    """
-    """
+class ResetPasswordRequestFormBase(SecureForm):
     email = StringField('Email', [
         v.Required(),
         v.Length(min=6, max=64),
@@ -19,21 +17,20 @@ class ResetPasswordRequestForm(SecureForm):
     submit = SubmitField('Request')
 
 
-def reset_password_request_form_factory(request):
-    class AResetPasswordRequestForm(ResetPasswordRequestForm):
-        pass
-
-    return build_form(AResetPasswordRequestForm, request)
+class ResetPasswordRequestForm(ResetPasswordRequestFormBase):
+    pass
 
 
-class ResetPasswordForm(SecureForm):
-    """
-    """
+def build_reset_password_request_form(request):
+    return build_form(ResetPasswordRequestForm, request)
+
+
+class ResetPasswordFormBase(SecureForm):
     new_password = PasswordField('New password', [
         v.Required(),
         v.Regexp(
-            '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])'
-            '(?=.*[A-z0-9\-\_\+\=\$\%\#\&\!\?])'),
+            r'(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])'
+            r'(?=.*[A-z0-9\-\_\+\=\$\%\#\&\!\?])'),
         v.Length(min=6, max=32),
     ])
     new_password_confirmation = PasswordField('Password confirmation', [
@@ -44,8 +41,9 @@ class ResetPasswordForm(SecureForm):
     submit = SubmitField('Request')
 
 
-def reset_password_form_factory(request):
-    class AResetPasswordForm(ResetPasswordForm):
-        pass
+class ResetPasswordForm(ResetPasswordFormBase):
+    pass
 
-    return build_form(AResetPasswordForm, request)
+
+def build_reset_password_form(request):
+    return build_form(ResetPasswordForm, request)

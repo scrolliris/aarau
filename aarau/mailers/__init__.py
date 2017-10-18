@@ -1,7 +1,3 @@
-"""The mailer package.
-"""
-
-
 def includeme(_config):
     """Initializes the mailer.
 

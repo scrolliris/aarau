@@ -1,5 +1,3 @@
-"""Template utility class and helper functions
-"""
 import os
 import json
 from typing import Union
@@ -11,13 +9,13 @@ from pyramid.decorator import reify
 from pyramid.events import subscriber
 from pyramid.events import BeforeRender
 
+from aarau.env import Env
 from aarau.request import CustomRequest
 
 
 @subscriber(BeforeRender)
 def add_template_util_renderer_globals(evt) -> None:
-    """Adds template utility instance as `util`
-    """
+    """Adds template utility instance as `util`."""
     ctx, req = evt['context'], evt['request']
     util = getattr(req, 'util', None)
 
@@ -30,7 +28,7 @@ def add_template_util_renderer_globals(evt) -> None:
 
 
 def clean(**kwargs) -> 'function':
-    """Returns sanitized value except allowed tags and attributes
+    """Returns sanitized value except allowed tags and attributes.
 
     >>> ${'<a href="/"><em>link</em></a>'|n,clean(
             tags=['a'], attributes=['href'])}
@@ -44,10 +42,11 @@ def clean(**kwargs) -> 'function':
 
 class TemplateUtil(object):
     # pylint: disable=no-self-use
-    """The utility for templates
+    """The utility for templates.
 
-    In some cases, no-self-use is disabled for convenience at templates
+    In some cases, no-self-use is disabled for convenience at templates.
     """
+
     def __init__(self, ctx: dict, req: CustomRequest, **kwargs: dict) -> None:
         self.ctx, self.req = ctx, req
 
@@ -57,16 +56,14 @@ class TemplateUtil(object):
 
     @reify
     def route_name(self) -> Union[None, str]:
-        """Returns matched route name
-        """
+        """Returns matched route name."""
         route = self.req.matched_route
         if route:
             return route.name
 
     @reify
     def manifest_json(self) -> dict:
-        """Reads manifest.json as dict
-        """
+        """Reads manifest.json as dict."""
         manifest_file = os.path.join(
             os.path.dirname(__file__), '..', '..', 'static', 'manifest.json')
         data = {}
@@ -81,36 +78,31 @@ class TemplateUtil(object):
 
     @reify
     def typekit_id(self) -> str:
-        """Return typekit id from env
-        """
-        from ..env import Env
+        """Returns typekit id from env."""
         env = Env()
         return str(env.get('TYPEKIT_ID', ''))
 
     def is_matched(self, matchdict) -> bool:
-        """Returns bool if dict matches or not
-        """
+        """Returns bool if dict matches or not."""
         return self.req.matchdict == matchdict
 
     def static_url(self, path) -> str:
-        """Returns whole url for static file
-        """
         return self.req.static_url('aarau:../static/' + path)
 
     def static_path(self, path) -> str:
-        """Returns url path for static file
-        """
         return self.req.static_path('aarau:../static/' + path)
 
     def built_asset_url(self, path) -> str:
-        """Returns url path for static file with built hash from manifest.json
+        """Returns url path for static file with built hash.
+
+        Hash value is extract from manifest.json which is generated via gulp
+        cammand.
         """
         path = self.manifest_json.get(path, path)
         return self.static_url(path)
 
     def truncate(self, str_val, length=25, suffix='...') -> str:
-        """Returns new truncated string and appends suffix
-        """
+        """Returns new truncated string and appends suffix."""
         if not isinstance(str_val, str):
             return ''
         if len(str_val) > length:

@@ -5,8 +5,8 @@ from .models.user import User
 
 
 class AuthenticationPolicy(AuthTktAuthenticationPolicy):
-    def authenticated_userid(self, req):
-        user = req.user
+    def authenticated_userid(self, request):
+        user = request.user
         if user is not None:
             return user.id
 
@@ -20,7 +20,7 @@ def current_user(req):
                     User.id == user_id,
                     User.activation_state == 'active').get()
             return user
-        except:
+        except User.DoesNotExist:
             return None
 
 

@@ -1,7 +1,7 @@
 from pyramid.events import subscriber
 from pyramid.events import BeforeRender
 
-from ..env import Env
+from aarau.env import Env
 
 
 @subscriber(BeforeRender)

@@ -13,7 +13,10 @@ def usage(argv):
     sys.exit(1)
 
 
-def main(argv=sys.argv, quiet=False):
+def main(argv=None):
+    if not argv:
+        argv = sys.argv
+
     if len(argv) < 2:
         usage(argv)
 

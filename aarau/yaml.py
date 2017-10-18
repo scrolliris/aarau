@@ -2,9 +2,11 @@ import os
 from ast import literal_eval
 from datetime import datetime, timedelta
 from contextlib import contextmanager
+import importlib
+import yaml
 
-from aarau.models import (  # noqa
-    Project, Membership, Plan,
+from aarau.models import (  # noqa,pylint: disable=unused-import
+    Project, Plan,
     Site,
     Publication, Article, Classification, License, Contribution,
     Application, Page,
@@ -13,8 +15,11 @@ from aarau.models import (  # noqa
 
 
 @contextmanager
-def tokenize(attributes={}):
+def tokenize(attributes):
     tokens = {}
+    if not isinstance(attributes, dict):
+        yield (tokens, attributes)
+
     for k in attributes.keys():
         if 'token' in k and callable(attributes[k]):
             tokens[k] = attributes[k]
@@ -31,7 +36,7 @@ def set_password(fixture, attributes):
 
 
 def tag_token_user_email_activation(secret):
-    def _tag_token_for_user_email_activation(loader, node):
+    def _tag_token_for_user_email_activation(_loader, node):
         def generate_token(user):
             return user.generate_token('user_email',
                                        secret=secret,
@@ -41,11 +46,11 @@ def tag_token_user_email_activation(secret):
     return _tag_token_for_user_email_activation
 
 
-def tag_datetime_utcnow_plus_timedelta(loader, node):
+def tag_datetime_utcnow_plus_timedelta(_loader, node):
     return datetime.utcnow() + timedelta(seconds=literal_eval(node.value))
 
 
-by_names = [
+BY_NAMES = [
     ('user', 'username'),
     ('plan', 'name'),
     ('license', 'identifier'),
@@ -56,34 +61,37 @@ by_names = [
     ('article', 'slug'),
 ]
 
-# functions to reference lookup relation (xxx_id column)
-# e.g. `!user.username "'john'"`
-ref_functions = {}
-for m, f in by_names:
-    def _ref_function_factory(m, f):
-        klass = m.title()
-        Klass, field = eval(klass), f
+
+def ref_functions():
+    """Foreign key reference lookup function generator (xxx_id column).
+
+    E.g. `!user.username "'john'"`
+    """
+    def import_by_name(module_name, klass_name):
+        module = importlib.import_module(module_name)
+        return getattr(module, klass_name)
+
+    def _ref_function_factory(k, a):
+        klass, field = import_by_name('aarau.models', k.title()), a
 
         def f():
-            def _f(loader, node):
+            def _f(_loader, node):
                 value = literal_eval(node.value)
-                if type(value) != str:
+                if not isinstance(value, str):
                     raise ValueError
-                expr = eval("{0:s}.{1:s} == '{2:s}'".format(
-                    klass, field, value))
-                return Klass.select().where(expr).get()
+                return klass.select().where(
+                    getattr(klass, field) == value).get()
 
             return _f
         return f
 
-    name = '!{0:s}.{1:s}'.format(m, f)
-    ref_functions[name] = _ref_function_factory(m, f)
+    for k, a in BY_NAMES:
+        name = '!{0:s}.{1:s}'.format(k, a)
+        yield (name, _ref_function_factory(k, a))
 
 
 @contextmanager
-def yaml_loader(settings={}):
-    import yaml
-
+def yaml_loader(settings=None):
     def load_yaml(yml_file):
         data = {}
         if os.path.isfile(yml_file):
@@ -95,7 +103,7 @@ def yaml_loader(settings={}):
         return data
 
     # simple utility functions for tag in yaml
-    if settings:
+    if settings and isinstance(settings, dict):
         yaml.add_constructor(
             '!token.user_email_activation',
             tag_token_user_email_activation(settings['token.secret']))
@@ -103,7 +111,7 @@ def yaml_loader(settings={}):
             '!datetime.utcnow+timedelta',
             tag_datetime_utcnow_plus_timedelta)
 
-        for tag, f in ref_functions.items():
+        for tag, f in ref_functions():
             yaml.add_constructor(tag, f())
 
     yield load_yaml

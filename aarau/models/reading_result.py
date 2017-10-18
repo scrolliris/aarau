@@ -1,5 +1,3 @@
-"""Reading result module.
-"""
 from datetime import datetime
 from peewee import (
     CharField,
@@ -10,13 +8,10 @@ from peewee import (
     fn,
 )
 
-from .base import AnalysisBase, NumericRangeField
+from aarau.models.base import AnalysisBase, NumericRangeField
 
 
 class ReadingResult(AnalysisBase):
-    """Result model class.
-    """
-    # pylint: disable=too-many-ancestors
     id = PrimaryKeyField()
     element_id = CharField(max_length=255, unique=True)
     project_id = CharField(max_length=128)
@@ -37,7 +32,7 @@ class ReadingResult(AnalysisBase):
     created_at = DateTimeField(null=False, default=datetime.utcnow)
     updated_at = DateTimeField(null=False, default=datetime.utcnow)
 
-    class Meta:  # pylint: disable=missing-docstring
+    class Meta:
         db_table = 'reading_results'
 
     def __repr__(self):
@@ -46,8 +41,7 @@ class ReadingResult(AnalysisBase):
 
     @classmethod
     def fetch_data_by_path(cls, project_access_key_id='', site_id=0):
-        """Fetches result values by path.
-        """
+        """Fetches result values by path."""
         return cls.select(
             cls.project_id,
             cls.site_id,

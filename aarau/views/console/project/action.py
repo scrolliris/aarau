@@ -1,5 +1,3 @@
-"""View actions for project.
-"""
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 
@@ -8,15 +6,16 @@ from aarau.models import (
     Membership,
     Plan,
     Project,
-    User
+    User,
 )
 
-from .form import edit_project_form, new_project_form
+from aarau.views.console.project.form import (
+    edit_project_form,
+    new_project_form,
+)
 
 
 def tpl(path, resource='project'):
-    """Return template file path.
-    """
     return 'aarau:templates/console/{0:s}/{1:s}'.format(resource, path)
 
 
@@ -24,8 +23,7 @@ def tpl(path, resource='project'):
              renderer=tpl('view.mako'))
 @login_required
 def project_view(req):
-    """Renders a project by id.
-    """
+    """Renders a project by id."""
     project_id = req.matchdict['id']
     user = req.user
     project = Project.select().join(Membership).join(User).where(
@@ -42,8 +40,7 @@ def project_view(req):
              renderer=tpl('new.mako'))
 @login_required
 def project_new(req):
-    """Renders a form new project/Create new project.
-    """
+    """Renders a form new project/Create new project."""
     user = req.user
     if len(user.projects) >= 1:  # beta
         next_path = req.route_path('console.top')
@@ -87,8 +84,7 @@ def project_new(req):
              renderer=tpl('edit.mako'))
 @login_required
 def project_edit(req):
-    """Renders a form for project/Update a project.
-    """
+    """Renders a form for project/Update a project."""
     project_id = req.matchdict['id']
     user = req.user
     project = Project.select().join(Membership).join(User).where(

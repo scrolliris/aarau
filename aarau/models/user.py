@@ -1,5 +1,3 @@
-"""The user model
-"""
 from datetime import datetime, timedelta
 
 import bcrypt
@@ -9,13 +7,18 @@ from peewee import (
     PrimaryKeyField,
 )
 
-from .base import CardinalBase, EnumField, TimestampMixin, TokenizerMixin
+from aarau.models.base import (
+    CardinalBase,
+    EnumField,
+    TimestampMixin,
+    TokenizerMixin,
+)
 
 
+# pylint: disable=too-many-ancestors
 class User(CardinalBase, TokenizerMixin, TimestampMixin):
-    """User account has a primary email for authentication
-    """
-    # pylint: disable=too-many-ancestors
+    """User account has a primary email for authentication."""
+
     activation_states = ('pending', 'active')
 
     id = PrimaryKeyField()
@@ -32,7 +35,7 @@ class User(CardinalBase, TokenizerMixin, TimestampMixin):
     reset_password_token_sent_at = DateTimeField(
         null=True, default=None)
 
-    class Meta:  # pylint: disable=missing-docstring
+    class Meta:
         db_table = 'users'
 
     @classmethod
@@ -42,11 +45,12 @@ class User(CardinalBase, TokenizerMixin, TimestampMixin):
 
     def __init__(self, *args, **kwargs):
         from playhouse.fields import ManyToManyField
-        # avoid circular dependencies
+        # pylint: disable=cyclic-import
         from .article import Article
         from .contribution import Contribution
         from .project import Project
         from .membership import Membership
+        # pylint: enable=cyclic-import
 
         # collaborator
         p_field = ManyToManyField(
@@ -65,8 +69,7 @@ class User(CardinalBase, TokenizerMixin, TimestampMixin):
     def __repr__(self):
         return '<User id:{}, email:{}>'.format(self.id, self.email)
 
-    # TODO:
-    # Create custom field:
+    # TODO: Create custom field:
     # See: https://github.com/coleifer/peewee/blob/\
     #   dc0ac68f3a596e27e117698393b4ab64d2f92617/playhouse/fields.py#L54
     def set_password(self, pw):
@@ -82,7 +85,7 @@ class User(CardinalBase, TokenizerMixin, TimestampMixin):
         token = self.generate_token(key='user',
                                     salt='reset_password',
                                     expiration=expiration)
-        # TODO: move reset password service
+        # TODO: Move reset password service
         self.reset_password_token = token
         self.reset_password_token_expires_at = datetime.utcnow() + \
             timedelta(seconds=expiration)

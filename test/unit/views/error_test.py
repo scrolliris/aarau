@@ -2,7 +2,7 @@ import pytest
 
 
 @pytest.fixture(autouse=True)
-def setup(config):
+def setup(config):  # pylint: disable=unused-argument
     pass
 
 

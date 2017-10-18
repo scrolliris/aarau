@@ -1,13 +1,13 @@
 from contextlib import contextmanager
 import hashlib
-import requests
 import time
+import requests
 
 from pyramid.renderers import render
 from pyramid_mailer import get_mailer
 from pyramid_mailer.message import Message as BaseMessage
 
-from ..env import Env
+from aarau.env import Env
 
 __all__ = ('UserMailer')
 
@@ -58,10 +58,11 @@ class UserMailer(object):
         self.request = request
         self.template = '../templates/user_mailer/{}.text.mako'
 
-    def __generate_hash_ref(self, length=9):
-        hash = hashlib.sha256()
-        hash.update(str(time.time()).encode('utf8'))
-        ref = hash.hexdigest()
+    @staticmethod
+    def generate_hash_ref(length=9):
+        hash_ref = hashlib.sha256()
+        hash_ref.update(str(time.time()).encode('utf8'))
+        ref = hash_ref.hexdigest()
         ref_length = len(ref)
         return ref[:(ref_length if length > ref_length else length)]
 
@@ -71,7 +72,7 @@ class UserMailer(object):
                                          token=user.reset_password_token)
             body = render(self.template.format('reset_password_email'), {
                 'url': url,
-                'ref': self.__generate_hash_ref(),
+                'ref': self.__class__.generate_hash_ref(),
             })
             message = Message(subject='Reset your password',
                               recipients=recipients,
@@ -85,7 +86,7 @@ class UserMailer(object):
                                          token=user_email.activation_token)
             body = render(self.template.format('account_activation_email'), {
                 'url': url,
-                'ref': self.__generate_hash_ref(),
+                'ref': self.__class__.generate_hash_ref(),
             })
             message = Message(subject='Activate your account',
                               recipients=recipients,
@@ -99,7 +100,7 @@ class UserMailer(object):
                                          token=user_email.activation_token)
             body = render(self.template.format('email_activation_email'), {
                 'url': url,
-                'ref': self.__generate_hash_ref(),
+                'ref': self.__class__.generate_hash_ref(),
             })
             message = Message(subject='Confirm your new email address',
                               recipients=recipients,

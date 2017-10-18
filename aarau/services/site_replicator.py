@@ -1,11 +1,9 @@
-"""Site replication service.
-"""
 from google.cloud import datastore
 
 
 class SiteReplicator(object):
-    """Service object for site replication.
-    """
+    """Service object for checking site cache replication status."""
+
     KIND = 'site'
 
     def __init__(self, *_args, **_kwargs):
@@ -15,15 +13,13 @@ class SiteReplicator(object):
         super().__init__()  # takes no arguments
 
     def assign(self, obj=None):
-        """Assigns appropriate object; site.
-        """
+        """Assigns appropriate object; site."""
         if obj:
             self.site = obj
 
     def replicate(self):
-        """Creates or updates appropriate site object.
-        """
-        # FIXME: raises valid exception
+        """Creates or updates appropriate site object."""
+        # TODO: raises appropriat exception
         if not self.site:
             raise Exception()
 
@@ -44,8 +40,7 @@ class SiteReplicator(object):
             return self.client.put(obj)
 
     def validate(self):
-        """Checks entity in datastore.
-        """
+        """Checks entity in datastore."""
         if not self.site:
             return False
 

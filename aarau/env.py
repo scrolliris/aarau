@@ -20,9 +20,9 @@ def load_dotenv_vars(dotenv_file=None):
             os.environ[v] = env_v
 
 
-# OS's environ handler (wrapper)
-# This class has utilities to treat environment variables.
 class Env():
+    """The wrapper of `os.environ` for application."""
+
     VALUES = ('development', 'test', 'production')
 
     def __init__(self):
@@ -33,8 +33,8 @@ class Env():
         v = str(os.environ.get('ENV', None))
         return v if v in cls.VALUES else 'production'
 
-    @classmethod
-    def settings_mappings(self):
+    @staticmethod
+    def settings_mappings():
         return {
             # Note: these values are updated if exist but not empty
             'auth.secret': 'AUTH_SECRET',
@@ -67,16 +67,14 @@ class Env():
             'google_cloud.project': 'GOOGLE_CLOUD_PROJECT',
         }
 
-    def get(self, key, default=None):
+    def get(self, key, default=None):  # pylint: disable=no-self-use
         return os.environ.get(key, default)
 
-    def set(self, key, value):
+    def set(self, key, value):  # pylint: disable=no-self-use
         os.environ[key] = value
 
     @reify
     def host(self):
-        # TODO
-        # get host and port from server section in ini as fallback
         return str(self.get('HOST', '0.0.0.0'))
 
     @reify

@@ -1,5 +1,3 @@
-"""The site model
-"""
 from pyramid.decorator import reify
 from peewee import (
     BooleanField,
@@ -10,7 +8,7 @@ from peewee import (
     DeferredRelation,
 )
 
-from .base import (
+from aarau.models.base import (
     CardinalBase,
     EnumField,
     DeletedAtMixin,
@@ -18,16 +16,19 @@ from .base import (
     TimestampMixin,
 )
 
-from .application import Application
-from .publication import Publication
+from aarau.models.application import Application
+from aarau.models.publication import Publication
 
 DeferredProject = DeferredRelation()  # pylint: disable=invalid-name
 
 
+# pylint: disable=too-many-ancestors
 class Site(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
-    """Website belongs to project, which has type as application or publication
+    """Site model (website) belongs to a project.
+
+    Site has its type as application (external site) or publication.
     """
-    # pylint: disable=too-many-ancestors
+
     calculation_states = ('off', 'on')
 
     id = PrimaryKeyField()
@@ -44,7 +45,7 @@ class Site(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
     write_key = CharField(max_length=128, null=False)
     is_pinned = BooleanField(default=False)
 
-    class Meta:  # pylint: disable=missing-docstring
+    class Meta:
         db_table = 'sites'
 
     def __repr__(self):

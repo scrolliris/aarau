@@ -14,9 +14,7 @@ from aarau.views.form import (
 )
 
 
-class ChangePasswordForm(SecureForm):
-    """
-    """
+class ChangePasswordFormBase(SecureForm):
     current_password = PasswordField('Current password', [
         v.Required(),
         v.Length(min=6, max=32),
@@ -33,18 +31,33 @@ class ChangePasswordForm(SecureForm):
     submit = SubmitField('Change')
 
 
-def change_password_form_factory(request, user):
-    class AChangePasswordForm(ChangePasswordForm):
-        def validate_new_password(self, field):
-            if user.password == user.__class__.encrypt_password(field.data):
-                raise ValidationError(
-                    'New password is same as current password')
-    return build_form(AChangePasswordForm, request)
+class ChangePasswordForm(ChangePasswordFormBase):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._user = None
+
+    @property
+    def user(self):
+        return self._user
+
+    @user.setter
+    def user(self, user):
+        self._user = user
+
+    def validate_new_password(self, field):  # pylint: disable=no-self-use
+        encrypted = self.user.__class__.encrypt_password(field.data)
+        if self.user.password == encrypted:
+            raise ValidationError(
+                'New password is same as current password')
 
 
-class NewEmailForm(SecureForm):
-    """
-    """
+def build_change_password_form(request, user):
+    form = build_form(ChangePasswordForm, request)
+    form.user = user
+    return form
+
+
+class NewEmailFormBase(SecureForm):
     new_email = StringField('New Email', [
         v.Required(),
         v.Length(min=6, max=64),
@@ -56,62 +69,69 @@ class NewEmailForm(SecureForm):
         raise NotImplementedError
 
 
-def new_email_form_factory(request):
-    class ANewEmailForm(NewEmailForm):
-        def validate_new_email(self, field):
-            from ...models.user_email import UserEmail
-            user_email = UserEmail.select().where(
-                UserEmail.email == field.data).first()
-            if user_email:
-                raise ValidationError('Email is already registered.')
-    return build_form(ANewEmailForm, request)
+class NewEmailForm(NewEmailFormBase):
+    def validate_new_email(self, field):
+        from aarau.models.user_email import UserEmail
+
+        user_email = UserEmail.select().where(
+            UserEmail.email == field.data).first()
+        if user_email:
+            raise ValidationError('Email is already registered.')
 
 
-class DeleteEmailForm(SecureForm):
-    """
-    """
+def build_new_email_form(request):
+    return build_form(NewEmailForm, request)
+
+
+class EmailFormBase(SecureForm):
     email = HiddenField('Email', [
         v.Required(),
         v.Length(min=6, max=64),
         v.Email(),
     ])
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._user_email = None
+
+    @property
+    def user_email(self):
+        return self._user_email
+
+    @user_email.setter
+    def user_email(self, user_email):
+        self._user_email = user_email
+
     def validate_email(self, field):
         raise NotImplementedError
 
 
-def delete_email_form_factory(request, user_email):
+class DeleteEmailForm(EmailFormBase):
+    def validate_email(self, field):
+        if not self.user_email:
+            raise ValidationError()
+
+
+def build_delete_email_form(request, user_email):
     if not user_email or user_email.type == 'primary':
         return build_form(FailureForm, request)
 
-    class ADeleteEmailForm(DeleteEmailForm):
-        def validate_email(self, field):
-            if not user_email:
-                raise ValidationError()
-    return build_form(ADeleteEmailForm, request)
+    form = build_form(DeleteEmailForm, request)
+    form.user_email = user_email
+    return form
 
 
-class ChangeEmailForm(SecureForm):
-    """
-    """
-    email = HiddenField('Email', [
-        v.Required(),
-        v.Length(min=6, max=64),
-        v.Email(),
-    ])
-
+class ChangeEmailForm(EmailFormBase):
     def validate_email(self, field):
-        raise NotImplementedError
+        if not self.user_email:
+            raise ValidationError()
 
 
-def change_email_form_factory(request, user_email):
+def build_change_email_form(request, user_email):
     if not user_email or user_email.activation_state == 'pending' or \
        user_email.type == 'primary':
-            return build_form(FailureForm, request)
+        return build_form(FailureForm, request)
 
-    class AChangeEmailForm(ChangeEmailForm):
-        def validate_email(self, field):
-            if not user_email:
-                raise ValidationError()
-
-    return build_form(AChangeEmailForm, request)
+    form = build_form(ChangeEmailForm, request)
+    form.user_email = user_email
+    return form

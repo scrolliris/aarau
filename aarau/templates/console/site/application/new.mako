@@ -26,7 +26,6 @@
         <%
           act = req.route_url('console.site.new', project_id=project.id, _query={'type':'application'})
           ctx = 'new'
-          # FIXME
           err = ''
         %>
         <%include file="aarau:templates/console/site/_form.mako" args="f=form, act=act, ctx=ctx, err=err"/>

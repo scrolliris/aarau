@@ -1,5 +1,2 @@
-def includeme(config):
-    """
-    Initializes reset_password view.
-    """
+def includeme(config):  # pylint: disable=unused-argument
     pass

@@ -1,21 +1,14 @@
-# pylint: disable=unused-argument,invalid-name
-"""Unit test for project model.
-"""
 import pytest
 
 from aarau.models import Project
 
 
 @pytest.fixture(autouse=True)
-def setup(config):
-    """Setup.
-    """
+def setup(config):  # pylint: disable=unused-argument
     pass
 
 
 def test_primary_owner(projects, plans, users):
-    """Test primary ownership after creation.
-    """
     from aarau.models import Membership
 
     project = projects['piano-music-club']
@@ -41,6 +34,7 @@ def test_primary_owner(projects, plans, users):
     assert 'member' == membership.role
 
     with pytest.raises(user.__class__.DoesNotExist):
+        # pylint: disable=pointless-statement
         project.primary_owner
 
     membership.role = 'primary_owner'

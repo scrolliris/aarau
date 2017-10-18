@@ -7,18 +7,19 @@ from peewee import (
     PrimaryKeyField,
 )
 
-from .base import (
+from aarau.models.base import (
     CardinalBase,
     EnumField, TimestampMixin, TokenizerMixin
 )
-from .user import User
+from aarau.models.user import User
 
 
 class UserEmail(CardinalBase, TokenizerMixin, TimestampMixin):
-    """Email belong to a user
+    """Emails belong to a user.
 
     A user has multiple emails. User object has primary email.
     """
+
     activation_states = ('pending', 'active')
     types = ('primary', 'normal')
 
@@ -40,7 +41,7 @@ class UserEmail(CardinalBase, TokenizerMixin, TimestampMixin):
         token = self.generate_token(key='user_email',
                                     salt='user_email_activation',
                                     expiration=expiration)
-        # TODO: move email activation service
+        # TODO: Move email activation service
         self.activation_token = token
         self.activation_state = 'pending'
         self.activation_token_expires_at = datetime.utcnow() + \
@@ -65,7 +66,7 @@ class UserEmail(CardinalBase, TokenizerMixin, TimestampMixin):
                     klass.activation_state == 'active',
                     klass.type == 'primary').get()
                 current_primary.type = 'normal'
-            except:
+            except klass.DoesNotExist:
                 self._meta.database.rollback()
                 return False
             self.type = 'primary'

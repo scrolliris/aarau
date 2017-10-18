@@ -1,12 +1,10 @@
-"""The page model
-"""
 from peewee import (
     CharField,
     ForeignKeyField,
     PrimaryKeyField,
 )
 
-from .base import (
+from aarau.models.base import (
     CardinalBase,
     EnumField,
     CodeMixin,
@@ -14,13 +12,13 @@ from .base import (
     TimestampMixin,
 )
 
-from .application import Application
+from aarau.models.application import Application
 
 
+# pylint: disable=too-many-ancestors
 class Page(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
-    """Web page belong to user's application, which is recorded via script
-    """
-    # pylint: disable=too-many-ancestors
+    """Web page belong to user's application, which is recorded via script."""
+
     scopes = ('public', 'private')
 
     id = PrimaryKeyField()
@@ -32,7 +30,7 @@ class Page(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
     title = CharField(max_length=128, null=True)
     scope = EnumField(choices=scopes, null=False, default='public')
 
-    class Meta:  # pylint: disable=missing-docstring
+    class Meta:
         db_table = 'pages'
 
     def __repr__(self):

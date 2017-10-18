@@ -1,22 +1,20 @@
-"""The Contribution model
-"""
 from peewee import (
     ForeignKeyField,
     PrimaryKeyField,
 )
 
-from .base import (
+from aarau.models.base import (
     CardinalBase,
     EnumField, TimestampMixin
 )
 
-from .article import Article
-from .user import User
+from aarau.models.article import Article
+from aarau.models.user import User
 
 
 class Contribution(CardinalBase, TimestampMixin):
-    """Relationship between user and article
-    """
+    """Relationship between user and article."""
+
     roles = ('primary_author', 'author', 'proofreader', 'cooperator',
              'translator', 'translator_supervisor', 'compiler', 'supervisor')
 
@@ -29,7 +27,7 @@ class Contribution(CardinalBase, TimestampMixin):
         related_name='contributions', null=False)
     role = EnumField(choices=roles, null=False, default='primary_author')
 
-    class Meta:  # pylint: disable=missing-docstring
+    class Meta:
         db_table = 'contributions'
 
     def __repr__(self):

@@ -1,25 +1,22 @@
-"""The publication model
-"""
 from peewee import (
     CharField,
     ForeignKeyField,
     PrimaryKeyField,
 )
 
-from .base import (
+from aarau.models.base import (
     CardinalBase,
     DeletedAtMixin,
     TimestampMixin,
 )
 
-from .license import License
-from .classification import Classification
+from aarau.models.license import License
+from aarau.models.classification import Classification
 
 
 class Publication(CardinalBase, TimestampMixin, DeletedAtMixin):
-    """Internal publication
-    """
-    # pylint: disable=too-many-ancestors
+    """Internal publication which published on scrolliris."""
+
     id = PrimaryKeyField()
     classification = ForeignKeyField(
         rel_model=Classification, db_column='classification_id', to_field='id',
@@ -31,7 +28,7 @@ class Publication(CardinalBase, TimestampMixin, DeletedAtMixin):
         related_name='publications', null=True)
     copyright = CharField(max_length=64, null=False)
 
-    class Meta:  # pylint: disable=missing-docstring
+    class Meta:
         db_table = 'publications'
 
     def __repr__(self):

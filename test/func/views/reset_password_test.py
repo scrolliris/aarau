@@ -1,13 +1,8 @@
-# pylint: disable=unused-argument
-"""Test reset password view actions.
-"""
 import pytest
 
 
 @pytest.fixture(autouse=True)
-def setup(request, config, mailbox):
-    """Setup.
-    """
+def setup(request, config, mailbox):  # pylint: disable=unused-argument
     mailbox.clean()
 
     # eager task (emulation)
@@ -15,18 +10,13 @@ def setup(request, config, mailbox):
     worker.conf.update(task_always_eager=True)
 
     def teardown():
-        """Teardown.
-        """
         worker.conf.update(task_always_eager=False)
         mailbox.clean()
 
     request.addfinalizer(teardown)
 
 
-def test_reset_password_with_valid_email(  # pylint: disable=invalid-name
-        users, login_as, dummy_app, mailbox):
-    """Test password reset functionality.
-    """
+def test_reset_password_with_valid_email(users, dummy_app, mailbox):
     user = users['oswald']
     res = dummy_app.get('/password/reset', status=200)
     res.charset = None

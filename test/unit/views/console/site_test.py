@@ -1,21 +1,14 @@
-# pylint: disable=unused-argument
-"""Unit tests for site view actions in console
-"""
 import pytest
 
 from aarau.views.console.site.action import application_site_view_badge
 
 
 @pytest.fixture(autouse=True)
-def setup(config):
-    """Setup
-    """
+def setup(config):  # pylint: disable=unused-argument
     pass
 
 
 def test_application_site_badge_without_type(users, dummy_request):
-    """Test badge view without `type` query param
-    """
     from pyramid.httpexceptions import HTTPNotFound
 
     user = users['oswald']
@@ -25,8 +18,6 @@ def test_application_site_badge_without_type(users, dummy_request):
 
 
 def test_application_site_badge_missing_project(users, dummy_request):
-    """Test badge view unknown project
-    """
     from webob.multidict import MultiDict
     from pyramid.httpexceptions import HTTPNotFound
 
@@ -44,8 +35,6 @@ def test_application_site_badge_missing_project(users, dummy_request):
 
 
 def test_application_site_badge_missing_site(users, dummy_request):
-    """Test badge view unknown site
-    """
     from webob.multidict import MultiDict
     from pyramid.httpexceptions import HTTPNotFound
 
@@ -62,8 +51,6 @@ def test_application_site_badge_missing_site(users, dummy_request):
 
 
 def test_application_site_badge(users, dummy_request):
-    """Test badge view
-    """
     from webob.multidict import MultiDict
 
     user = users['oswald']

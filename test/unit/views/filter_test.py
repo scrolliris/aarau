@@ -1,19 +1,12 @@
-# pylint: disable=unused-argument
-"""Unit tests for view filters.
-"""
 import pytest
 
 
 @pytest.fixture(autouse=True)
-def setup(config):
-    """Setup.
-    """
+def setup(config):  # pylint: disable=unused-argument
     pass
 
 
 def test_forbidden_redirect_as_logged_in_user(users, dummy_request):
-    """Test redirect by forbidden error.
-    """
     from pyramid.httpexceptions import HTTPFound
     from aarau.views.filter import forbidden_redirect
 
@@ -26,8 +19,6 @@ def test_forbidden_redirect_as_logged_in_user(users, dummy_request):
 
 
 def test_forbidden_redirect(dummy_request):
-    """Test redirect by forbidden error.
-    """
     from pyramid.httpexceptions import HTTPFound
     from aarau.views.filter import forbidden_redirect
 

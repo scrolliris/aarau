@@ -1,45 +1,27 @@
-# pylint: disable=inherit-non-class,no-self-argument,no-method-argument
-"""Interface classes as service object.
-"""
-
+# pylint: disable=inherit-non-class,no-self-argument
 from zope.interface import Attribute, Interface
 
 
 class IActivator(Interface):
-    """Interface as activator service
-    """
-    # pylint: disable=missing-docstring
     user = Attribute("""user object""")
     user_email = Attribute("""user_email obejct""")
     activation_token = Attribute("""user_email object's activation_token""")
 
-    def assign(user=None, email=None, token=None):
+    def invoke(self):
         pass
 
-    def activate():
-        pass
-
-    def invoke():
-        pass
-
-    def token_has_expired():
+    def token_has_expired(self):
         pass
 
 
 class IReplicator(Interface):
-    """Interface as replicator service
-    """
-    # pylint: disable=missing-docstring
     obj = Attribute("""object""")
 
-    def assign(obj=None):
+    def replicate(self):
         pass
 
-    def replicate():
+    def validate(self):
         pass
 
-    def validate():
-        pass
-
-    def destroy():
+    def destroy(self):
         pass

@@ -1,5 +1,3 @@
-"""View actions for project.
-"""
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
 
@@ -10,20 +8,17 @@ from aarau.models import (
     Project,
 )
 
-from .form import new_project_form
+from aarau.views.project.form import new_project_form
 
 
 def tpl(path, resource='project'):
-    """Return template file path.
-    """
     return 'aarau:templates/{0:s}/{1:s}'.format(resource, path)
 
 
 @view_config(route_name='project.new', renderer=tpl('new.mako'))
 @login_required
 def project_new(req):
-    """Renders a form new project/Create new project.
-    """
+    """Renders a form new project/Create new project."""
     user = req.user
     if user.projects:  # beta
         next_path = req.route_path('console.top')

@@ -109,8 +109,7 @@ check:
 .PHONY: check
 
 lint:
-	pylint aarau
-	pylint test
+	pylint test aarau
 .PHONY: lint
 
 vet: | check lint

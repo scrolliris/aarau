@@ -1,6 +1,3 @@
-"""View actions for settings.
-"""
-
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 
@@ -9,10 +6,10 @@ from aarau.services.interface import IActivator
 from aarau.views import tpl
 from aarau.views.filter import login_required
 from aarau.views.settings.form import (
-    change_password_form_factory,
-    new_email_form_factory,
-    delete_email_form_factory,
-    change_email_form_factory,
+    build_change_password_form,
+    build_new_email_form,
+    build_delete_email_form,
+    build_change_email_form,
 )
 
 
@@ -22,8 +19,7 @@ from aarau.views.settings.form import (
              renderer=tpl('settings/account.mako'))
 @login_required
 def settings_account(_request):
-    """ Renders account settings view
-    """
+    """Renders account settings view."""
     return {}
 
 
@@ -32,15 +28,14 @@ def settings_account(_request):
              renderer=tpl('settings/email.mako'))
 @login_required
 def settings_email(request):
-    """ Renders email settings view and adds new email via POST
-    """
+    """Renders email settings view and adds new email via POST."""
     user = request.user
 
     next_path = request.route_path('settings.section', section='email')
     user_emails = user.emails.order_by(
         UserEmail.type.asc(), UserEmail.id.asc())
 
-    form = new_email_form_factory(request)
+    form = build_new_email_form(request)
     if 'submit' in request.POST:
         _ = request.translate
         if 'pending' in [ue.activation_state for ue in user_emails]:
@@ -62,8 +57,8 @@ def settings_email(request):
     email_forms = {}
     for user_email in user_emails:
         email_forms[user_email.id] = {
-            'change': change_email_form_factory(request, user_email),
-            'delete': delete_email_form_factory(request, user_email),
+            'change': build_change_email_form(request, user_email),
+            'delete': build_delete_email_form(request, user_email),
         }
     return dict(form=form, user_emails=user_emails, email_forms=email_forms)
 
@@ -71,8 +66,7 @@ def settings_email(request):
 @view_config(route_name='settings.email_activate', request_method='GET')
 @login_required
 def settings_email_activate(request):
-    """ Activates user email
-    """
+    """Activates user email."""
     user = request.user
 
     try:
@@ -99,15 +93,14 @@ def settings_email_activate(request):
 @view_config(route_name='settings.email_delete', request_method='POST')
 @login_required
 def settings_email_delete(request):
-    """ Deletes user email
-    """
+    """Deletes user email."""
     user = request.user
     user_email = user.emails.where(
         UserEmail.email == request.params['email'],
         UserEmail.type != 'primary',
     ).first()
 
-    form = delete_email_form_factory(request, user_email)
+    form = build_delete_email_form(request, user_email)
     if 'submit' in request.POST:
         _ = request.translate
         if form.validate():
@@ -125,15 +118,14 @@ def settings_email_delete(request):
 @view_config(route_name='settings.email_change', request_method='POST')
 @login_required
 def settings_email_change(request):
-    """ Changes user email
-    """
+    """Changes user email."""
     user = request.user
     user_email = user.emails.where(
         UserEmail.email == request.params['email'],
         UserEmail.type != 'primary',
     ).first()
 
-    form = change_email_form_factory(request, user_email)
+    form = build_change_email_form(request, user_email)
     if 'submit' in request.POST:
         _ = request.translate
         if form.validate() and user_email.make_as_primary():
@@ -152,11 +144,10 @@ def settings_email_change(request):
              renderer=tpl('settings/password.mako'))
 @login_required
 def settings_password(request):
-    """ Renders password settings view and changes password via POST
-    """
+    """Renders password settings view and changes password via POST."""
     user = request.user
 
-    form = change_password_form_factory(request, user)
+    form = build_change_password_form(request, user)
     if 'submit' in request.POST:
         _ = request.translate
         if form.validate():

@@ -1,16 +1,10 @@
-""" UserEmail activation service
-"""
-
 from aarau.services.mixin import ActivatorMixin
 from aarau.tasks.send_email import send_email_activation_email
 
 
 class UserEmailActivator(ActivatorMixin):
-    """ Service object for user email activation
-    """
-
     def invoke(self):
-        """ Saves appropriate object (user email)
+        """Saves appropriate object (user email).
 
         This method sends email for activation to user's new email address,
         as side effect.
@@ -26,6 +20,5 @@ class UserEmailActivator(ActivatorMixin):
             send_email_activation_email.delay(self.user_email.id)
 
     def activate(self):
-        """ Activates user email using activation token
-        """
+        """Activates user email using activation token."""
         return self.user_email.activate(self.activation_token)

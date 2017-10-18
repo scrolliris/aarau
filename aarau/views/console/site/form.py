@@ -36,7 +36,7 @@ class NewSiteForm(SiteFormBaseMixin, SecureForm):
 
 def new_application_site_form(req, project):
     class ANewSiteForm(NewSiteForm):
-        def validate_domain(self, field):
+        def validate_domain(self, field):  # pylint: disable=no-self-use
             from aarau.models.site import Site
             site = Site.select().where(
                 Site.hosting_type == 'Application',
@@ -53,7 +53,7 @@ class EditSiteForm(SiteFormBaseMixin, SecureForm):
     submit = SubmitField('Update')
 
 
-def edit_application_site_form(req, project, site):
+def edit_application_site_form(req, _project, site):
     class AnEditSiteForm(EditSiteForm):
         pass
 

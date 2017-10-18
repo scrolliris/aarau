@@ -1,6 +1,3 @@
-"""Forms
-"""
-
 from pyramid.i18n import TranslationStringFactory
 from wtforms.form import Form
 from wtforms.csrf.core import CSRF as _CSRF
@@ -10,8 +7,8 @@ _ = TranslationStringFactory('form')
 
 
 class CSRF(_CSRF):
-    """The csrf class uses pyramid's builtin csrf.
-    """
+    """CSRF utility extends pyramid's builtin csrf."""
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.csrf_context = None
@@ -28,35 +25,27 @@ class CSRF(_CSRF):
             raise ValueError('Invalid CSRF')
 
 
-# pylint: disable=anomalous-backslash-in-string
-USERNAME_PATTERN = \
-    '\A[a-z][a-z0-9\_\-]+\Z'
-
-PASSWORD_PATTERN = \
-    '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])'
+USERNAME_PATTERN = r'\A[a-z][a-z0-9\_\-]+\Z'
+PASSWORD_PATTERN = r'(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])'
 
 
-class SecureForm(Form):
-    """The form enables csrf protection.
-    """
-    # pylint: disable=too-few-public-methods
+class SecureForm(Form):  # pylint: disable=too-few-public-methods
+    """Form base class enables csrf protection."""
+
     class Meta:
-        """Meta class of SecureForm.
-        """
         csrf = True
         csrf_class = CSRF
 
 
 class FailureForm(SecureForm):
-    """A form returns always failure at its validation.
-    """
+    """A form returns always failure at its validation."""
+
     def validate(self):
         return False
 
 
 def build_form(klass, request, data=None):
-    """Factory method for form.
-    """
+    """Builder method builds a form."""
     form = klass(request.POST, data, meta={
         'csrf_context': request.session,
         'locales': ['en_US', 'en'],

@@ -1,37 +1,26 @@
-# pylint: disable=unused-argument,invalid-name
-"""Unit test for article model.
-"""
 import pytest
 
 from aarau.models import Article
 
 
 @pytest.fixture(autouse=True)
-def setup(config):
-    """Setup.
-    """
+def setup(config):  # pylint: disable=unused-argument
     pass
 
 
 def test_generate_code_returns_fixed_length_string():
-    """Test code length.
-    """
     code = Article.generate_code()
     assert 40 == len(code)
 
 
 def test_generate_code_returns_valid_sha1_string():
-    """Test code format.
-    """
     import re
 
     code = Article.generate_code()
-    assert re.match('^[0-9a-f]{40}$', code)
+    assert re.match(r'^[0-9a-f]{40}$', code)
 
 
 def test_generate_code_returns_always_new_code():
-    """Test generate_code helper generates new unique code.
-    """
     codes = [c for c in filter(
         lambda x: Article.generate_code(), range(5))]
     assert 5 == len(set(codes))
@@ -39,15 +28,11 @@ def test_generate_code_returns_always_new_code():
 
 def test_grab_unique_code_repeats_until_to_grab_unique_code(
         articles, mocker):
-    """Test article has a unique code.
-    """
     article = articles['piano-lesson']
 
     codes = ['brand-new-sha1-code', article.code]
 
     def dummy_generate_code():
-        """ Returns mocked value from `codes`
-        """
         return codes.pop()
 
     # this patch restores original method after test case
@@ -69,8 +54,6 @@ def test_grab_unique_code_repeats_until_to_grab_unique_code(
 
 
 def test_published_at_assignment_by_save(users):
-    """Test newly created article has published_at.
-    """
     from datetime import datetime
     from aarau.models import Project, Site
 
@@ -96,9 +79,7 @@ def test_published_at_assignment_by_save(users):
     assert isinstance(article.published_at, datetime)
 
 
-def test_progress_state_as_choises(users):
-    """Test progress_states choices.
-    """
+def test_progress_state_as_choises():
     expected_choices = [
         ('draft', 'draft'),
         ('wip', 'wip'),
@@ -111,20 +92,16 @@ def test_progress_state_as_choises(users):
     assert expected_choices == Article.progress_state_as_choices
 
 
-def test_published_on(users, publications):
-    """Test published_on state.
-    """
+def test_published_on(publications):
     publication = publications['How to score music playing piano']
     articles = Article.published_on(publication)
     article = next((a for a in articles), None)
 
-    assert 0 != len(articles)
+    assert articles
     assert isinstance(article, Article)
 
 
-def test_get_by_slug(users):
-    """Test fetching by using slug.
-    """
+def test_get_by_slug():
     slug = 'piano-lesson'
     article = Article.get_by_slug(slug)
 

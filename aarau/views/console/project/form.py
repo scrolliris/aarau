@@ -1,5 +1,3 @@
-"""Forms and factory methods for console view actions
-"""
 from wtforms import (
     SelectField,
     StringField,
@@ -12,7 +10,7 @@ from aarau.models import Plan
 from aarau.views.form import SecureForm, build_form
 
 
-NAMESPACE_PATTERN = '\A[a-z][a-z0-9\_\-]+[a-z0-9]\Z'
+NAMESPACE_PATTERN = r'\A[a-z][a-z0-9\_\-]+[a-z0-9]\Z'
 
 
 class ProjectFormBaseMixin(object):
@@ -37,8 +35,9 @@ class NewProjectForm(ProjectFormBaseMixin, SecureForm):
 
 def new_project_form(req):
     class ANewProjectForm(NewProjectForm):
-        def validate_namespace(self, field):
+        def validate_namespace(self, field):  # pylint: disable=no-self-use
             from aarau.models.project import Project
+
             project = Project.select().where(
                 Project.namespace == field.data).first()
             if project:

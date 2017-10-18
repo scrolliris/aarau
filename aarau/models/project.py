@@ -1,12 +1,10 @@
-"""The project model.
-"""
 from peewee import (
     CharField,
     ForeignKeyField,
     PrimaryKeyField,
 )
 
-from .base import (
+from aarau.models.base import (
     CardinalBase,
     EnumField,
     DeletedAtMixin,
@@ -14,16 +12,16 @@ from .base import (
     TimestampMixin,
 )
 
-from .plan import Plan
-from .site import Site
-from .application import Application
-from .publication import Publication
+from aarau.models.plan import Plan
+from aarau.models.site import Site
+from aarau.models.application import Application
+from aarau.models.publication import Publication
 
 
+# pylint: disable=too-many-ancestors
 class Project(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
-    """Publishing project as workspace
-    """
-    # pylint: disable=too-many-ancestors
+    """Publishing project as workspace."""
+
     billing_states = ('none', 'pending', 'processing', 'valid')
 
     id = PrimaryKeyField()
@@ -38,7 +36,7 @@ class Project(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
     billing_state = EnumField(
         choices=billing_states, null=False, default='none')
 
-    class Meta:  # pylint: disable=missing-docstring
+    class Meta:
         db_table = 'projects'
 
     def __init__(self, *args, **kwargs):
@@ -60,8 +58,7 @@ class Project(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
 
     @classmethod
     def get_by_access_key_id(cls, access_key_id):
-        """Fetches a project by unique access_key_id string
-        """
+        """Fetches a project by unique access_key_id string."""
         # pylint: disable=no-member
         return cls.select().where(
             cls.access_key_id_key == access_key_id,
@@ -69,8 +66,6 @@ class Project(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
 
     @property
     def application_sites(self):
-        """Fetches external application sites
-        """
         # pylint: disable=no-member
         return Site.select().join(Application, on=(
             (Site.hosting_type == 'Application') &
@@ -79,8 +74,6 @@ class Project(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
 
     @property
     def publication_sites(self):
-        """Returns internal publication sites
-        """
         # pylint: disable=no-member
         return Site.select().join(Publication, on=(
             (Site.hosting_type == 'Publication') &
@@ -89,8 +82,7 @@ class Project(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
 
     @property
     def primary_owner(self):
-        """Returns user as primary owner of this project
-        """
+        """Returns user as primary owner of this project."""
         from .membership import Membership
         from .user import User
 

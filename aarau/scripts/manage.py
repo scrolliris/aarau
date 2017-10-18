@@ -1,6 +1,3 @@
-"""Utility script for database management.
-"""
-
 import os
 import sys
 from contextlib import contextmanager
@@ -25,8 +22,6 @@ from aarau.yaml import (
 
 
 def usage(argv):
-    """Displays script usage.
-    """
     cmd = os.path.basename(argv[0])
     print('usage: %s <config_uri> <command> <action> [var=value]\n'
           '(example: "%s \'development.ini#\' db seed")' % (cmd, cmd))
@@ -34,8 +29,8 @@ def usage(argv):
 
 
 class DbCli(object):
-    """CLI for database (PostgreSQL) management.
-    """
+    """CLI for database (PostgreSQL) management."""
+
     def __init__(self, settings):
         self.settings = settings
 
@@ -66,14 +61,11 @@ class DbCli(object):
         yield db[db_kind]
 
     def help(self):  # pylint: disable=no-self-use
-        """Prints usage.
-        """
         print('usage: db {help|init|seed|drop} [var=value]')
         sys.exit(1)
 
     def init(self):
-        """Initializes database.
-        """
+        """Initializes database."""
         with self._raw_db('cardinal') as (db, datname):
             q = "SELECT 1 FROM pg_database WHERE datname='{}'".format(datname)
             if db.execute_sql(q).rowcount != 0:
@@ -87,8 +79,7 @@ class DbCli(object):
             db.execute_sql(q)
 
     def migrate(self):
-        """Migrates database schema.
-        """
+        """Migrates database schema."""
         from peewee_migrate import Router
 
         with self._db('cardinal') as db, db.atomic():
@@ -97,8 +88,7 @@ class DbCli(object):
             router.run()
 
     def rollback(self):
-        """Rollbacks a latest migration.
-        """
+        """Rollbacks a latest migration."""
         from peewee_migrate import Router
 
         with self._db('cardinal') as db, db.atomic():
@@ -108,14 +98,11 @@ class DbCli(object):
                 router.rollback(router.done[-1])
 
     def seed(self):
-        """Imports db seed records for development.
-        """
+        """Imports db seed records for development."""
         with self._db('cardinal') as db, db.atomic():
             with yaml_loader(self.settings) as loader:
-                def load_data(klass, attributes):
-                    """Loads data into database.
-                    """
-                    with tokenize(attributes) as (tokens, attributes):
+                def load_data(klass, attrs):
+                    with tokenize(attrs) as (tokens, attributes):
 
                         obj = klass(**attributes)
                         obj.save()
@@ -150,8 +137,7 @@ class DbCli(object):
                             load_data(model, attributes)
 
     def drop(self):
-        """Drops database.
-        """
+        """Drops entire database."""
         with self._raw_db('cardinal') as (db, datname):
             q = "SELECT 1 FROM pg_database WHERE datname='{}'".format(datname)
             if db.execute_sql(q).rowcount == 0:
@@ -161,9 +147,10 @@ class DbCli(object):
             db.execute_sql(q)
 
 
-def main(argv=sys.argv):
-    """The Main interface.
-    """
+def main(argv=None):
+    if not argv:
+        argv = sys.argv
+
     if len(argv) < 4:
         usage(argv)
     config_uri = argv[1]

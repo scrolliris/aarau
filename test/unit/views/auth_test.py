@@ -1,13 +1,12 @@
-# pylint: disable=unused-argument
-"""Unit tests for login/logout.
-"""
+import re
+
 import pytest
+
+TKT = re.compile(r'auth_tkt=[A-z0-9_\!\:]+;')
 
 
 @pytest.fixture(autouse=True)
-def setup(config):
-    """Setup.
-    """
+def setup(config):  # pylint: disable=unused-argument
     pass
 
 
@@ -24,7 +23,6 @@ def test_login(dummy_request):
 
 def test_login_as_logged_in_user_with_referrer(
         users, dummy_request):
-    import re
     from aarau.views.auth import login
 
     referrer = 'http://example.org/settings'
@@ -35,14 +33,12 @@ def test_login_as_logged_in_user_with_referrer(
     assert '302 Found' == res.status
     assert referrer == res.location
 
-    tkt = re.compile('auth_tkt=[A-z0-9_\!\:]+;')
-    assert tkt.match(res.headers['Set-Cookie'])
+    assert TKT.match(res.headers['Set-Cookie'])
 
 
 def test_login_as_logged_in_user_without_referrer(
         users, dummy_request):
     from aarau.views.auth import login
-    import re
 
     dummy_request.user = users['oswald']
     dummy_request.referrer = None
@@ -51,11 +47,10 @@ def test_login_as_logged_in_user_without_referrer(
     assert '302 Found' == res.status
     assert '/' == res.location
 
-    tkt = re.compile('auth_tkt=[A-z0-9_\!\:]+;')
-    assert tkt.match(res.headers['Set-Cookie'])
+    assert TKT.match(res.headers['Set-Cookie'])
 
 
-def test_login_with_wrong_email(users, dummy_request):
+def test_login_with_wrong_email(dummy_request):
     from aarau.views.auth import login
 
     dummy_request.user = None
@@ -109,7 +104,6 @@ def test_login_as_pending_user(users, dummy_request):
 
 
 def test_login_with_valid_credentials(users, dummy_request):
-    import re
     from aarau.views.auth import login
 
     user = users['oswald']
@@ -126,12 +120,10 @@ def test_login_with_valid_credentials(users, dummy_request):
     assert '302 Found' == res.status
     assert '/' == res.location
 
-    tkt = re.compile('auth_tkt=[A-z0-9_\!\:]+;')
-    assert tkt.match(res.headers['Set-Cookie'])
+    assert TKT.match(res.headers['Set-Cookie'])
 
 
 def test_logout_as_logged_in_user(users, dummy_request):
-    import re
     from aarau.views.auth import login, logout
 
     dummy_request.user = users['oswald']
@@ -140,8 +132,7 @@ def test_logout_as_logged_in_user(users, dummy_request):
 
     assert '302 Found' == res.status
     assert '/' == res.location
-    tkt = re.compile('auth_tkt=[A-z0-9_\!\:]+;')
-    assert tkt.match(res.headers['Set-Cookie'])
+    assert TKT.match(res.headers['Set-Cookie'])
 
     res = logout(dummy_request)
 

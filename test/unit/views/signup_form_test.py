@@ -8,13 +8,8 @@ from aarau.views.signup.form import (
 
 
 @pytest.fixture(autouse=True)
-def setup(request, config):
+def setup(request, config):  # pylint: disable=unused-argument
     pass
-
-    def teardown():
-        pass
-
-    request.addfinalizer(teardown)
 
 
 def test_build_signup_form(dummy_request):
@@ -81,7 +76,7 @@ def test_validate_email_with_pending_expired_email(
             form.validate_email(field)
 
 
-def test_validate_email_with_new_email(mocker, users, dummy_request):
+def test_validate_email_with_new_email(mocker, dummy_request):
     from wtforms import ValidationError
 
     dummy_request.params = dummy_request.POST = MultiDict()

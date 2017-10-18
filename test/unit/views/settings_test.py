@@ -3,7 +3,7 @@ from webob.multidict import MultiDict
 
 
 @pytest.fixture(autouse=True)
-def setup(request, config, mailer_outbox):
+def setup(request, config, mailer_outbox):  # pylint: disable=unused-argument
     def clean_outbox():
         del mailer_outbox[:]
     clean_outbox()
@@ -289,7 +289,7 @@ def test_settings_email_delete_with_valid_email(
     assert '/settings/email' == res.location
 
 
-# TODO test_settings_email_change
+# TODO: Add test_settings_email_change, here
 
 
 def test_settings_password_with_empty_params(users, dummy_request):

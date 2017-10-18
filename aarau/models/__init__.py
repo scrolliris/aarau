@@ -1,5 +1,3 @@
-""" Models handle database objects
-"""
 from urllib.parse import urlparse, parse_qs
 
 from playhouse.pool import PooledPostgresqlDatabase
@@ -8,8 +6,8 @@ PooledPostgresqlDatabase.register_fields({'enum': 'enum'})
 
 
 class DB(dict):
-    """Database connections
-    """
+    """Database connections."""
+
     __getattr__ = dict.get
     __setattr__ = dict.__setitem__
     __delattr__ = dict.__delitem__
@@ -20,6 +18,7 @@ db = DB({  # proxies
     'cardinal': PooledPostgresqlDatabase(None, threadlocals=True),
     'analysis': PooledPostgresqlDatabase(None, threadlocals=True)
 })
+# pylint: enable=invalid-name
 
 
 # pylint: disable=wrong-import-position
@@ -37,6 +36,7 @@ from .site import Site, DeferredProject
 from .user import User
 from .user_email import UserEmail
 from .reading_result import ReadingResult
+# pylint: enable=wrong-import-position
 
 DeferredProject.set_model(Project)
 
@@ -52,8 +52,7 @@ __all__ = (
 
 
 def init_db(settings, db_kind):
-    """Initializes database connection.
-    """
+    """Initializes database connection."""
     key_prefix = 'database.{}.'.format(db_kind)
     url = urlparse(settings[key_prefix + 'url'])
     host = url.hostname

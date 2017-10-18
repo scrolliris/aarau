@@ -1,8 +1,6 @@
-"""Tasks package.
-"""
 import ssl  # noqa
 
-from pyramid_celery import celery_app as worker
+from pyramid_celery import celery_app as _worker
 from pyramid.threadlocal import get_current_registry
 
 from aarau import get_settings
@@ -11,10 +9,9 @@ from aarau import get_settings
 __all__ = ('worker')
 
 
-def init_worker(settings={}):  # pylint: disable=dangerous-default-value
-    """Initializes worker (app).
-    """
-    if not settings:
+def init_worker(settings):
+    """Initializes and updates worker (app)."""
+    if not settings or not isinstance(settings, dict):
         # for celery worker process
         # see aarau/scripts/worker.py
         import os
@@ -31,16 +28,15 @@ def init_worker(settings={}):  # pylint: disable=dangerous-default-value
     options = {  # duplicated for consistency
         'broker_url': settings['queue.url'],
     }
-    worker.conf.update(**options)
-    return worker
+    _worker.conf.update(**options)
+    return _worker
 
 
-worker = init_worker(get_settings())  # noqa pylint: disable=invalid-name
+worker = init_worker(get_settings())  # pylint: disable=invalid-name
 
 
 def blank_request():
-    """Returns blank request object.
-    """
+    """Returns blank dummy request object."""
     from aarau.request import CustomRequest
 
     # The variables wsgi.url_scheme, HTTP_HOST and SCRIPT_NAME

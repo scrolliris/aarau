@@ -1,5 +1,3 @@
-"""Configuration for testing
-"""
 # pylint: disable=redefined-outer-name,unused-argument
 import os
 
@@ -22,9 +20,11 @@ INI_FILE = os.path.join(TEST_DIR, '..', 'config', 'testing.ini')
 
 @pytest.fixture(scope='session')
 def dotenv() -> None:
-    """Loads dotenv file
-    """
+    """Loads dotenv file."""
     from aarau.env import load_dotenv_vars
+
+    if not os.environ.get('ENV', None):
+        os.environ['ENV'] = 'test'
 
     # same as aarau:main
     dotenv_file = os.path.join(TEST_DIR, '..', '.env')
@@ -34,8 +34,7 @@ def dotenv() -> None:
 
 @pytest.fixture(scope='session')
 def env(dotenv) -> dict:
-    """Returns env object
-    """
+    """Returns env object."""
     from aarau.env import Env
 
     return Env()
@@ -43,8 +42,7 @@ def env(dotenv) -> dict:
 
 @pytest.fixture(scope='session')
 def raw_settings(dotenv) -> dict:
-    """Returns raw setting dict
-    """
+    """Returns raw setting dict."""
     from pyramid.paster import get_appsettings
 
     return get_appsettings('{0:s}#{1:s}'.format(INI_FILE, 'aarau'))
@@ -52,8 +50,7 @@ def raw_settings(dotenv) -> dict:
 
 @pytest.fixture(scope='session')
 def resolve_settings() -> 'function':
-    """Returns resolving function for settings
-    """
+    """Returns resolving function for settings."""
     from aarau import resolve_settings
 
     def _resolve_settings(raw_s):
@@ -64,14 +61,11 @@ def resolve_settings() -> 'function':
 
 @pytest.fixture(scope='session')
 def settings(raw_settings, resolve_settings) -> 'function':
-    """Returns (environ) resolved settings
-    """
+    """Returns (environ) resolved settings."""
     return resolve_settings(raw_settings)
 
 
 def new_extra_environ(domain) -> dict:
-    """Test utility method just generate new extra_environ dict
-    """
     return {
         'HTTP_HOST': domain + ':80',
         'SERVER_NAME': domain,
@@ -84,16 +78,12 @@ def new_extra_environ(domain) -> dict:
 
 @pytest.fixture(scope='session')
 def extra_environ(env) -> dict:
-    """Returns extra environ object
-    """
     domain = env.get('DOMAIN', 'example.org')
     return new_extra_environ(domain)
 
 
 @pytest.fixture(scope='session')
 def db(settings):
-    """Returns initialized db instance
-    """
     from aarau.models import DB, init_db
 
     return DB({
@@ -104,8 +94,7 @@ def db(settings):
 
 @pytest.fixture(scope='function')
 def get_mailer():
-    """Returns getting mailer function
-    """
+    """Returns getting mailer function."""
     def _get_mailer(request_or_registry):
         from pyramid_mailer import get_mailer
         from zope.interface.interfaces import ComponentLookupError
@@ -122,8 +111,7 @@ def get_mailer():
 
 @pytest.yield_fixture(autouse=True, scope='session')
 def session_helper(db):
-    """A helper function for session scope
-    """
+    """A helper function for session scope."""
     db.cardinal.connect()
     db.analysis.connect()
 
@@ -138,8 +126,7 @@ def session_helper(db):
 
 @pytest.yield_fixture(autouse=True, scope='module')
 def module_helper(settings, db):
-    """A helper function for module scope
-    """
+    """A helper function for module scope."""
     import sys
 
     from .data import import_data  # pylint: disable=import-error
@@ -158,8 +145,7 @@ def module_helper(settings, db):
     #    db.drop_tables(tables, safe=True)
 
     def truncate_tables(tables, cascade=False):
-        """Truncates database tables
-        """
+        """Truncates database tables."""
         q = 'TRUNCATE table {0:s}'
         if cascade:
             q += ' CASCADE'
@@ -182,8 +168,7 @@ def module_helper(settings, db):
 
 @pytest.yield_fixture(autouse=True, scope='function')
 def function_helper(db):
-    """A helper function for function scope
-    """
+    """A helper function for function scope."""
     with db.cardinal.execution_context(with_transaction=True):
         yield
 
@@ -198,14 +183,12 @@ def function_helper(db):
 
 @pytest.fixture(scope='session')
 def config(request, settings) -> Configurator:
-    """Returns the testing config
-    """
+    """Returns the testing config."""
     from pyramid import testing
 
     config = testing.setUp(settings=settings)
-    # FIXME:
-    #    these includings from .ini file are not evaluated
-    #    in unit tests.
+    # NOTE: Remove these lines. The .ini file isn't evaluated in unit tests.
+    # why?
     config.include('pyramid_assetviews')
     config.include('pyramid_beaker')
     config.include('pyramid_celery')
@@ -240,8 +223,6 @@ def config(request, settings) -> Configurator:
     config.add_subscriber(add_console_renderer_globals, BeforeRender)
 
     def teardown():
-        """The teardown function
-        """
         testing.tearDown()
 
     request.addfinalizer(teardown)
@@ -251,8 +232,6 @@ def config(request, settings) -> Configurator:
 
 @pytest.fixture(scope='function')
 def dummy_request(db, settings, extra_environ) -> Request:
-    """Returns Dummy request object
-    """
     from pyramid import testing
     from pyramid_services import find_service
     from zope.interface.adapter import AdapterRegistry
@@ -280,8 +259,6 @@ def dummy_request(db, settings, extra_environ) -> Request:
 
 @pytest.fixture(scope='function')
 def projects():
-    """Returns test projects
-    """
     from aarau.models.project import Project
 
     return {p.namespace: p for p in Project.select()}
@@ -289,8 +266,6 @@ def projects():
 
 @pytest.fixture(scope='function')
 def users():
-    """Returns test users
-    """
     from aarau.models.user import User
 
     return {u.username: u for u in User.select()}
@@ -298,8 +273,6 @@ def users():
 
 @pytest.fixture(scope='function')
 def publications():
-    """Returns test publications
-    """
     from aarau.models.publication import Publication
 
     return {p.name: p for p in Publication.select()}
@@ -307,8 +280,6 @@ def publications():
 
 @pytest.fixture(scope='function')
 def articles():
-    """Returns test articles
-    """
     from aarau.models.article import Article
 
     return {a.slug: a for a in Article.select()}
@@ -316,8 +287,6 @@ def articles():
 
 @pytest.fixture(scope='function')
 def plans():
-    """Returns test plans
-    """
     from aarau.models.plan import Plan
 
     return {p.name: p for p in Plan.select()}
@@ -325,8 +294,7 @@ def plans():
 
 @pytest.fixture(scope='function')
 def mailer_outbox(dummy_request, get_mailer):
-    """Returns dummy mailbox for out going emails
-    """
+    """Returns dummy mailbox for out going emails."""
     return get_mailer(dummy_request).outbox
 
 
@@ -334,8 +302,7 @@ def mailer_outbox(dummy_request, get_mailer):
 
 @pytest.fixture(scope='session')
 def router(raw_settings) -> Router:
-    """Returns the internal app of app for testing
-    """
+    """Returns the internal app of app for testing."""
     from aarau import main
 
     global_config = {
@@ -349,13 +316,12 @@ def router(raw_settings) -> Router:
 
 @pytest.fixture(scope='session')
 def dummy_app(router, env, extra_environ) -> 'function':
-    """Returns a dummy test app
-    """
     class DummyAppProxy():
-        """The wrapper for actual dummy app
+        """The wrapper for actual dummy app.
 
         Adds `switch_target()` to change subdomain via extra_environ.
         """
+
         def __init__(self, extra_environ) -> None:
             self.extra_environ = extra_environ
             self._app = None
@@ -373,7 +339,7 @@ def dummy_app(router, env, extra_environ) -> 'function':
                 self._app.extra_environ = new_extra_environ(domain)
 
         def switch_target(self, target=None) -> 'self':
-            """Target subdomain switch utility
+            """Target subdomain switch utility method.
 
             >>> app = dummy_app.switch_target('console')
             >>> app.get('/', status=200)
@@ -383,18 +349,12 @@ def dummy_app(router, env, extra_environ) -> 'function':
 
         @property
         def app(self):
-            """Wrapper of app property
-            """
             return self._app.app
 
         def get(self, *args, **kwargs):
-            """Wrapper to actual get method
-            """
             return self._app.get(*args, **kwargs)
 
         def post(self, *args, **kwargs):
-            """Wrapper to actual post method
-            """
             return self._app.post(*args, **kwargs)
 
     return DummyAppProxy(extra_environ)
@@ -402,26 +362,21 @@ def dummy_app(router, env, extra_environ) -> 'function':
 
 @pytest.fixture(scope='function')
 def mailbox(dummy_app, get_mailer):
-    """Returns mailbox user interface for out going emails
-    """
-    # FIXME: mock `http` type.
+    """Returns mailbox user interface for out going emails."""
+    # TODO: Mock `http` type.
     class Mailbox(object):
-        """The Mailbox.
-        """
         def __init__(self, request):
             # pylint: disable=too-many-function-args
             self._mailer = get_mailer(dummy_app.app.registry)
 
         @property
         def sent_messages(self):
-            """Fetches sent messages from mailbox
-            """
+            """Fetches sent messages from mailbox."""
             # pylint: disable=no-member
             return self._mailer.outbox
 
         def clean(self):
-            """Clears all messages in mailbox
-            """
+            """Clears all messages in mailbox."""
             # pylint: disable=no-member
             del self._mailer.outbox[:]
 
@@ -430,8 +385,7 @@ def mailbox(dummy_app, get_mailer):
 
 @pytest.fixture(scope='function')
 def login(dummy_app):
-    """Login utility function
-    """
+    """Login utility function."""
     def _login(user, password=None):
         from os import path
         from aarau.yaml import yaml_loader
@@ -447,9 +401,8 @@ def login(dummy_app):
 
         app = dummy_app.switch_target()
         res = app.get('/login', status=200)
-        # TODO:
-        #   See https://github.com/Pylons/webtest/issues/164
-        #   To avoid warning for now. Remove `res.charset = None` in tests.
+        # TODO: Remove `res.charset = None` in tests. (used to avoid warning)
+        # see https://github.com/Pylons/webtest/issues/164
         res.charset = None
         token = res.html.select_one('input[name=csrf_token]')['value']
         params = {
@@ -467,8 +420,6 @@ def login(dummy_app):
 
 @pytest.fixture(scope='function')
 def logout(dummy_app):
-    """Logout ulitity function
-    """
     def _logout():
         app = dummy_app.switch_target()
         res = app.get('/logout', status=302)
@@ -480,8 +431,7 @@ def logout(dummy_app):
 
 @pytest.fixture(scope='function')
 def login_as(login, logout):
-    """Login utility for specified user
-    """
+    """Login utility for specified user."""
     from contextlib import contextmanager
 
     @contextmanager

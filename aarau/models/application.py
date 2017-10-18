@@ -1,11 +1,9 @@
-"""The application model
-"""
 from peewee import (
     CharField,
     PrimaryKeyField,
 )
 
-from .base import (
+from aarau.models.base import (
     CardinalBase,
     DeletedAtMixin,
     TimestampMixin,
@@ -13,14 +11,13 @@ from .base import (
 
 
 class Application(CardinalBase, TimestampMixin, DeletedAtMixin):
-    """User's external site
-    """
-    # pylint: disable=too-many-ancestors
+    """User's external site application."""
+
     id = PrimaryKeyField()
     name = CharField(max_length=128, null=False)
     description = CharField(max_length=255, null=True)
 
-    class Meta:  # pylint: disable=missing-docstring
+    class Meta:
         db_table = 'applications'
 
     def __repr__(self):

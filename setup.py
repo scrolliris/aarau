@@ -1,7 +1,4 @@
-# pylint: disable=C0103
-"""Setup script.
-"""
-
+# pylint: disable=invalid-name
 import os
 
 from setuptools import setup, find_packages

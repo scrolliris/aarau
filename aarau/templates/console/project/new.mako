@@ -22,7 +22,6 @@
         <%
           act = req.route_path('console.project.new')
           ctx = 'new'
-          # FIXME
           err = ''
           obj = None
         %>

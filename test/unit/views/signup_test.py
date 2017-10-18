@@ -3,7 +3,7 @@ from webob.multidict import MultiDict
 
 
 @pytest.fixture(autouse=True)
-def setup(request, config, mailer_outbox):
+def setup(request, config, mailer_outbox):  # pylint: disable=unused-argument
     def clean_outbox():
         del mailer_outbox[:]
     clean_outbox()
@@ -43,7 +43,7 @@ def test_signup_with_none_submitted_request(dummy_request):
     assert not dummy_request.session.pop_flash('failure')
 
 
-def test_signup_with_validation_error(users, dummy_request):
+def test_signup_with_validation_error(dummy_request):
     from aarau.views.signup.action import signup
     from aarau.views.signup.form import SignupForm
 
@@ -69,7 +69,7 @@ def test_signup_with_validation_error(users, dummy_request):
     assert dummy_request.session.pop_flash('failure')
 
 
-def test_signup_with_valid_credentials(users, dummy_request):
+def test_signup_with_valid_credentials(dummy_request):
     from aarau.views.signup.action import signup
 
     user = {  # The Egg Twins

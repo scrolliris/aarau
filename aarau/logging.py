@@ -1,5 +1,3 @@
-"""Application logging module.
-"""
 import logging
 from pyramid.events import ContextFound
 from pyramid.events import subscriber
@@ -7,8 +5,7 @@ from pyramid.events import subscriber
 
 @subscriber(ContextFound)
 def context_found(event):
-    """Records incoming request without assets and health check.
-    """
+    """Records incoming request without assets and health check."""
     request = event.request
     # quiet access to assets
     path = getattr(request, 'path', '')

@@ -1,6 +1,3 @@
-""" View actions for signup
-"""
-
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from pyramid.security import remember
 from pyramid.view import view_config
@@ -14,8 +11,7 @@ from aarau.views.signup.form import build_signup_form
 @view_config(route_name='signup', request_method=('GET', 'POST'),
              renderer=tpl('shared/signup.mako'))
 def signup(request):
-    """ Renders signup view and creates new user account via POST
-    """
+    """Renders signup view and creates new user account via POST."""
     user = request.user
     if user:
         return HTTPFound(location=request.route_path('top'))
@@ -44,8 +40,7 @@ def signup(request):
 
 @view_config(route_name='signup.activate', request_method='GET')
 def signup_activate(request):
-    """ Activates user account using token
-    """
+    """Activates user account using token."""
     user = request.user
     if user:
         return HTTPFound(location=request.route_path('top'))

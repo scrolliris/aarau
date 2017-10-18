@@ -1,4 +1,6 @@
-""" ActivatorMixin for class implements IActivator interface
+"""ActivatorMixin for class implements IActivator interface.
+
+Inherit this Mixin in service.
 """
 
 from datetime import datetime
@@ -7,8 +9,6 @@ from aarau.models.user_email import UserEmail
 
 
 class ActivatorMixin(object):
-    """ Service for activation
-    """
     def __init__(self, request):
         self.request = request
         self._user = None
@@ -17,8 +17,6 @@ class ActivatorMixin(object):
 
     @property
     def user(self):
-        """ User object
-        """
         return self._user
 
     @user.setter
@@ -27,8 +25,6 @@ class ActivatorMixin(object):
 
     @property
     def user_email(self):
-        """ UserEmail object
-        """
         return self._user_email
 
     @user_email.setter
@@ -37,8 +33,6 @@ class ActivatorMixin(object):
 
     @property
     def activation_token(self):
-        """ Activation token
-        """
         return self._activation_token
 
     @activation_token.setter
@@ -46,15 +40,15 @@ class ActivatorMixin(object):
         self._activation_token = value
 
     def has_token_expired(self):
-        """ Checks token expiration validity for activation
-        """
+        """Checks token expiration validity for activation."""
         return self.user_email.activation_token_expires_at < datetime.utcnow()
 
     # TODO: refactor :'(
     def assign(self, user=None, email=None, token=None):
         """Assigns appropriate objects; user, user_email and activation_token.
 
-        Raises DoesNotExit error if user email related to token does not exist.
+        It raises DoesNotExit error if user email related to token does not
+        exist
         """
         if user:
             self.user = user
@@ -70,9 +64,8 @@ class ActivatorMixin(object):
                                             user=self.user, type='primary')
                 return
             # email: change email request
-            else:
-                self.user_email = UserEmail(email=email, type='normal')
-                return
+            self.user_email = UserEmail(email=email, type='normal')
+            return
 
         # activation (for activate)
         if self.activation_token and email is None:

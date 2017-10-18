@@ -1,11 +1,11 @@
 from contextlib import contextmanager
 from os import path
 
-from .env import Env
+from aarau.env import Env
 
 
 class SubdomainPredicate(object):
-    def __init__(self, val, config):
+    def __init__(self, val, _config):
         self.val = val
 
     def text(self):
@@ -23,7 +23,7 @@ class SubdomainPredicate(object):
 def subdomain_pregenerator(subdomain):
     env = Env()
 
-    def pregenerator(request, elements, kw):
+    def pregenerator(_req, elements, kw):
         domain = env.get('DOMAIN', None)
         if subdomain:
             kw['_host'] = '{0!s}.{1!s}'.format(subdomain, domain)
@@ -72,7 +72,6 @@ def includeme(config):
     filenames = [f for f in ('robots.txt', 'humans.txt', 'favicon.ico')
                  if path.isfile((static_dir + '/{}').format(f))]
     if filenames:
-        # FIXME
         filenames = sum([filenames, []], [])
         config.add_asset_views(
             'aarau:../static', filenames=filenames, http_cache=cache_max_age)
@@ -83,6 +82,7 @@ def includeme(config):
     subdomain = subdomain_manager_factory(config)
 
     with subdomain('console') as c:
+        # pylint: disable=anomalous-backslash-in-string
         c.add_route('console.top', '/')
         c.add_route('console.project.new', '/project/new')
         c.add_route('console.project.view', '/project/{id:\d+}')

@@ -1,5 +1,3 @@
-"""View actions for site.
-"""
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 
@@ -14,15 +12,13 @@ from aarau.models import (
 )
 from aarau.services.interface import IReplicator
 
-from .form import (
+from aarau.views.console.site.form import (
     edit_application_site_form,
-    new_application_site_form
+    new_application_site_form,
 )
 
 
 def tpl(path, resource='site'):
-    """Return template file path.
-    """
     return 'aarau:templates/console/{0:s}/{1:s}'.format(resource, path)
 
 
@@ -40,9 +36,8 @@ def _fetch_project(project_id, user_id):
              renderer=tpl('application/new.mako'))
 @login_required
 def application_site_new(req):
-    """Renders a form or save new application site.
-    """
-    # FIXME use predicate
+    """Renders a form or save new application site."""
+    # TODO: Use predicate
     if 'type' not in req.params or req.params['type'] != 'application':
         raise HTTPNotFound
 
@@ -86,8 +81,7 @@ def application_site_new(req):
              renderer=tpl('application/edit.mako'))
 @login_required
 def application_site_edit(req):
-    """Renders a form for site to update
-    """
+    """Renders a form for site to update."""
     if 'type' not in req.params or req.params['type'] != 'application':
         raise HTTPNotFound
 
@@ -132,8 +126,7 @@ def application_site_edit(req):
              renderer=tpl('application/view_result.mako'))
 @login_required
 def application_site_view_result(req):
-    """Renders a site result by id.
-    """
+    """Renders a site result by id."""
     if 'type' not in req.params or req.params['type'] != 'application':
         raise HTTPNotFound
 
@@ -156,8 +149,7 @@ def application_site_view_result(req):
              renderer=tpl('application/view_script.mako'))
 @login_required
 def application_site_view_script(req):
-    """Renders a site script by id.
-    """
+    """Renders a site script by id."""
     if 'type' not in req.params or req.params['type'] != 'application':
         raise HTTPNotFound
 
@@ -181,8 +173,7 @@ def application_site_view_script(req):
              renderer=tpl('application/view_badge.mako'))
 @login_required
 def application_site_view_badge(req):
-    """Renders badge view for this site
-    """
+    """Renders badge view for this site."""
     if 'type' not in req.params or req.params['type'] != 'application':
         raise HTTPNotFound
 

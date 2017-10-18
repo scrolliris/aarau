@@ -1,23 +1,21 @@
-"""The membership model
-"""
 from peewee import (
     ForeignKeyField,
     PrimaryKeyField,
 )
 
-from .base import (
+from aarau.models.base import (
     CardinalBase,
     EnumField, TimestampMixin
 )
 
-from .user import User
-from .project import Project
+from aarau.models.user import User
+from aarau.models.project import Project
 
 
+# pylint: disable=too-many-ancestors
 class Membership(CardinalBase, TimestampMixin):
-    """Relationship between user and project
-    """
-    # pylint: disable=too-many-ancestors
+    """Relationship between user and project."""
+
     roles = ('primary_owner', 'owner', 'member')
 
     id = PrimaryKeyField()

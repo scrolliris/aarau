@@ -1,5 +1,3 @@
-"""The article model
-"""
 from datetime import datetime
 
 from peewee import (
@@ -10,7 +8,7 @@ from peewee import (
 )
 from playhouse.signals import pre_save
 
-from .base import (
+from aarau.models.base import (
     CardinalBase,
     EnumField,
     CodeMixin,
@@ -19,14 +17,12 @@ from .base import (
     classproperty,
 )
 
-from .license import License
-from .publication import Publication
+from aarau.models.license import License
+from aarau.models.publication import Publication
 
 
+# pylint: disable=too-many-ancestors
 class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
-    """Article is posted text
-    """
-    # pylint: disable=too-many-ancestors
     scopes = ('public', 'private')
     progress_states = (
         'draft', 'wip', 'ready', 'scheduled', 'published',
@@ -51,14 +47,15 @@ class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
         choices=progress_states, null=False, default='draft')
     published_at = DateTimeField(null=True)
 
-    class Meta:  # pylint: disable=missing-docstring
+    class Meta:
         db_table = 'articles'
 
     def __init__(self, *args, **kwargs):
         from playhouse.fields import ManyToManyField
-        # avoid circular dependencies
+        # pylint: disable=cyclic-import
         from .contribution import Contribution
         from .user import User
+        # pylint: enable=cyclic-import
 
         field = ManyToManyField(
             rel_model=User, related_name='users',
@@ -75,25 +72,22 @@ class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
 
     @classproperty
     def progress_state_as_choices(cls):
-        """Returns choice pair as list for progress_state
+        """Returns choice pair as list for progress_state.
 
-        See classproperty implementation
+        See classproperty implementation.
         """
         # pylint: disable=no-self-argument
         return [(s, s) for s in cls.progress_states]
 
     @classmethod
     def published_on(cls, publication):
-        """Provides scope by publication
-        """
+        """Provides scope by publication."""
         # pylint: disable=no-member
         return Article.select().join(Publication).where(
             Publication.id == publication.id)
 
     @classmethod
     def get_by_slug(cls, slug):
-        """Fetches a article by unique slug string
-        """
         # pylint: disable=no-member
         return cls.select().where(
             cls.slug == slug,
@@ -104,9 +98,9 @@ class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
 
 @pre_save(sender=Article)
 def on_save_handler(sender, instance, created):
-    """Evaluated before save as hook
+    """Evaluated before save as hook.
 
-    Updates published_at property, appropriately
+    Updates published_at property, appropriately.
     """
     # pylint: disable=unused-argument
     # release

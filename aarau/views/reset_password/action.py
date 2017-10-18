@@ -5,9 +5,9 @@ from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from aarau.models.user import User
 from aarau.tasks.send_email import send_reset_password_email
 
-from .form import (
-    reset_password_request_form_factory,
-    reset_password_form_factory,
+from aarau.views.reset_password.form import (
+    build_reset_password_request_form,
+    build_reset_password_form,
 )
 
 
@@ -19,7 +19,7 @@ def reset_password_request(request):
     if user:
         return HTTPFound(location=request.route_path('top'))
 
-    form = reset_password_request_form_factory(request)
+    form = build_reset_password_request_form(request)
     if 'submit' in request.POST:
         _ = request.translate
         if form.validate():
@@ -42,7 +42,7 @@ def reset_password_request(request):
     return dict(form=form)
 
 
-# TODO: move reset password service
+# TODO: Move reset password service
 @view_config(route_name='reset_password',
              request_method=('GET', 'POST'),
              renderer='../../templates/shared/reset_password.mako')
@@ -65,7 +65,7 @@ def reset_password(request):
                               queue='failure', allow_duplicate=False)
         return HTTPFound(location=request.route_path('reset_password'))
 
-    form = reset_password_form_factory(request)
+    form = build_reset_password_form(request)
     if 'submit' in request.POST:
         if form.validate():
             user.reset_password(token, form.new_password.data)

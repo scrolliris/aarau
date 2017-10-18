@@ -24,7 +24,6 @@
         <%
           act = req.route_path('console.project.edit', id=project.id)
           ctx = 'edit'
-          # FIXME
           err = ''
           obj = project
         %>

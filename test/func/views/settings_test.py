@@ -1,13 +1,8 @@
-# pylint: disable=unused-argument,invalid-name
-"""Settings view functionality tests.
-"""
 import pytest
 
 
 @pytest.fixture(autouse=True)
-def setup(request, config, mailbox):
-    """Setup.
-    """
+def setup(request, config, mailbox):  # pylint: disable=unused-argument
     mailbox.clean()
 
     # eager task (emulation)
@@ -15,8 +10,6 @@ def setup(request, config, mailbox):
     worker.conf.update(task_always_eager=True)
 
     def teardown():
-        """Teardown.
-        """
         worker.conf.update(task_always_eager=False)
         mailbox.clean()
 
@@ -24,8 +17,6 @@ def setup(request, config, mailbox):
 
 
 def test_settings(users, login_as, dummy_app):
-    """Test default (account) view.
-    """
     user = users['oswald']
     with login_as(user):
         res = dummy_app.get('/settings', status=200)
@@ -33,8 +24,6 @@ def test_settings(users, login_as, dummy_app):
 
 
 def test_settings_account_with_empty_params(users, login_as, dummy_app):
-    """Test account view.
-    """
     user = users['oswald']
     with login_as(user):
         res = dummy_app.get('/settings/account', status=200)
@@ -42,8 +31,6 @@ def test_settings_account_with_empty_params(users, login_as, dummy_app):
 
 
 def test_settings_email_with_empty_params(users, login_as, dummy_app):
-    """Test email view.
-    """
     user = users['oswald']
     with login_as(user):
         res = dummy_app.get('/settings/email', status=200)
@@ -55,8 +42,6 @@ def test_settings_email_with_empty_params(users, login_as, dummy_app):
     {'csrf_token': '12345'},  # invalid
 ])
 def test_settings_email_with_invalid_csrf(users, login_as, params, dummy_app):
-    """Test email view with invalid csrf token.
-    """
     user = users['oswald']
     with login_as(user):
         params['new_email'] = user.email
@@ -68,8 +53,6 @@ def test_settings_email_with_invalid_csrf(users, login_as, params, dummy_app):
 
 
 def test_settings_email_with_pending_email(users, login_as, dummy_app):
-    """Test email saving if user has pending email.
-    """
     from aarau.models.user_email import UserEmail
 
     user = users['henry']
@@ -97,8 +80,6 @@ def test_settings_email_with_pending_email(users, login_as, dummy_app):
 
 
 def test_settings_email_with_invalid_email(users, login_as, dummy_app):
-    """Test email saving with invalid email input.
-    """
     from aarau.models.user_email import UserEmail
 
     user = users['oswald']
@@ -126,8 +107,6 @@ def test_settings_email_with_invalid_email(users, login_as, dummy_app):
 
 
 def test_settings_email_with_valid_email(users, login_as, dummy_app):
-    """Test email saving.
-    """
     from aarau.models.user_email import UserEmail
 
     user = users['oswald']
@@ -160,8 +139,6 @@ def test_settings_email_with_valid_email(users, login_as, dummy_app):
 
 def test_settings_email_activate_with_expired_token(
         users, login_as, dummy_app):
-    """Test email activation view with expired token.
-    """
     from datetime import datetime
     from aarau.models.user_email import UserEmail
 
@@ -184,10 +161,8 @@ def test_settings_email_activate_with_expired_token(
                 '') in res.html.select_one('.warning.message p')
 
 
-def test_settings_email_activate_with_unexpected_error(
+def test_settings_email_activate_with_badsignature_error(
         monkeypatch, users, login_as, dummy_app):
-    """Test email activation view with error.
-    """
     from aarau.models.user_email import UserEmail
 
     user = users['weenie']
@@ -202,10 +177,12 @@ def test_settings_email_activate_with_unexpected_error(
         # simurate unexpected error (like configuration error)
         from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
-        def mock_init(self, *args, **kwargs):
-            return None
+        # pylint: disable=unused-argument
+        def mock_loads(self, s, salt=None, return_header=False):
+            from itsdangerous import BadSignature
+            raise BadSignature
 
-        monkeypatch.setattr(Serializer, '__init__', mock_init)
+        monkeypatch.setattr(Serializer, 'loads', mock_loads)
 
         res = dummy_app.get(url, status=302)
         res = res.follow(status=200)
@@ -217,8 +194,6 @@ def test_settings_email_activate_with_unexpected_error(
 
 
 def test_settings_email_activate_with_valid_token(users, login_as, dummy_app):
-    """Test email activation.
-    """
     from aarau.models.user_email import UserEmail
 
     user = users['weenie']
@@ -248,8 +223,6 @@ def test_settings_email_activate_with_valid_token(users, login_as, dummy_app):
 ])
 def test_settings_email_delete_with_invalid_email(
         users, login_as, user_email, dummy_app):
-    """Test email deletion with invalid email input.
-    """
     user = users['henry']
     with login_as(user):
         res = dummy_app.get('/settings/email', status=200)
@@ -273,8 +246,6 @@ def test_settings_email_delete_with_invalid_email(
 
 def test_settings_email_delete_with_valid_email(
         users, login_as, dummy_app):
-    """Test email deletion.
-    """
     from aarau.models.user_email import UserEmail
 
     user = users['weenie']
@@ -306,12 +277,10 @@ def test_settings_email_delete_with_valid_email(
             assert user_email.refresh()
 
 
-# TODO test_settings_email_change
+# TODO: Add test_settings_email_change here
 
 
 def test_settings_password_with_empty_params(users, login_as, dummy_app):
-    """Test password view.
-    """
     user = users['oswald']
     with login_as(user):
         res = dummy_app.get('/settings/password', status=200)
@@ -324,8 +293,6 @@ def test_settings_password_with_empty_params(users, login_as, dummy_app):
 ])
 def test_settings_password_with_invalid_csrf(
         users, login_as, params, dummy_app):
-    """Test password updating with invalid csrf token.
-    """
     user = users['oswald']
     with login_as(user):
         params['current_password'] = '0PlayingPiano'
@@ -340,8 +307,6 @@ def test_settings_password_with_invalid_csrf(
 
 def test_settings_password_with_validation_errors(
         users, login_as, dummy_app):
-    """Test password saving validation errors.
-    """
     user = users['oswald']
     with login_as(user):
         res = dummy_app.get('/settings/password', status=200)
@@ -363,8 +328,6 @@ def test_settings_password_with_validation_errors(
 
 def test_settings_password_with_valid_credentials(
         users, login_as, dummy_app):
-    """Test password saving with invalid credentials.
-    """
     user = users['oswald']
     with login_as(user):
         res = dummy_app.get('/settings/password', status=200)

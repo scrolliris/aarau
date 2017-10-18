@@ -24,7 +24,8 @@ def _db(db_kind):
 class SendEmailTask(worker.Task):
     queue = 'default'
 
-    def on_failure(self, exc, task_id, args, kwargs, einfo):
+    # pylint: disable=no-self-use,too-many-arguments
+    def on_failure(self, exc, task_id, _args, _kwargs, _einfo):
         print('{0!r} failed: {1!r}'.format(task_id, exc))
 
 

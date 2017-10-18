@@ -1,6 +1,3 @@
-"""The service package.
-"""
-
 from aarau.services.interface import IActivator, IReplicator
 from aarau.services.account_activator import AccountActivator
 from aarau.services.site_replicator import SiteReplicator
@@ -14,12 +11,8 @@ __all__ = (
 
 
 def activator_factory(activation_type='user_email'):
-    """Returns activator service factory method.
-    """
-
+    """Returns activator service factory method."""
     def _activator_factory(_, req):
-        """ Actual activator factory
-        """
         if activation_type == 'user_email':
             return UserEmailActivator(req)
         elif activation_type == 'account':
@@ -29,12 +22,8 @@ def activator_factory(activation_type='user_email'):
 
 
 def replicator_factory(replication_obj='site'):
-    """Returns replicator service factory method.
-    """
-
+    """Returns replicator service factory method."""
     def _replicator_factory(_, req):
-        """ Actual replicator factory
-        """
         if replication_obj == 'site':
             return SiteReplicator(req)
 
@@ -46,7 +35,6 @@ def includeme(config):
 
     Activate this setup using ``config.include('aarau.services')``.
     """
-
     # activator services
     for name in ('user_email', 'account',):
         config.register_service_factory(activator_factory(name),
