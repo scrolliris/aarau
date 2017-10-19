@@ -7,7 +7,7 @@
 
 <div class="content">
   <div class="grid">
-    <div class="row">
+    <div class="row landscape">
       <div class="column-16" align="center">
         ${render_notice()}
 

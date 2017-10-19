@@ -29,6 +29,7 @@
     <link rel="apple-touch-icon" type="image/png" sizes="57x57" href="${req.util.static_path('img/touch-icon-57.png')}">
     <link rel="humans" type="text/plain" href="/humans.txt">
     <link rel="robots" type="text/plain" href="/robots.txt">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab:300" rel="stylesheet">
     <link rel="stylesheet" href="${util.built_asset_url('vendor.css')}">
     <link rel="stylesheet" href="${util.built_asset_url('master.css')}">
   </head>
@@ -52,16 +53,7 @@
     <%block name='script'>
       <script src="${util.built_asset_url('vendor.js')}" charset="utf-8"></script>
       <script src="${util.built_asset_url('master.js')}" charset="utf-8"></script>
-      <script>
-        (function(d) {
-          var config = {
-                kitId: '${util.typekit_id}'
-              , scriptTimeout: 3000
-              , async: true
-              }
-            , h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
-        })(document);
-      </script>
+      <%include file='aarau:templates/_font.mako'/>
     </%block>
     <%block name='extra_script'>
     </%block>

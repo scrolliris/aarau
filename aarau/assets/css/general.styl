@@ -19,6 +19,38 @@
 main > .content
   min-height 54.03rem
 
+// header
+header
+  background-color #222222
+  .logo
+    display inline-block
+    margin-right 0.44rem
+  .logo-type
+    display inline-block
+    margin-left 0.267rem
+    margin-right 1.33rem
+  .menu
+    > a:first-child
+        &:hover
+          text-decoration none
+    .item
+      color #888888
+      &:hover
+        color #f1f1f1
+        background none
+      &.active
+        background none
+        color #ffffff
+
+
+.global-message
+  font-family monospace
+  background-color #454545
+  color #d3d3d3
+  margin 0
+  padding 0.66rem 0
+  text-align center
+
 // footer
 footer
   border-top 1px solid darken($gray0, 6%)
@@ -42,7 +74,10 @@ footer
     color $gray1
     font-size 0.83em
 
-// additional decoration -- styr
+// additional decoration (override) -- styr
+.top.menu
+  padding 0.28rem 1.44rem
+
 .attached.box
   padding 1.66rem 1.89rem
   .form,

@@ -66,6 +66,7 @@
     <%block name='script'>
       <script src="${util.built_asset_url('vendor.js')}" charset="utf-8"></script>
       <script src="${util.built_asset_url('master.js')}" charset="utf-8"></script>
+      <%include file='aarau:templates/_font.mako'/>
     </%block>
     <%block name='extra_script'>
     </%block>
