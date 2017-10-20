@@ -20,3 +20,10 @@ input::-ms-input-placeholder,
 textarea:-ms-input-placeholder,
 textarea::-ms-input-placeholder
   color darken(#c3bfb5, 9%)
+
+a[target="_blank"]
+  &:hover::after
+    display inline-block
+    margin-left 0.16rem
+    font-size 0.91em
+    content '\2197'

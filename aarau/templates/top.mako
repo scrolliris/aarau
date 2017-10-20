@@ -48,7 +48,7 @@
           <div class="header"><h3>Our Updates</h3></div>
           <div class="description">
             <p>Scrolliris is currently under the development as public BETA.</p>
-            <a class="flat secondary button" href="https://log.scrolliris.com/">Check the Log</a>
+            <a class="flat secondary button" href="https://log.scrolliris.com/" target="_blank">Check the Log</a>
           </div>
         </div>
       </div>
