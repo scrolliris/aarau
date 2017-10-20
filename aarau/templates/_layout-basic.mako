@@ -5,9 +5,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <!--
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    -->
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="keywords" content="">
@@ -29,19 +27,21 @@
     <link rel="apple-touch-icon" type="image/png" sizes="57x57" href="${req.util.static_path('img/touch-icon-57.png')}">
     <link rel="humans" type="text/plain" href="/humans.txt">
     <link rel="robots" type="text/plain" href="/robots.txt">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab:300" rel="stylesheet">
     <link rel="stylesheet" href="${util.built_asset_url('vendor.css')}">
     <link rel="stylesheet" href="${util.built_asset_url('master.css')}">
   </head>
   <body id="basic">
-    <main>
-      ${render_announcement()}
+    <div class="wrapper">
+      <section class="container">
+        ${render_announcement()}
 
-      ${self.body()}
-    </main>
+        ${self.body()}
+      </section>
+    </div>
 
     <%block name='script'>
-      <script src="${util.built_asset_url('vendor.js')}" charset="utf-8"></script>
-      <script src="${util.built_asset_url('master.js')}" charset="utf-8"></script>
+      <%include file='aarau:templates/_font.mako'/>
     </%block>
     <%block name='extra_script'/>
   </body>

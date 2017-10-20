@@ -2,8 +2,8 @@
 <header>
   <div class="top menu">
     <a href="${req.route_url('top', namespace=None)}">
-      <h1 class="item">
-        <img class="logo" width="32" height="32" src="${util.static_url('img/scrolliris-logo-64x64.png')}" onmouseover="this.src='${util.static_url('img/scrolliris-logo-32x32.png')}';" onmouseout="this.src='${util.static_url('img/scrolliris-logo-64x64.png')}'">
+      <h1 class="logo item">
+        <img class="logo-mark" width="32" height="32" src="${util.static_url('img/scrolliris-logo-64x64.png')}" onmouseover="this.src='${util.static_url('img/scrolliris-logo-32x32.png')}';" onmouseout="this.src='${util.static_url('img/scrolliris-logo-64x64.png')}'">
         <span class="logo-type">Scrolliris</span>
       </h1>
     </a>
@@ -17,12 +17,14 @@
     <nav class="right menu">
       % if req.user:
         % if req.user.projects:
-          <a class="item" href="${req.route_url('console.top')}">Console</a>
+          <a class="mobile hidden item" href="${req.route_url('console.top')}">Console</a>
         % endif
         <a class="item${' active' if util.route_name.startswith('settings') else ''}" href="${req.route_url('settings')}">Settings</a>
         <a class="item" href="${req.route_url('logout')}">Log out</a>
       % else:
-        <a class="item" href="${req.route_url('signup')}">Sign up</a>
+        % if not req.path.startswith('/signup'):
+          <a class="item" href="${req.route_url('signup')}">Sign up</a>
+        % endif
         <a class="item" href="${req.route_url('login')}">Log in</a>
       % endif
     </nav>

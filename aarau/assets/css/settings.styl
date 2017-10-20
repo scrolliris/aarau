@@ -1,21 +1,40 @@
-div#settings
-  padding-top 2.1rem
+#settings
+  padding-top 2.2rem
 
-  .ui.menu
-  .ui.vertical.menu
-    box-shadow none
+  .attached.box
+    padding 1.26rem 0.39rem
 
-  .ui.header:first-child
-    margin-top 0
-
-  table.ui.basic.table
+  table.table
+    width 90%
     tbody
       tr:last-child
         td
           border-bottom 1px solid rgba(34, 36, 38, 0.1)
-      td.action
-        text-align right
+      td
+        .small.text
+          display inline-block
+          margin 0.66rem 0
+        .action
+          margin-top 0.33rem
+          vertical-align middle
+          display inline-block
+          text-align right
+          &.right
+            float right
 
+
+// email
+#settings
   form.change-email,
   form.delete-email
-    display inline
+    display inline-block
+
+  form.delete-email
+    margin 0
+
+  form.change-email
+    margin 0 0.6rem 0 0
+
+  form#add_new_email
+    display block
+    margin-top 2.1rem

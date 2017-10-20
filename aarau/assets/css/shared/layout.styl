@@ -1,0 +1,88 @@
+@import './_colour.styl'
+
+.wrapper
+  position relative
+  min-height 100%
+
+#basic .wrapper,
+#standard .wrapper
+  background-color #fbfaf8
+
+.wrapper > section.container
+  width 100%
+
+#standard
+  .wrapper > section.container
+    padding-bottom 14.22rem
+
+// header
+header
+  background-color #222222
+  .top.menu > a h1.logo
+    margin 0.42rem 0 0.42rem 0.51em
+    padding 0
+  .logo-mark
+    display inline-block
+  .logo-type
+    display inline-block
+    margin-left 0.667rem
+    margin-right 1.33rem
+  .menu
+    > a:first-child
+        &:hover
+          text-decoration none
+    .item
+      color #888888
+      &:hover
+        color #f1f1f1
+        background none
+      &.active
+        background none
+        color #ffffff
+
+// footer
+footer
+  position absolute
+  bottom 0
+  width 100%
+  background-color #454545
+  ul.list
+    display inline-block
+    margin 0.68rem 0
+    padding 0
+    & > li.item
+      font-size 0.83em
+      display inline-block
+      list-style none
+      margin 0 0.48em
+      padding 0
+      &:last-child
+        margin-right 0
+    &.right
+      float right
+  p.copyright
+    margin-right 2.33rem
+    float right
+    color $gray1
+    font-size 0.83em
+
+
+// same as normal (styr)
+@media screen and (max-width: 768px)
+  header
+    .top.menu
+      > a h1.logo
+        margin 0.42rem 0 0.42rem 0.22rem
+      > .item
+        display none
+    .menu .right.menu:last-child
+      margin-right 0
+      .item
+        margin-right 0.11rem
+        margin-left 0.11rem
+  footer
+    ul.list
+      margin 0.82rem 0.88rem 0.02rem 0
+    .copyright
+      margin 0 0.88rem 0.66rem 0 !important
+      text-align right

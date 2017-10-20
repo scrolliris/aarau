@@ -1,11 +1,11 @@
-@import './shared/_colour.styl'
-
-.pride
-  font-size 90%
-  color $gray1
-
-.top.menu
-  padding 0.62rem 1.44rem
+.global-message
+  font-family monospace
+  background-color #454545
+  color #d3d3d3
+  margin 0
+  padding 0.66rem 0
+  text-align center
+  line-height 1.32em
 
 .tab.menu .item
   line-height 1.1em
@@ -16,110 +16,21 @@
     &:hover
       cursor not-allowed
 
-main > .content
-  min-height 54.03rem
+.mobile.only
+  display none
 
-// header
-header
-  background-color #222222
-  .logo
-    display inline-block
-    margin-right 0.44rem
-  .logo-type
-    display inline-block
-    margin-left 0.267rem
-    margin-right 1.33rem
-  .menu
-    > a:first-child
-        &:hover
-          text-decoration none
-    .item
-      color #888888
-      &:hover
-        color #f1f1f1
-        background none
-      &.active
-        background none
-        color #ffffff
+.wf-loading h1
+.wf-loading h2
+.wf-loading h3
+.wf-loading h4
+.wf-loading h5
+.wf-loading h6
+.wf-loading p
+  visibility hidden
 
+@media screen and (max-width: 768px)
+  .mobile.hidden
+    display none
 
-.global-message
-  font-family monospace
-  background-color #454545
-  color #d3d3d3
-  margin 0
-  padding 0.66rem 0
-  text-align center
-
-// footer
-footer
-  border-top 1px solid darken($gray0, 6%)
-  ul.list
-    display inline-block
-    margin 0.68rem 0
-    padding 0
-    & > li.item
-      font-size 0.83em
-      display inline-block
-      list-style none
-      margin 0 0.48em
-      padding 0
-      &:last-child
-        margin-right 0
-    &.right
-      float right
-  p.copyright
-    margin-right 2.33rem
-    float right
-    color $gray1
-    font-size 0.83em
-
-// additional decoration (override) -- styr
-.top.menu
-  padding 0.28rem 1.44rem
-
-.attached.box
-  padding 1.66rem 1.89rem
-  .form,
-  .table
-    width auto
-    margin 1.36rem 1.29rem
-
-.box
-  .description
-  .text
-    margin-left 0.16rem
-
-.small.text
-  font-size 0.83em
-
-.content .form
-  .header
-    margin-bottom 1.33rem
-
-.embeded.box
-  border none
-  box-shadow none !important
-
-.flat.button
-  &.petit
-    line-height 1.12em
-    padding 0.31rem 0.416rem
-
-div.message
-  margin-top 1.29rem
-  margin-bottom 1.63rem
-
-div.list,
-ul.list
-  margin 0.96rem 0
-  .item
-    margin 0.48rem 0.41rem
-    .content
-      .header
-        color $gray2
-        font-weight bold
-      .description
-        color darken($gray1, 33%)
-        font-size 0.95em
-        margin 0.43rem 0 0.98rem 0
+  .mobile.only
+    display block !important

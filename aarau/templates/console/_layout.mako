@@ -29,6 +29,7 @@
     <link rel="apple-touch-icon" type="image/png" sizes="57x57" href="${req.util.static_path('img/touch-icon-57.png')}">
     <link rel="humans" type="text/plain" href="/humans.txt">
     <link rel="robots" type="text/plain" href="/robots.txt">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab:300" rel="stylesheet">
     <link rel="stylesheet" href="${util.built_asset_url('vendor.css')}">
     <link rel="stylesheet" href="${util.built_asset_url('master.css')}">
   </head>
@@ -38,33 +39,35 @@
         <%include file='aarau:templates/console/_sidebar.mako'/>
       </%block>
 
-      <div class="content">
-        <header>
-          <div class="top menu">
-            <div class="item">
-              <%block name='breadcrumb'>
-              </%block>
+      <section class="container">
+        <div class="content">
+          <header>
+            <div class="top menu">
+              <div class="item">
+                <%block name='breadcrumb'>
+                </%block>
+              </div>
+              <div class="right menu">
+                <a class="item" href="${req.route_url('logout')}">Log out</a>
+              </div>
             </div>
-            <div class="right menu">
-              <a class="item" href="${req.route_url('logout')}">Log out</a>
-            </div>
-          </div>
-        </header>
+          </header>
 
-        <main>
-          ${render_announcement()}
+          <main>
+            ${render_announcement()}
 
-          ${self.body()}
-        </main>
+            ${self.body()}
+          </main>
 
-        <%block name='footer'>
-          <%include file='aarau:templates/console/_footer.mako'/>
-        </%block>
+          <%block name='footer'>
+            <%include file='aarau:templates/console/_footer.mako'/>
+          </%block>
+        </div>
       </div>
-    </div>
+    </section>
 
     <%block name='script'>
-      <script src="${util.built_asset_url('vendor.js')}" charset="utf-8"></script>
+      ## <script src="${util.built_asset_url('vendor.js')}" charset="utf-8"></script>
       <script src="${util.built_asset_url('master.js')}" charset="utf-8"></script>
       <%include file='aarau:templates/_font.mako'/>
     </%block>

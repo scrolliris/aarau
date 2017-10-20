@@ -7,8 +7,9 @@
 <div class="content">
   <div id="settings">
     <div class="grid">
+
       <div class="row">
-        <div class="column-3 offset-2 column-v-4 offset-v-1 column-l-16">
+        <div class="offset-2 column-3 offset-v-1 column-v-4 column-l-16">
           <%include file='aarau:templates/settings/_menu.mako'/>
         </div>
 
@@ -17,7 +18,7 @@
           <div class="attached box">
             <form class="form">
               <div class="row">
-                <div class="field-10">
+                <div class="field-10 field-n-16">
                   <label class="label" for="language">Language</label>
                   <select id="language">
                     <option value="0">English</option>
@@ -25,7 +26,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="field-10">
+                <div class="field-10 field-n-16">
                   <label for="username" class="label">Username (optional)</label>
                   <input type="text" id="username" name="username" placeholder="e.g. scrolliris">
                 </div>
@@ -44,7 +45,9 @@
             </form>
           </div>
         </div>
+
       </div>
+
     </div>
   </div>
 </div>

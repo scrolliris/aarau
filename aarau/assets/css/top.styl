@@ -1,17 +1,24 @@
+@import './shared/_colour.styl'
+
 #standard
   .header h3
     display inline-block
 
   .row.landscape
-    background-color #fbfaf8
+    background-color #f0ede6
+    border-bottom 1px solid lighten(#999999, 68%)
 
   .banner
     padding 2.66rem 1.86rem 1.66rem 1.86rem
     .primary.button
       margin 2.22rem 0
 
-  main > .content
-    width 100%
+  .card
     .box
+      border-top 4px solid darkgray
       .description
         margin 1.66rem 0
+
+.pride
+  font-size 90%
+  color $gray1

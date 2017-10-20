@@ -28,28 +28,34 @@
              After that, go to <a class="link" href="${req.route_url('login')}">Log in</a>
           </div>
         % else:
-          <div class="required field-13${' error' if form.email.errors else ''}">
+          <div class="required field-16${' error' if form.email.errors else ''}">
             <label class="label" for="email">${__(form.email.label.text)}</label>
             <p class="description">${_('signup.email.description')}</p>
 
-            ${form.email(class_='', placeholder=_('signup.email.placeholder'))}
-            ${render_error_message(form.email)}
+            <div class="field-13 field-n-16">
+              ${form.email(class_='', placeholder=_('signup.email.placeholder'))}
+              ${render_error_message(form.email)}
+            </div>
           </div>
 
-          <div class="field-11${' error' if form.name.errors else ''}">
+          <div class="field-16${' error' if form.name.errors else ''}">
             <label class="label" for="name">${__(form.name.label.text)}</label>
             <p class="description">${_('signup.name.description')}</p>
 
-            ${form.name(class_='', placeholder=_('signup.name.placeholder'))}
-            ${render_error_message(form.name)}
+            <div class="field-11 field-n-13">
+              ${form.name(class_='', placeholder=_('signup.name.placeholder'))}
+              ${render_error_message(form.name)}
+            </div>
           </div>
 
-          <div class="field-8${' error' if form.username.errors else ''}">
+          <div class="field-16${' error' if form.username.errors else ''}">
             <label class="label" for="username">${__(form.username.label.text)}</label>
             <p class="description">${_('signup.username.description')}</p>
 
-            ${form.username(class_='', placeholder=_('signup.username.placeholder'))}
-            ${render_error_message(form.username)}
+            <div class="field-8 field-n-11">
+              ${form.username(class_='', placeholder=_('signup.username.placeholder'))}
+              ${render_error_message(form.username)}
+            </div>
           </div>
 
           <div class="required field-16${' error' if form.password.errors else ''}">
@@ -58,7 +64,8 @@
               'letters': '<code>{}</code>'.format(_('misc.letters')),
               'numbers': '<code>{}</code>'.format(_('misc.numbers'))
             })|n,trim,clean(tags=['code'])}</p>
-            <div class="field-11">
+
+            <div class="field-8 field-n-11">
               ${form.password(class_='', placeholder=_('signup.password.placeholder'))}
               ${render_error_message(form.password)}
             </div>
@@ -80,7 +87,7 @@
         </form>
       </div>
 
-      <div class="column-4 offset-1 column-v-5 offset-v-1 column-l-16">
+      <div class="mobile hidden column-4 offset-1 column-v-5 offset-v-1 column-l-16">
         <div class="primary box">
           <h6>You&apos;ll love Scrolliris</h6>
           <div class="list">

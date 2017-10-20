@@ -109,14 +109,10 @@ gulp.task('build-install:master', function(done) {
 var paths = {
   master: [
     path.join(assetsDir, 'master.js')
-  , path.join(assetsDir, 'css/shared/*.styl')
-  , path.join(assetsDir, 'css/console/*.styl')
-  , path.join(assetsDir, 'css/*.styl')
-  , path.join(assetsDir, 'js/shared/*.styl')
-  , path.join(assetsDir, 'js/console/ui.js')
-  , path.join(assetsDir, 'js/*.js')
-  , path.join(assetsDir, 'component/*.js')
-  , path.join(assetsDir, 'component/*.styl')
+  , path.join(assetsDir, 'css/**/*.styl')
+  , path.join(assetsDir, 'js/**/*.js')
+  , path.join(assetsDir, 'component/**/*.js')
+  , path.join(assetsDir, 'component/**/*.styl')
   ]
 , img: [
     path.join(assetsDir, 'img/*')

@@ -7,13 +7,14 @@
 
 <div class="content">
   <div class="grid">
+
     <div class="row landscape">
       <div class="column-16" align="center">
         ${render_notice()}
 
         <div class="banner">
           <h1 class="header">Beyond the Scroll</h1>
-          <p>Extend your publication readability beyond the scroll with Scrolliris</p>
+          <p>Include a just single javascript, anonymous tracking works, get readability</p>
         % if req.user and req.user.projects:
           <a class="flat button" href="${req.route_url('console.top')}">Go to Console</a>
         % else:
@@ -24,7 +25,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row card">
       <div class="column-3 offset-3 column-v-8 column-l-16" align="center">
         <div class="box">
           <div class="header"><h3>How it works</h3></div>
@@ -53,5 +54,6 @@
         </div>
       </div>
     </div>
+
   </div>
 </div>

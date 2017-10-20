@@ -5,9 +5,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <!--
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    -->
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="keywords" content="">
@@ -39,11 +37,10 @@
         <%include file='aarau:templates/_header.mako'/>
       </%block>
 
-      <main>
+      <section class="container">
         ${render_announcement()}
-
         ${self.body()}
-      </main>
+      </section>
 
       <%block name='footer'>
         <%include file='aarau:templates/_footer.mako'/>
@@ -51,10 +48,11 @@
     </div>
 
     <%block name='script'>
-      <script src="${util.built_asset_url('vendor.js')}" charset="utf-8"></script>
-      <script src="${util.built_asset_url('master.js')}" charset="utf-8"></script>
+      ## <script src="${util.built_asset_url('vendor.js')}" charset="utf-8"></script>
+      <script src="${util.built_asset_url('master.js')}" charset="utf-8" async="true"></script>
       <%include file='aarau:templates/_font.mako'/>
     </%block>
+
     <%block name='extra_script'>
     </%block>
   </body>
