@@ -20,15 +20,17 @@
 
 <div id ="project" class="content">
   ${render_notice()}
-
   <div class="grid">
+
     <div class="row">
       <div class="column-16">
         <h3>${application.name}</h3>
         <label class="primary label">${site.domain}</label>
       </div>
     </div>
+
     <div class="row">
+
       <div class="column-16">
         <div class="tab menu">
           <a class="item" href="${req.route_path('console.site.application.view.result', project_id=project.id, id=site.id, _query={'type': 'application'})}">Results</a>
@@ -36,6 +38,7 @@
           <a class="item" href="${req.route_path('console.site.application.view.badge', project_id=project.id, id=site.id, _query={'type': 'application'})}">Badges</a>
         </div>
       </div>
+
       <div class="column-16">
       % if replication_state:
         <label class="positive line label">ready</label>
@@ -69,6 +72,7 @@
         </div>
 
         <div class="primary flat box">
+
           <div class="row">
             <div class="column-16">
               <h5>Readability Analysis Tracker</h5>
@@ -111,6 +115,7 @@
 
         </div>
       </div>
+
     </div>
   </div>
 </div>

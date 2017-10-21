@@ -39,32 +39,31 @@
         <%include file='aarau:templates/console/_sidebar.mako'/>
       </%block>
 
-      <section class="container">
-        <div class="content">
-          <header>
-            <div class="top menu">
-              <div class="item">
-                <%block name='breadcrumb'>
-                </%block>
-              </div>
-              <div class="right menu">
-                <a class="item" href="${req.route_url('logout')}">Log out</a>
-              </div>
+      ## sidebar content && main container
+      <section class="content container">
+        <header>
+          <div class="top menu">
+            <div class="item">
+              <%block name='breadcrumb'>
+              </%block>
             </div>
-          </header>
+            <div class="right menu">
+              <a class="item" href="${req.route_url('logout')}">Log out</a>
+            </div>
+          </div>
+        </header>
 
-          <main>
-            ${render_announcement()}
+        <main>
+          ${render_announcement()}
 
-            ${self.body()}
-          </main>
+          ${self.body()}
+        </main>
 
-          <%block name='footer'>
-            <%include file='aarau:templates/console/_footer.mako'/>
-          </%block>
-        </div>
-      </div>
-    </section>
+        <%block name='footer'>
+          <%include file='aarau:templates/console/_footer.mako'/>
+        </%block>
+      </section>
+    </div>
 
     <%block name='script'>
       ## <script src="${util.built_asset_url('vendor.js')}" charset="utf-8"></script>
