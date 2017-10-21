@@ -29,7 +29,8 @@
     <link rel="apple-touch-icon" type="image/png" sizes="57x57" href="${req.util.static_path('img/touch-icon-57.png')}">
     <link rel="humans" type="text/plain" href="/humans.txt">
     <link rel="robots" type="text/plain" href="/robots.txt">
-    <link href="//fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab:300" rel="stylesheet">
+    <style>html{background-color:#454545;}.not-ready{visibility: hidden;}</style>
+    <script><%include file='aarau:assets/_fouc.js'/></script>
     <link rel="stylesheet" href="${util.built_asset_url('vendor.css')}">
     <link rel="stylesheet" href="${util.built_asset_url('master.css')}">
   </head>
@@ -67,7 +68,7 @@
 
     <%block name='script'>
       ## <script src="${util.built_asset_url('vendor.js')}" charset="utf-8"></script>
-      <script src="${util.built_asset_url('master.js')}" charset="utf-8"></script>
+      <script src="${util.built_asset_url('master.js')}" charset="utf-8" async></script>
       <%include file='aarau:templates/_font.mako'/>
     </%block>
     <%block name='extra_script'>
