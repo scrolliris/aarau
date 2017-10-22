@@ -10,11 +10,15 @@
 </script>
 <script>
 (function(d) {
+  var families = [
+    'Open Sans'
+  , 'Roboto Slab:300'
+  ].join('|').replace(/\b\s\b/g, '+');
   var loadFont = function(url) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
     xhr.onreadystatechange = function () {
-      if (xhr.readyState == 4 && xhr.status == 200) {
+      if (xhr.readyState === 4 && xhr.status === 200) {
         var style = d.createElement('style');
         style.innerHTML = xhr.responseText;
         d.head.appendChild(style);
@@ -23,7 +27,7 @@
     xhr.send();
   }
   d.body.onload = function() {
-    var url = 'https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab:300';
+    var url = 'https://fonts.googleapis.com/css?family=' + families;
     loadFont(url);
   }
 })(document);

@@ -1,5 +1,9 @@
 (function(d, w, name) {
   'use strict';
+  // back or forward
+  if (!!w.performance && w.performance.navigation.type === 2) {
+    return;
+  }
   d.documentElement.className = name;
   var c
     , r = (function(_d) {

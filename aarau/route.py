@@ -1,5 +1,8 @@
 from contextlib import contextmanager
 from os import path
+import time
+
+from pyramid.static import QueryStringConstantCacheBuster
 
 from aarau.env import Env
 
@@ -78,6 +81,8 @@ def includeme(config):
 
     config.add_static_view(
         name='assets', path='aarau:../static/', cache_max_age=cache_max_age)
+    config.add_cache_buster('aarau:../static/', QueryStringConstantCacheBuster(
+        str(int(time.time()))))
 
     subdomain = subdomain_manager_factory(config)
 

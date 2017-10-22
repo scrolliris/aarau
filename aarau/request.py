@@ -139,6 +139,12 @@ class CustomRequest(Request):  # pylint: disable=too-many-ancestors
         ips = re.split(r'[,\s]+', value) if value else []
         return [ip for ip in ips if IPV4_ADDR.match(ip) or IPV6_ADDR.match(ip)]
 
+    def _force_ssl(self, env_dict):
+        """Sets url schema forcing https for next request links."""
+        env_dict['wsgi.url_scheme'] = self.settings.get(
+            'wsgi.url_scheme', 'https')
+        return env_dict
+
     def _set_hsts(self, req):
         """Sets HSTS header based on `X-Forwarded-Proto`."""
         criteria = [
@@ -150,9 +156,3 @@ class CustomRequest(Request):  # pylint: disable=too-many-ancestors
             hsts_options = self.settings.get('hsts.options', '')
             req.response.headers['Strict-Transport-Security'] = \
                 "max-age={};{}".format(hsts_max_age, hsts_options)
-
-    def _force_ssl(self, env_dict):
-        """Sets url schema forcing https for next request links."""
-        env_dict['wsgi.url_scheme'] = self.settings.get(
-            'wsgi.url_scheme', 'https')
-        return env_dict
