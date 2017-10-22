@@ -50,6 +50,8 @@ class TemplateUtil(object):
     def __init__(self, ctx: dict, req: CustomRequest, **kwargs: dict) -> None:
         self.ctx, self.req = ctx, req
 
+        self.env = Env()
+
         if getattr(req, 'util', None) is None:
             req.util = self
         self.__dict__.update(kwargs)
@@ -79,14 +81,27 @@ class TemplateUtil(object):
     @reify
     def typekit_id(self) -> str:
         """Returns typekit id from env."""
-        env = Env()
-        return str(env.get('TYPEKIT_ID', ''))
+        return str(self.req.settings.get('font.typekit_id', ''))
 
     def is_matched(self, matchdict) -> bool:
         """Returns bool if dict matches or not."""
         return self.req.matchdict == matchdict
 
     def static_url(self, path) -> str:
+        """Returns url for asset file path.
+
+        If producition, generates cdn url by settings.
+        """
+        import re
+        unslash = re.compile(r'^\/|\/$')
+
+        def get_bucket_info(name):
+            part = self.req.settings.get('storage.bucket_{0:s}'.format(name))
+            return re.sub(unslash, '', part)
+
+        if not self.env.is_production:
+            h, n, p = [get_bucket_info(x) for x in ('host', 'name', 'path')]
+            return 'https://{0:s}/{1:s}/{2:s}/{3:s}'.format(h, n, p, path)
         return self.req.static_url('aarau:../static/' + path)
 
     def static_path(self, path) -> str:

@@ -57,6 +57,7 @@ class Env():
             'session.cookie_domain': 'SESSION_COOKIE_DOMAIN',
             'queue.url': 'QUEUE_URL',
             'cache.url': 'CACHE_URL',
+            'font.typekit_id': 'FONT_TYPEKIT_ID',
             'database.cardinal.url': 'DATABASE_CARDINAL_URL',
             'database.analysis.url': 'DATABASE_ANALYSIS_URL',
             'pyramid.csrf_trusted_origins': 'CSRF_TRUSTED_ORIGINS',
@@ -64,6 +65,10 @@ class Env():
             'wsgi.auth_credentials': 'WSGI_AUTH_CREDENTIALS',
             'datastore.emulator_host': 'DATASTORE_EMULATOR_HOST',
             'datastore.project_id': 'DATASTORE_PROJECT_ID',
+            'storage.bucket_host': 'STORAGE_BUCKET_HOST',
+            'storage.bucket_name': 'STORAGE_BUCKET_NAME',
+            'storage.bucket_path': 'STORAGE_BUCKET_PATH',
+            # deployment
             'google_cloud.project': 'GOOGLE_CLOUD_PROJECT',
         }
 
