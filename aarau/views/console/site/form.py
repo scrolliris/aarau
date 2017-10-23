@@ -47,5 +47,5 @@ def build_new_application_site_form(req):
     return build_form(NewSiteForm, req)
 
 
-def build_edit_application_site_form(req):
-    return build_form(EditSiteForm, req)
+def build_edit_application_site_form(req, site):
+    return build_form(EditSiteForm, req, site)

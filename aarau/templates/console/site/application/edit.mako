@@ -21,14 +21,13 @@
       <div class="column-9">
         ${render_notice()}
 
-        <h2 class="header">Edit Site</h2>
-        <p class="description"></p>
         <%
           act = req.route_url('console.site.application.edit', project_id=project.id, id=site.id, _query={'type':'application'})
           ctx = 'edit'
           err = ''
+          obj = site
         %>
-        <%include file="aarau:templates/console/site/_form.mako" args="f=form, act=act, ctx=ctx, err=err"/>
+        <%include file="aarau:templates/console/site/_form.mako" args="f=form, act=act, ctx=ctx, err=err, obj=obj"/>
       </div>
     </div>
   </div>

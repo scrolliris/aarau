@@ -93,7 +93,7 @@ def application_site_edit(req):
         Site.id == site_id,
         Site.project_id == project_id).get()  # pylint: disable=no-member
 
-    form = build_edit_application_site_form(req)
+    form = build_edit_application_site_form(req, site)
     if 'submit' in req.POST:
         _ = req.translate
         if form.validate():
