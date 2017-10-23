@@ -13,8 +13,8 @@ from aarau.models import (
 from aarau.services.interface import IReplicator
 
 from aarau.views.console.site.form import (
-    edit_application_site_form,
-    new_application_site_form,
+    build_edit_application_site_form,
+    build_new_application_site_form,
 )
 
 
@@ -42,7 +42,7 @@ def application_site_new(req):
         raise HTTPNotFound
 
     project = _fetch_project(req.matchdict['project_id'], req.user.id)
-    form = new_application_site_form(req, project)
+    form = build_new_application_site_form(req)
     if 'submit' in req.POST:
         _ = req.translate
         if form.validate():
@@ -93,7 +93,7 @@ def application_site_edit(req):
         Site.id == site_id,
         Site.project_id == project_id).get()  # pylint: disable=no-member
 
-    form = edit_application_site_form(req, project, site)
+    form = build_edit_application_site_form(req)
     if 'submit' in req.POST:
         _ = req.translate
         if form.validate():

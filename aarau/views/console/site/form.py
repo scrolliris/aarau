@@ -4,16 +4,20 @@ from wtforms import (
     SubmitField,
     TextAreaField,
 )
-from wtforms import validators as v, ValidationError
+from wtforms import validators as v
 from wtforms.form import Form
 
 from aarau.views.form import SecureForm, build_form
+
+DOMAIN_PATTERN = r'\A([A-Za-z0-9]\.|[A-Za-z0-9][A-Za-z0-9-]{0,61}' \
+    r'[A-Za-z0-9]\.){1,3}[A-Za-z]{2,6}\Z'
 
 
 class SiteFormBaseMixin(object):
     domain = StringField('Domain', [
         v.Required(),
-        v.Length(min=3, max=32),
+        v.Regexp(DOMAIN_PATTERN),
+        v.Length(min=3, max=64),
     ])
 
 
@@ -34,27 +38,14 @@ class NewSiteForm(SiteFormBaseMixin, SecureForm):
     submit = SubmitField('Create')
 
 
-def new_application_site_form(req, project):
-    class ANewSiteForm(NewSiteForm):
-        def validate_domain(self, field):  # pylint: disable=no-self-use
-            from aarau.models.site import Site
-            site = Site.select().where(
-                Site.hosting_type == 'Application',
-                Site.project_id == project.id,  # pylint: disable=no-member
-                Site.domain == field.data).first()
-            if site:
-                raise ValidationError('Domain already exists.')
-
-    return build_form(ANewSiteForm, req)
-
-
 class EditSiteForm(SiteFormBaseMixin, SecureForm):
     application = FormField(ApplicationForm)
     submit = SubmitField('Update')
 
 
-def edit_application_site_form(req, _project, site):
-    class AnEditSiteForm(EditSiteForm):
-        pass
+def build_new_application_site_form(req):
+    return build_form(NewSiteForm, req)
 
-    return build_form(AnEditSiteForm, req, site)
+
+def build_edit_application_site_form(req):
+    return build_form(EditSiteForm, req)
