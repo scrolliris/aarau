@@ -99,7 +99,7 @@ class TemplateUtil(object):
             part = self.req.settings.get('storage.bucket_{0:s}'.format(name))
             return re.sub(unslash, '', part)
 
-        if not self.env.is_production:
+        if self.env.is_production:
             h, n, p = [get_bucket_info(x) for x in ('host', 'name', 'path')]
             return 'https://{0:s}/{1:s}/{2:s}/{3:s}'.format(h, n, p, path)
         return self.req.static_url('aarau:../static/' + path)
