@@ -7,6 +7,10 @@ else
 	env := $(ENV)
 endif
 
+ifeq (, $(NODE_ENV))
+	NODE_ENV := development
+endif
+
 app := aarau
 
 # -- installation
@@ -129,7 +133,7 @@ ifeq (, $(shell which gulp 2>/dev/null))
 	$(info gulp command not found. run `npm install -g gulp-cli`)
 	$(info )
 else
-	gulp
+	NODE_ENV=$(NODE_ENV) gulp
 endif
 .PHONY: build
 
@@ -144,7 +148,7 @@ ifeq (, $(shell which gulp 2>/dev/null))
 	$(info gulp command not found. run `npm install -g gulp-cli`)
 	$(info )
 else
-	gulp clean
+	NODE_ENV=$(NODE_ENV) gulp clean
 endif
 .PHONY: clean
 
