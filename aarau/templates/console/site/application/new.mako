@@ -22,7 +22,7 @@
         ${render_notice()}
 
         <h2 class="header">New Site</h2>
-        <p class="description">Each sites in the project should have same contents or comparable articles which are written by you. Normally, you need only one site.</p>
+        <p class="description">Each sites in the project should have same, sibling or comparable contents which are published by you, normally.</p>
         <%
           act = req.route_url('console.site.new', project_id=project.id, _query={'type':'application'})
           ctx = 'new'

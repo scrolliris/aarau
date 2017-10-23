@@ -11,8 +11,7 @@
   <div class="grid">
     <div class="row">
       <div class="column-16">
-        <a class="primary${' disabled' if len(req.user.projects) >= 1 else ''} button" href="${req.route_path('console.project.new')}">New Project</a>
-        <p class="note">You can create only one project while in beta.</p>
+        <a class="primary button" href="${req.route_path('console.project.new')}">New Project</a>
       </div>
     % for project in projects:
       <div class="column-4 column-v-8 column-l-16">

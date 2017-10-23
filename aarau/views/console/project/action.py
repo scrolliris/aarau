@@ -42,10 +42,6 @@ def project_view(req):
 def project_new(req):
     """Renders a form new project/Create new project."""
     user = req.user
-    if len(user.projects) >= 1:  # beta
-        next_path = req.route_path('console.top')
-        raise HTTPFound(location=next_path)
-
     form = new_project_form(req)
     if 'submit' in req.POST:
         _ = req.translate
