@@ -27,7 +27,7 @@ def test_build_new_application_site_form(dummy_request):
 ])
 def test_validate_domain_format_with_invalid_domain(domain, dummy_request):
     dummy_request.params = dummy_request.POST = MultiDict({
-        'csrf_token':  dummy_request.session.get_csrf_token(),
+        'csrf_token': dummy_request.session.get_csrf_token(),
         'domain': domain,
         'application-name': 'Test Site',
     })
@@ -45,7 +45,7 @@ def test_validate_domain_format_with_invalid_domain(domain, dummy_request):
 ])
 def test_validate_domain_format_with_valid_domain(domain, dummy_request):
     dummy_request.params = dummy_request.POST = MultiDict({
-        'csrf_token':  dummy_request.session.get_csrf_token(),
+        'csrf_token': dummy_request.session.get_csrf_token(),
         'domain': domain,
         'application-name': 'Test Site',
     })
