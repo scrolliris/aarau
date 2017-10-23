@@ -10,8 +10,8 @@ from aarau.models import (
 )
 
 from aarau.views.console.project.form import (
-    edit_project_form,
-    new_project_form,
+    build_edit_project_form,
+    build_new_project_form,
 )
 
 
@@ -42,7 +42,7 @@ def project_view(req):
 def project_new(req):
     """Renders a form new project/Create new project."""
     user = req.user
-    form = new_project_form(req)
+    form = build_new_project_form(req)
     if 'submit' in req.POST:
         _ = req.translate
         if form.validate():
@@ -89,7 +89,7 @@ def project_edit(req):
     ).get()
     if not project:
         raise HTTPNotFound
-    form = edit_project_form(req, project)
+    form = build_edit_project_form(req, project)
     if 'submit' in req.POST:
         _ = req.translate
         if form.validate():

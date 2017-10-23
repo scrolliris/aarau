@@ -8,7 +8,7 @@ from aarau.models import (
     Project,
 )
 
-from aarau.views.project.form import new_project_form
+from aarau.views.project.form import build_new_project_form
 
 
 def tpl(path, resource='project'):
@@ -24,7 +24,7 @@ def project_new(req):
         next_path = req.route_path('console.top')
         raise HTTPFound(location=next_path)
 
-    form = new_project_form(req)
+    form = build_new_project_form(req)
     if 'submit' in req.POST:
         _ = req.translate
         if form.validate():

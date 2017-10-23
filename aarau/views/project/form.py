@@ -30,14 +30,13 @@ class ProjectFormBaseMixin(object):
 class NewProjectForm(ProjectFormBaseMixin, SecureForm):
     submit = SubmitField('Create')
 
+    def validate_namespace(self, field):  # pylint: disable=no-self-use
+        from aarau.models.project import Project
+        project = Project.select().where(
+            Project.namespace == field.data).first()
+        if project:
+            raise ValidationError('Namespace is already taken.')
 
-def new_project_form(req):
-    class ANewProjectForm(NewProjectForm):
-        def validate_namespace(self, field):  # pylint: disable=no-self-use
-            from aarau.models.project import Project
-            project = Project.select().where(
-                Project.namespace == field.data).first()
-            if project:
-                raise ValidationError('Namespace is already taken.')
 
-    return build_form(ANewProjectForm, req)
+def build_new_project_form(req):
+    return build_form(NewProjectForm, req)
