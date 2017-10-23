@@ -1,5 +1,6 @@
 import os
 import json
+import re
 from typing import Union
 
 from bleach import clean as _clean
@@ -11,6 +12,8 @@ from pyramid.events import BeforeRender
 
 from aarau.env import Env
 from aarau.request import CustomRequest
+
+UNSLASH_PATTERN = re.compile(r'^\/|\/$')
 
 
 @subscriber(BeforeRender)
@@ -92,12 +95,9 @@ class TemplateUtil(object):
 
         If producition, generates cdn url by settings.
         """
-        import re
-        unslash = re.compile(r'^\/|\/$')
-
         def get_bucket_info(name):
             part = self.req.settings.get('storage.bucket_{0:s}'.format(name))
-            return re.sub(unslash, '', part)
+            return re.sub(UNSLASH_PATTERN, '', part)
 
         if self.env.is_production:
             h, n, p = [get_bucket_info(x) for x in ('host', 'name', 'path')]

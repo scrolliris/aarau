@@ -69,7 +69,6 @@ def new_extra_environ(domain) -> dict:
     return {
         'HTTP_HOST': domain + ':80',
         'SERVER_NAME': domain,
-        'SERVER_HOST': domain,
         'SERVER_PORT': '80',
         'REMOTE_ADDR': '127.0.0.1',
         'wsgi.url_scheme': 'http',
@@ -238,14 +237,22 @@ def dummy_request(db, settings, extra_environ) -> Request:
     from aarau.utils.localization import get_translator_function
 
     locale_name = 'en'
+    # `request.application_url` will be referenced by url routing
+    url = 'http://{}'.format(extra_environ['SERVER_NAME'])
     req = testing.DummyRequest(
-        db=db,
-        subdomain='',
         environ=extra_environ,
+        db=db,
         _LOCALE_=locale_name,
         locale_name=locale_name,
         matched_route=None,
         settings=settings,
+        server_name=extra_environ['SERVER_NAME'],
+        subdomain='',
+        host=extra_environ['HTTP_HOST'],
+        application_url=url,
+        url=url,
+        host_url=url,
+        path_url=url,
     )
     # for service objects
     req.service_cache = AdapterRegistry()
@@ -315,7 +322,7 @@ def router(raw_settings) -> Router:
 
 
 @pytest.fixture(scope='session')
-def dummy_app(router, env, extra_environ) -> 'function':
+def dummy_app(router, extra_environ) -> 'function':
     class DummyAppProxy():
         """The wrapper for actual dummy app.
 
@@ -331,7 +338,7 @@ def dummy_app(router, env, extra_environ) -> 'function':
         def _format(self, subdomain=None) -> None:
             if self._app is None:
                 self._app = TestApp(router, extra_environ=self.extra_environ)
-            domain = env.get('DOMAIN', 'example.org')
+            domain = self.extra_environ['SERVER_NAME']
             if subdomain is not None:
                 domain = ('{}.' + domain).format(subdomain)  # replace
                 self._app.extra_environ = new_extra_environ(domain)
