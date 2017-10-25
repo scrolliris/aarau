@@ -1,6 +1,6 @@
 ---
 sites:
-  - project: !project.name "'Sample Project'"
+  - project: !project.namespace "'sample-project'"
     domain: example.com
     hosting_id: !application.name "'Sample Application'"
     hosting_type: Application
@@ -12,7 +12,7 @@ sites:
     updated_at: !datetime.utcnow+timedelta -7200
     deleted_at:
 
-  - project: !project.name "'Sample Project'"
+  - project: !project.namespace "'sample-project'"
     domain: example.org
     hosting_id: !publication.name "'Sample Publication'"
     hosting_type: Publication

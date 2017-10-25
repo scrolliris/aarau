@@ -3,7 +3,7 @@ projects:
   - access_key_id: hj2v9RRzMnk6WgRnuRVxWHuv6d8WBsCs
     plan: !plan.name "'plan.free.name'"
     subscription_id: 164567
-    namespace: sample
+    namespace: sample-project
     name: Sample Project
     description: >-
       A sample project.
