@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Neuchâtel 0.1\n"
 "Report-Msgid-Bugs-To: support@scrolliris.com\n"
-"POT-Creation-Date: 2017-10-15 16:42+0900\n"
+"POT-Creation-Date: 2017-10-26 03:55+0900\n"
 "PO-Revision-Date: 2017-06-16 01:09+0900\n"
 "Last-Translator: Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>\n"
 "Language-Team: Scrolliris Translation Team <support@scrolliris.com>\n"
@@ -20,45 +20,45 @@ msgstr ""
 msgid "link.text.cookie"
 msgstr "Cookie"
 
-#: aarau/templates/_footer.mako:8 aarau/templates/shared/signup.mako:60
+#: aarau/templates/_footer.mako:8 aarau/templates/shared/signup.mako:79
 msgid "link.text.pp"
 msgstr "Privacy Policy"
 
-#: aarau/templates/_footer.mako:7 aarau/templates/shared/signup.mako:59
+#: aarau/templates/_footer.mako:7 aarau/templates/shared/signup.mako:78
 msgid "link.text.tos"
 msgstr "Term of Service"
 
-#: aarau/views/auth.py:34
+#: aarau/views/auth.py:44
 msgid "login.failure"
 msgstr "The credential you've entered is incorrect"
 
-#: aarau/views/filter.py:32
+#: aarau/views/filter.py:30
 msgid "login.needed"
 msgstr "Please log in"
 
-#: aarau/templates/shared/signup.mako:46
+#: aarau/templates/shared/signup.mako:64
 msgid "misc.letters"
 msgstr "A-z"
 
-#: aarau/templates/shared/signup.mako:47
+#: aarau/templates/shared/signup.mako:65
 msgid "misc.numbers"
 msgstr "0-9"
 
-#: aarau/views/project/action.py:61
-#: aarau/views/console/project/action.py:80
+#: aarau/views/project/action.py:56
+#: aarau/views/console/project/action.py:73
 msgid "project.creation.failure"
 msgstr ""
 
-#: aarau/views/project/action.py:55
-#: aarau/views/console/project/action.py:75
+#: aarau/views/project/action.py:50
+#: aarau/views/console/project/action.py:68
 msgid "project.creation.success"
 msgstr ""
 
-#: aarau/views/console/project/action.py:115
+#: aarau/views/console/project/action.py:107
 msgid "project.update.failure"
 msgstr ""
 
-#: aarau/views/console/project/action.py:110
+#: aarau/views/console/project/action.py:102
 msgid "project.update.success"
 msgstr ""
 
@@ -82,129 +82,129 @@ msgstr "Password could not been updated"
 msgid "reset_password.update.success"
 msgstr "Password has been successfully updated"
 
-#: aarau/views/settings/action.py:59
+#: aarau/views/settings/action.py:54
 msgid "settings.email.addition.failure"
 msgstr "Email address could not been added"
 
-#: aarau/views/settings/action.py:47
+#: aarau/views/settings/action.py:42
 msgid "settings.email.addition.pending"
 msgstr "You have already a pending verification for new email address"
 
-#: aarau/views/settings/action.py:55
+#: aarau/views/settings/action.py:50
 msgid "settings.email.addition.success"
 msgstr "New email address has been successfully added"
 
-#: aarau/views/settings/action.py:143
+#: aarau/views/settings/action.py:135
 msgid "settings.email.change.failure"
 msgstr "Primary email address could not been changed"
 
-#: aarau/views/settings/action.py:140
+#: aarau/views/settings/action.py:132
 msgid "settings.email.change.success"
 msgstr "Primary email address successfully changed"
 
-#: aarau/views/settings/action.py:87
+#: aarau/views/settings/action.py:81
 msgid "settings.email.confirmation.expired"
 msgstr "New email verification token has been already expired"
 
-#: aarau/views/settings/action.py:90
+#: aarau/views/settings/action.py:84
 msgid "settings.email.confirmation.failure"
 msgstr "New email could not been verified"
 
-#: aarau/views/settings/action.py:93
+#: aarau/views/settings/action.py:87
 msgid "settings.email.confirmation.success"
 msgstr "New email address has been successfully verified"
 
-#: aarau/views/settings/action.py:118
+#: aarau/views/settings/action.py:111
 msgid "settings.email.deletion.failure"
 msgstr "Email address could not been deleted"
 
-#: aarau/views/settings/action.py:115
+#: aarau/views/settings/action.py:108
 msgid "settings.email.deletion.success"
 msgstr "Email address has been successfully deleted"
 
-#: aarau/views/settings/action.py:174
+#: aarau/views/settings/action.py:165
 msgid "settings.password.change.failure"
 msgstr "Password could not been changed"
 
-#: aarau/views/settings/action.py:171
+#: aarau/views/settings/action.py:162
 msgid "settings.password.change.invalid"
 msgstr "Invalid password"
 
-#: aarau/views/settings/action.py:166
+#: aarau/views/settings/action.py:157
 msgid "settings.password.change.success"
 msgstr "Password has been successfully changed"
 
-#: aarau/views/signup/action.py:62
+#: aarau/views/signup/action.py:57
 msgid "signup.activation.expired"
 msgstr "Activation token has been already expired"
 
-#: aarau/views/signup/action.py:65
+#: aarau/views/signup/action.py:60
 msgid "signup.activation.failure"
 msgstr "Your account could not been activated"
 
-#: aarau/views/signup/action.py:68
+#: aarau/views/signup/action.py:63
 msgid "signup.activation.success"
 msgstr "Your account has been successfully activated"
 
-#: aarau/templates/shared/signup.mako:57
+#: aarau/templates/shared/signup.mako:76
 msgid "signup.agreement"
 msgstr ""
 "By clicking on $button below, you are agreeing to the $tos and the $pp"
 
-#: aarau/views/signup/action.py:39
+#: aarau/views/signup/action.py:35
 msgid "signup.creation.failure"
 msgstr "Your signup has been failed"
 
-#: aarau/views/signup/action.py:35
+#: aarau/views/signup/action.py:31
 msgid "signup.creation.success"
 msgstr "Your signup has been successfully requested"
 
-#: aarau/templates/shared/signup.mako:21
+#: aarau/templates/shared/signup.mako:33
 msgid "signup.email.description"
 msgstr "You need this to log in to your account."
 
-#: aarau/templates/shared/signup.mako:23
+#: aarau/templates/shared/signup.mako:36
 msgid "signup.email.placeholder"
 msgstr "william.shakespeare@scrolliris.com"
 
-#: aarau/templates/shared/signup.mako:29
+#: aarau/templates/shared/signup.mako:43
 msgid "signup.name.description"
 msgstr "This is your fullname."
 
-#: aarau/templates/shared/signup.mako:31
+#: aarau/templates/shared/signup.mako:46
 msgid "signup.name.placeholder"
 msgstr "William Shakespeare (optional)"
 
-#: aarau/templates/shared/signup.mako:45
+#: aarau/templates/shared/signup.mako:63
 msgid "signup.password.description"
 msgstr ""
 "At least, use one lower and one UPPER letter from: $letters, and one "
 "digit from: $numbers. 8 characters are minimum length."
 
-#: aarau/templates/shared/signup.mako:50
+#: aarau/templates/shared/signup.mako:69
 msgid "signup.password.placeholder"
 msgstr "Keep it secret :)"
 
-#: aarau/templates/shared/signup.mako:37
+#: aarau/templates/shared/signup.mako:53
 msgid "signup.username.description"
 msgstr "This is your personal username."
 
-#: aarau/templates/shared/signup.mako:39
+#: aarau/templates/shared/signup.mako:56
 msgid "signup.username.placeholder"
 msgstr "william (optional)"
 
-#: aarau/views/console/site/action.py:79
+#: aarau/views/console/site/action.py:73
 msgid "site.application.creation.failure"
 msgstr "Site could not been created"
 
-#: aarau/views/console/site/action.py:74
+#: aarau/views/console/site/action.py:68
 msgid "site.application.creation.success"
 msgstr "Site has been successfully created"
 
-#: aarau/views/console/site/action.py:124
+#: aarau/views/console/site/action.py:117
 msgid "site.application.update.failure"
 msgstr "Site could not been updated"
 
-#: aarau/views/console/site/action.py:119
+#: aarau/views/console/site/action.py:112
 msgid "site.application.update.success"
 msgstr "Site has been successfully updated"
