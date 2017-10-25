@@ -61,7 +61,7 @@ compile:
       gettext
     - node --version
     - npm --version
-    - nmp install --global i18next-conv
+    - npm install --global i18next-conv
   script:
     - make catalog
   artifacts:
