@@ -105,6 +105,11 @@ def includeme(config):
         c.add_route('console.site.application.edit',
                     '/project/{project_id:\d+}/site/{id:\d+}/edit')
 
+    with subdomain('console') as c:
+        # pylint: disable=anomalous-backslash-in-string
+        c.add_route('api.console.site.application.result',
+                    '/api/project/{project_id:\d+}/site/{id:\d+}/result.json')
+
     with subdomain(None) as c:
         c.add_route('top', '/')
 

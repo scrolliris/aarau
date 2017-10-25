@@ -135,11 +135,14 @@ Check `Makefile`
 (venv) % make setup
 
 : install node modules & run gulp task
-(venv) % npm install --global gulp-cli
+(venv) % npm install --global gulp-cli i18next-conv
 (venv) % npm install
 
 : run gulp
 (venv) % make build
+
+: compile translation data (gettext .mo in locale and .json in static/locale)
+(venv) % make compile
 
 : import seed data into database for development
 (venv) % make db-seed

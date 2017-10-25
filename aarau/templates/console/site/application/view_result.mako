@@ -4,6 +4,7 @@
 <%inherit file='aarau:templates/console/_layout.mako'/>
 
 <%block name='title'>${render_title('Site | Project')}</%block>
+<%block name='body_attr'> data-locale-file="${req.util.static_url('{}')|unquote,formatting('locale/{{lng}}/{{ns}}.json'),h}"</%block>
 
 <%block name='breadcrumb'>
 <div class="breadcrumb">
@@ -37,32 +38,8 @@
         </div>
       </div>
       <div class="column-16">
-      % if not results:
-        <div class="info message">
-          <h6>Are you ready?</h6>
-          <p>Otherwise, please check `Scripts` tab. It takes few minutes stating logging and calculation. The data will be shown here. Please access again, later :-D</p>
-        </div>
-      % else:
         <h5>Pages</h5>
-        <table class="bordered table">
-          <thead>
-            <tr>
-              <th>Path</th>
-              <th>Paragraph</th>
-              <th>Record Count</th>
-            </tr>
-          </thead>
-          <tbody>
-          % for r in results:
-            <tr>
-              <td>${r.path}</td>
-              <td>${r.paragraph_numbers}</td>
-              <td>${r.total_count}</td>
-            </tr>
-          % endfor
-          </tbody>
-        </table>
-      % endif
+        <div id="page_table_container" data-project-id="${project.id}", data-site-id="${site.id}"></div>
       </div>
     </div>
   </div>

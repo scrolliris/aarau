@@ -6,7 +6,6 @@ from aarau.models import (
     Application,
     Project,
     Membership,
-    ReadingResult,
     User,
     Site,
 )
@@ -22,7 +21,7 @@ def tpl(path, resource='site'):
     return 'aarau:templates/console/{0:s}/{1:s}'.format(resource, path)
 
 
-def _fetch_project(project_id, user_id):
+def fetch_project(project_id, user_id):
     project = Project.select().join(Membership).join(User).where(
         User.id == user_id,
         Project.id == project_id
@@ -41,7 +40,7 @@ def application_site_new(req):
     if 'type' not in req.params or req.params['type'] != 'application':
         raise HTTPNotFound
 
-    project = _fetch_project(req.matchdict['project_id'], req.user.id)
+    project = fetch_project(req.matchdict['project_id'], req.user.id)
     form = build_new_application_site_form(req)
     if 'submit' in req.POST:
         _ = req.translate
@@ -88,7 +87,7 @@ def application_site_edit(req):
     project_id = req.matchdict['project_id']
     site_id = req.matchdict['id']
 
-    project = _fetch_project(project_id, req.user.id)
+    project = fetch_project(project_id, req.user.id)
     site = Site.by_type(req.params['type']).where(
         Site.id == site_id,
         Site.project_id == project_id).get()  # pylint: disable=no-member
@@ -133,16 +132,16 @@ def application_site_view_result(req):
     project_id = req.matchdict['project_id']
     site_id = req.matchdict['id']
 
-    project = _fetch_project(project_id, req.user.id)
-    site = Site.by_type(req.params['type']).where(
-        Site.id == site_id,
-        Site.project_id == project_id).get()  # pylint: disable=no-member
-
-    results = ReadingResult.fetch_data_by_path(
-        project.access_key_id, site_id)
+    project = fetch_project(project_id, req.user.id)
+    try:
+        site = Site.by_type(req.params['type']).where(
+            Site.id == site_id,
+            Site.project_id == project_id).get()  # pylint: disable=no-member
+    except site.DoesNotExist:
+        raise HTTPFound
 
     return dict(project=project, site=site,
-                application=site.application, results=results)
+                application=site.application)
 
 
 @view_config(route_name='console.site.application.view.script',
@@ -156,7 +155,7 @@ def application_site_view_script(req):
     project_id = req.matchdict['project_id']
     site_id = req.matchdict['id']
 
-    project = _fetch_project(project_id, req.user.id)
+    project = fetch_project(project_id, req.user.id)
     site = Site.by_type(req.params['type']).where(
         Site.id == site_id,
         Site.project_id == project_id).get()  # pylint: disable=no-member
@@ -180,7 +179,7 @@ def application_site_view_badge(req):
     project_id = req.matchdict['project_id']
     site_id = req.matchdict['id']
 
-    project = _fetch_project(project_id, req.user.id)
+    project = fetch_project(project_id, req.user.id)
     try:
         site = Site.by_type(req.params['type']).where(
             Site.id == site_id,

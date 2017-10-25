@@ -70,7 +70,7 @@ while [ $# -gt 0 ]; do
       ACTION="${1}"
       shift
       ;;
-    "message"|"form")
+    "message"|"form"|"console.json")
       DOMAIN="${1}"
       shift
       ;;
@@ -87,19 +87,24 @@ done
 
 
 run_extract_command() {
+  FILE_LIST=""
   if [ "${DOMAIN}" == "message" ]; then
     FILE_LIST="`find ./aarau -type f \( -name '*.py' -or -name '*.mako' \) \
       ! -path "./**/*/form.py" -print`"
   elif [ "${DOMAIN}" == "form" ]; then
     FILE_LIST="`find ./aarau/**/*/form.py -type f \( -name '*.py' \) -print`"
+  elif [ "${DOMAIN}" == "console.json" ]; then
+    echo "[info] not supported; update it manually."
   fi
-  xgettext --default-domain=${DOMAIN} --sort-output --keyword=$KEYWORD \
-    --output-dir=locale --output=${DOMAIN}.pot \
-    --from-code=UTF-8 --language=Python --width=$WIDTH \
-    --msgid-bugs-address=$MSGID_BUGS_ADDRESS \
-    --directory=. \
-    --package-name=$PACKAGE_NAME --package-version=$PACKAGE_VERSION \
-    $FILE_LIST
+  if [ "${FILE_LIST}" != "" ]; then
+    xgettext --default-domain=${DOMAIN} --sort-output --keyword=$KEYWORD \
+      --output-dir=locale --output=${DOMAIN}.pot \
+      --from-code=UTF-8 --language=Python --width=$WIDTH \
+      --msgid-bugs-address=$MSGID_BUGS_ADDRESS \
+      --directory=. \
+      --package-name=$PACKAGE_NAME --package-version=$PACKAGE_VERSION \
+      $FILE_LIST
+  fi
 }
 
 run_generate_command() {
@@ -118,9 +123,19 @@ run_update_command() {
 }
 
 run_compile_command() {
-  msgfmt --directory=locale/${LOCALE}/LC_MESSAGES ${DOMAIN}.po \
-    --output-file=locale/${LOCALE}/LC_MESSAGES/${DOMAIN}.mo \
-    --check --strict
+  if [ "${DOMAIN}" == "console.json" ]; then
+    if type "i18next-conv" > /dev/null; then
+      i18next-conv -l $LOCALE \
+        -s locale/$LOCALE/LC_MESSAGES/$DOMAIN.po \
+        -t static/locale/$LOCALE/$DOMAIN
+    else
+      echo "[info] #${DOMAIN} 18next-conv command is missing"
+    fi
+  else
+    msgfmt --directory=locale/${LOCALE}/LC_MESSAGES ${DOMAIN}.po \
+      --output-file=locale/${LOCALE}/LC_MESSAGES/${DOMAIN}.mo \
+      --check --strict
+  fi
 }
 
 case $ACTION in

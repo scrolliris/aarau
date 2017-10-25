@@ -22,6 +22,9 @@
     "gulp-clean": "0.3.2",
     "gulp-copy": "1.0.0",
     "gulp-env": "0.4.0",
+    "i18next": "10.0.3",
+    "i18next-browser-languagedetector": "2.0.0",
+    "i18next-xhr-backend": "1.4.3",
     "inferno": "1.2.2",
     "license-webpack-plugin": "0.4.2",
     "moment": "2.18.1",
@@ -38,7 +41,8 @@
   },
   "devDependencies": {
     "eslint": "3.16.1",
-    "gulp-cli": "1.4.0"
+    "gulp-cli": "1.4.0",
+    "i18next-conv": "5.0.0"
   },
   "cacheDirectories": [
     "node_modules"

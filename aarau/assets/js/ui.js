@@ -1,8 +1,8 @@
-'use strict';
+import { render } from 'inferno.js';
+import h from 'inferno-hyperscript.js';
 
-import { render } from 'inferno';
-import h from 'inferno-hyperscript';
-import Ticker from '../component/ticker';
+import Ticker from '../component/ticker.js';
+
 
 var ticker = document.getElementById('ticker');
 if (ticker !== null) {

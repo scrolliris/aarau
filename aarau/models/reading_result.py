@@ -39,6 +39,13 @@ class ReadingResult(AnalysisBase):
         return '<ReadingResult id:{} element_id:{} code:{} path:{}>'.format(
             self.id, self.element_id, self.code, self.path)
 
+    def __json__(self, _req):
+        return {'project_id': self.project_id,
+                'site_id': self.site_id, 'path': self.path,
+                'code': self.code,
+                'paragraph_numbers': self.paragraph_numbers,
+                'total_count': self.total_count}
+
     @classmethod
     def fetch_data_by_path(cls, project_access_key_id='', site_id=0):
         """Fetches result values by path."""

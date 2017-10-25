@@ -1,7 +1,5 @@
-'use strict';
-
-import Component from 'inferno-component';
-import h from 'inferno-hyperscript';
+import Component from 'inferno-component.js';
+import h from 'inferno-hyperscript.js';
 
 import './ticker.styl';
 

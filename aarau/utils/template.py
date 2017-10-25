@@ -2,6 +2,7 @@ import os
 import json
 import re
 from typing import Union
+from urllib import parse
 
 from bleach import clean as _clean
 from markupsafe import Markup
@@ -28,6 +29,8 @@ def add_template_util_renderer_globals(evt) -> None:
         util = get_settings()['aarau.includes']['template_util'](ctx, req)
     evt['util'] = util
     evt['clean'] = clean
+    evt['unquote'] = unquote
+    evt['formatting'] = formatting
 
 
 def clean(**kwargs) -> 'function':
@@ -41,6 +44,19 @@ def clean(**kwargs) -> 'function':
         return Markup(_clean(text, **kwargs))
 
     return __clean
+
+
+def unquote(text: str) -> str:
+    """Returns unquoted text (decorded url)."""
+    return parse.unquote(text)
+
+
+def formatting(*args: tuple) -> 'function':
+    """Returns formatted value if text has placeholder."""
+    def __formatting(text: str) -> str:
+        return str(text).format(*args)
+
+    return __formatting
 
 
 class TemplateUtil(object):

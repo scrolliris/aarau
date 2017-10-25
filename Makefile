@@ -94,13 +94,19 @@ catalog-extract:
 .PHONY: catalog-extract
 
 catalog-compile:
-	./bin/linguine compile message en
-	./bin/linguine compile form en
+	for ns in message form console\.json ; do \
+	  for locale in en ; do \
+	    ./bin/linguine compile $$ns $$locale; \
+	  done; \
+	done
 .PHONY: catalog-compile
 
 catalog-update:
-	./bin/linguine update message en
-	./bin/linguine update form en
+	for ns in message form console\.json ; do \
+	  for locale in en ; do \
+	    ./bin/linguine update $$ns $$locale; \
+	  done; \
+	done
 .PHONY: catalog-update
 
 catalog: | catalog-compile

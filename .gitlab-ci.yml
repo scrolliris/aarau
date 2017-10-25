@@ -52,21 +52,23 @@ lint:
 
 compile:
   stage: compile
-  image: python:3.5.4
+  image: node:7.10.1
   variables:
-    ENV: production
+    NODE_ENV: production
   before_script:
     - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
     - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
       gettext
-    - python --version
-    - pip --version
+    - node --version
+    - npm --version
+    - nmp install --global i18next-conv
   script:
     - make catalog
   artifacts:
     untracked: true
     paths:
       - locale
+      - static/locale
   except:
     - tags
 
