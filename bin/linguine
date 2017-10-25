@@ -31,17 +31,17 @@ USG
 }
 
 # see https://gitlab.com/lupine-software/neuchatel
-PACKAGE_NAME="Neuchâtel"
-PACKAGE_VERSION="0.1"
-MSGID_BUGS_ADDRESS="support@scrolliris.com"
-COPYRIGHT="Lupine Software LLC"
+package_name="Neuchâtel"
+package_version="0.1"
+msgid_bugs_address="support@scrolliris.com"
+copyright="Lupine Software LLC"
 
-KEYWORD="_"
-WIDTH=73
+keyword="_"
+width=73
 
-ACTION=""
-DOMAIN=""
-LOCALE=""
+action=""
+domain=""
+locale=""
 
 getopt --test > /dev/null
 if [ $? -ne 4 ]; then
@@ -50,11 +50,11 @@ fi
 
 set -e
 
-options=h
-longoptions=help
+_options=h
+_longoptions=help
 
-_=`getopt --name "$0" \
---options "$options" --longoptions "$longoptions" --unquoted -- "$@"`
+_=`getopt --name "${0}" \
+--options "${_options}" --longoptions "${_longoptions}" --unquoted -- "${@}"`
 
 if [ $? -ne 0 ]; then
   exit 2
@@ -67,15 +67,15 @@ while [ $# -gt 0 ]; do
       exit 0
       ;;
     "compile"|"c"|"extract"|"e"|"generate"|"g"|"update"|"u")
-      ACTION="${1}"
+      action="${1}"
       shift
       ;;
     "message"|"form"|"console.json")
-      DOMAIN="${1}"
+      domain="${1}"
       shift
       ;;
     "en")
-      LOCALE="${1}"
+      locale="${1}"
       shift
       ;;
     *)
@@ -87,84 +87,84 @@ done
 
 
 run_extract_command() {
-  FILE_LIST=""
-  if [ "${DOMAIN}" == "message" ]; then
-    FILE_LIST="`find ./aarau -type f \( -name '*.py' -or -name '*.mako' \) \
+  file_list=""
+  if [ "${domain}" = "message" ]; then
+    file_list="`find ./aarau -type f \( -name '*.py' -or -name '*.mako' \) \
       ! -path "./**/*/form.py" -print`"
-  elif [ "${DOMAIN}" == "form" ]; then
-    FILE_LIST="`find ./aarau/**/*/form.py -type f \( -name '*.py' \) -print`"
-  elif [ "${DOMAIN}" == "console.json" ]; then
+  elif [ "${domain}" = "form" ]; then
+    file_list="`find ./aarau/**/*/form.py -type f \( -name '*.py' \) -print`"
+  elif [ "${domain}" = "console.json" ]; then
     echo "[info] not supported; update it manually."
   fi
-  if [ "${FILE_LIST}" != "" ]; then
-    xgettext --default-domain=${DOMAIN} --sort-output --keyword=$KEYWORD \
-      --output-dir=locale --output=${DOMAIN}.pot \
-      --from-code=UTF-8 --language=Python --width=$WIDTH \
-      --msgid-bugs-address=$MSGID_BUGS_ADDRESS \
+  if [ "${file_list}" != "" ]; then
+    xgettext --default-domain=$domain --sort-output --keyword=$keyword \
+      --output-dir=locale --output=$domain.pot \
+      --from-code=UTF-8 --language=Python --width=$width \
+      --msgid-bugs-address=$msgid_bugs_address \
       --directory=. \
-      --package-name=$PACKAGE_NAME --package-version=$PACKAGE_VERSION \
-      $FILE_LIST
+      --package-name=$package_name --package-version=$package_version \
+      $file_list
   fi
 }
 
 run_generate_command() {
-  mkdir -p locale/${LOCALE}/LC_MESSAGES
-  xgettext --default-domain=${DOMAIN} --sort-output --width=$WIDTH \
-    --output-dir=locale --output=${LOCALE}/LC_MESSAGES/${DOMAIN}.po \
+  mkdir -p locale/$locale/LC_MESSAGES
+  xgettext --default-domain=$domain --sort-output --width=$width \
+    --output-dir=locale --output=$locale/LC_MESSAGES/$domain.po \
     --directory=locale \
-    ${DOMAIN}.pot
+    $domain.pot
 }
 
 run_update_command() {
   msgmerge --directory=locale \
-  --output-file=locale/${LOCALE}/LC_MESSAGES/${DOMAIN}.po --previous \
-  --sort-output --width=$WIDTH \
-  ${LOCALE}/LC_MESSAGES/${DOMAIN}.po ${DOMAIN}.pot
+  --output-file=locale/$locale/LC_MESSAGES/$domain.po --previous \
+  --sort-output --width=$width \
+  $locale/LC_MESSAGES/$domain.po $domain.pot
 }
 
 run_compile_command() {
-  if [ "${DOMAIN}" == "console.json" ]; then
+  if [ "${domain}" = "console.json" ]; then
     if type "i18next-conv" > /dev/null; then
-      i18next-conv -l $LOCALE \
-        -s locale/$LOCALE/LC_MESSAGES/$DOMAIN.po \
-        -t static/locale/$LOCALE/$DOMAIN
+      i18next-conv -l $locale \
+        -s locale/$locale/LC_MESSAGES/$domain.po \
+        -t static/locale/$locale/$domain
     else
-      echo "[info] #${DOMAIN} 18next-conv command is missing"
+      echo "[info] #${domain} 18next-conv command is missing"
     fi
   else
-    msgfmt --directory=locale/${LOCALE}/LC_MESSAGES ${DOMAIN}.po \
-      --output-file=locale/${LOCALE}/LC_MESSAGES/${DOMAIN}.mo \
+    msgfmt --directory=locale/$locale/LC_MESSAGES $domain.po \
+      --output-file=locale/$locale/LC_MESSAGES/$domain.mo \
       --check --strict
   fi
 }
 
-case $ACTION in
-  "c") ACTION="compile"  ;;
-  "e") ACTION="extract"  ;;
-  "g") ACTION="generate" ;;
-  "u") ACTION="update"   ;;
+case $action in
+  "c") action="compile"  ;;
+  "e") action="extract"  ;;
+  "g") action="generate" ;;
+  "u") action="update"   ;;
 esac
 
 
-if [ "$ACTION" = "" ]; then
+if [ "${action}" = "" ]; then
   echo "<action> is missing"
   print_usage `basename $0`
   exit 2
 fi
 
-if [ "$DOMAIN" = "" ]; then
+if [ "${domain}" = "" ]; then
   echo "<domain> is missing"
   print_usage `basename $0`
   exit 2
 fi
 
-if [ "$ACTION" != "extract" ] && [ "$LOCALE" = "" ]; then
+if [ "${action}" != "extract" ] && [ "${locale}" = "" ]; then
   echo "<locale> is missing"
   print_usage `basename $0`
   exit 2
 fi
 
-case $ACTION in
+case $action in
   "compile")  run_compile_command  ;;
   "extract")  run_extract_command  ;;
   "generate") run_generate_command ;;
