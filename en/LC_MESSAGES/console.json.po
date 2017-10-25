@@ -1,0 +1,35 @@
+# Neuchâtel
+# Copyright (C) 2017 Lupine Software LLC
+# This file is distributed under the same license as the Neuchâtel package.
+# Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Neuchâtel 0.1\n"
+"Report-Msgid-Bugs-To: support@scrolliris.com\n"
+"POT-Creation-Date: 2017-10-25 00:18+0900\n"
+"PO-Revision-Date: 2017-10-26 02:12+0900\n"
+"Last-Translator: Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>\n"
+"Language-Team: Scrolliris Translation Team <support@scrolliris.com>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "page.empty.message.description"
+msgstr ""
+"Otherwise, please check `Scripts` tab. It takes few minutes stating "
+"logging and calculation. The data will be shown here. Please access "
+"again, later :-D"
+
+msgid "page.empty.message.title"
+msgstr "Are you ready?"
+
+msgid "page.table.header.paragraph"
+msgstr "TRACKED PARAGRAPHS"
+
+msgid "page.table.header.path"
+msgstr "PATH"
+
+msgid "page.table.header.total_count"
+msgstr "TOTAL COUNT"
