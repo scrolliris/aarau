@@ -11,6 +11,7 @@ __pycache__/
 codequality.txt
 
 app.yaml
+cors-file.json
 
 /bin/deliver
 /bin/sql-*
