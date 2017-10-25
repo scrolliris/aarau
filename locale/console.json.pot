@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Neuchâtel 0.1\n"
 "Report-Msgid-Bugs-To: support@scrolliris.com\n"
-"POT-Creation-Date: 2017-10-26 03:55+0900\n"
+"POT-Creation-Date: 2017-10-25 00:18+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,22 +17,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: aarau/views/signup/form.py:23
-msgid "signup.label.email"
+# -- aarau/assets/component/console/page.js
+msgid "page.empty.message.title"
 msgstr ""
 
-#: aarau/views/signup/form.py:28
-msgid "signup.label.name"
+msgid "page.empty.message.description"
 msgstr ""
 
-#: aarau/views/signup/form.py:37
-msgid "signup.label.password"
+msgid "page.table.header.path"
 msgstr ""
 
-#: aarau/views/signup/form.py:32
-msgid "signup.label.username"
+msgid "page.table.header.paragraph"
 msgstr ""
 
-#: aarau/views/signup/form.py:42
-msgid "signup.submit.create"
+msgid "page.table.header.total_count"
 msgstr ""
