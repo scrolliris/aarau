@@ -119,7 +119,7 @@ check:
 .PHONY: check
 
 lint:
-	pylint test aarau
+	pylint test ${app}
 .PHONY: lint
 
 vet: | check lint
