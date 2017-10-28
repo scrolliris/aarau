@@ -1,18 +1,17 @@
+import { linkEvent } from 'inferno.js';
 import Component from 'inferno-component.js';
 import h from 'inferno-hyperscript.js';
 
 import { i18n } from '../../js/console/i18n.js';
 
+import Paginator from './paginator.js';
+
 import './page.styl';
 
 
 class API {
-  constructor(projectId, siteId) {
-    this.url = this._buildURL(projectId, siteId);
-  }
-
-  _buildURL(projectId, siteId) {
-    return '/api/project/' + projectId + '/site/' + siteId + '/result.json';
+  constructor(url) {
+    this.url = url;
   }
 
   fetch(isAsync) {
@@ -46,23 +45,50 @@ class API {
 }
 
 
+let handlePageLinkClick = (instance, page) => {
+  if (page !== instance.state.page) {
+    // NOTE: instance.setState({page}) won't work here.
+    instance.update(page);
+  }
+};
+
+
 class PageTable extends Component {
   constructor(props) {
     super(props);
+    let url = '/api/project/' + this.props.projectId +
+              '/site/' + this.props.siteId + '/result.json';
+    this.props['url'] = url;
+    this.props['pageWindow'] = 2;
     this.state = {
       data: []
+    , page: 1
+    , pageCount: 1
     };
   }
 
   componentDidMount() {
-    let api = new API(this.props.projectId, this.props.siteId);
+    this.update();
+  }
+
+  update(page) {
+    let url = this.props.url;
+    let { data, pageCount } = this.state;
+    if (page === undefined) {
+      page = this.state.page;
+    }
+    if (page !== 1) {
+      url = url + '?page=' + Number.parseInt(page, 10);
+    }
+    let api = new API(url);
     api.fetch().then((res) => {
-      let data = [];
-      if ('data' in res) {
-        data = res['data'];
-      }
+      if ('data' in res) { data = res['data']; }
+      if ('page' in res) { page = res['page']; }
+      if ('page_count' in res) { pageCount = res['page_count']; }
       this.setState({
         data
+      , page
+      , pageCount
       });
     }).catch((reason) => {
       // pass
@@ -70,41 +96,49 @@ class PageTable extends Component {
     });
   }
 
-  _buildPageURL(pageId) {
-    return '/project/' + this.props.projectId + '/site/' +
-      this.props.siteId + '/page/' + pageId;
-  }
-
   _linkTo(pageId, text) {
     // TODO: set link to page view
+    //const url = '/project/' + this.props.projectId + '/site/' +
+    //  this.props.siteId + '/page/' + pageId;
     //return h('a', {'href': this._buildPageURL(pageId)}, text);
     return text;
   }
 
   render() {
-    if (!this.state.data) {
+    const url = this.props.url;
+    const { data, page, pageCount } = this.state;
+    if (!data) {
       return h('.info.message', null, [
         h('h6', null, i18n.t('pageEmptyMessageTitle'))
       , h('p', null, i18n.t('pageEmptyMessageDescription'))
       ]);
     } else {
-      return h('table', {'class': 'bordered table'}, [
-        h('thead', null,
-          h('tr', null, [
-            h('th', i18n.t('page.table.header.path'))
-          , h('th', i18n.t('page.table.header.paragraph'))
-          , h('th', i18n.t('page.table.header.total_count'))
-          ])
-        )
-      , h('tbody', null,
-          this.state.data.map(row => {
-            return h('tr', [
-              h('td', null, this._linkTo(row.code, row.path))
-            , h('td', null, this._linkTo(row.code, row.paragraph_numbers))
-            , h('td', null, this._linkTo(row.code, row.total_count))
-            ]);
-          })
-        )
+      return h('div', null, [
+        h('table', {'class': 'bordered table'}, [
+          h('thead', null,
+            h('tr', null, [
+              h('th', i18n.t('page.table.header.path'))
+            , h('th', i18n.t('page.table.header.paragraph'))
+            , h('th', i18n.t('page.table.header.total_count'))
+            ])
+          )
+        , h('tbody', null,
+            data.map(row => {
+              return h('tr', [
+                h('td', null, this._linkTo(row.code, row.path))
+              , h('td', null, this._linkTo(row.code, row.paragraph_numbers))
+              , h('td', null, this._linkTo(row.code, row.total_count))
+              ]);
+            })
+          )
+        ])
+      , h('div', null, h(Paginator, {
+          url: url
+        , page: page // current page
+        , pageWindow: this.props.pageWindow
+        , pageCount: pageCount // total page count
+        , handleClick: linkEvent(this, handlePageLinkClick)
+        }))
       ]);
     }
   }
