@@ -81,6 +81,10 @@ test:
 	ENV=test py.test -c 'config/testing.ini' -s -q
 .PHONY: test
 
+doctest:
+	ENV=test ./bin/run_doctest
+.PHONY: doctest
+
 coverage:
 	ENV=test py.test -c 'config/testing.ini' -s -q --cov=${app} --cov-report \
 	  term-missing:skip-covered

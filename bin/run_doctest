@@ -1,0 +1,82 @@
+#!/usr/bin/env python
+
+"""Thi script runs doctest in target files using multiprocessing package.
+
+This works almost same with `doctest.testfile('path/to/file.py')` for
+a single test. But in some cases, it seems that `testfile()` needs additional
+blank line(s) in doctest (because parsing).
+"""
+
+import multiprocessing as mp
+import sys
+
+# files which contain doctest(s)
+# TODO: collect files, automatically
+TARGET_FILES = (
+    '../aarau/aarau/utils/template.py',
+)
+
+
+def run_test(test_queue: mp.JoinableQueue, return_value: mp.Value) -> None:
+    """Doctest runner process.
+
+    This process skips all tests after a failure.
+    """
+    from collections import namedtuple
+    from subprocess import PIPE, Popen
+
+    # simulate result of `doctest.testfile()`
+    Result = namedtuple('Result', 'failed')  # pylint:  disable=invalid-name
+
+    while True:
+        filepath = test_queue.get()
+        if return_value.value != 0:  # skipped
+            print("Skipping test in file '{}'...".format(filepath))
+            test_queue.task_done()
+        try:
+            # result = doctest.testfile(filepath)
+            p = Popen(['python', '-m', 'doctest', filepath],
+                      stdin=None, stdout=PIPE, stderr=PIPE)
+            out, err = p.communicate()
+            if err:
+                raise RuntimeError('Error: "%s"' % err.decode('utf-8'))
+            if p.returncode != 0:
+                result = Result(p.returncode)
+                print(out.decode('utf-8'))
+            else:
+                result = Result(0)
+        except Exception as exp:  # pylint: disable=broad-except
+            print(exp)
+            result = Result(2)
+
+        return_value.value = result.failed if result.failed != 0 else 0
+        test_queue.task_done()
+
+
+def runner(files: list, test_queue: mp.JoinableQueue) -> None:
+    for filepath in files:
+        print("Run doctest in '{}'...".format(filepath))
+        test_queue.put(filepath)
+
+
+def main(files: list) -> None:
+    test_queue = mp.JoinableQueue()
+
+    return_value = mp.Value('i', 0)
+    test_proc = mp.Process(target=run_test, args=(test_queue, return_value,))
+    test_proc.daemon = True
+    test_proc.start()
+
+    runner(files, test_queue)
+
+    test_queue.join()
+
+    status = int(return_value.value)
+    print("\nExited with status '{}'".format(status))
+    return sys.exit(status)
+
+
+if __name__ == '__main__':
+    main(TARGET_FILES)
+
+# vim:syntax=python
