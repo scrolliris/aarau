@@ -48,6 +48,7 @@ def api_application_site_result(req):
     project_id = req.matchdict.get('project_id')
     site_id = req.matchdict.get('id')
 
+    err_msg = None
     try:
         project = fetch_project(project_id, req.user.id)
         Site.by_type('Application').where(
