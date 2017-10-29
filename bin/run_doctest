@@ -1,15 +1,19 @@
 #!/usr/bin/env python
 
-"""Thi script runs doctest in target files using multiprocessing package.
+"""This script runs doctest in target files using multiprocessing package.
 
-This works almost same with `doctest.testfile('path/to/file.py')` for
-a single test. But in some cases, it seems that `testfile()` needs additional
-blank line(s) in doctest (because parsing).
+The `run_test()` works almost same with `doctest.testfile('path/to/file.py')`
+for a single test. But in some cases, it seems that `testfile()` needs
+additional blank line(s) in the end of doctest (because parsing), so it runs
+`python -m doctest file.py`. If you need to run doctest for a single file,
+just run it command like this script.
 """
 
 import multiprocessing as mp
 from os import path
 import sys
+
+from typing import Tuple
 
 # files which contain doctest(s)
 # TODO: collect files, automatically
@@ -29,20 +33,23 @@ def run_test(test_queue: mp.JoinableQueue, return_value: mp.Value) -> None:
     # simulate result of `doctest.testfile()`
     Result = namedtuple('Result', 'failed')  # pylint:  disable=invalid-name
 
+    def _run_test(filepath: str) -> Tuple[tuple, int]:
+        # result = doctest.testfile(filepath)
+        p = Popen(['python', '-m', 'doctest', filepath],
+                  stdin=None, stdout=PIPE, stderr=PIPE)
+        return [p.communicate(), p.returncode]
+
     while True:
         filepath = test_queue.get()
         if return_value.value != 0:  # skipped
             print("Skipping test in file '{}'...".format(filepath))
             test_queue.task_done()
         try:
-            # result = doctest.testfile(filepath)
-            p = Popen(['python', '-m', 'doctest', filepath],
-                      stdin=None, stdout=PIPE, stderr=PIPE)
-            out, err = p.communicate()
+            (out, err), returncode = _run_test(filepath)
             if err:
                 raise RuntimeError('Error: "%s"' % err.decode('utf-8'))
-            if p.returncode != 0:
-                result = Result(p.returncode)
+            if returncode != 0:
+                result = Result(returncode)
                 print(out.decode('utf-8'))
             else:
                 result = Result(0)

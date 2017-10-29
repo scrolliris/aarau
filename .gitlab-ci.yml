@@ -2,6 +2,7 @@
 stages:
   - check
   - lint
+  - doctest
   - compile
   - build
   - test
@@ -47,6 +48,22 @@ lint:
     - ENV=development make setup
     - ENV=test make setup
     - make lint
+  except:
+    - tags
+
+doctest:
+  stage: doctest
+  image: python:3.5.4
+  before_script:
+    - python --version
+    - pip --version
+  script:
+    - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
+    - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
+      gcc zlib1g zlib1g-dev libmemcached11 libmemcached-dev
+    - ENV=development make setup
+    - ENV=test make setup
+    - make doctest
   except:
     - tags
 
