@@ -36,9 +36,17 @@ def add_template_util_renderer_globals(evt) -> None:
 def clean(**kwargs) -> 'function':
     """Returns sanitized value except allowed tags and attributes.
 
-    >>> ${'<a href="/"><em>link</em></a>'|n,clean(
-            tags=['a'], attributes=['href'])}
-    "<a href="/">link</a>"
+    It looks like `${'<a href="/"><em>link</em></a>'|n,clean(
+    tags=['a'], attributes=['href'])}`.
+
+    >>> from aarau.utils.template import clean
+
+    >>> type(clean(tags=['a'], attributes=['href']))
+    <class 'function'>
+
+    >>> c = clean(tags=['a'], attributes=['href'])
+    >>> str(c('<a href="/"><em>link</em></a>'))
+    '<a href="/">&lt;em&gt;link&lt;/em&gt;</a>'
     """
     def __clean(text) -> Markup:
         return Markup(_clean(text, **kwargs))
