@@ -32,7 +32,7 @@
     "style-loader": "0.13.1",
     "stylus": "0.54.5",
     "stylus-loader": "2.4.0",
-    "styr": "0.0.22",
+    "styr": "0.0.23",
     "url-loader": "0.5.7",
     "vinyl-named": "1.1.0",
     "webpack": "1.14.0",
