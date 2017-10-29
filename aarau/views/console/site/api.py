@@ -1,6 +1,8 @@
 import math
 
 from pyramid.decorator import reify
+from pyramid.httpexceptions import HTTPNotFound
+from pyramid.response import Response
 from pyramid.view import view_config
 
 from aarau.views.filter import login_required
@@ -46,13 +48,18 @@ def api_application_site_result(req):
     project_id = req.matchdict.get('project_id')
     site_id = req.matchdict.get('id')
 
-    project = fetch_project(project_id, req.user.id)
     try:
+        project = fetch_project(project_id, req.user.id)
         Site.by_type('Application').where(
             Site.id == site_id,
             Site.project_id == project_id).get()  # pylint: disable=no-member
+    except HTTPNotFound:
+        err_msg = "The project with id '{}' was not found.".format(project_id)
     except Site.DoesNotExist:  # pylint: disable=no-member
-        return {'data': []}
+        err_msg = "The site with id '{}' was not found.".format(site_id)
+
+    if err_msg:
+        return Response(status=404, json_body={'error': err_msg})
 
     q = ReadingResult.fetch_data_by_path(
         project.access_key_id, site_id)
