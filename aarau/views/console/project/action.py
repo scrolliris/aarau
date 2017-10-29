@@ -24,7 +24,7 @@ def tpl(path, resource='project'):
 @login_required
 def project_view(req):
     """Renders a project by id."""
-    project_id = req.matchdict['id']
+    project_id = req.matchdict.get('id')
     user = req.user
     project = Project.select().join(Membership).join(User).where(
         User.id == user.id,
@@ -81,7 +81,7 @@ def project_new(req):
 @login_required
 def project_edit(req):
     """Renders a form for project/Update a project."""
-    project_id = req.matchdict['id']
+    project_id = req.matchdict.get('id')
     user = req.user
     project = Project.select().join(Membership).join(User).where(
         User.id == user.id,

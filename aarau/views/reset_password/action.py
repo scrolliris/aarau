@@ -51,7 +51,7 @@ def reset_password(request):
     if user:
         return HTTPFound(location=request.route_path('top'))
 
-    token = request.matchdict['token']
+    token = request.matchdict.get('token')
     try:
         user = User.select().where(
             User.activation_state == 'active',

@@ -71,7 +71,7 @@ def settings_email_activate(request):
 
     try:
         activator = request.find_service(IActivator, name='user_email')
-        activator.assign(token=request.matchdict['token'], user=user)
+        activator.assign(token=request.matchdict.get('token'), user=user)
     except:
         raise HTTPNotFound
     else:

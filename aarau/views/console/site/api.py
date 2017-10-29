@@ -11,7 +11,7 @@ from aarau.models import (
 
 from aarau.views.console.site.action import fetch_project
 
-ITEMS_PER_PAGE = 20
+ITEMS_PER_PAGE = 2
 
 
 class PaginatedQuery:
@@ -43,8 +43,8 @@ class PaginatedQuery:
 @login_required
 def api_application_site_result(req):
     """Renders result json by id."""
-    project_id = req.matchdict['project_id']
-    site_id = req.matchdict['id']
+    project_id = req.matchdict.get('project_id')
+    site_id = req.matchdict.get('id')
 
     project = fetch_project(project_id, req.user.id)
     try:

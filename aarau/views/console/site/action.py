@@ -40,7 +40,7 @@ def application_site_new(req):
     if 'type' not in req.params or req.params['type'] != 'application':
         raise HTTPNotFound
 
-    project = fetch_project(req.matchdict['project_id'], req.user.id)
+    project = fetch_project(req.matchdict.get('project_id'), req.user.id)
     form = build_new_application_site_form(req)
     if 'submit' in req.POST:
         _ = req.translate
@@ -84,8 +84,8 @@ def application_site_edit(req):
     if 'type' not in req.params or req.params['type'] != 'application':
         raise HTTPNotFound
 
-    project_id = req.matchdict['project_id']
-    site_id = req.matchdict['id']
+    project_id = req.matchdict.get('project_id')
+    site_id = req.matchdict.get('id')
 
     project = fetch_project(project_id, req.user.id)
     site = Site.by_type(req.params['type']).where(
@@ -129,8 +129,8 @@ def application_site_view_result(req):
     if 'type' not in req.params or req.params['type'] != 'application':
         raise HTTPNotFound
 
-    project_id = req.matchdict['project_id']
-    site_id = req.matchdict['id']
+    project_id = req.matchdict.get('project_id')
+    site_id = req.matchdict.get('id')
 
     project = fetch_project(project_id, req.user.id)
     try:
@@ -152,8 +152,8 @@ def application_site_view_script(req):
     if 'type' not in req.params or req.params['type'] != 'application':
         raise HTTPNotFound
 
-    project_id = req.matchdict['project_id']
-    site_id = req.matchdict['id']
+    project_id = req.matchdict.get('project_id')
+    site_id = req.matchdict.get('id')
 
     project = fetch_project(project_id, req.user.id)
     site = Site.by_type(req.params['type']).where(
@@ -176,8 +176,8 @@ def application_site_view_badge(req):
     if 'type' not in req.params or req.params['type'] != 'application':
         raise HTTPNotFound
 
-    project_id = req.matchdict['project_id']
-    site_id = req.matchdict['id']
+    project_id = req.matchdict.get('project_id')
+    site_id = req.matchdict.get('id')
 
     project = fetch_project(project_id, req.user.id)
     try:
