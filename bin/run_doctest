@@ -8,13 +8,14 @@ blank line(s) in doctest (because parsing).
 """
 
 import multiprocessing as mp
+from os import path
 import sys
 
 # files which contain doctest(s)
 # TODO: collect files, automatically
-TARGET_FILES = (
-    '../aarau/aarau/utils/template.py',
-)
+TARGET_FILES = [path.abspath(path.join(path.dirname(__file__), f)) for f in (
+    '../aarau/utils/template.py',
+)]
 
 
 def run_test(test_queue: mp.JoinableQueue, return_value: mp.Value) -> None:
