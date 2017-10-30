@@ -13,7 +13,7 @@ from aarau.models import (
 
 from aarau.views.console.site.action import fetch_project
 
-ITEMS_PER_PAGE = 2
+ITEMS_PER_PAGE = 20
 
 
 class PaginatedQuery:
