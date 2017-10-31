@@ -8,16 +8,6 @@ stages:
   - test
   - codequality
 
-variables:
-  APT_CACHE_DIR: apt-cache
-  PIP_CACHE_DIR: pip-cache
-
-cache:
-  untracked: true
-  paths:
-    - apt-cache
-    - pip-cache
-
 # -- stages
 
 check:
@@ -25,6 +15,7 @@ check:
   image: python:3.5.4
   variables:
     ENV: development
+    PIP_CACHE_DIR: pip-cache
   before_script:
     - python --version
     - pip --version
@@ -32,38 +23,57 @@ check:
   script:
     - make clean
     - make check
+  cache:
+    untracked: true
+    paths:
+      - pip-cache
   except:
     - tags
 
 lint:
   stage: lint
   image: python:3.5.4
+    APT_CACHE_DIR: apt-cache
+    PIP_CACHE_DIR: pip-cache
   before_script:
     - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
     - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
       gcc zlib1g zlib1g-dev libmemcached11 libmemcached-dev
     - python --version
     - pip --version
-  script:
     - ENV=development make setup
     - ENV=test make setup
+  script:
     - make lint
+  cache:
+    untracked: true
+    paths:
+      - apt-cache
+      - pip-cache
   except:
     - tags
 
 doctest:
   stage: doctest
   image: python:3.5.4
+  variables:
+    APT_CACHE_DIR: apt-cache
+    PIP_CACHE_DIR: pip-cache
   before_script:
-    - python --version
-    - pip --version
-  script:
     - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
     - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
       gcc zlib1g zlib1g-dev libmemcached11 libmemcached-dev
+    - python --version
+    - pip --version
     - ENV=development make setup
     - ENV=test make setup
+  script:
     - make doctest
+  cache:
+    untracked: true
+    paths:
+      - apt-cache
+      - pip-cache
   except:
     - tags
 
@@ -71,6 +81,7 @@ compile:
   stage: compile
   image: node:7.10.1
   variables:
+    APT_CACHE_DIR: apt-cache
     NODE_ENV: production
   before_script:
     - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
@@ -81,6 +92,11 @@ compile:
     - npm install --global i18next-conv
   script:
     - make catalog
+  cache:
+    untracked: true
+    paths:
+      - apt-cache
+      - node_modules
   artifacts:
     untracked: true
     paths:
@@ -101,6 +117,10 @@ build:
     - npm install --ignore-scripts
   script:
     - make build
+  cache:
+    untracked: true
+    paths:
+      - node_modules
   artifacts:
     untracked: true
     paths:
@@ -115,6 +135,8 @@ test:
     - postgres:9.6
     - redis:3.2
   variables:
+    APT_CACHE_DIR: apt-cache
+    PIP_CACHE_DIR: pip-cache
     ENV: test
     POSTGRES_DB: aarau_test
     POSTGRES_USER: aarau
@@ -125,11 +147,16 @@ test:
       gcc zlib1g zlib1g-dev libmemcached11 libmemcached-dev
     - python --version
     - pip --version
-  script:
     - make setup
     - make db-init
     - make db-migrate
+  script:
     - make coverage
+  cache:
+    untracked: true
+    paths:
+      - apt-cache
+      - pip-cache
   except:
     - tags
 
