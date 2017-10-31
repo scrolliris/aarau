@@ -33,6 +33,7 @@ check:
 lint:
   stage: lint
   image: python:3.5.4
+  variables:
     APT_CACHE_DIR: apt-cache
     PIP_CACHE_DIR: pip-cache
   before_script:
@@ -163,10 +164,10 @@ test:
 codequality:
   stage: codequality
   image: docker:latest
-  variables:
-    DOCKER_DRIVER: overlay
   services:
     - docker:dind
+  variables:
+    DOCKER_DRIVER: overlay
   before_script:
     - docker pull codeclimate/codeclimate
     - docker run --env CODECLIMATE_CODE="$PWD"
