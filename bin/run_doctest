@@ -15,11 +15,11 @@ import sys
 
 from typing import Tuple
 
-# files which contain doctest(s)
+# a generator makes files which contain doctest(s)
 # TODO: collect files, automatically
-TARGET_FILES = [path.abspath(path.join(path.dirname(__file__), f)) for f in (
+TARGET_FILES = (path.abspath(path.join(path.dirname(__file__), f)) for f in (
     '../aarau/utils/template.py',
-)]
+))
 
 
 def run_test(test_queue: mp.JoinableQueue, return_value: mp.Value) -> None:
@@ -37,7 +37,7 @@ def run_test(test_queue: mp.JoinableQueue, return_value: mp.Value) -> None:
         # result = doctest.testfile(filepath)
         p = Popen(['python', '-m', 'doctest', filepath],
                   stdin=None, stdout=PIPE, stderr=PIPE)
-        return [p.communicate(), p.returncode]
+        return (p.communicate(), p.returncode)
 
     while True:
         filepath = test_queue.get()
@@ -61,13 +61,13 @@ def run_test(test_queue: mp.JoinableQueue, return_value: mp.Value) -> None:
         test_queue.task_done()
 
 
-def runner(files: list, test_queue: mp.JoinableQueue) -> None:
+def runner(files: 'generator', test_queue: mp.JoinableQueue) -> None:
     for filepath in files:
         print("Run doctest in '{}'...".format(filepath))
         test_queue.put(filepath)
 
 
-def main(files: list) -> None:
+def main(files: 'generator') -> None:
     test_queue = mp.JoinableQueue()
 
     return_value = mp.Value('i', 0)
