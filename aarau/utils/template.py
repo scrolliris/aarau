@@ -114,7 +114,7 @@ class TemplateUtil(object):
         """Returns bool if dict matches or not."""
         return self.req.matchdict == matchdict
 
-    def static_url(self, path) -> str:
+    def static_url(self, filepath) -> str:
         """Returns url for asset file path.
 
         If producition, generates cdn url by settings.
@@ -125,20 +125,20 @@ class TemplateUtil(object):
 
         if self.env.is_production:
             h, n, p = [get_bucket_info(x) for x in ('host', 'name', 'path')]
-            return 'https://{0:s}/{1:s}/{2:s}/{3:s}'.format(h, n, p, path)
-        return self.req.static_url('aarau:../static/' + path)
+            return 'https://{0:s}/{1:s}/{2:s}/{3:s}'.format(h, n, p, filepath)
+        return self.req.static_url('aarau:../static/' + filepath)
 
-    def static_path(self, path) -> str:
-        return self.req.static_path('aarau:../static/' + path)
+    def static_path(self, filepath) -> str:
+        return self.req.static_path('aarau:../static/' + filepath)
 
-    def built_asset_url(self, path) -> str:
-        """Returns url path for static file with built hash.
+    def hashed_asset_url(self, filepath) -> str:
+        """Returns url path for static file with content hash.
 
         Hash value is extract from manifest.json which is generated via gulp
         cammand.
         """
-        path = self.manifest_json.get(path, path)
-        return self.static_url(path)
+        hashed_filepath = self.manifest_json.get(filepath, filepath)
+        return self.static_url(hashed_filepath)
 
     def truncate(self, str_val, length=25, suffix='...') -> str:
         """Returns new truncated string and appends suffix."""
