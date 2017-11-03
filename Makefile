@@ -162,6 +162,13 @@ else
 endif
 .PHONY: clean
 
+# prints untracked (volatile) files
+expose:
+	git ls-files --others | \
+	  grep -vE '(lib|tmp|test|static|db|locale|node_modules|\.?cache)/' | \
+	  grep -vE '(__pycache__|venv)/' | \
+	  grep -vE '(\.coverage|\.*-version|bin\/gitlab*)'
+.PHONY: expose
 
 .DEFAULT_GOAL = coverage
 default: coverage
