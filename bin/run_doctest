@@ -13,7 +13,7 @@ import multiprocessing as mp
 from os import path
 import sys
 
-from typing import Tuple
+from typing import Generator, Tuple
 
 # a generator makes files which contain doctest(s)
 # TODO: collect files, automatically
@@ -61,13 +61,13 @@ def run_test(test_queue: mp.JoinableQueue, return_value: mp.Value) -> None:
         test_queue.task_done()
 
 
-def runner(files: 'generator', test_queue: mp.JoinableQueue) -> None:
+def runner(files: Generator[str], test_queue: mp.JoinableQueue) -> None:
     for filepath in files:
         print("Run doctest in '{}'...".format(filepath))
         test_queue.put(filepath)
 
 
-def main(files: 'generator') -> None:
+def main(files: Generator[str]) -> None:
     test_queue = mp.JoinableQueue()
 
     return_value = mp.Value('i', 0)
