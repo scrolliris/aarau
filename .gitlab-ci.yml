@@ -17,6 +17,7 @@ check:
     ENV: development
     PIP_CACHE_DIR: pip-cache
   before_script:
+    - pip install --upgrade pip setuptools
     - python --version
     - pip --version
     - pip install flake8 flake8-docstrings -c constraints.txt
@@ -40,6 +41,7 @@ lint:
     - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
     - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
       gcc zlib1g zlib1g-dev libmemcached11 libmemcached-dev
+    - pip install --upgrade pip setuptools
     - python --version
     - pip --version
     - ENV=development make setup
@@ -64,6 +66,7 @@ doctest:
     - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
     - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
       gcc zlib1g zlib1g-dev libmemcached11 libmemcached-dev
+    - pip install --upgrade pip setuptools
     - python --version
     - pip --version
     - ENV=development make setup
@@ -80,7 +83,7 @@ doctest:
 
 compile:
   stage: compile
-  image: node:7.10.1
+  image: node:8.9.0
   variables:
     APT_CACHE_DIR: apt-cache
     NODE_ENV: production
@@ -108,7 +111,7 @@ compile:
 
 build:
   stage: build
-  image: node:7.10.1
+  image: node:8.9.0
   variables:
     NODE_ENV: production
   before_script:
@@ -146,6 +149,7 @@ test:
     - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
     - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
       gcc zlib1g zlib1g-dev libmemcached11 libmemcached-dev
+    - pip install --upgrade pip setuptools
     - python --version
     - pip --version
     - make setup
