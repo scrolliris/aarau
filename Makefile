@@ -166,7 +166,7 @@ endif
 expose:
 	git ls-files --others | \
 	  grep -vE '(lib|tmp|test|static|db|locale|node_modules|\.?cache)/' | \
-	  grep -vE '(__pycache__|venv)/' | \
+	  grep -vE '(__pycache__|\.egg-info|venv)/' | \
 	  grep -vE '(\.coverage|\.*-version|bin\/gitlab*)'
 .PHONY: expose
 
