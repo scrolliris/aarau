@@ -1,6 +1,6 @@
 <div class="sidebar">
   <div class="item">
-    <a href="${req.route_url('top', namespace=None)}"><img class="logo" width="32" height="32" src="${util.static_url('img/scrolliris-logo-32x32.png')}"></a>
+    <a href="${req.route_url('top', namespace=None)}"><img class="logo" width="32" height="32" src="${util.static_url('img/scrolliris-logo-64x64.png')}"></a>
   </div>
   <a class="item${' active' if util.route_name.startswith('console.project') or util.route_name == 'console.top' or req.path.startswith('/project/') else ''}" href="${req.route_path('console.top')}">Projects</a>
   <a class="disabled item" href="#">Preferences</a>

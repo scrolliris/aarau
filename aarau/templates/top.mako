@@ -8,13 +8,15 @@
 <div class="content">
   <div class="grid">
 
-    <div class="row landscape">
+    <div class="row landscape${' user' if req.user else ''}">
       <div class="column-16" align="center">
         ${render_notice()}
 
         <div class="banner">
+        % if not req.user:
           <h1 class="header">Beyond the Scroll</h1>
           <p>Include a just single javascript, anonymous tracking works, get readability</p>
+        % endif
         % if req.user and req.user.projects:
           <a class="flat button" href="${req.route_url('console.top')}">Go to Console</a>
         % else:

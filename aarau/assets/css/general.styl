@@ -1,11 +1,21 @@
+@import './shared/_colour.styl'
+
 .global-message
+  background-color #565656
   font-family monospace
-  background-color #454545
-  color #d3d3d3
   margin 0
-  padding 0.66rem 0
+  padding 0
   text-align center
   line-height 1.32em
+  &.user
+    background-color $paper3
+  p
+    color #d3d3d3
+    padding 0.68rem
+    margin 0
+    &.user
+      color #454545
+
 
 .tab.menu .item
   line-height 1.1em

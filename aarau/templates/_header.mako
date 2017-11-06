@@ -3,8 +3,8 @@
   <div class="top menu">
     <a href="${req.route_url('top', namespace=None)}">
       <h1 class="logo item">
-        <img class="logo-mark" width="32" height="32" src="${util.static_url('img/scrolliris-logo-64x64.png')}" onmouseover="this.src='${util.static_url('img/scrolliris-logo-32x32.png')}';" onmouseout="this.src='${util.static_url('img/scrolliris-logo-64x64.png')}'">
-        <span class="logo-type">Scrolliris</span>
+        <img class="logo-mark" width="26" height="26" src="${util.static_url('img/scrolliris-logo-fbfaf8-64x64.png')}">
+        <span class="logo-type"><span class="scroll">Scroll</span><span class="iris">iris</span></span>
       </h1>
     </a>
     % if not req.user:
@@ -31,11 +31,11 @@
   </div>
 </header>
 
-<div class="global-message">
-% if not req.path.startswith('/settings'):
-  Beyond the Scroll - Extend your Publication <i class="_r">R</i><i class="_e">e</i><i class="_a">a</i><i class="_d">d</i><i class="_a">a</i><i class="_b">b</i><i class="_i">i</i><i class="_l">l</i><i class="_i">i</i><i class="_t">t</i><i class="_y">y</i>
-% elif req.user:
-  Hoi! If you have question, Please contact us support@scrolliris.com
+<div class="global-message${' user' if req.user else ''}">
+% if not req.user:
+  <p>Extend your Publication <i class="_r">R</i><i class="_e">e</i><i class="_a">a</i><i class="_d">d</i><i class="_a">a</i><i class="_b">b</i><i class="_i">i</i><i class="_l">l</i><i class="_i">i</i><i class="_t">t</i><i class="_y">y</i></p>
+% else:
+  <p class="user">Ahoj! If you have any questions, Please contact us support@scrolliris.com</p>
 % endif
 </div>
 </%block>
