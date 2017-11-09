@@ -30,6 +30,7 @@ requires = [
     'pyramid_celery',
     'pyramid_mako',
     'pyramid_mailer',
+    'pyramid_secure_response',
     'pyramid_services',
     'requests',
     'transaction',
