@@ -21,8 +21,8 @@ check:
     - python --version
     - pip --version
     - pip install flake8 flake8-docstrings -c constraints.txt
-  script:
     - make clean
+  script:
     - make check
   cache:
     untracked: true
