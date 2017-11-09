@@ -148,10 +148,10 @@ endif
 .PHONY: build
 
 clean:
-	find . ! -readable -prune -o -print \
+	find . ! -readable -prune -o \
 	  ! -path "./.git/*" ! -path "./node_modules/*" ! -path "./venv*" \
 	  ! -path "./doc/*" ! -path "./locale/*" ! -path "./tmp/*" \
-	  ! -path "./lib/*" | \
+	  ! -path "./lib/*" -print | \
 	  grep -E "(__pycache__|\.egg-info|\.pyc|\.pyo)" | \
 	  xargs rm -rf
 ifeq (, $(shell which gulp 2>/dev/null))
