@@ -15,7 +15,7 @@
         <div class="banner">
         % if not req.user:
           <h1 class="header">Beyond the Scroll</h1>
-          <p>Include a just single javascript, anonymous tracking works, get readability</p>
+          <p>Include just a single javascript, get anonymous tracking works, and increase readability</p>
         % endif
         % if req.user and req.user.projects:
           <a class="flat button" href="${req.route_url('console.top')}">Go to Console</a>
@@ -33,7 +33,7 @@
           <div class="header"><h3>How it works</h3></div>
           <div class="description">
             <p>Learn how our readability analysis works.</p>
-            <a class="flat button" href="https://doc.scrolliris.com/how_it_works/overview.html" target="_blank">Read the Doc</a>
+            <a class="flat button" href="https://doc.scrolliris.com/how_it_works/overview.html" target="_blank">Read Documentation</a>
           </div>
         </div>
       </div>
@@ -41,7 +41,7 @@
         <div class="box">
           <div class="header"><h3>Demo</h3></div>
           <div class="description">
-            <p>Check our concept draft document on online. It works as demo.</p>
+            <p>Check our concept draft document on online. It works as a demo.</p>
             <a class="flat primary button" href="https://try.scrolliris.com" target="_blank">Try Demo</a>
           </div>
         </div>
@@ -50,7 +50,7 @@
         <div class="box">
           <div class="header"><h3>Our Updates</h3></div>
           <div class="description">
-            <p>Scrolliris is currently under the development as public BETA.</p>
+            <p>Scrolliris is currently under development as public beta.</p>
             <a class="flat secondary button" href="https://log.scrolliris.com/" target="_blank">Check the Log</a>
           </div>
         </div>
