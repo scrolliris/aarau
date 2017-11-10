@@ -26,7 +26,7 @@ msgstr "Privacy Policy"
 
 #: aarau/templates/_footer.mako:7 aarau/templates/shared/signup.mako:78
 msgid "link.text.tos"
-msgstr "Term of Service"
+msgstr "Terms of Service"
 
 #: aarau/views/auth.py:44
 msgid "login.failure"
