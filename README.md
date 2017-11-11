@@ -2,7 +2,7 @@
 
 `/ɑ́ːràu/`
 
-[![pipeline status][ci-build]][commit] [![coverage report][ci-cov]][commit]
+[![pipeline status][pipeline]][commit] [![coverage report][coverage]][commit]
 
 
 ```txt
@@ -382,13 +382,13 @@ Free Documentation License".
 Check the [GNU Free Documentation License](
 https://www.gnu.org/licenses/fdl-1.3.en.html).
 
-### Resource (image)
+### Image
 
 `CC-BY-NC-SA-4.0`
 
-The files in the `aarau/assets/img` directory are licensed under the
+The illustration and photos in this project are licensed under the
 Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
-Public License.
+License.
 
 [![Creative Commons License](
 https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)](
@@ -419,6 +419,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 See [LICENSE](LICENSE).
 
 
-[ci-build]: https://gitlab.com/lupine-software/aarau/badges/master/build.svg
-[ci-cov]: https://gitlab.com/lupine-software/aarau/badges/master/coverage.svg
+[pipeline]: https://gitlab.com/lupine-software/aarau/badges/master/pipeline.svg
+[coverage]: https://gitlab.com/lupine-software/aarau/badges/master/coverage.svg
 [commit]: https://gitlab.com/lupine-software/aarau/commits/master
