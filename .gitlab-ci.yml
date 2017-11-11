@@ -1,8 +1,6 @@
 # https://docs.gitlab.com/ce/ci/yaml/
 stages:
-  - check
-  - lint
-  - doctest
+  - vet
   - compile
   - build
   - test
@@ -11,7 +9,7 @@ stages:
 # -- stages
 
 check:
-  stage: check
+  stage: vet
   image: python:3.5.4
   variables:
     ENV: development
@@ -32,7 +30,7 @@ check:
     - tags
 
 lint:
-  stage: lint
+  stage: vet
   image: python:3.5.4
   variables:
     APT_CACHE_DIR: apt-cache
@@ -48,31 +46,6 @@ lint:
     - ENV=test make setup
   script:
     - make lint
-  cache:
-    untracked: true
-    paths:
-      - apt-cache
-      - pip-cache
-  except:
-    - tags
-
-doctest:
-  stage: doctest
-  image: python:3.5.4
-  variables:
-    APT_CACHE_DIR: apt-cache
-    PIP_CACHE_DIR: pip-cache
-  before_script:
-    - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
-    - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
-      gcc zlib1g zlib1g-dev libmemcached11 libmemcached-dev
-    - pip install --upgrade pip setuptools
-    - python --version
-    - pip --version
-    - ENV=development make setup
-    - ENV=test make setup
-  script:
-    - make doctest
   cache:
     untracked: true
     paths:
@@ -129,6 +102,31 @@ build:
     untracked: true
     paths:
       - static
+  except:
+    - tags
+
+doctest:
+  stage: test
+  image: python:3.5.4
+  variables:
+    APT_CACHE_DIR: apt-cache
+    PIP_CACHE_DIR: pip-cache
+  before_script:
+    - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
+    - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
+      gcc zlib1g zlib1g-dev libmemcached11 libmemcached-dev
+    - pip install --upgrade pip setuptools
+    - python --version
+    - pip --version
+    - ENV=development make setup
+    - ENV=test make setup
+  script:
+    - make doctest
+  cache:
+    untracked: true
+    paths:
+      - apt-cache
+      - pip-cache
   except:
     - tags
 
