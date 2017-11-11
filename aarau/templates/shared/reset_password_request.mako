@@ -17,7 +17,7 @@
       <div class="column-6 offset-5 column-v-8 offset-v-4 column-l-10 offset-l-3 column-m-16">
         <div class="embeded box">
           <div class="header">
-            <a href="/"><img class="logo" width="32" height="32" src="${util.static_url('img/scrolliris-logo-32x32.png')}"></a>
+            <a href="/"><img class="logo" width="32" height="32" src="${util.static_url('img/scrolliris-logo-f0ede6-64x64.png')}"></a>
           </div>
           <form id="reset_password_request" class="form${' error' if is_failure else ''}" action="${req.route_url('reset_password.request')}" method="post">
             ${form.csrf_token}
