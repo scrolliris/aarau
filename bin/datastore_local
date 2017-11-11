@@ -3,6 +3,7 @@ set -u
 
 root_dir=$(dirname $(dirname $(readlink -f $0)))
 
+python2_7=${CLOUDSDK_PYTHON:-/usr/bin/python2.7}
 project=
 env_name=
 clean_data_dir=false
@@ -91,7 +92,7 @@ fi
 
 mkdir -p $data_dir
 
-gcloud beta emulators datastore start \
+CLOUDSDK_PYTHON=$python2_7 gcloud beta emulators datastore start \
   --host-port=$host_port \
   --project=$project \
   --data-dir=$data_dir \
