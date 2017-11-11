@@ -41,7 +41,7 @@ class Paginator extends Component {
     , onClick: linkEvent(this, handleClick)
     };
     if (isActive) {
-      attributes['class'] = 'active';
+      attributes['class'] = 'item active';
     }
     return h('a', attributes, page);
   }
@@ -66,8 +66,8 @@ class Paginator extends Component {
       startPage = 1;
     } else {
       list = [
-        h('li', null, this._linkTo(1))
-      , h('li', null, '...')
+        h('li', {class: 'item'}, this._linkTo(1))
+      , h('li', {class: 'item'}, '...')
       ];
     }
     let endPage = Math.min(page + pageWindow, pageCount);
@@ -75,12 +75,12 @@ class Paginator extends Component {
       endPage = pageCount;
     }
     list.push.apply(list, range(startPage, endPage).map(n => {
-      return h('li', null, this._linkTo(n, (n === this.state.page)));
+      return h('li', {class: 'item'}, this._linkTo(n, (n === this.state.page)));
     }));
     if ((pageCount - pageWindow) > (page + pageWindow)) {
       list.push.apply(list, [ // eslint-disable-line no-useless-call
-        h('li', null, '...')
-      , h('li', null, this._linkTo(pageCount))
+        h('li', {class: 'item'}, '...')
+      , h('li', {class: 'item'}, this._linkTo(pageCount))
       ]);
     }
     return h('ul', {class: 'pagination'}, list);
