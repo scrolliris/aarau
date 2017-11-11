@@ -8,7 +8,6 @@ from pyramid.view import view_config
 from aarau.views.filter import login_required
 from aarau.models import (
     ReadingResult,
-    Site,
 )
 
 from aarau.views.console.site import (
