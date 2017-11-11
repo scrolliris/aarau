@@ -11,7 +11,10 @@ from aarau.models import (
     Site,
 )
 
-from aarau.views.console.site import fetch_project
+from aarau.views.console.site import (
+    get_project,
+    get_site,
+)
 
 ITEMS_PER_PAGE = 20
 
@@ -44,26 +47,18 @@ class PaginatedQuery:
              renderer='json')
 @login_required
 def api_application_site_result(req):
-    """Renders result json by id."""
     project_id = req.matchdict.get('project_id')
     site_id = req.matchdict.get('id')
 
-    err_msg = None
     try:
-        project = fetch_project(project_id, req.user.id)
-        Site.by_type('Application').where(
-            Site.id == site_id,
-            Site.project_id == project_id).get()  # pylint: disable=no-member
+        project = get_project(project_id, user_id=req.user.id)
+        site = get_site(site_id, project_id=project.id, type_='application')
     except HTTPNotFound:
-        err_msg = "The project with id '{}' was not found.".format(project_id)
-    except Site.DoesNotExist:  # pylint: disable=no-member
-        err_msg = "The site with id '{}' was not found.".format(site_id)
-
-    if err_msg:
-        return Response(status=404, json_body={'error': err_msg})
+        return Response(status=404, json_body={
+            'error': 'The project or site was not found'})
 
     q = ReadingResult.fetch_data_by_path(
-        project.access_key_id, site_id)
+        project.access_key_id, site.id)
     pq = PaginatedQuery(q, str(req.params.get('page', 1)), ITEMS_PER_PAGE)
     return {'data': list(pq.get_objects()),
             'page': pq.page,

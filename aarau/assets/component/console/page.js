@@ -58,6 +58,7 @@ class PageTable extends Component {
     super(props);
     let url = '/api/project/' + this.props.projectId +
               '/site/' + this.props.siteId + '/result.json';
+    url += '?type=application';
     this.props['url'] = url;
     this.props['pageWindow'] = 2;
     this.state = {

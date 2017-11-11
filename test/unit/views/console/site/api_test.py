@@ -24,10 +24,8 @@ def test_application_site_result_with_invalid_project_id(
     assert 404 == res.status_code
     json_body = json.loads(res.body.decode())
     assert ['error'] == list(json_body.keys())
-    error_msg = (
-        "The project with id '{}' was not found."
-    ).format(params.get('project_id'))
-    assert error_msg == json_body['error']
+    expected = 'The project or site was not found'
+    assert expected == json_body['error']
 
 
 @pytest.mark.parametrize('params', [
@@ -45,9 +43,7 @@ def test_application_site_result_with_invalid_site_id(
 
     res = api_application_site_result(dummy_request)
     assert 404 == res.status_code
-    expected = (
-        "The site with id '{}' was not found."
-    ).format(params.get('id'))
+    expected = 'The project or site was not found'
     assert expected == json.loads(res.body.decode())['error']
 
 

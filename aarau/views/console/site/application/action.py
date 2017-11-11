@@ -1,5 +1,5 @@
 from pyramid.view import view_config
-from pyramid.httpexceptions import HTTPFound, HTTPNotFound
+from pyramid.httpexceptions import HTTPFound
 
 from aarau.views.filter import login_required
 from aarau.models import (
@@ -8,7 +8,11 @@ from aarau.models import (
 )
 from aarau.services.interface import IReplicator
 
-from aarau.views.console.site import fetch_project, tpl
+from aarau.views.console.site import (
+    get_project,
+    get_site,
+    tpl,
+)
 from aarau.views.console.site.form import (
     build_edit_application_site_form,
     build_new_application_site_form,
@@ -19,12 +23,8 @@ from aarau.views.console.site.form import (
              renderer=tpl('new.mako', type_='application'))
 @login_required
 def application_site_new(req):
-    """Renders a form or save new application site."""
-    # TODO: Use predicate
-    if 'type' not in req.params or req.params['type'] != 'application':
-        raise HTTPNotFound
-
-    project = fetch_project(req.matchdict.get('project_id'), req.user.id)
+    project_id = req.matchdict.get('project_id')
+    project = get_project(project_id, user_id=req.user.id)
     site = Site(
         project=project,
         hosting_type='Application',
@@ -65,17 +65,11 @@ def application_site_new(req):
              renderer=tpl('edit.mako', type_='application'))
 @login_required
 def application_site_edit(req):
-    """Renders a form for site to update."""
-    if 'type' not in req.params or req.params['type'] != 'application':
-        raise HTTPNotFound
-
     project_id = req.matchdict.get('project_id')
     site_id = req.matchdict.get('id')
 
-    project = fetch_project(project_id, req.user.id)
-    site = Site.by_type(req.params['type']).where(
-        Site.id == site_id,
-        Site.project_id == project_id).get()  # pylint: disable=no-member
+    project = get_project(project_id, user_id=req.user.id)
+    site = get_site(site_id, project_id=project.id, type_='application')
 
     form = build_edit_application_site_form(req, site)
     if 'submit' in req.POST:
@@ -110,20 +104,11 @@ def application_site_edit(req):
              renderer=tpl('view_result.mako', type_='application'))
 @login_required
 def application_site_view_result(req):
-    """Renders a site result by id."""
-    if 'type' not in req.params or req.params['type'] != 'application':
-        raise HTTPNotFound
-
     project_id = req.matchdict.get('project_id')
     site_id = req.matchdict.get('id')
 
-    project = fetch_project(project_id, req.user.id)
-    try:
-        site = Site.by_type(req.params['type']).where(
-            Site.id == site_id,
-            Site.project_id == project_id).get()  # pylint: disable=no-member
-    except site.DoesNotExist:
-        raise HTTPFound
+    project = get_project(project_id, user_id=req.user.id)
+    site = get_site(site_id, project_id=project.id, type_='application')
 
     return dict(project=project, site=site,
                 application=site.application)
@@ -133,17 +118,11 @@ def application_site_view_result(req):
              renderer=tpl('view_script.mako', type_='application'))
 @login_required
 def application_site_view_script(req):
-    """Renders a site script by id."""
-    if 'type' not in req.params or req.params['type'] != 'application':
-        raise HTTPNotFound
-
     project_id = req.matchdict.get('project_id')
     site_id = req.matchdict.get('id')
 
-    project = fetch_project(project_id, req.user.id)
-    site = Site.by_type(req.params['type']).where(
-        Site.id == site_id,
-        Site.project_id == project_id).get()  # pylint: disable=no-member
+    project = get_project(project_id, user_id=req.user.id)
+    site = get_site(site_id, project_id=project.id, type_='application')
 
     replicator = req.find_service(iface=IReplicator, name='site')
     replicator.assign(obj=site)
@@ -157,20 +136,11 @@ def application_site_view_script(req):
              renderer=tpl('view_badge.mako', type_='application'))
 @login_required
 def application_site_view_badge(req):
-    """Renders badge view for this site."""
-    if 'type' not in req.params or req.params['type'] != 'application':
-        raise HTTPNotFound
-
     project_id = req.matchdict.get('project_id')
     site_id = req.matchdict.get('id')
 
-    project = fetch_project(project_id, req.user.id)
-    try:
-        site = Site.by_type(req.params['type']).where(
-            Site.id == site_id,
-            Site.project_id == project_id).get()  # pylint: disable=no-member
-    except Site.DoesNotExist:  # pylint: disable=no-member
-        raise HTTPNotFound
+    project = get_project(project_id, user_id=req.user.id)
+    site = get_site(site_id, project_id=project.id, type_='application')
 
     return dict(project=project, site=site,
                 application=site.application)

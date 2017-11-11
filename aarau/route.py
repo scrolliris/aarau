@@ -65,6 +65,16 @@ def subdomain_manager_factory(config):
     return subdomain_manager(config)
 
 
+def site_type_of(hosting_type):
+    from pyramid.httpexceptions import HTTPNotFound
+
+    def predicate(_, req):
+        if 'type' not in req.params or req.params['type'] != hosting_type:
+            raise HTTPNotFound
+        return True
+    return predicate
+
+
 def includeme(config):
     env = Env()
 
@@ -96,23 +106,30 @@ def includeme(config):
         c.add_route('console.site.application.new',
                     '/project/{project_id:\d+}/site/new')
         # application
+        application_type = site_type_of('application')
         c.add_route('console.site.application.view.result',
-                    '/project/{project_id:\d+}/site/{id:\d+}/result')
+                    '/project/{project_id:\d+}/site/{id:\d+}/result',
+                    custom_predicates=(application_type,))
         c.add_route('console.site.application.view.script',
-                    '/project/{project_id:\d+}/site/{id:\d+}/script')
+                    '/project/{project_id:\d+}/site/{id:\d+}/script',
+                    custom_predicates=(application_type,))
         c.add_route('console.site.application.view.badge',
-                    '/project/{project_id:\d+}/site/{id:\d+}/badge')
+                    '/project/{project_id:\d+}/site/{id:\d+}/badge',
+                    custom_predicates=(application_type,))
         c.add_route('console.site.application.edit',
-                    '/project/{project_id:\d+}/site/{id:\d+}/edit')
+                    '/project/{project_id:\d+}/site/{id:\d+}/edit',
+                    custom_predicates=(application_type,))
 
         # publication
         c.add_route('console.site.publication.edit',
                     '/project/{project_id:\d+}/site/{id:\d+}/edit')
 
+    # internal api
     with subdomain('console') as c:
         # pylint: disable=anomalous-backslash-in-string
         c.add_route('api.console.site.application.result',
-                    '/api/project/{project_id:\d+}/site/{id:\d+}/result.json')
+                    '/api/project/{project_id:\d+}/site/{id:\d+}/result.json',
+                    custom_predicates=(application_type,))
 
     with subdomain(None) as c:
         c.add_route('top', '/')
