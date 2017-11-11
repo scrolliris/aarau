@@ -1,6 +1,8 @@
 import pytest
 
-from aarau.views.console.site.action import application_site_view_badge
+from aarau.views.console.site.application.action import (
+    application_site_view_badge,
+)
 
 
 @pytest.fixture(autouse=True)

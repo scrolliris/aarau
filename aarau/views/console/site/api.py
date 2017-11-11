@@ -11,7 +11,7 @@ from aarau.models import (
     Site,
 )
 
-from aarau.views.console.site.action import fetch_project
+from aarau.views.console.site import fetch_project
 
 ITEMS_PER_PAGE = 20
 

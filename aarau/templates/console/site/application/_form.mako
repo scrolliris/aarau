@@ -5,7 +5,7 @@
 <form id="${ctx}_application_site" class="form${' error' if err is not None else ''}" action="${act}" method="post">
   ${f.csrf_token}
   <h4 class="header">${ctx.upper()}</h4>
-  <p><span class="secondary line label">${site.hosting_type}</span></p>
+  <p><span class="secondary line label">${obj.hosting_type}</span></p>
 
   <div class="row">
     <div class="required field-5${' error' if f.domain.errors else ''}">

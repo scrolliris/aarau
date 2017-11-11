@@ -11,7 +11,7 @@
   <span class="divider">/</span>
   <a class="item" href="${req.route_path('console.project.view', id=project.id)}">${project.name}</a>
   <span class="divider">/</span>
-  <span class="active item">Edit Site</span>
+  <span class="active item">Edit Application</span>
 </div>
 </%block>
 
@@ -24,10 +24,10 @@
         <%
           act = req.route_url('console.site.application.edit', project_id=project.id, id=site.id, _query={'type':'application'})
           ctx = 'edit'
-          err = ''
+          err = form.errors
           obj = site
         %>
-        <%include file="aarau:templates/console/site/_form.mako" args="f=form, act=act, ctx=ctx, err=err, obj=obj"/>
+        <%include file="aarau:templates/console/site/application/_form.mako" args="f=form, act=act, ctx=ctx, err=err, obj=obj"/>
       </div>
     </div>
   </div>

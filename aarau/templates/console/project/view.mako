@@ -25,7 +25,7 @@
         <h3>${project.name}</h3>
         <label class="primary label">${project.namespace}</label>
         <p class="description">${project.description}</p>
-        <form class="inline form" method="get" action="${req.route_path('console.site.new', project_id=project.id)}">
+        <form class="inline form" method="get" action="${req.route_path('console.site.application.new', project_id=project.id)}">
           <div class="field-2 field-v-4 field-l-16">
             <select name="type">
               <option value="application">Application</option>

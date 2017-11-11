@@ -4,35 +4,19 @@ from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from aarau.views.filter import login_required
 from aarau.models import (
     Application,
-    Project,
-    Membership,
-    User,
     Site,
 )
 from aarau.services.interface import IReplicator
 
+from aarau.views.console.site import fetch_project, tpl
 from aarau.views.console.site.form import (
     build_edit_application_site_form,
     build_new_application_site_form,
 )
 
 
-def tpl(path, resource='site'):
-    return 'aarau:templates/console/{0:s}/{1:s}'.format(resource, path)
-
-
-def fetch_project(project_id, user_id):
-    project = Project.select().join(Membership).join(User).where(
-        User.id == user_id,
-        Project.id == project_id
-    ).first()
-    if not project:
-        raise HTTPNotFound
-    return project
-
-
-@view_config(route_name='console.site.new',
-             renderer=tpl('application/new.mako'))
+@view_config(route_name='console.site.application.new',
+             renderer=tpl('new.mako', type_='application'))
 @login_required
 def application_site_new(req):
     """Renders a form or save new application site."""
@@ -41,6 +25,11 @@ def application_site_new(req):
         raise HTTPNotFound
 
     project = fetch_project(req.matchdict.get('project_id'), req.user.id)
+    site = Site(
+        project=project,
+        hosting_type='Application',
+        calculation_state='off',
+    )
     form = build_new_application_site_form(req)
     if 'submit' in req.POST:
         _ = req.translate
@@ -51,12 +40,8 @@ def application_site_new(req):
                     description=form.application.form.description.data)
                 application.save()
 
-                site = Site(
-                    hosting_id=application.id,
-                    hosting_type='Application',
-                    domain=form.domain.data,
-                    calculation_state='off')
-                site.project = project
+                site.hosting_id = application.id
+                site.domain = form.domain.data
                 site.read_key = Site.grab_unique_key('read_key')
                 site.write_key = Site.grab_unique_key('write_key')
                 site.save()
@@ -73,11 +58,11 @@ def application_site_new(req):
             req.session.flash(_('site.application.creation.failure'),
                               queue='failure', allow_duplicate=False)
 
-    return dict(form=form, project=project)
+    return dict(form=form, project=project, site=site)
 
 
 @view_config(route_name='console.site.application.edit',
-             renderer=tpl('application/edit.mako'))
+             renderer=tpl('edit.mako', type_='application'))
 @login_required
 def application_site_edit(req):
     """Renders a form for site to update."""
@@ -122,7 +107,7 @@ def application_site_edit(req):
 
 
 @view_config(route_name='console.site.application.view.result',
-             renderer=tpl('application/view_result.mako'))
+             renderer=tpl('view_result.mako', type_='application'))
 @login_required
 def application_site_view_result(req):
     """Renders a site result by id."""
@@ -145,7 +130,7 @@ def application_site_view_result(req):
 
 
 @view_config(route_name='console.site.application.view.script',
-             renderer=tpl('application/view_script.mako'))
+             renderer=tpl('view_script.mako', type_='application'))
 @login_required
 def application_site_view_script(req):
     """Renders a site script by id."""
@@ -169,7 +154,7 @@ def application_site_view_script(req):
 
 
 @view_config(route_name='console.site.application.view.badge',
-             renderer=tpl('application/view_badge.mako'))
+             renderer=tpl('view_badge.mako', type_='application'))
 @login_required
 def application_site_view_badge(req):
     """Renders badge view for this site."""

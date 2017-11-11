@@ -93,7 +93,7 @@ def includeme(config):
         c.add_route('console.project.view', '/project/{id:\d+}')
         c.add_route('console.project.edit', '/project/{id:\d+}/edit')
 
-        c.add_route('console.site.new',
+        c.add_route('console.site.application.new',
                     '/project/{project_id:\d+}/site/new')
         # application
         c.add_route('console.site.application.view.result',
@@ -103,6 +103,10 @@ def includeme(config):
         c.add_route('console.site.application.view.badge',
                     '/project/{project_id:\d+}/site/{id:\d+}/badge')
         c.add_route('console.site.application.edit',
+                    '/project/{project_id:\d+}/site/{id:\d+}/edit')
+
+        # publication
+        c.add_route('console.site.publication.edit',
                     '/project/{project_id:\d+}/site/{id:\d+}/edit')
 
     with subdomain('console') as c:
