@@ -1,12 +1,16 @@
-09 Nov 2017 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
+Sat 11 Nov 2017 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
+	* Update npm packages (file-loader, styr)
+	* Fix logo file name path
+
+Thu 09 Nov 2017 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
 	* Enter pyramid_secure_response (ssl redirect, HSTS Header)
 
-09 Oct 2017 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
+Mon 09 Oct 2017 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
 	* Change urls for badge (as `img.scrolliris.io`)
 	* Add a note for license
 
-03 Oct 2017 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
+Tue 03 Oct 2017 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
 	* Add changelog link
 
-16 Aug 2017 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
+Wed 16 Aug 2017 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
 	* Initial import
