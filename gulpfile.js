@@ -128,6 +128,7 @@ var paths = {
   ]
 , author: [
     path.join(assetsDir, 'author.js')
+  , path.join(assetsDir, 'css/shared/**/*.styl')
   , path.join(assetsDir, 'css/console/**/*.styl')
   , path.join(assetsDir, 'js/console/**/*.js')
   , path.join(assetsDir, 'component/console/**/*.{styl,js}')
