@@ -1,3 +1,6 @@
+Sun 12 Nov 2017 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
+	* Update font config (remove typekit, async loader)
+
 Sat 11 Nov 2017 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
 	* Refactor site application actions
 	* Update npm packages (file-loader, styr)
