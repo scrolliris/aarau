@@ -105,11 +105,6 @@ class TemplateUtil(object):
 
         return data
 
-    @reify
-    def typekit_id(self) -> str:
-        """Returns typekit id from env."""
-        return str(self.req.settings.get('font.typekit_id', ''))
-
     def is_matched(self, matchdict) -> bool:
         """Returns bool if dict matches or not."""
         return self.req.matchdict == matchdict
