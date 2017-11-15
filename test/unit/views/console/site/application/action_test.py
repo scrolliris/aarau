@@ -159,8 +159,8 @@ def test_application_site_new_post(mocker, users, dummy_request):
     project.refresh()
     application_sites = project.application_sites
     assert 2 == len(application_sites)
-    assert 1 == len(list(filter(lambda s: s.application.name == \
-        'New Test Application', application_sites)))
+    assert 1 == len(list(filter(lambda s: s.application.name ==
+                    'New Test Application', application_sites)))
 
     # pylint: disable=no-member
     assert 1 == dummy_service.assign.call_count
