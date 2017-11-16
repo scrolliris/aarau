@@ -42,3 +42,4 @@ def tpl(path, type_=''):
 
 def includeme(config):
     config.include('.application')
+    config.include('.publication')

@@ -66,11 +66,9 @@ def subdomain_manager_factory(config):
 
 
 def site_type_of(hosting_type):
-    from pyramid.httpexceptions import HTTPNotFound
-
     def predicate(_, req):
         if 'type' not in req.params or req.params['type'] != hosting_type:
-            raise HTTPNotFound
+            return False
         return True
     return predicate
 
@@ -103,10 +101,14 @@ def includeme(config):
         c.add_route('console.project.view', '/project/{id:\d+}')
         c.add_route('console.project.edit', '/project/{id:\d+}/edit')
 
-        c.add_route('console.site.application.new',
-                    '/project/{project_id:\d+}/site/new')
         # application
         application_type = site_type_of('application')
+        c.add_route('console.site.application.new',
+                    '/project/{project_id:\d+}/site/new',
+                    custom_predicates=(application_type,))
+        c.add_route('console.site.application.edit',
+                    '/project/{project_id:\d+}/site/{id:\d+}/edit',
+                    custom_predicates=(application_type,))
         c.add_route('console.site.application.view.result',
                     '/project/{project_id:\d+}/site/{id:\d+}/result',
                     custom_predicates=(application_type,))
@@ -116,13 +118,18 @@ def includeme(config):
         c.add_route('console.site.application.view.badge',
                     '/project/{project_id:\d+}/site/{id:\d+}/badge',
                     custom_predicates=(application_type,))
-        c.add_route('console.site.application.edit',
-                    '/project/{project_id:\d+}/site/{id:\d+}/edit',
-                    custom_predicates=(application_type,))
 
         # publication
+        publication_type = site_type_of('publication')
+        c.add_route('console.site.publication.new',
+                    '/project/{project_id:\d+}/site/new',
+                    custom_predicates=(publication_type,))
         c.add_route('console.site.publication.edit',
-                    '/project/{project_id:\d+}/site/{id:\d+}/edit')
+                    '/project/{project_id:\d+}/site/{id:\d+}/edit',
+                    custom_predicates=(publication_type,))
+        c.add_route('console.site.publication.view',
+                    '/project/{project_id:\d+}/site/{id:\d+}',
+                    custom_predicates=(publication_type,))
 
     # internal api
     with subdomain('console') as c:

@@ -1,3 +1,5 @@
+from types import GeneratorType
+
 from peewee import (
     CharField,
     ForeignKeyField,
@@ -7,6 +9,7 @@ from peewee import (
 from aarau.models.base import (
     CardinalBase,
     TimestampMixin,
+    classproperty,
 )
 
 
@@ -24,3 +27,9 @@ class Classification(CardinalBase, TimestampMixin):
     def __repr__(self):
         return '<Classification id:{} notation:{} name: {}>'.format(
             self.id, self.notation, self.name)
+
+    @classproperty
+    def as_choices(cls) -> GeneratorType:  # pylint: disable=no-self-argument
+        """Returns classifications as choices."""
+        return ((str(p.id), p.name) for p in cls.select(
+            cls.id, cls.name).order_by(cls.id.asc()))

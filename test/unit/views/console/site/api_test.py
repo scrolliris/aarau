@@ -1,6 +1,6 @@
-import pytest
+import json
 
-from aarau.views.console.site.api import api_application_site_result
+import pytest
 
 
 @pytest.fixture(autouse=True)
@@ -8,13 +8,15 @@ def setup(config):  # pylint: disable=unused-argument
     pass
 
 
+# GET api_application_site_result
+
 @pytest.mark.parametrize('params', [
     {},
     {'project_id': '0'}
 ], ids=['missing', 'invalid'])
 def test_application_site_result_with_invalid_project_id(
         users, params, dummy_request):
-    import json
+    from aarau.views.console.site.api import api_application_site_result
 
     user = users['oswald']
     dummy_request.user = user
@@ -34,11 +36,11 @@ def test_application_site_result_with_invalid_project_id(
 ], ids=['missing', 'invalid'])
 def test_application_site_result_with_invalid_site_id(
         users, params, dummy_request):
-    import json
+    from aarau.views.console.site.api import api_application_site_result
 
     user = users['oswald']
-    dummy_request.user = user
     params['project_id'] = user.projects[0].id
+    dummy_request.user = user
     dummy_request.matchdict = params
 
     res = api_application_site_result(dummy_request)

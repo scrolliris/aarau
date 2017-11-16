@@ -8,7 +8,7 @@ from peewee import (
 from aarau.models.base import (
     CardinalBase,
     TimestampMixin,
-    classproperty
+    classproperty,
 )
 
 
