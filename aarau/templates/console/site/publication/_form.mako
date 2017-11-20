@@ -32,7 +32,6 @@
   <div class="row">
     <div class="required field-5${' error' if _f.classification.errors else ''}">
       <label class="label" for="publication-classification">Classification</label>
-      <span class="description"></span>
       ${_f.classification(class_='control')}
       ${render_error_message(_f.classification)}
     </div>
@@ -48,7 +47,12 @@
   </div>
 
   <div class="row">
-    <div class="required field-16${' error' if _f.copyright.errors else ''}">
+    <div class="required field-7${' error' if _f.license.errors else ''}">
+      <label class="label" for="publication-license">License</label>
+      ${_f.license(class_='control')}
+      ${render_error_message(_f.license)}
+    </div>
+    <div class="required offset-1 field-8${' error' if _f.copyright.errors else ''}">
       <label class="label" for="publication-copyright">Copyright</label>
       ${_f.copyright(class_='control', placeholder='e.g. 2017 Albrecht Dürer')}
       ${render_error_message(_f.copyright)}
@@ -56,10 +60,10 @@
   </div>
 
   <div class="row">
-    <div class="optional field-10${' error' if _f.description.errors else ''}">
+    <div class="optional field-15${' error' if _f.description.errors else ''}">
       <label class="label" for="publication-description">Description</label>
       <p class="description">Describe the <strong>theme</strong> of your new publication.</p>
-      ${_f.description(class_='control', rows=1, cols=30, placeholder='Science notes from my daily thoughts.')}
+      ${_f.description(class_='control', rows=2, placeholder='Science notes from my daily thoughts.')}
       ${render_error_message(_f.description)}
     </div>
   </div>

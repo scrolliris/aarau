@@ -39,6 +39,7 @@ def publication_site_new(req):
                 publication = Publication(
                     classification=pub_f.classification.data,
                     name=pub_f.name.data,
+                    license=pub_f.license.data,
                     copyright=pub_f.copyright.data,
                     description=pub_f.description.data)
                 publication.save()
@@ -82,6 +83,7 @@ def publication_site_edit(req):
                 pub_f = form.publication.form
                 site.publication.classification = pub_f.classification.data
                 site.publication.name = pub_f.name.data
+                site.publication.license = pub_f.license.data
                 site.publication.copyright = pub_f.copyright.data
                 site.publication.description = pub_f.description.data
                 site.publication.save()

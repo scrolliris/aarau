@@ -1,9 +1,15 @@
+from types import GeneratorType
+
 from peewee import (
     CharField,
     PrimaryKeyField,
 )
 
-from aarau.models.base import CardinalBase, TimestampMixin
+from aarau.models.base import (
+    CardinalBase,
+    TimestampMixin,
+    classproperty,
+)
 
 
 class License(CardinalBase, TimestampMixin):
@@ -24,3 +30,9 @@ class License(CardinalBase, TimestampMixin):
         """Fetches a license by identifier string."""
         return cls.select().where(
             cls.identifier == identifier).get()
+
+    @classproperty
+    def as_choices(cls) -> GeneratorType:  # pylint: disable=no-self-argument
+        """Returns licenses as choices."""
+        return ((str(p.id), p.fullname) for p in cls.select(
+            cls.id, cls.fullname).order_by(cls.id.asc()))

@@ -16,39 +16,39 @@ DOMAIN_PATTERN = r'\A([A-Za-z0-9]\.|[A-Za-z0-9][A-Za-z0-9-]{0,61}' \
 SLUG_PATTERN = r'\A[A-Za-z0-9-]{0,32}\Z'
 
 
-class ApplicationBaseMixin(object):
-    domain = StringField('Domain', [
-        v.Required(),
-        v.Regexp(DOMAIN_PATTERN),
-        v.Length(min=3, max=32),
-    ])
+class SiteForm(object):
+    class ApplicationBaseMixin(object):
+        domain = StringField('Domain', [
+            v.Required(),
+            v.Regexp(DOMAIN_PATTERN),
+            v.Length(min=3, max=32),
+        ])
 
-    slug = StringField('Slug', [
-        v.Optional(),
-        v.Regexp(SLUG_PATTERN),
-        v.Length(min=6, max=32),
-    ])
+        slug = StringField('Slug', [
+            v.Optional(),
+            v.Regexp(SLUG_PATTERN),
+            v.Length(min=6, max=32),
+        ])
 
+    class PublicationBaseMixin(object):
+        slug = StringField('Slug', [
+            v.Required(),
+            v.Regexp(SLUG_PATTERN),
+            v.Length(min=6, max=32),
+        ])
 
-class PublicationBaseMixin(object):
-    slug = StringField('Slug', [
-        v.Required(),
-        v.Regexp(SLUG_PATTERN),
-        v.Length(min=6, max=32),
-    ])
+        def validate_slug(self, field):   # pylint: disable=no-self-use
+            from aarau.models.site import Site
 
-    def validate_slug(self, field):   # pylint: disable=no-self-use
-        from aarau.models.site import Site
-
-        query = Site.select().where(
-            Site.domain >> None,
-            Site.slug == field.data)
-        if hasattr(self, 'current_site'):
-            # allow itself
-            query = query.where(
-                Site.id != self.current_site.id)
-        if query.first():
-            raise ValidationError('Slug is already taken.')
+            query = Site.select().where(
+                Site.domain >> None,
+                Site.slug == field.data)
+            if hasattr(self, 'current_site'):
+                # allow itself
+                query = query.where(
+                    Site.id != self.current_site.id)
+            if query.first():
+                raise ValidationError('Slug is already taken.')
 
 
 # nested form
@@ -72,6 +72,9 @@ class PublicationForm(Form):
         v.Required(),
         v.Length(min=3, max=64),
     ])
+    license = SelectField('License', [
+        v.Required(),
+    ], choices=(...))
     copyright = StringField('Copyright', [
         v.Required(),
         v.Length(min=3, max=255),
@@ -93,21 +96,34 @@ class PublicationForm(Form):
 
         return list(Classification.as_choices)
 
+    @staticmethod
+    def __license_choices():
+        """Returns license choices generator as list.
+
+        Because it seems that wtforms SelectField's choices needs list.
+        If returns just iterable or generator, it does not work at re-rendering
+        after submit.
+        """
+        from aarau.models import License
+
+        return list(License.as_choices)
+
     def __init__(self, formdata=None, obj=None, prefix='', **kwargs):
         # pylint: disable=no-member
         self.classification.kwargs['choices'] = self.__classification_choices()
+        self.license.kwargs['choices'] = self.__license_choices()
 
         super().__init__(formdata, obj, prefix, **kwargs)
 
 
 # application
 
-class NewApplicationSiteForm(ApplicationBaseMixin, SecureForm):
+class NewApplicationSiteForm(SiteForm.ApplicationBaseMixin, SecureForm):
     application = FormField(ApplicationForm)
     submit = SubmitField('Create')
 
 
-class EditApplicationSiteForm(ApplicationBaseMixin, SecureForm):
+class EditApplicationSiteForm(SiteForm.ApplicationBaseMixin, SecureForm):
     application = FormField(ApplicationForm)
     submit = SubmitField('Update')
 
@@ -122,12 +138,12 @@ def build_edit_application_site_form(req, site):
 
 # publication
 
-class NewPublicationSiteForm(PublicationBaseMixin, SecureForm):
+class NewPublicationSiteForm(SiteForm.PublicationBaseMixin, SecureForm):
     publication = FormField(PublicationForm)
     submit = SubmitField('Create')
 
 
-class EditPublicationSiteForm(PublicationBaseMixin, SecureForm):
+class EditPublicationSiteForm(SiteForm.PublicationBaseMixin, SecureForm):
     publication = FormField(PublicationForm)
     submit = SubmitField('Update')
 

@@ -95,6 +95,7 @@ def test_publication_site_new_post_with_validation_error(users, dummy_request):
         'slug': '',
         'publication-name': '',
         'publication-classification': '',
+        'publication-license': '',
         'publication-copyright': '2017 Oswald & Weenie',
         'publication-description': '',
         'submit': 'Create',
@@ -119,7 +120,8 @@ def test_publication_site_new_post_with_validation_error(users, dummy_request):
 
 
 def test_publication_site_new_post(mocker, users, dummy_request):
-    from aarau.models.classification import Classification
+    # pylint: disable=too-many-locals
+    from aarau.models import Classification, License
     from aarau.views.console.site.publication.action import \
         publication_site_new
 
@@ -127,6 +129,7 @@ def test_publication_site_new_post(mocker, users, dummy_request):
     project = user.projects[0]
 
     # pylint: disable=unsubscriptable-object
+    license_id = list(License.as_choices)[0][0]
     classification_id = list(Classification.as_choices)[0][0]
 
     query_param = {'type': 'publication'}
@@ -134,6 +137,7 @@ def test_publication_site_new_post(mocker, users, dummy_request):
         'csrf_token': dummy_request.session.get_csrf_token(),
         'slug': 'new-piano-publication',
         'publication-name': 'New Piano Publication',
+        'publication-license': license_id,
         'publication-classification': classification_id,
         'publication-copyright': '2017 Oswald & Weenie',
         'publication-description': '...',
@@ -347,6 +351,7 @@ def test_publication_site_edit_post_with_validation_error(
         # invalid values
         'slug': '',
         'publication-name': '',
+        'publication-license': '',
         'publication-classification': '',
         'publication-copyright': '',
         'publication-description': '',
@@ -388,6 +393,7 @@ def test_publication_site_edit_post(mocker, users, dummy_request):
         # invalid values
         'slug': site.slug,
         'publication-name': 'New Piano Club Changelog',
+        'publication-license': publication.license.id,
         'publication-classification': publication.classification.id,
         'publication-copyright': publication.copyright,
         'publication-description': publication.description,
