@@ -171,7 +171,8 @@ codequality:
   variables:
     DOCKER_DRIVER: overlay
   before_script:
-    - docker pull codeclimate/codeclimate
+    # 0.70.1 fails
+    - docker pull codeclimate/codeclimate:0.70.0
     - docker run --env CODECLIMATE_CODE="$PWD"
       --volume "$PWD":/code
       --volume /var/run/docker.sock:/var/run/docker.sock
