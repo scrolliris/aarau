@@ -139,6 +139,7 @@ def includeme(config):
                     custom_predicates=(application_type,))
 
     with subdomain(None) as c:
+        # pylint: disable=anomalous-backslash-in-string
         c.add_route('top', '/')
 
         c.add_route('login', '/login')
@@ -149,6 +150,12 @@ def includeme(config):
 
         c.add_route('signup', '/signup')
         c.add_route('signup.activate', '/user/activate/{token}')
+
+        # public view
+        c.add_route('site.application.view',
+                    '/applications/{id:\d+}')
+        c.add_route('site.publication.view',
+                    '/publications/{slug}')
 
         # login_required
         c.add_route('project.new', '/project/new')

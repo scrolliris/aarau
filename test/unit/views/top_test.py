@@ -19,20 +19,22 @@ def test_get_site_type():
 
 
 def test_view_top(users, dummy_request):
-    from aarau.models import Publication
+    from aarau.models import Site
     from aarau.views.top import top
 
-    dummy_request.user = users['oswald']
+    user = users['oswald']
+    dummy_request.user = user
     res = top(dummy_request)
 
     assert isinstance(res, dict)
-    assert ('site_objects', 'site_type') == tuple(sorted(res.keys()))
+    assert ('site_type', 'sites') == tuple(sorted(res.keys()))
     assert 'publication' == res['site_type']
-    assert {Publication} == set([o.__class__ for o in res['site_objects']])
+    assert {Site} == set([s.__class__ for s in res['sites']])
+    assert False not in set([hasattr(s, 'publication') for s in res['sites']])
 
 
 def test_view_top_type_publication(users, dummy_request):
-    from aarau.models import Publication
+    from aarau.models import Site
     from aarau.views.top import top
 
     user = users['oswald']
@@ -44,13 +46,14 @@ def test_view_top_type_publication(users, dummy_request):
     res = top(dummy_request)
 
     assert isinstance(res, dict)
-    assert ('site_objects', 'site_type') == tuple(sorted(res.keys()))
+    assert ('site_type', 'sites') == tuple(sorted(res.keys()))
     assert 'publication' == res['site_type']
-    assert {Publication} == set([o.__class__ for o in res['site_objects']])
+    assert {Site} == set([s.__class__ for s in res['sites']])
+    assert False not in set([hasattr(s, 'publication') for s in res['sites']])
 
 
 def test_view_top_type_application(users, dummy_request):
-    from aarau.models import Application
+    from aarau.models import Site
     from aarau.views.top import top
 
     user = users['oswald']
@@ -62,6 +65,7 @@ def test_view_top_type_application(users, dummy_request):
     res = top(dummy_request)
 
     assert isinstance(res, dict)
-    assert ('site_objects', 'site_type') == tuple(sorted(res.keys()))
+    assert ('site_type', 'sites') == tuple(sorted(res.keys()))
     assert 'application' == res['site_type']
-    assert {Application} == set([o.__class__ for o in res['site_objects']])
+    assert {Site} == set([s.__class__ for s in res['sites']])
+    assert False not in set([hasattr(s, 'application') for s in res['sites']])

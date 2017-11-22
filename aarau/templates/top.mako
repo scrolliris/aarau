@@ -20,7 +20,7 @@
         % if req.user and req.user.projects:
           <a class="flat button" href="${req.route_url('console.top')}">Go to Console</a>
         % else:
-          <a class="primary button" href="${req.route_url('project.new', namespace=None)}">Create a Project</a>
+          <a class="primary button" href="${req.route_path('project.new', namespace=None)}">Create a Project</a>
         % endif
         </div>
         <div id="ticker" class="pride"></div>
@@ -37,17 +37,19 @@
         <p>
         % if site_type == 'publication':
           <span class="rounded label publication active">HOSTED</span>
-          <span class="rounded label application"><a href="${req.route_url('top', _query={'type': 'application'})}">INTEGRATED</a></span>
+          <span class="rounded label application"><a href="${req.route_path('top', _query={'type': 'application'})}">INTEGRATED</a></span>
         % else:
-          <span class="rounded label publication"><a href="${req.route_url('top')}">HOSTED</a></span>
+          <span class="rounded label publication"><a href="${req.route_path('top')}">HOSTED</a></span>
           <span class="rounded label application active">INTEGRATED</span>
         % endif
         </p>
 
         % if site_type == 'application':
-          % for application in site_objects:
+          % for site in sites:
+            <% application = site.application %>
             <div class="flat box">
-              <h5 class="header">${util.truncate(application.name, 25)}</h5>
+              <a href="${req.route_path('site.application.view', id=application.id)}">
+                <h5 class="header">${util.truncate(application.name, 25)}</h5></a>
               <div class="description">
                 <span class="date">${application.created_at.strftime('%Y-%m-%d %H:%M')}</span>
                 <p>${util.truncate(application.description, length=120)}</p>
@@ -55,9 +57,11 @@
             </div>
           % endfor
         % else:
-          % for publication in site_objects:
+          % for site in sites:
+            <% publication = site.publication %>
             <div class="flat box">
-              <h5 class="header">${util.truncate(publication.name, length=25)}</h5>
+              <a href="${req.route_path('site.publication.view', slug=site.slug)}">
+                <h5 class="header">${util.truncate(publication.name, length=25)}</h5></a>
               <div class="description">
                 <span class="date">${publication.created_at.strftime('%Y-%m-%d %H:%M')}</span>
                 <span class="secondary label">${publication.license.identifier}</span>

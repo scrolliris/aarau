@@ -33,7 +33,7 @@
 
 <div class="global-message${' user' if req.user else ''}">
 % if not req.user:
-  <p>Increase your Publication <i class="_r">R</i><i class="_e">e</i><i class="_a">a</i><i class="_d">d</i><i class="_a">a</i><i class="_b">b</i><i class="_i">i</i><i class="_l">l</i><i class="_i">i</i><i class="_t">t</i><i class="_y">y</i></p>
+  <p>Increase your Text Readability</p>
 % else:
   <p class="user">Ahoj! If you have any questions, Please contact us support@scrolliris.com</p>
 % endif
