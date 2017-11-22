@@ -72,6 +72,6 @@ class Site(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
         hosting_type = type_name.capitalize()
         type_class = globals()[hosting_type]
 
-        return cls.select().join(type_class, on=(
+        return cls.select(cls, type_class).join(type_class, on=(
             (cls.hosting_type == hosting_type) &
             (cls.hosting_id == type_class.id)))
