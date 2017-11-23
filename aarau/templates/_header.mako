@@ -16,7 +16,7 @@
 
     <nav class="right menu">
       % if req.user:
-        % if req.user.projects:
+        % if req.user.memberships:
           <a class="mobile hidden item" href="${req.route_url('console.top')}">Console</a>
         % endif
         <a class="item${' active' if util.route_name.startswith('settings') else ''}" href="${req.route_url('settings')}">Settings</a>

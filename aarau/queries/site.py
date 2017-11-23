@@ -1,5 +1,6 @@
 from aarau.models import (  # noqa  # pylint: disable=unused-import
     Site,
+    Project,
     Application,
     Publication,
     License,
@@ -13,14 +14,16 @@ def get_sites(site_type, limit=10):
     sites = Site.select().join(
         site_class,
         on=(Site.hosting_id == site_class.id).alias(site_type)
+    ).switch(Site).join(
+        Project
     )
     if site_type == 'application':
         sites = sites.select(
-            Site, site_class
+            Site, Project, site_class
         )
     else:
         sites = sites.select(
-            Site, site_class, License, Classification
+            Site, Project, site_class, License, Classification
         ).switch(Publication).join(
             License,
             on=(Publication.license_id == License.id)
