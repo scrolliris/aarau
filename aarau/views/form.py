@@ -44,10 +44,10 @@ class FailureForm(SecureForm):
         return False
 
 
-def build_form(klass, request, data=None):
+def build_form(klass, req, obj=None):
     """Builder method builds a form."""
-    form = klass(request.POST, data, meta={
-        'csrf_context': request.session,
+    form = klass(req.POST, obj, meta={
+        'csrf_context': req.session,
         'locales': ['en_US', 'en'],
     })
     return form

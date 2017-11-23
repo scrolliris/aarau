@@ -11,7 +11,7 @@
   <span class="divider">/</span>
   <a class="item" href="${req.route_path('console.project.view', id=project.id)}">${project.name}</a>
   <span class="divider">/</span>
-  <span class="active item">New Application</span>
+  <span class="active item">New Publication</span>
 </div>
 </%block>
 
@@ -20,14 +20,14 @@
     <div class="row">
       <div class="column-9">
         ${render_notice()}
-        <p class="description">Enter your external web application (or website) which is integrated with Scrolliris&apos;s readability analysis.</p>
+        <p class="description">Create new publication which is published on Scrolliris.</p>
         <%
-          act = req.route_url('console.site.application.new', project_id=project.id, _query={'type':'application'})
+          act = req.route_url('console.site.publication.new', project_id=project.id, _query={'type':'publication'})
           ctx = 'new'
           err = form.errors
           obj = site
         %>
-        <%include file="aarau:templates/console/site/application/_form.mako" args="f=form, act=act, ctx=ctx, err=err, obj=obj"/>
+        <%include file="aarau:templates/console/site/publication/_form.mako" args="f=form, act=act, ctx=ctx, err=err, obj=obj"/>
       </div>
     </div>
   </div>

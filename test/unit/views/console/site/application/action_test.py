@@ -1,11 +1,7 @@
 import pytest
 
-from aarau.views.console.site.application.action import (
-    application_site_new,
-    application_site_view_badge,
-    application_site_view_result,
-    application_site_view_script,
-)
+from webob.multidict import MultiDict, NestedMultiDict, NoVars
+from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 
 from aarau.models import Site
 
@@ -15,9 +11,11 @@ def setup(config):  # pylint: disable=unused-argument
     pass
 
 
+# GET application_site_new
+
 def test_application_site_new_get_missing_project(users, dummy_request):
-    from webob.multidict import NestedMultiDict
-    from pyramid.httpexceptions import HTTPNotFound
+    from aarau.views.console.site.application.action import \
+        application_site_new
 
     user = users['oswald']
     dummy_request.user = user
@@ -33,8 +31,9 @@ def test_application_site_new_get_missing_project(users, dummy_request):
 
 
 def test_application_site_new_get(users, dummy_request):
-    from webob.multidict import NestedMultiDict, NoVars
     from aarau.views.console.site.form import build_new_application_site_form
+    from aarau.views.console.site.application.action import \
+        application_site_new
 
     user = users['oswald']
     dummy_request.user = user
@@ -57,20 +56,22 @@ def test_application_site_new_get(users, dummy_request):
     assert isinstance(res['site'], Site)
 
 
+# POST application_site_new
+
 def test_application_site_new_post_missing_project(users, dummy_request):
-    from webob.multidict import MultiDict, NestedMultiDict
-    from pyramid.httpexceptions import HTTPNotFound
+    from aarau.views.console.site.application.action import \
+        application_site_new
 
     user = users['oswald']
-    dummy_request.user = user
-    query = {'type': 'application'}
-    data = {
+    query_param = {'type': 'application'}
+    submit_body = {
         'submit': 'Create',
         # rest is omitted
     }
-    dummy_request.GET = NestedMultiDict(query)
-    dummy_request.POST = MultiDict(data)
-    dummy_request.params = NestedMultiDict({**query, **data})
+    dummy_request.user = user
+    dummy_request.GET = NestedMultiDict(query_param)
+    dummy_request.POST = MultiDict(submit_body)
+    dummy_request.params = NestedMultiDict({**query_param, **submit_body})
     dummy_request.matchdict = {
         'project_id': 0,  # invalid
     }
@@ -80,24 +81,25 @@ def test_application_site_new_post_missing_project(users, dummy_request):
 
 
 def test_application_site_new_post_with_validation_error(users, dummy_request):
-    from webob.multidict import MultiDict, NestedMultiDict
     from aarau.views.console.site.form import build_new_application_site_form
+    from aarau.views.console.site.application.action import \
+        application_site_new
 
     user = users['oswald']
     project = user.projects[0]
-    dummy_request.user = user
-    query = {'type': 'application'}
-    data = {
+    query_param = {'type': 'application'}
+    submit_body = {
+        'submit': 'Create',
         'csrf_token': dummy_request.session.get_csrf_token(),
         # invalid values
         'domain': '',
         'application-name': '',
         'application-description': '',
-        'submit': 'Create',
     }
-    dummy_request.GET = NestedMultiDict(query)
-    dummy_request.POST = MultiDict(data)
-    dummy_request.params = NestedMultiDict({**query, **data})
+    dummy_request.user = user
+    dummy_request.GET = NestedMultiDict(query_param)
+    dummy_request.POST = MultiDict(submit_body)
+    dummy_request.params = NestedMultiDict({**query_param, **submit_body})
     dummy_request.matchdict = {
         'project_id': project.id
     }
@@ -114,23 +116,23 @@ def test_application_site_new_post_with_validation_error(users, dummy_request):
 
 
 def test_application_site_new_post(mocker, users, dummy_request):
-    from pyramid.httpexceptions import HTTPFound
-    from webob.multidict import MultiDict, NestedMultiDict
+    from aarau.views.console.site.application.action import \
+        application_site_new
 
     user = users['oswald']
     project = user.projects[0]
-    dummy_request.user = user
-    query = {'type': 'application'}
-    data = {
+    query_param = {'type': 'application'}
+    submit_body = {
+        'submit': 'Create',
         'csrf_token': dummy_request.session.get_csrf_token(),
         'domain': 'new.example.org',
         'application-name': 'New Test Application',
         'application-description': '...',
-        'submit': 'Create',
     }
-    dummy_request.GET = NestedMultiDict(query)
-    dummy_request.POST = MultiDict(data)
-    dummy_request.params = NestedMultiDict({**query, **data})
+    dummy_request.user = user
+    dummy_request.GET = NestedMultiDict(query_param)
+    dummy_request.POST = MultiDict(submit_body)
+    dummy_request.params = NestedMultiDict({**query_param, **submit_body})
     dummy_request.matchdict = {
         'project_id': project.id
     }
@@ -160,24 +162,26 @@ def test_application_site_new_post(mocker, users, dummy_request):
     application_sites = project.application_sites
     assert 2 == len(application_sites)
     assert 1 == len(list(filter(lambda s: s.application.name ==
-                    'New Test Application', application_sites)))
+                                'New Test Application', application_sites)))
 
     # pylint: disable=no-member
     assert 1 == dummy_service.assign.call_count
     assert 1 == dummy_service.replicate.call_count
 
 
-def test_application_site_badge_missing_project(users, dummy_request):
-    from webob.multidict import NestedMultiDict
-    from pyramid.httpexceptions import HTTPNotFound
+# GET application_site_view_badge
+
+def test_application_site_view_badge_missing_project(users, dummy_request):
+    from aarau.views.console.site.application.action import \
+        application_site_view_badge
 
     user = users['oswald']
+    project = user.projects[0]
+    site = project.application_sites[0]
     dummy_request.user = user
     dummy_request.params = dummy_request.GET = NestedMultiDict({
         'type': 'application'
     })
-    project = user.projects[0]
-    site = project.application_sites[0]
     dummy_request.matchdict = {
         'project_id': 0,  # invalid
         'id': site.id,
@@ -187,16 +191,16 @@ def test_application_site_badge_missing_project(users, dummy_request):
         application_site_view_badge(dummy_request)
 
 
-def test_application_site_badge_missing_site(users, dummy_request):
-    from webob.multidict import NestedMultiDict
-    from pyramid.httpexceptions import HTTPNotFound
+def test_application_site_view_badge_missing_site(users, dummy_request):
+    from aarau.views.console.site.application.action import \
+        application_site_view_badge
 
     user = users['oswald']
+    project = user.projects[0]
     dummy_request.user = user
     dummy_request.params = dummy_request.GET = NestedMultiDict({
         'type': 'application',
     })
-    project = user.projects[0]
     dummy_request.matchdict = {
         'project_id': project.id,
         'id': 0,  # invalid
@@ -206,8 +210,9 @@ def test_application_site_badge_missing_site(users, dummy_request):
         application_site_view_badge(dummy_request)
 
 
-def test_application_site_badge(users, dummy_request):
-    from webob.multidict import NestedMultiDict
+def test_application_site_view_badge(users, dummy_request):
+    from aarau.views.console.site.application.action import \
+        application_site_view_badge
 
     user = users['oswald']
     project = user.projects[0]
@@ -229,17 +234,19 @@ def test_application_site_badge(users, dummy_request):
     assert site.application == res['application']
 
 
-def test_application_site_result_missing_project(users, dummy_request):
-    from webob.multidict import NestedMultiDict
-    from pyramid.httpexceptions import HTTPNotFound
+# GET application_site_view_result
+
+def test_application_site_view_result_missing_project(users, dummy_request):
+    from aarau.views.console.site.application.action import \
+        application_site_view_result
 
     user = users['oswald']
+    project = user.projects[0]
+    site = project.application_sites[0]
     dummy_request.user = user
     dummy_request.params = dummy_request.GET = NestedMultiDict({
         'type': 'application',
     })
-    project = user.projects[0]
-    site = project.application_sites[0]
     dummy_request.matchdict = {
         'project_id': 0,  # invalid
         'id': site.id,
@@ -249,9 +256,9 @@ def test_application_site_result_missing_project(users, dummy_request):
         application_site_view_result(dummy_request)
 
 
-def test_application_site_result_missing_site(users, dummy_request):
-    from webob.multidict import NestedMultiDict
-    from pyramid.httpexceptions import HTTPNotFound
+def test_application_site_view_result_missing_site(users, dummy_request):
+    from aarau.views.console.site.application.action import \
+        application_site_view_result
 
     user = users['oswald']
     dummy_request.user = user
@@ -268,8 +275,9 @@ def test_application_site_result_missing_site(users, dummy_request):
         application_site_view_result(dummy_request)
 
 
-def test_application_site_result(users, dummy_request):
-    from webob.multidict import NestedMultiDict
+def test_application_site_view_result(users, dummy_request):
+    from aarau.views.console.site.application.action import \
+        application_site_view_result
 
     user = users['oswald']
     project = user.projects[0]
@@ -292,17 +300,20 @@ def test_application_site_result(users, dummy_request):
     assert site.application == res['application']
 
 
-def test_application_site_script_missing_project(mocker, users, dummy_request):
-    from webob.multidict import NestedMultiDict
-    from pyramid.httpexceptions import HTTPNotFound
+# GET application_site_view_script
+
+def test_application_site_view_script_missing_project(
+        mocker, users, dummy_request):
+    from aarau.views.console.site.application.action import \
+        application_site_view_script
 
     user = users['oswald']
+    project = user.projects[0]
+    site = project.application_sites[0]
     dummy_request.user = user
     dummy_request.params = dummy_request.GET = NestedMultiDict({
         'type': 'application',
     })
-    project = user.projects[0]
-    site = project.application_sites[0]
     dummy_request.matchdict = {
         'project_id': 0,  # invalid
         'id': site.id,
@@ -330,16 +341,17 @@ def test_application_site_script_missing_project(mocker, users, dummy_request):
     assert 0 == dummy_service.validate.call_count
 
 
-def test_application_site_script_missing_site(mocker, users, dummy_request):
-    from webob.multidict import NestedMultiDict
-    from pyramid.httpexceptions import HTTPNotFound
+def test_application_site_view_script_missing_site(
+        mocker, users, dummy_request):
+    from aarau.views.console.site.application.action import \
+        application_site_view_script
 
     user = users['oswald']
+    project = user.projects[0]
     dummy_request.user = user
     dummy_request.params = dummy_request.GET = NestedMultiDict({
         'type': 'application',
     })
-    project = user.projects[0]
     dummy_request.matchdict = {
         'project_id': project.id,
         'id': 0,  # invalid
@@ -367,8 +379,9 @@ def test_application_site_script_missing_site(mocker, users, dummy_request):
     assert 0 == dummy_service.validate.call_count
 
 
-def test_application_site_script(mocker, users, dummy_request):
-    from webob.multidict import NestedMultiDict
+def test_application_site_view_script(mocker, users, dummy_request):
+    from aarau.views.console.site.application.action import \
+        application_site_view_script
 
     user = users['oswald']
     project = user.projects[0]

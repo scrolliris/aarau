@@ -37,7 +37,8 @@ class Site(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
         related_name='sites', null=False, index=True)
     hosting_id = IntegerField(null=True)
     hosting_type = CharField(max_length=32, null=True)
-    domain = CharField(max_length=32, null=False)
+    domain = CharField(max_length=32, null=True)
+    slug = CharField(max_length=255, null=True)
     calculation_state = EnumField(
         choices=calculation_states,
         null=False, default='off')
@@ -49,8 +50,8 @@ class Site(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
         db_table = 'sites'
 
     def __repr__(self):
-        return '<Site id:{} project_id:{} namespace:{}>'.format(
-            self.id, self.project_id, self.namespace)
+        return '<Site id:{} project_id:{} domain:{} slug:{}>'.format(
+            self.id, self.project_id, self.domain, self.slug)
 
     @reify
     def application(self):
@@ -71,6 +72,6 @@ class Site(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
         hosting_type = type_name.capitalize()
         type_class = globals()[hosting_type]
 
-        return cls.select().join(type_class, on=(
+        return cls.select(cls, type_class).join(type_class, on=(
             (cls.hosting_type == hosting_type) &
             (cls.hosting_id == type_class.id)))

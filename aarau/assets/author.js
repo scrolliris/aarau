@@ -8,6 +8,7 @@ import './css/shared/overwrite.styl'
 // -- standard
 import './css/console/general.styl'
 import './css/console/site.styl'
+import './css/console/publication.styl'
 
 // script
 import './js/console/ui.js'

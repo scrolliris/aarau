@@ -2,6 +2,7 @@
 sites:
   - project: !project.namespace "'piano-music-club'"
     domain: example.org
+    slug:
     hosting_id: !application.name "'How to score music playing piano'"
     hosting_type: Application
     calculation_state: 'on'
@@ -13,7 +14,8 @@ sites:
     deleted_at:
 
   - project: !project.namespace "'piano-music-club'"
-    domain: piano.doc.scrolliris.com
+    domain:
+    slug: playing-piano
     hosting_id: !publication.name "'How to score music playing piano'"
     hosting_type: Publication
     calculation_state: 'on'

@@ -25,7 +25,7 @@
     <div class="row">
       <div class="column-16">
         <h3>${application.name}</h3>
-        <label class="primary label">${site.domain}</label>
+        <label class="primary rounded label">${site.domain}</label>
       </div>
     </div>
     <div class="row">

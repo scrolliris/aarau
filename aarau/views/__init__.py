@@ -24,6 +24,10 @@ def includeme(config):
     """
     config.include('.signup')
     config.include('.settings')
+    config.include('.application')
+    config.include('.publication')
+    config.include('.project')
+
     config.include('.console')
 
     # make request.subdomain available for use in app

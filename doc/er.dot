@@ -53,11 +53,10 @@ digraph DB {
   ]
 
   User [
-    // signed up user
     label = <<table border="0" cellspacing="0" cellpadding="3">
-      <tr><td border="1" colspan="3" align="center" bgcolor="gray60">users</td></tr>
+      <tr><td border="1" colspan="4" align="center" bgcolor="gray60">users</td></tr>
       <tr>
-        <td border="1" colspan="3" align="left">
+        <td border="1" colspan="4" align="left">
 «User»<br align="left"/>
 has_one: account<br align="left"/>
 has_many: user_emails (as emails)<br align="left"/>
@@ -67,56 +66,67 @@ has_many: projects (via membership)<br align="left"/>
       <tr>
         <td border="1" align="center"><b>FIELD</b></td>
         <td border="1" align="center"><b>TYPE</b></td>
+        <td border="1" align="center"><b>MODIFIER</b></td>
         <td border="1" align="center"><b>VALUE</b></td>
       </tr>
       <tr>
         <td border="1" align="left">name</td>
         <td border="1" align="left">string (null)</td>
         <td border="1" align="left"></td>
+        <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">username</td>
         <td border="1" align="left">string (null)</td>
         <td border="1" align="left"></td>
+        <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">email</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">password</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">activation_state</td>
         <td border="1" align="left">enum (0)</td>
+        <td border="1" align="left"></td>
         <td border="1" align="left">0:pending,1:active</td>
       </tr>
       <tr>
         <td border="1" align="left">reset_password_token</td>
         <td border="1" align="left">string (null)</td>
         <td border="1" align="left"></td>
+        <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">reset_password_token_expires_at</td>
         <td border="1" align="left">datetime (null)</td>
+        <td border="1" align="left"></td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">reset_password_token_sent_at</td>
         <td border="1" align="left">datetime (null)</td>
         <td border="1" align="left"></td>
+        <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">created_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">updated_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
     </table>>
@@ -128,11 +138,10 @@ has_many: projects (via membership)<br align="left"/>
   ]
 
   UserEmail [
-    // user's emails
     label = <<table border="0" cellspacing="0" cellpadding="3">
-      <tr><td border="1" colspan="3" align="center" bgcolor="gray60">user_emails</td></tr>
+      <tr><td border="1" colspan="4" align="center" bgcolor="gray60">user_emails</td></tr>
       <tr>
-        <td border="1" colspan="3" align="left">
+        <td border="1" colspan="4" align="left">
 «User»<br align="left"/>
 belongs_to: user<br align="left"/>
         </td>
@@ -140,41 +149,55 @@ belongs_to: user<br align="left"/>
       <tr>
         <td border="1" align="center"><b>FIELD</b></td>
         <td border="1" align="center"><b>TYPE</b></td>
+        <td border="1" align="center"><b>MODIFIER</b></td>
         <td border="1" align="center"><b>VALUE</b></td>
+      </tr>
+      <tr>
+        <td border="1" align="left">user_id</td>
+        <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
+        <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">email</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">type</td>
         <td border="1" align="left">enum (0)</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left">0:primary,1:normal</td>
       </tr>
       <tr>
         <td border="1" align="left">activation_state</td>
         <td border="1" align="left">enum (0)</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left">0:pending,1:active</td>
       </tr>
       <tr>
         <td border="1" align="left">activation_token</td>
         <td border="1" align="left">string (null)</td>
         <td border="1" align="left"></td>
+        <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">activation_token_expires_at</td>
         <td border="1" align="left">datetime (null)</td>
         <td border="1" align="left"></td>
+        <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">created_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">updated_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
     </table>>
@@ -186,11 +209,10 @@ belongs_to: user<br align="left"/>
   ]
 
   Account [
-    // user account
     label = <<table border="0" cellspacing="0" cellpadding="3">
-      <tr><td border="1" colspan="3" align="center" bgcolor="mistyrose1">accounts</td></tr>
+      <tr><td border="1" colspan="4" align="center" bgcolor="mistyrose1">accounts</td></tr>
       <tr>
-        <td border="1" colspan="3" align="left">
+        <td border="1" colspan="4" align="left">
 <b>«</b>Account<b>»</b><br align="left"/>
 belongs_to: user<br align="left"/>
         </td>
@@ -198,26 +220,31 @@ belongs_to: user<br align="left"/>
       <tr>
         <td border="1" align="center"><b>FIELD</b></td>
         <td border="1" align="center"><b>TYPE</b></td>
+        <td border="1" align="center"><b>MODIFIER</b></td>
         <td border="1" align="center"><b>VALUE</b></td>
       </tr>
       <tr>
         <td border="1" align="left">user_id</td>
-        <td border="1" align="left">integer (null)</td>
+        <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">created_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">updated_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">deleted_at</td>
         <td border="1" align="left">datetime (null)</td>
+        <td border="1" align="left"></td>
         <td border="1" align="left"></td>
       </tr>
     </table>>
@@ -229,11 +256,10 @@ belongs_to: user<br align="left"/>
   ]
 
   Contribution [
-    // relation for user and article
     label = <<table border="0" cellspacing="0" cellpadding="3">
-      <tr><td border="1" colspan="3" align="center" bgcolor="mistyrose1">contributions</td></tr>
+      <tr><td border="1" colspan="4" align="center" bgcolor="mistyrose1">contributions</td></tr>
       <tr>
-        <td border="1" colspan="3" align="left">
+        <td border="1" colspan="4" align="left">
 <b>«</b>Contribution<b>»</b><br align="left"/>
 belongs_to: article<br align="left"/>
 belongs_to: user<br align="left"/>
@@ -242,21 +268,25 @@ belongs_to: user<br align="left"/>
       <tr>
         <td border="1" align="center"><b>FIELD</b></td>
         <td border="1" align="center"><b>TYPE</b></td>
+        <td border="1" align="center"><b>MODIFIER</b></td>
         <td border="1" align="center"><b>VALUE</b></td>
       </tr>
       <tr>
         <td border="1" align="left">article_id</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">user_id</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">role</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left">
 0:primary_author,1:author,2:proofreader,3:cooperator,4:translator,<br/>
 5:translator_supervisor,6:compiler,7:supervisor</td>
@@ -264,11 +294,13 @@ belongs_to: user<br align="left"/>
       <tr>
         <td border="1" align="left">created_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">updated_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
     </table>>
@@ -280,11 +312,10 @@ belongs_to: user<br align="left"/>
   ]
 
   Membership [
-    // relation for user and project
     label = <<table border="0" cellspacing="0" cellpadding="3">
-      <tr><td border="1" colspan="3" align="center" bgcolor="mistyrose1">memberships</td></tr>
+      <tr><td border="1" colspan="4" align="center" bgcolor="mistyrose1">memberships</td></tr>
       <tr>
-        <td border="1" colspan="3" align="left">
+        <td border="1" colspan="4" align="left">
 <b>«</b>Membership<b>»</b><br align="left"/>
 belongs_to: user<br align="left"/>
 belongs_to: project<br align="left"/>
@@ -293,31 +324,37 @@ belongs_to: project<br align="left"/>
       <tr>
         <td border="1" align="center"><b>FIELD</b></td>
         <td border="1" align="center"><b>TYPE</b></td>
+        <td border="1" align="center"><b>MODIFIER</b></td>
         <td border="1" align="center"><b>VALUE</b></td>
       </tr>
       <tr>
         <td border="1" align="left">user_id</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">project_id</td>
         <td border="1" align="left">integer</td>
         <td border="1" align="left"></td>
+        <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">role</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left">0:primary_owner, 1:owner, 2:member</td>
       </tr>
       <tr>
         <td border="1" align="left">created_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">updated_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
     </table>>
@@ -329,11 +366,10 @@ belongs_to: project<br align="left"/>
   ]
 
   Plan [
-    // the plan for project
     label = <<table border="0" cellspacing="0" cellpadding="3">
-      <tr><td border="1" colspan="3" align="center" bgcolor="whitesmoke">plans</td></tr>
+      <tr><td border="1" colspan="4" align="center" bgcolor="whitesmoke">plans</td></tr>
       <tr>
-        <td border="1" colspan="3" align="left">
+        <td border="1" colspan="4" align="left">
 <b>«</b>Plan<b>»</b><br align="left"/>
 has_many: projects<br align="left"/>
 has_many: transactions<br align="left"/>
@@ -342,36 +378,43 @@ has_many: transactions<br align="left"/>
       <tr>
         <td border="1" align="center"><b>FIELD</b></td>
         <td border="1" align="center"><b>TYPE</b></td>
+        <td border="1" align="center"><b>MODIFIER</b></td>
         <td border="1" align="center"><b>VALUE</b></td>
       </tr>
       <tr>
         <td border="1" align="left">payment_type_id</td>
-        <td border="1" align="left">smallint</td>
+        <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left">(external id)</td>
       </tr>
       <tr>
         <td border="1" align="left">name</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">price</td>
         <td border="1" align="left">float (0.00)</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">description</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">created_at</td>
         <td border="1" align="left">datetime</td>
         <td border="1" align="left"></td>
+        <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">updated_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left"></td>
         <td border="1" align="left"></td>
       </tr>
     </table>>
@@ -383,11 +426,10 @@ has_many: transactions<br align="left"/>
   ]
 
   Project [
-    // the project
     label = <<table border="0" cellspacing="0" cellpadding="3">
-      <tr><td border="1" colspan="3" align="center" bgcolor="lightcyan1">projects</td></tr>
+      <tr><td border="1" colspan="4" align="center" bgcolor="lightcyan1">projects</td></tr>
       <tr>
-        <td border="1" colspan="3" align="left">
+        <td border="1" colspan="4" align="left">
 <b>«</b>Project<b>»</b><br align="left"/>
 belongs_to: plan<br align="left"/>
 has_many: users (`collaborators` via membership)<br align="left"/>
@@ -398,56 +440,67 @@ has_many: transactions<br align="left"/>
       <tr>
         <td border="1" align="center"><b>FIELD</b></td>
         <td border="1" align="center"><b>TYPE</b></td>
+        <td border="1" align="center"><b>MODIFIER</b></td>
         <td border="1" align="center"><b>VALUE</b></td>
       </tr>
       <tr>
         <td border="1" align="left">access_key_id</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">plan_id</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">subscription_id</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left"></td>
         <td border="1" align="left">(external id)</td>
       </tr>
       <tr>
         <td border="1" align="left">namespace</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">name</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">description</td>
-        <td border="1" align="left">unicode (null)</td>
+        <td border="1" align="left">string (null)</td>
+        <td border="1" align="left"></td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">billing_state</td>
         <td border="1" align="left">enum (0)</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left">0:none,1:pending,2:processing,3:valid</td>
       </tr>
       <tr>
         <td border="1" align="left">created_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">updated_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">deleted_at</td>
         <td border="1" align="left">datetime (null)</td>
+        <td border="1" align="left"></td>
         <td border="1" align="left"></td>
       </tr>
     </table>>
@@ -459,11 +512,10 @@ has_many: transactions<br align="left"/>
   ]
 
   Site [
-    // external publication
     label = <<table border="0" cellspacing="0" cellpadding="3">
-      <tr><td border="1" colspan="3" align="center" bgcolor="lightcyan1">sites</td></tr>
+      <tr><td border="1" colspan="4" align="center" bgcolor="lightcyan1">sites</td></tr>
       <tr>
-        <td border="1" colspan="3" align="left">
+        <td border="1" colspan="4" align="left">
 <b>«</b>Site<b>»</b><br align="left"/>
 belongs_to: project<br align="left"/>
 belongs_to: publication<br align="left"/>
@@ -473,61 +525,79 @@ belongs_to: application<br align="left"/>
       <tr>
         <td border="1" align="center"><b>FIELD</b></td>
         <td border="1" align="center"><b>TYPE</b></td>
+        <td border="1" align="center"><b>MODIFIER</b></td>
         <td border="1" align="center"><b>VALUE</b></td>
       </tr>
       <tr>
         <td border="1" align="left">project_id</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">domain</td>
         <td border="1" align="left">string</td>
         <td border="1" align="left"></td>
+        <td border="1" align="left"></td>
+      </tr>
+      <tr>
+        <td border="1" align="left">slug</td>
+        <td border="1" align="left">string</td>
+        <td border="1" align="left"></td>
+        <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">hosting_id</td>
         <td border="1" align="left">integer</td>
         <td border="1" align="left"></td>
+        <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">hosting_type</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left"></td>
         <td border="1" align="left">{Publication,Application}</td>
       </tr>
       <tr>
         <td border="1" align="left">calculation_state</td>
         <td border="1" align="left">enum (0)</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left">0:off,1:on</td>
       </tr>
       <tr>
         <td border="1" align="left">read_key</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">write_key</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">is_pinned</td>
         <td border="1" align="left">boolean (false)</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">created_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">updated_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">deleted_at</td>
         <td border="1" align="left">datetime (null)</td>
+        <td border="1" align="left"></td>
         <td border="1" align="left"></td>
       </tr>
     </table>>
@@ -539,11 +609,10 @@ belongs_to: application<br align="left"/>
   ]
 
   Application [
-    // the webpage belongs to (external) publication
     label = <<table border="0" cellspacing="0" cellpadding="3">
-      <tr><td border="1" colspan="3" align="center" bgcolor="lightcyan1">applications</td></tr>
+      <tr><td border="1" colspan="4" align="center" bgcolor="lightcyan1">applications</td></tr>
       <tr>
-        <td border="1" colspan="3" align="left">
+        <td border="1" colspan="4" align="left">
 <b>«</b>Application<b>»</b><br align="left"/>
 has_one: site<br align="left"/>
 has_many: pages<br align="left"/>
@@ -552,31 +621,37 @@ has_many: pages<br align="left"/>
       <tr>
         <td border="1" align="center"><b>FIELD</b></td>
         <td border="1" align="center"><b>TYPE</b></td>
+        <td border="1" align="center"><b>MODIFIER</b></td>
         <td border="1" align="center"><b>VALUE</b></td>
       </tr>
       <tr>
         <td border="1" align="left">name</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">description</td>
-        <td border="1" align="left">unicode (null)</td>
+        <td border="1" align="left">string (null)</td>
+        <td border="1" align="left"></td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">created_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">updated_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">deleted_at</td>
         <td border="1" align="left">datetime (null)</td>
+        <td border="1" align="left"></td>
         <td border="1" align="left"></td>
       </tr>
     </table>>
@@ -588,11 +663,10 @@ has_many: pages<br align="left"/>
   ]
 
   Page [
-    // the webpage belongs to application
     label = <<table border="0" cellspacing="0" cellpadding="3">
-      <tr><td border="1" colspan="3" align="center" bgcolor="lightcyan1">pages</td></tr>
+      <tr><td border="1" colspan="4" align="center" bgcolor="lightcyan1">pages</td></tr>
       <tr>
-        <td border="1" colspan="3" align="left">
+        <td border="1" colspan="4" align="left">
 <b>«</b>Page<b>»</b><br align="left"/>
 belongs_to: application<br align="left"/>
         </td>
@@ -600,46 +674,55 @@ belongs_to: application<br align="left"/>
       <tr>
         <td border="1" align="center"><b>FIELD</b></td>
         <td border="1" align="center"><b>TYPE</b></td>
+        <td border="1" align="center"><b>MODIFIER</b></td>
         <td border="1" align="center"><b>VALUE</b></td>
       </tr>
       <tr>
         <td border="1" align="left">application_id</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">code</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">path</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">title</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">scope</td>
-        <td border="1" align="left">integer</td>
+        <td border="1" align="left">enum (0)</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left">0:public,1:private</td>
       </tr>
       <tr>
         <td border="1" align="left">created_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">updated_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">deleted_at</td>
         <td border="1" align="left">datetime (null)</td>
+        <td border="1" align="left"></td>
         <td border="1" align="left"></td>
       </tr>
     </table>>
@@ -651,11 +734,10 @@ belongs_to: application<br align="left"/>
   ]
 
   Publication [
-    // the publication which has articles
     label = <<table border="0" cellspacing="0" cellpadding="3">
-      <tr><td border="1" colspan="3" align="center" bgcolor="lightcyan1">publications</td></tr>
+      <tr><td border="1" colspan="4" align="center" bgcolor="lightcyan1">publications</td></tr>
       <tr>
-        <td border="1" colspan="3" align="left">
+        <td border="1" colspan="4" align="left">
 <b>«</b>Publication<b>»</b><br align="left"/>
 belongs_to: classification<br align="left"/>
 belongs_to: license<br align="left"/>
@@ -667,46 +749,55 @@ has_many: articles<br align="left"/>
       <tr>
         <td border="1" align="center"><b>FIELD</b></td>
         <td border="1" align="center"><b>TYPE</b></td>
+        <td border="1" align="center"><b>MODIFIER</b></td>
         <td border="1" align="center"><b>VALUE</b></td>
       </tr>
       <tr>
         <td border="1" align="left">classification_id</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">name</td>
-        <td border="1" align="left">unicode</td>
+        <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">description</td>
-        <td border="1" align="left">unicode (null)</td>
+        <td border="1" align="left">string (null)</td>
+        <td border="1" align="left"></td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">license_id</td>
         <td border="1" align="left">integer (null)</td>
         <td border="1" align="left"></td>
+        <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">copyright</td>
-        <td border="1" align="left">unicode</td>
+        <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">created_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">updated_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">deleted_at</td>
         <td border="1" align="left">datetime (null)</td>
+        <td border="1" align="left"></td>
         <td border="1" align="left"></td>
       </tr>
     </table>>
@@ -718,11 +809,10 @@ has_many: articles<br align="left"/>
   ]
 
   Article [
-    // published articles
     label = <<table border="0" cellspacing="0" cellpadding="3">
-      <tr><td border="1" colspan="3" align="center" bgcolor="lightcyan1">articles</td></tr>
+      <tr><td border="1" colspan="4" align="center" bgcolor="lightcyan1">articles</td></tr>
       <tr>
-        <td border="1" colspan="3" align="left">
+        <td border="1" colspan="4" align="left">
 <b>«</b>Article<b>»</b><br align="left"/>
 belongs_to: publication<br align="left"/>
 has_many: users (`contributors` via contribution)<br align="left"/>
@@ -733,46 +823,55 @@ has_many: tags<br align="left"/>
       <tr>
         <td border="1" align="center"><b>FIELD</b></td>
         <td border="1" align="center"><b>TYPE</b></td>
+        <td border="1" align="center"><b>MODIFIER</b></td>
         <td border="1" align="center"><b>VALUE</b></td>
       </tr>
       <tr>
         <td border="1" align="left">publication_id</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">code</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">slug</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">title</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">scope</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left">0:public, 1:private</td>
       </tr>
       <tr>
         <td border="1" align="left">license_id</td>
         <td border="1" align="left">integer</td>
         <td border="1" align="left"></td>
+        <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">copyright</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">progress_state</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left">
 0:draft,1:wip,2:ready,3:accepted,4:scheduled,<br/>
 5:published,6:rejected,7:archived</td>
@@ -781,20 +880,24 @@ has_many: tags<br align="left"/>
         <td border="1" align="left">published_at</td>
         <td border="1" align="left">datetime (null)</td>
         <td border="1" align="left"></td>
+        <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">created_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">updated_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">deleted_at</td>
         <td border="1" align="left">datetime (null)</td>
+        <td border="1" align="left"></td>
         <td border="1" align="left"></td>
       </tr>
     </table>>
@@ -806,11 +909,10 @@ has_many: tags<br align="left"/>
   ]
 
   Classification [
-    // the classification of bublication (UDC)
     label = <<table border="0" cellspacing="0" cellpadding="3">
-      <tr><td border="1" colspan="3" align="center" bgcolor="whitesmoke">classifications</td></tr>
+      <tr><td border="1" colspan="4" align="center" bgcolor="whitesmoke">classifications</td></tr>
       <tr>
-        <td border="1" colspan="3" align="left">
+        <td border="1" colspan="4" align="left">
 <b>«</b>Classification<b>»</b><br align="left"/>
 has_many: publications<br align="left"/>
         </td>
@@ -818,31 +920,37 @@ has_many: publications<br align="left"/>
       <tr>
         <td border="1" align="center"><b>FIELD</b></td>
         <td border="1" align="center"><b>TYPE</b></td>
+        <td border="1" align="center"><b>MODIFIER</b></td>
         <td border="1" align="center"><b>VALUE</b></td>
       </tr>
       <tr>
         <td border="1" align="left">parent_id</td>
         <td border="1" align="left">integer (null)</td>
         <td border="1" align="left"></td>
+        <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">notation</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">name</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">created_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">updated_at</td>
         <td border="1" align="left">date</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
     </table>>
@@ -854,11 +962,10 @@ has_many: publications<br align="left"/>
   ]
 
   Label [
-    // labels for articles by publication
     label = <<table border="0" cellspacing="0" cellpadding="3">
-      <tr><td border="1" colspan="3" align="center" bgcolor="gray60">labels</td></tr>
+      <tr><td border="1" colspan="4" align="center" bgcolor="gray60">labels</td></tr>
       <tr>
-        <td border="1" colspan="3" align="left">
+        <td border="1" colspan="4" align="left">
 <b>«</b>Label<b>»</b><br align="left"/>
 belongs_to: publication<br align="left"/>
 has_many: articles (via labelling)<br align="left"/>
@@ -867,36 +974,43 @@ has_many: articles (via labelling)<br align="left"/>
       <tr>
         <td border="1" align="center"><b>FIELD</b></td>
         <td border="1" align="center"><b>TYPE</b></td>
+        <td border="1" align="center"><b>MODIFIER</b></td>
         <td border="1" align="center"><b>VALUE</b></td>
       </tr>
       <tr>
         <td border="1" align="left">publication_id</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">name</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">color</td>
         <td border="1" align="left">string</td>
         <td border="1" align="left"></td>
+        <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">description</td>
         <td border="1" align="left">text</td>
         <td border="1" align="left"></td>
+        <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">created_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">updated_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
     </table>>
@@ -908,11 +1022,10 @@ has_many: articles (via labelling)<br align="left"/>
   ]
 
   Tag [
-    // global tags on application
     label = <<table border="0" cellspacing="0" cellpadding="3">
-      <tr><td border="1" colspan="3" align="center" bgcolor="gray60">tags</td></tr>
+      <tr><td border="1" colspan="4" align="center" bgcolor="gray60">tags</td></tr>
       <tr>
-        <td border="1" colspan="3" align="left">
+        <td border="1" colspan="4" align="left">
 <b>«</b>Tag<b>»</b><br align="left"/>
 has_many: articles<br align="left"/>
         </td>
@@ -920,26 +1033,31 @@ has_many: articles<br align="left"/>
       <tr>
         <td border="1" align="center"><b>FIELD</b></td>
         <td border="1" align="center"><b>TYPE</b></td>
+        <td border="1" align="center"><b>MODIFIER</b></td>
         <td border="1" align="center"><b>VALUE</b></td>
       </tr>
       <tr>
         <td border="1" align="left">name</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">count</td>
         <td border="1" align="left">integer (0)</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left">taggings count</td>
       </tr>
       <tr>
         <td border="1" align="left">created_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">updated_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
     </table>>
@@ -951,11 +1069,10 @@ has_many: articles<br align="left"/>
   ]
 
   Transaction [
-    // histories of payment transactions
     label = <<table border="0" cellspacing="0" cellpadding="3">
-      <tr><td border="1" colspan="3" align="center" bgcolor="mistyrose1">transactions</td></tr>
+      <tr><td border="1" colspan="4" align="center" bgcolor="mistyrose1">transactions</td></tr>
       <tr>
-        <td border="1" colspan="3" align="left">
+        <td border="1" colspan="4" align="left">
 <b>«</b>Transaction<b>»</b><br align="left"/>
 belongs_to: account<br align="left"/>
 belongs_to: plan<br align="left"/>
@@ -965,36 +1082,97 @@ belongs_to: project<br align="left"/>
       <tr>
         <td border="1" align="center"><b>FIELD</b></td>
         <td border="1" align="center"><b>TYPE</b></td>
+        <td border="1" align="center"><b>MODIFIER</b></td>
         <td border="1" align="center"><b>VALUE</b></td>
       </tr>
       <tr>
         <td border="1" align="left">account_id</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">project_id</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">subscription_id</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left"></td>
         <td border="1" align="left">(external id)</td>
       </tr>
       <tr>
         <td border="1" align="left">plan_id</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">created_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">updated_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
+        <td border="1" align="left"></td>
+      </tr>
+    </table>>
+    shape     = "none"
+    style     = ""
+    margin    = "0"
+    fontcolor = "black"
+    fillcolor = ""
+  ]
+
+  License [
+    label = <<table border="0" cellspacing="0" cellpadding="3">
+      <tr><td border="1" colspan="4" align="center" bgcolor="whitesmoke">licenses</td></tr>
+      <tr>
+        <td border="1" colspan="4" align="left">
+<b>«</b>License<b>»</b><br align="left"/>
+has_many: publications<br align="left"/>
+has_many: articles<br align="left"/>
+        </td>
+      </tr>
+      <tr>
+        <td border="1" align="center"><b>FIELD</b></td>
+        <td border="1" align="center"><b>TYPE</b></td>
+        <td border="1" align="center"><b>MODIFIER</b></td>
+        <td border="1" align="center"><b>VALUE</b></td>
+      </tr>
+      <tr>
+        <td border="1" align="left">identifier</td>
+        <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
+        <td border="1" align="left"></td>
+      </tr>
+      <tr>
+        <td border="1" align="left">fullname</td>
+        <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
+        <td border="1" align="left"></td>
+      </tr>
+      <tr>
+        <td border="1" align="left">url</td>
+        <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
+        <td border="1" align="left"></td>
+      </tr>
+      <tr>
+        <td border="1" align="left">created_at</td>
+        <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
+        <td border="1" align="left"></td>
+      </tr>
+      <tr>
+        <td border="1" align="left">updated_at</td>
+        <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
     </table>>
@@ -1011,37 +1189,42 @@ belongs_to: project<br align="left"/>
   ]
 
   Labelling [
-    // relation for label and some objects (labelable)
     label = <<table border="0" cellspacing="0" cellpadding="3">
-      <tr><td border="1" colspan="3" align="center" bgcolor="gray60">labellings</td></tr>
+      <tr><td border="1" colspan="4" align="center" bgcolor="gray60">labellings</td></tr>
       <tr>
         <td border="1" align="center"><b>FIELD</b></td>
         <td border="1" align="center"><b>TYPE</b></td>
+        <td border="1" align="center"><b>MODIFIER</b></td>
         <td border="1" align="center"><b>VALUE</b></td>
       </tr>
       <tr>
         <td border="1" align="left">label_id</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">labelable_id</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">labelable_type</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left">{Article}</td>
       </tr>
       <tr>
         <td border="1" align="left">created_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">updated_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
     </table>>
@@ -1052,87 +1235,43 @@ belongs_to: project<br align="left"/>
     fillcolor = "whitesmoke"
   ]
 
-  License [
-    // the licenses for publication and article
-    label = <<table border="0" cellspacing="0" cellpadding="3">
-      <tr><td border="1" colspan="3" align="center" bgcolor="whitesmoke">licenses</td></tr>
-      <tr>
-        <td border="1" colspan="3" align="left">
-<b>«</b>License<b>»</b><br align="left"/>
-has_many: publications<br align="left"/>
-has_many: articles<br align="left"/>
-        </td>
-      </tr>
-      <tr>
-        <td border="1" align="center"><b>FIELD</b></td>
-        <td border="1" align="center"><b>TYPE</b></td>
-        <td border="1" align="center"><b>VALUE</b></td>
-      </tr>
-      <tr>
-        <td border="1" align="left">identifier</td>
-        <td border="1" align="left">string</td>
-        <td border="1" align="left"></td>
-      </tr>
-      <tr>
-        <td border="1" align="left">fullname</td>
-        <td border="1" align="left">string</td>
-        <td border="1" align="left"></td>
-      </tr>
-      <tr>
-        <td border="1" align="left">url</td>
-        <td border="1" align="left">string</td>
-        <td border="1" align="left"></td>
-      </tr>
-      <tr>
-        <td border="1" align="left">created_at</td>
-        <td border="1" align="left">datetime</td>
-        <td border="1" align="left"></td>
-      </tr>
-      <tr>
-        <td border="1" align="left">updated_at</td>
-        <td border="1" align="left">datetime</td>
-        <td border="1" align="left"></td>
-      </tr>
-    </table>>
-    shape     = "none"
-    style     = ""
-    margin    = "0"
-    fontcolor = "black"
-    fillcolor = ""
-  ]
-
   Tagging [
-    // relation for tag and objects (taggable)
     label = <<table border="0" cellspacing="0" cellpadding="3">
-      <tr><td border="1" colspan="3" align="center" bgcolor="gray60">taggins</td></tr>
+      <tr><td border="1" colspan="4" align="center" bgcolor="gray60">taggins</td></tr>
       <tr>
         <td border="1" align="center"><b>FIELD</b></td>
         <td border="1" align="center"><b>TYPE</b></td>
+        <td border="1" align="center"><b>MODIFIER</b></td>
         <td border="1" align="center"><b>VALUE</b></td>
       </tr>
       <tr>
         <td border="1" align="left">tag_id</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">taggable_id</td>
         <td border="1" align="left">integer</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">taggable_type</td>
         <td border="1" align="left">string</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left">{Article}</td>
       </tr>
       <tr>
         <td border="1" align="left">created_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
         <td border="1" align="left">updated_at</td>
         <td border="1" align="left">datetime</td>
+        <td border="1" align="left">not null</td>
         <td border="1" align="left"></td>
       </tr>
     </table>>

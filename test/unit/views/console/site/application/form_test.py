@@ -1,10 +1,6 @@
 import pytest
 
 from webob.multidict import MultiDict
-from aarau.views.console.site.form import (
-    build_new_application_site_form,
-    NewSiteForm,
-)
 
 
 @pytest.fixture(autouse=True)
@@ -13,9 +9,14 @@ def setup(request, config):  # pylint: disable=unused-argument
 
 
 def test_build_new_application_site_form(dummy_request):
+    from aarau.views.console.site.form import (
+        build_new_application_site_form,
+        NewApplicationSiteForm,
+    )
+
     dummy_request.params = dummy_request.POST = MultiDict()
     form = build_new_application_site_form(dummy_request)
-    assert isinstance(form, NewSiteForm)
+    assert isinstance(form, NewApplicationSiteForm)
 
 
 @pytest.mark.parametrize('domain', [
@@ -26,6 +27,8 @@ def test_build_new_application_site_form(dummy_request):
     'not.-valid.com',
 ])
 def test_validate_domain_format_with_invalid_domain(domain, dummy_request):
+    from aarau.views.console.site.form import build_new_application_site_form
+
     dummy_request.params = dummy_request.POST = MultiDict({
         'csrf_token': dummy_request.session.get_csrf_token(),
         'domain': domain,
@@ -44,6 +47,8 @@ def test_validate_domain_format_with_invalid_domain(domain, dummy_request):
     'goo.gl',
 ])
 def test_validate_domain_format_with_valid_domain(domain, dummy_request):
+    from aarau.views.console.site.form import build_new_application_site_form
+
     dummy_request.params = dummy_request.POST = MultiDict({
         'csrf_token': dummy_request.session.get_csrf_token(),
         'domain': domain,

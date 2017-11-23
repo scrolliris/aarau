@@ -20,40 +20,76 @@
         % if req.user and req.user.projects:
           <a class="flat button" href="${req.route_url('console.top')}">Go to Console</a>
         % else:
-          <a class="primary button" href="${req.route_url('project.new', namespace=None)}">Create a Project</a>
+          <a class="primary button" href="${req.route_path('project.new', namespace=None)}">Create a Project</a>
         % endif
         </div>
         <div id="ticker" class="pride"></div>
       </div>
     </div>
 
-    <div class="row card">
-      <div class="column-3 offset-3 column-v-8 column-l-16" align="center">
-        <div class="box">
-          <div class="header"><h3>How it works</h3></div>
+    <div class="row publication">
+      <div class="offset-3 column-7 offset-v-2 column-v-8 column-l-16 site-object">
+        <div class="tab menu">
+          <div class="item active">Publications</div>
+          <div class="disabled item">Slides</div>
+        </div>
+
+        <p>
+        % if site_type == 'publication':
+          <span class="rounded label publication active">HOSTED</span>
+          <span class="rounded label application"><a href="${req.route_path('top', _query={'type': 'application'})}">INTEGRATED</a></span>
+        % else:
+          <span class="rounded label publication"><a href="${req.route_path('top')}">HOSTED</a></span>
+          <span class="rounded label application active">INTEGRATED</span>
+        % endif
+        </p>
+
+        % if site_type == 'application':
+          % for site in sites:
+            <% application = site.application %>
+            <div class="flat box">
+              <a href="${req.route_path('site.application.view', id=application.id)}">
+                <h5 class="header">${util.truncate(application.name, 25)}</h5></a>
+              <div class="description">
+                <span class="date">${application.created_at.strftime('%Y-%m-%d %H:%M')}</span>
+                <p>${util.truncate(application.description, length=120)}</p>
+              </div>
+            </div>
+          % endfor
+        % else:
+          % for site in sites:
+            <% publication = site.publication %>
+            <div class="flat box">
+              <a href="${req.route_path('site.publication.view', slug=site.slug)}">
+                <h5 class="header">${util.truncate(publication.name, length=25)}</h5></a>
+              <div class="description">
+                <span class="date">${publication.created_at.strftime('%Y-%m-%d %H:%M')}</span>
+                <span class="secondary label">${publication.license.identifier}</span>
+                <span class="classification">${util.truncate(publication.classification.name, length=60)}</span>
+                <p>${util.truncate(publication.description, length=120)}</p>
+              </div>
+            </div>
+          % endfor
+        % endif
+      </div>
+      <div class="column-3 column-v-4 column-l-16 card">
+        <div class="flat box" align="center">
+          <div class="header"><h4>How it works</h4></div>
           <div class="description">
             <p>Learn how our readability analysis works.</p>
             <a class="flat button" href="https://doc.scrolliris.com/how_it_works/overview.html" target="_blank">Read Documentation</a>
           </div>
         </div>
-      </div>
-      <div class="column-4 column-v-8 column-l-16" align="center">
-        <div class="box">
-          <div class="header"><h3>Demo</h3></div>
-          <div class="description">
-            <p>Check our concept draft document on online. It works as a demo.</p>
-            <a class="flat primary button" href="https://try.scrolliris.com" target="_blank">Try Demo</a>
-          </div>
-        </div>
-      </div>
-      <div class="column-3 column-v-8 offset-v-4 column-l-16" align="center">
-        <div class="box">
-          <div class="header"><h3>Our Updates</h3></div>
+        <div class="warn message">
           <div class="description">
             <p>Scrolliris is currently under development as public beta.</p>
-            <a class="flat secondary button" href="https://log.scrolliris.com/" target="_blank">Check the Log</a>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="row card">
+      <div class="column-3 column-v-8 offset-v-4 column-l-16" align="center">
       </div>
     </div>
 
