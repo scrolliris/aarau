@@ -5,33 +5,46 @@
 
 <%block name='title'>${render_title('')}</%block>
 
-<div class="content">
+<div class="content publication">
   <div class="grid">
 
-    <div class="row publication">
+    <% publication = site.publication %>
+
+    <div class="row">
       <div class="column-16" align="center">
         ${render_notice()}
-      </div>
 
-      <div class="offset-3 column-7 offset-v-2 column-v-8 column-l-16 site-object">
-        <p><span class="rounded active label">HOSTED</span></p>
-
-        <% publication = site.publication %>
-        <div class="group flat box">
-          <h3 class="header">${publication.name}</h3>
-          <p class="author">${site.project.primary_owner.name}</p>
-          <div class="description">
-            <span class="date">${publication.created_at.strftime('%Y-%m-%d %H:%M')}</span>
-            <span class="secondary label">${publication.license.identifier}</span>
+        <div class="row" align="left">
+          <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16 breadcrumb">
+            <a class="item" href="${req.route_path('top')}">Top</a>
+            <span class="diviber">/</span>
+            <a class="item" href="${req.route_path('project.view', namespace=site.project.namespace)}">${site.project.name}</a>
+            <span class="diviber">/</span>
+            <span class="item">${publication.name}</a>
           </div>
-          <span class="classification">${publication.classification.name}</span>
-          <p>${publication.description}</p>
-        </div>
-        <div class="group flat box">
-          <h5>Articles</h5>
         </div>
       </div>
-      <div class="column-3 column-v-4 column-l-16">
+
+      <div class="offset-3 column-7 offset-v-2 column-v-8 column-l-16">
+        <span class="rounded active label">HOSTED</span>
+
+        <div class="container">
+          <div class="group flat box">
+            <h3 class="header">${publication.name}</h3>
+            <p class="author">${site.project.primary_owner.name}</p>
+            <div class="description">
+              Published As <span class="primary label">${publication.license.identifier}</span>
+              In&nbsp;<span class="classification">${publication.classification.name}</span>
+              <p>${publication.description}</p>
+            </div>
+          </div>
+          <div class="group flat box">
+            <h5>Articles</h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="column-3 column-v-4 column-l-16 right-side-bar">
         % if not req.user:
           <div class="info message">
             <h6 class="header">CREATE A PUBLICATION</h6>

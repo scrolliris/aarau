@@ -27,19 +27,19 @@
       </div>
     </div>
 
-    <div class="row publication">
-      <div class="offset-3 column-7 offset-v-2 column-v-8 column-l-16 site-object">
+    <div class="row site">
+      <div class="offset-3 column-7 offset-v-2 column-v-8 column-l-16">
         <div class="tab menu">
-          <div class="item active">Publications</div>
+          <div class="item active">Texts</div>
           <div class="disabled item">Slides</div>
         </div>
 
         <p>
         % if site_type == 'publication':
           <span class="rounded label publication active">HOSTED</span>
-          <span class="rounded label application"><a href="${req.route_path('top', _query={'type': 'application'})}">INTEGRATED</a></span>
+          <span class="rounded line label application"><a href="${req.route_path('top', _query={'type': 'application'})}">INTEGRATED</a></span>
         % else:
-          <span class="rounded label publication"><a href="${req.route_path('top')}">HOSTED</a></span>
+          <span class="rounded line label publication"><a href="${req.route_path('top')}">HOSTED</a></span>
           <span class="rounded label application active">INTEGRATED</span>
         % endif
         </p>
@@ -47,11 +47,14 @@
         % if site_type == 'application':
           % for site in sites:
             <% application = site.application %>
-            <div class="flat box">
+            <% project = site.project %>
+            <div class="flat application site box">
               <a href="${req.route_path('site.application.view', id=application.id)}">
-                <h5 class="header">${util.truncate(application.name, 25)}</h5></a>
+                <h5 class="header">${project.name}&nbsp;/&nbsp;${util.truncate(application.name, 25)}</h5></a>
               <div class="description">
-                <span class="date">${application.created_at.strftime('%Y-%m-%d %H:%M')}</span>
+                <p class="note">Registered On
+                  <a href="${req.route_path('project.view', namespace=project.namespace, _query={'type': 'application'})}"><span class="project-namespace">${project.namespace}</span></a>
+                  @&nbsp;<span class="secondary label date">${application.created_at.strftime('%Y-%m-%d %H:%M')}</span></p>
                 <p>${util.truncate(application.description, length=120)}</p>
               </div>
             </div>
@@ -59,13 +62,16 @@
         % else:
           % for site in sites:
             <% publication = site.publication %>
-            <div class="flat box">
+            <% project = site.project %>
+            <div class="flat publication site box">
               <a href="${req.route_path('site.publication.view', slug=site.slug)}">
-                <h5 class="header">${util.truncate(publication.name, length=25)}</h5></a>
+                <h5 class="header">${project.name}&nbsp;/&nbsp;${util.truncate(publication.name, length=25)}</h5></a>
+              <span class="classification">${util.truncate(publication.classification.name, length=85)}</span>
               <div class="description">
-                <span class="date">${publication.created_at.strftime('%Y-%m-%d %H:%M')}</span>
-                <span class="secondary label">${publication.license.identifier}</span>
-                <span class="classification">${util.truncate(publication.classification.name, length=60)}</span>
+                <p class="note">Published On
+                  <a href="${req.route_path('project.view', namespace=project.namespace)}"><span class="project-namespace">${project.namespace}</span></a>
+                  As&nbsp;<span class="primary label">${publication.license.identifier}</span>
+                  @&nbsp;<span class="secondary label date">${publication.created_at.strftime('%Y-%m-%d %H:%M')}</span></p>
                 <p>${util.truncate(publication.description, length=120)}</p>
               </div>
             </div>

@@ -5,26 +5,43 @@
 
 <%block name='title'>${render_title('')}</%block>
 
-<div class="content">
+<div class="content application">
   <div class="grid">
 
-    <div class="row application">
-      ${render_notice()}
-      <div class="offset-3 column-7 offset-v-2 column-v-8 column-l-16 site-object">
-        <p><span class="rounded active label">INTEGRATED</span></p>
+    <% application = site.application %>
 
-        <% application = site.application %>
-        <div class="group flat box">
-          <h3 class="header">${application.name}</h3>
-          <p class="author">${site.project.primary_owner.name}</p>
-          <div class="description">
-            <span class="date">${application.created_at.strftime('%Y-%m-%d %H:%M')}</span>
-            <span class="secondary label">${site.domain}</span>
+    <div class="row">
+      <div class="column-16" align="center">
+        ${render_notice()}
+
+        <div class="row" align="left">
+          <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16 breadcrumb">
+            <a class="item" href="${req.route_path('top', _query={'type': 'application'})}">Top</a>
+            <span class="diviber">/</span>
+            <a class="item" href="${req.route_path('project.view', namespace=site.project.namespace, _query={'type': 'application'})}">${site.project.name}</a>
+            <span class="diviber">/</span>
+            <span class="item">${application.name}</a>
           </div>
-          <p>${application.description}</p>
         </div>
       </div>
-      <div class="column-3 column-v-4 column-l-16">
+
+      <div class="offset-3 column-7 offset-v-2 column-v-8 column-l-16">
+        <span class="rounded active label">INTEGRATED</span>
+
+        <div class="container">
+          <div class="group flat box">
+            <h3 class="header">${application.name}</h3>
+            <p class="author">${site.project.primary_owner.name}</p>
+            <div class="description">
+              <span class="date">${application.created_at.strftime('%Y-%m-%d %H:%M')}</span>
+              <span class="secondary label">${site.domain}</span>
+            </div>
+            <p>${application.description}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="column-3 column-v-4 column-l-16 right-side-bar">
         % if not req.user:
           <div class="info message">
             <h6 class="header">Create a Project</h6>

@@ -6,13 +6,37 @@ from aarau.models import (
     Membership,
     Plan,
     Project,
+    Site,
 )
 
 from aarau.views.project.form import build_new_project_form
+from aarau.queries.site import get_sites
+
+
+def get_site_type(params):
+    site_type = 'publication' if (
+        'type' not in params or params['type'] == 'publication'
+    ) else 'application'
+    return site_type
 
 
 def tpl(path, resource='project'):
     return 'aarau:templates/{0:s}/{1:s}'.format(resource, path)
+
+
+@view_config(route_name='project.view',
+             renderer=tpl('view.mako'))
+def project_view(req):
+    project = Project.select().where(
+        Project.namespace == req.matchdict['namespace']
+    ).get()
+
+    site_type = get_site_type(req.params)
+    sites = get_sites(site_type).where(
+        Site.project_id == project.id
+    )
+
+    return dict(project=project, site_type=site_type, sites=sites)
 
 
 @view_config(route_name='project.new', renderer=tpl('new.mako'))
