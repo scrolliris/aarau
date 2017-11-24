@@ -1,3 +1,5 @@
+from collections.abc import Mapping
+
 import pytest
 
 from webob.multidict import NestedMultiDict, NoVars
@@ -26,7 +28,7 @@ def test_view_top(users, dummy_request):
     dummy_request.user = user
     res = top(dummy_request)
 
-    assert isinstance(res, dict)
+    assert isinstance(res, Mapping)
     assert ('site_type', 'sites') == tuple(sorted(res.keys()))
     assert 'publication' == res['site_type']
     assert {Site} == set([s.__class__ for s in res['sites']])
@@ -45,7 +47,7 @@ def test_view_top_type_publication(users, dummy_request):
 
     res = top(dummy_request)
 
-    assert isinstance(res, dict)
+    assert isinstance(res, Mapping)
     assert ('site_type', 'sites') == tuple(sorted(res.keys()))
     assert 'publication' == res['site_type']
     assert {Site} == set([s.__class__ for s in res['sites']])
@@ -64,7 +66,7 @@ def test_view_top_type_application(users, dummy_request):
 
     res = top(dummy_request)
 
-    assert isinstance(res, dict)
+    assert isinstance(res, Mapping)
     assert ('site_type', 'sites') == tuple(sorted(res.keys()))
     assert 'application' == res['site_type']
     assert {Site} == set([s.__class__ for s in res['sites']])

@@ -1,3 +1,5 @@
+from collections.abc import Mapping
+
 import pytest
 
 from webob.multidict import MultiDict, NestedMultiDict, NoVars
@@ -50,7 +52,7 @@ def test_publication_site_new_get(users, dummy_request):
     res = publication_site_new(dummy_request)
     form = build_new_publication_site_form(dummy_request)
 
-    assert isinstance(res, dict)
+    assert isinstance(res, Mapping)
     assert ('form', 'project', 'site') == tuple(sorted(res.keys()))
     assert isinstance(res['form'], form.__class__)
     assert project == res['project']
@@ -112,7 +114,7 @@ def test_publication_site_new_post_with_validation_error(users, dummy_request):
     form = build_new_publication_site_form(dummy_request)
 
     assert dummy_request.session.peek_flash('failure')
-    assert isinstance(res, dict)
+    assert isinstance(res, Mapping)
     assert ('form', 'project', 'site') == tuple(sorted(res.keys()))
     assert isinstance(res['form'], form.__class__)
     assert project == res['project']
@@ -275,7 +277,7 @@ def test_publication_site_edit_get(mocker, users, dummy_request):
     res = publication_site_edit(dummy_request)
     form = build_edit_publication_site_form(dummy_request, site)
 
-    assert isinstance(res, dict)
+    assert isinstance(res, Mapping)
     assert ('form', 'project', 'publication', 'site') == \
         tuple(sorted(res.keys()))
     assert isinstance(res['form'], form.__class__)
@@ -369,7 +371,7 @@ def test_publication_site_edit_post_with_validation_error(
     form = build_edit_publication_site_form(dummy_request, site)
 
     assert dummy_request.session.peek_flash('failure')
-    assert isinstance(res, dict)
+    assert isinstance(res, Mapping)
     assert ('form', 'project', 'publication', 'site') == \
         tuple(sorted(res.keys()))
     assert isinstance(res['form'], form.__class__)

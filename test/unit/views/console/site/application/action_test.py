@@ -1,3 +1,5 @@
+from collections.abc import Mapping
+
 import pytest
 
 from webob.multidict import MultiDict, NestedMultiDict, NoVars
@@ -49,7 +51,7 @@ def test_application_site_new_get(users, dummy_request):
     res = application_site_new(dummy_request)
     form = build_new_application_site_form(dummy_request)
 
-    assert isinstance(res, dict)
+    assert isinstance(res, Mapping)
     assert ('form', 'project', 'site') == tuple(sorted(res.keys()))
     assert isinstance(res['form'], form.__class__)
     assert project == res['project']
@@ -108,7 +110,7 @@ def test_application_site_new_post_with_validation_error(users, dummy_request):
     form = build_new_application_site_form(dummy_request)
 
     assert dummy_request.session.peek_flash('failure')
-    assert isinstance(res, dict)
+    assert isinstance(res, Mapping)
     assert ('form', 'project', 'site') == tuple(sorted(res.keys()))
     assert isinstance(res['form'], form.__class__)
     assert project == res['project']
@@ -227,7 +229,7 @@ def test_application_site_view_badge(users, dummy_request):
     }
     res = application_site_view_badge(dummy_request)
 
-    assert isinstance(res, dict)
+    assert isinstance(res, Mapping)
     assert ('application', 'project', 'site') == tuple(sorted(res.keys()))
     assert project == res['project']
     assert site == res['site']
@@ -293,7 +295,7 @@ def test_application_site_view_result(users, dummy_request):
 
     res = application_site_view_result(dummy_request)
 
-    assert isinstance(res, dict)
+    assert isinstance(res, Mapping)
     assert ('application', 'project', 'site') == tuple(sorted(res.keys()))
     assert project == res['project']
     assert site == res['site']
@@ -411,7 +413,7 @@ def test_application_site_view_script(mocker, users, dummy_request):
 
     res = application_site_view_script(dummy_request)
 
-    assert isinstance(res, dict)
+    assert isinstance(res, Mapping)
     assert ('application', 'project', 'replication_state', 'site') == \
         tuple(sorted(res.keys()))
     assert project == res['project']
