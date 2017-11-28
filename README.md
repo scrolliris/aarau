@@ -20,8 +20,8 @@ The application of [https://scrolliris.com/](https://scrolliris.com/).
 
 ## Repository
 
-[https://gitlab.com/lupine-software/aarau](
-https://gitlab.com/lupine-software/aarau)
+[https://gitlab.com/scrolliris/aarau](
+https://gitlab.com/scrolliris/aarau)
 
 
 ## Requirements
@@ -34,7 +34,7 @@ https://gitlab.com/lupine-software/aarau)
 * Datastore (emulator)
 * Node.js `>= 7.10.1` (build)
 * GNU gettext `>= 0.19.8.1` (translation)
-* [Neuchâtel](https://gitlab.com/lupine-software/neuchatel) as git subtree
+* [Neuchâtel](https://gitlab.com/scrolliris/neuchatel) as git subtree
 * Graphviz (document)
 
 
@@ -68,13 +68,13 @@ TODO
 #### Neuchâtel
 
 See translation project [Neuchâtel](
-https://gitlab.com/lupine-software/neuchatel).
+https://gitlab.com/scrolliris/neuchatel).
 
 Don't commit directly the changes on above translation project into this repo.
 
 ```zsh
 : setup `locale`
-% git remote add neuchatel https://gitlab.com/lupine-software/neuchatel.git
+% git remote add neuchatel https://gitlab.com/scrolliris/neuchatel.git
 % git subtree add --prefix locale neuchatel master
 
 : synchronize with updates into specified branch
@@ -323,7 +323,7 @@ See documents.
 ## Translation
 
 See `./bin/linguine --help` and translation project [repository](
-https://gitlab.com/lupine-software/neuchatel)
+https://gitlab.com/scrolliris/neuchatel)
 
 ### Generate new catalog
 
@@ -419,6 +419,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 See [LICENSE](LICENSE).
 
 
-[pipeline]: https://gitlab.com/lupine-software/aarau/badges/master/pipeline.svg
-[coverage]: https://gitlab.com/lupine-software/aarau/badges/master/coverage.svg
-[commit]: https://gitlab.com/lupine-software/aarau/commits/master
+[pipeline]: https://gitlab.com/scrolliris/aarau/badges/master/pipeline.svg
+[coverage]: https://gitlab.com/scrolliris/aarau/badges/master/coverage.svg
+[commit]: https://gitlab.com/scrolliris/aarau/commits/master

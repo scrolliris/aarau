@@ -30,7 +30,7 @@ Examples:
 USG
 }
 
-# see https://gitlab.com/lupine-software/neuchatel
+# see https://gitlab.com/scrolliris/neuchatel
 package_name="Neuchâtel"
 package_version="0.1"
 msgid_bugs_address="support@scrolliris.com"

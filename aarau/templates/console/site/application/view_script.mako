@@ -77,7 +77,7 @@
             <div class="column-16">
               <h5>Readability Analysis Tracker</h5>
               <p class="description">Set <code>PROJECT_ID</code> and configure <label class="negative label">WRITE_KEY</label> as `apiKey` with yours. You can just paste this snippet at the bottom of body of your article. The script will work based on user&apos;s scroll. At least, you need to include this for readability analysis of your texts.</p>
-              <p class="description">The source code is available from also <a href="https://gitlab.com/lupine-software/siret" target="_blank">our repository</a>. (codename: siret)</p>
+              <p class="description">The source code is available from also <a href="https://gitlab.com/scrolliris/siret" target="_blank">our repository</a>. (codename: siret)</p>
               <pre class="inverted">(function(d, w) {
   var config = {
       projectId: '${project.access_key_id}'
@@ -97,7 +97,7 @@
             <div class="column-16">
               <h5>Readability Analysis Reflector</h5>
               <p class="description">Set <code>PROJECT_ID</code> and configure <label class="positive label">READ_KEY</label> as `apiKey` with yours. You can just paste this snippet at the bottom of body of your article. A small browser viewer widget will appear on your site. If you don't share the result as public, it's recommended to include it for your admin user.</p>
-              <p class="description">The source code is available from also <a href="https://gitlab.com/lupine-software/sihl" target="_blank">our repository</a>. (codename: sihl)</p>
+              <p class="description">The source code is available from also <a href="https://gitlab.com/scrolliris/sihl" target="_blank">our repository</a>. (codename: sihl)</p>
               <pre class="inverted">(function(d, w) {
   var config = {
       projectId: '${project.access_key_id}'
