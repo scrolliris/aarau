@@ -6,8 +6,6 @@ stages:
   - test
   - codequality
 
-# -- stages
-
 check:
   stage: vet
   image: python:3.5.4

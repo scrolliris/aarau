@@ -3,10 +3,10 @@ __pycache__/
 *.egg
 .cache
 
-.python-version
+.*-version
 
-.env
-.env.ci
+.env*
+!.env*.sample
 .coverage
 codequality.txt
 

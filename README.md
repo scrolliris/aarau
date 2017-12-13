@@ -55,12 +55,12 @@ TODO
 
 : Node.js (e.g. nodeenv)
 (venv) % pip install nodeenv
-(venv) % nodeenv --python-virtualenv --with-npm --node=7.10.1
+(venv) % nodeenv --python-virtualenv --with-npm --node=8.9.0
 : re-activate for node.js at this time
 (venv) % source venv/bin/activate
 (venv) % npm update --global npm
 (venv) % npm --version
-5.3.0
+5.5.1
 ```
 
 ### Dependencies
@@ -174,7 +174,7 @@ Create manually by your self for now.
   --database 'postgresql://user:pass@localhost:5432/dbname' NAME
 ```
 
-### Check, Lint and Analyze
+### Style Check, Lint and Analyze
 
 * flake8
 * flake8-docstrings (pep257)
