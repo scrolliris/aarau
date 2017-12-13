@@ -45,7 +45,7 @@ locale=""
 
 getopt --test > /dev/null
 if [ $? -ne 4 ]; then
-  echo "\`getout --test\` failed"
+  echo "-- old getopt(1) --"
 fi
 
 set -e
