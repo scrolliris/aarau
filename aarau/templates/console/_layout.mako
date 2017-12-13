@@ -29,10 +29,10 @@
     <link rel="apple-touch-icon" type="image/png" sizes="57x57" href="${req.util.static_path('img/touch-icon-57.png')}">
     <link rel="humans" type="text/plain" href="/humans.txt">
     <link rel="robots" type="text/plain" href="/robots.txt">
-    <link rel="stylesheet" href="${util.hashed_asset_url('vendor.css')}">
-    <link rel="stylesheet" href="${util.hashed_asset_url('author.css')}">
     <style>html{background-color:#454545;}</style>
     <style>.not-ready{visibility: hidden;}</style>
+    <link rel="stylesheet" href="${util.hashed_asset_url('vendor.css')}">
+    <link rel="stylesheet" href="${util.hashed_asset_url('author.css')}">
     <script><%include file='aarau:assets/_fouc.js'/></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300|Roboto+Slab:300" rel="stylesheet">
   </head>
