@@ -10,7 +10,7 @@
   <div class="row">
     <div class="field-8">
       <label class="label" for="domain">Domain</label>
-      <p class="description">Custom domain or subdomain e.g. <code>xxx.scrolliris.io</code> support is still TBD.</p>
+      <p class="description">Custom domain or subdomain e.g. <code>xxx.scrolliris.com</code> support is still TBD.</p>
       <span class="secondary line label">scrolliris.com</span>
     </div>
   </div>

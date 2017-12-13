@@ -43,16 +43,16 @@
               <h5 class="title">General Badges</h5>
               <h6 calss="title">STATIC</h6>
               <p class="text">These badges are static svg. You can embed it on your article to describe tracking status. Choose <code>{on|off}.svg</code>.</p>
-              <p class="badges"><img src="https://img.scrolliris.io/badge/tracking/on.svg">&nbsp;<img src="https://img.scrolliris.io/badge/tracking/off.svg"></p>
+              <p class="badges"><img src="https://img.scrolliris.com/badge/tracking/on.svg">&nbsp;<img src="https://img.scrolliris.com/badge/tracking/off.svg"></p>
               <pre>
 # AsciiDoc
-image:https://img.scrolliris.io/badge/tracking/off.svg[link="https://about.scrolliris.com/",title="tracking status"]
+image:https://img.scrolliris.com/badge/tracking/off.svg[link="https://about.scrolliris.com/",title="tracking status"]
 
 # Markdown
-[![tracking status](https://img.scrolliris.io/badge/tracking/off.svg)](https://about.scrolliris.com/)
+[![tracking status](https://img.scrolliris.com/badge/tracking/off.svg)](https://about.scrolliris.com/)
 
 # HTML
-&lt;a href="https://about.scrolliris.com/"&gt;&lt;img src="https://img.scrolliris.io/badge/tracking/off.svg" alt="tracking status"&gt;&lt;/a&gt;
+&lt;a href="https://about.scrolliris.com/"&gt;&lt;img src="https://img.scrolliris.com/badge/tracking/off.svg" alt="tracking status"&gt;&lt;/a&gt;
 </pre>
 
               <h6 calss="title">DYNAMIC</h6>
