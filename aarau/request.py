@@ -60,7 +60,6 @@ class CustomRequest(Request):  # pylint: disable=too-many-ancestors
 
         # finished callbacks
         self.add_finished_callback(self.__class__.close_db)
-        self.add_finished_callback(self._set_hsts)
 
     @classmethod
     def trim_port(cls, env_dict):
@@ -144,15 +143,3 @@ class CustomRequest(Request):  # pylint: disable=too-many-ancestors
         env_dict['wsgi.url_scheme'] = self.settings.get(
             'wsgi.url_scheme', 'https')
         return env_dict
-
-    def _set_hsts(self, req):
-        """Sets HSTS header based on `X-Forwarded-Proto`."""
-        criteria = [
-            (not self.env.is_production),
-            req.headers.get('X-Forwarded-Proto', 'http') == 'https',
-        ]
-        if not any(criteria):
-            hsts_max_age = self.settings.get('hsts.max-age', '3153600')
-            hsts_options = self.settings.get('hsts.options', '')
-            req.response.headers['Strict-Transport-Security'] = \
-                "max-age={};{}".format(hsts_max_age, hsts_options)

@@ -16,8 +16,6 @@ TEST_DIR = os.path.dirname(__file__)
 INI_FILE = os.path.join(TEST_DIR, '..', 'config', 'testing.ini')
 
 
-# -- Shared fixtures
-
 @pytest.fixture(scope='session')
 def dotenv() -> None:
     """Loads dotenv file."""
@@ -106,8 +104,6 @@ def get_mailer():
     return _get_mailer
 
 
-# auto fixtures
-
 @pytest.yield_fixture(autouse=True, scope='session')
 def session_helper(db):
     """A helper function for session scope."""
@@ -177,8 +173,6 @@ def function_helper(db):
         # to not bring any change into next test case
         db.cardinal.rollback()
 
-
-# -- View tests
 
 @pytest.fixture(scope='session')
 def config(request, settings) -> Configurator:
@@ -304,8 +298,6 @@ def mailer_outbox(dummy_request, get_mailer):
     """Returns dummy mailbox for out going emails."""
     return get_mailer(dummy_request).outbox
 
-
-# -- Functional tests
 
 @pytest.fixture(scope='session')
 def router(raw_settings) -> Router:

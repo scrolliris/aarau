@@ -93,11 +93,6 @@ setup(
         'production': production_requires,
     },
     install_requires=requires,
-    message_extractors={'aarau': [
-        ('**.py', 'python', None),
-        ('templates/**.mako', 'mako', {'input_encoding': 'utf-8'}),
-        ('static/**', 'ignore', None),
-    ]},
     entry_points="""\
     [paste.app_factory]
     main = aarau:main
