@@ -346,6 +346,13 @@ The translation catalog needs GNU gettext.
 (venv) % make catalog-compile
 ```
 
+Translations for frontend (json) needs `i18next-conv`.
+
+```zsh
+% npm install -g i18next-conv
+% make catalog-compile
+```
+
 ### Work-flow
 
 0. extract
