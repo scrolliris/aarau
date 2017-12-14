@@ -34,6 +34,6 @@ def test_static_url_in_production(monkeypatch, dummy_request):
     template_util = TemplateUtil({}, dummy_request)
     monkeypatch.setattr(template_util, 'env', DummyEnv())
 
-    expected = 'https://cdn.example.com/example.org/v1/static/' \
+    expected = 'https://cdn.example.com/org.example/v1/static/' \
         'img/touch-icon-120.png'
     assert expected == template_util.static_url('img/touch-icon-120.png')
