@@ -112,10 +112,10 @@ class TemplateUtil(object):
     def static_url(self, filepath) -> str:
         """Returns url for asset file path.
 
-        If producition, generates cdn url by settings.
+        If producition, generates bucket url which is hosted on CDN.
         """
         def get_bucket_info(name):
-            part = self.req.settings.get('storage.bucket_{0:s}'.format(name))
+            part = self.req.settings.get('bucket.{0:s}'.format(name))
             return re.sub(UNSLASH_PATTERN, '', part)
 
         if self.env.is_production:
