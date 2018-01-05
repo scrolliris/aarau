@@ -22,7 +22,7 @@ from aarau.views.console.site.form import (
 @view_config(route_name='console.site.publication.new',
              renderer=tpl('new.mako', type_='publication'))
 @login_required
-def publication_site_new(req):
+def publication_new(req):
     project_id = req.matchdict.get('project_id')
     project = get_project(project_id, user_id=req.user.id)
     site = Site(
@@ -65,10 +65,25 @@ def publication_site_new(req):
     return dict(form=form, project=project, site=site)
 
 
-@view_config(route_name='console.site.publication.edit',
-             renderer=tpl('edit.mako', type_='publication'))
+@view_config(route_name='console.site.publication.overview',
+             renderer=tpl('overview.mako', type_='publication'))
 @login_required
-def publication_site_edit(req):
+def publication_overview(req):
+    project_id = req.matchdict.get('project_id')
+    site_id = req.matchdict.get('id')
+
+    project = get_project(project_id, user_id=req.user.id)
+    site = get_site(site_id, project_id=project.id, type_='publication')
+
+    return dict(project=project, site=site,
+                publication=site.publication)
+
+
+@view_config(route_name='console.site.publication.settings',
+             request_method=('GET', 'POST'),
+             renderer=tpl('settings.mako', type_='publication'))
+@login_required
+def publication_settings(req):
     project_id = req.matchdict.get('project_id')
     site_id = req.matchdict.get('id')
 
@@ -76,6 +91,8 @@ def publication_site_edit(req):
     site = get_site(site_id, project_id=project.id, type_='publication')
 
     form = build_edit_publication_site_form(req, site)
+
+    # update
     if 'submit' in req.POST:
         _ = req.translate
         if form.validate():
@@ -97,25 +114,9 @@ def publication_site_edit(req):
 
             req.session.flash(_('site.publication.update.success'),
                               queue='success', allow_duplicate=False)
-            next_path = req.route_path('console.project.view', id=project.id)
-            return HTTPFound(location=next_path)
         else:
             req.session.flash(_('site.publication.update.failure'),
                               queue='failure', allow_duplicate=False)
 
-    return dict(form=form, project=project, site=site,
-                publication=site.publication)
-
-
-@view_config(route_name='console.site.publication.view',
-             renderer=tpl('view.mako', type_='publication'))
-@login_required
-def publication_site_view(req):
-    project_id = req.matchdict.get('project_id')
-    site_id = req.matchdict.get('id')
-
-    project = get_project(project_id, user_id=req.user.id)
-    site = get_site(site_id, project_id=project.id, type_='publication')
-
-    return dict(project=project, site=site,
+    return dict(project=project, site=site, form=form,
                 publication=site.publication)

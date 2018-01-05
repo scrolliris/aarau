@@ -53,12 +53,13 @@ def test_routing_to_robots_as_logged_in_user(dummy_app, login_as, users):
         assert 200 == res.status_code
 
 
-def test_routing_to_console_application_site_badge(dummy_app, login_as, users):
+def test_routing_to_console_application_settings_badges(
+        dummy_app, login_as, users):
     user = users['oswald']
     with login_as(user):
         project = user.projects[0]
         site = project.application_sites[0]
-        url = '/project/{}/site/{}/badge?type=application'.format(
+        url = '/projects/{}/sites/{}/settings/badges?type=application'.format(
             project.id, site.id)
         app = dummy_app.switch_target('console')
         res = app.get(url, status=200)

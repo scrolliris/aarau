@@ -13,11 +13,11 @@ def setup(config):  # pylint: disable=unused-argument
     pass
 
 
-# GET application_site_new
+# -- GET application_new
 
-def test_application_site_new_get_missing_project(users, dummy_request):
+def test_application_new_get_missing_project(users, dummy_request):
     from aarau.views.console.site.application.action import \
-        application_site_new
+        application_new
 
     user = users['oswald']
     dummy_request.user = user
@@ -29,13 +29,13 @@ def test_application_site_new_get_missing_project(users, dummy_request):
     }
 
     with pytest.raises(HTTPNotFound):
-        application_site_new(dummy_request)
+        application_new(dummy_request)
 
 
-def test_application_site_new_get(users, dummy_request):
+def test_application_new_get(users, dummy_request):
     from aarau.views.console.site.form import build_new_application_site_form
     from aarau.views.console.site.application.action import \
-        application_site_new
+        application_new
 
     user = users['oswald']
     dummy_request.user = user
@@ -48,7 +48,7 @@ def test_application_site_new_get(users, dummy_request):
         'project_id': project.id,
     }
 
-    res = application_site_new(dummy_request)
+    res = application_new(dummy_request)
     form = build_new_application_site_form(dummy_request)
 
     assert isinstance(res, Mapping)
@@ -58,11 +58,11 @@ def test_application_site_new_get(users, dummy_request):
     assert isinstance(res['site'], Site)
 
 
-# POST application_site_new
+# -- POST application_new
 
-def test_application_site_new_post_missing_project(users, dummy_request):
+def test_application_new_post_missing_project(users, dummy_request):
     from aarau.views.console.site.application.action import \
-        application_site_new
+        application_new
 
     user = users['oswald']
     query_param = {'type': 'application'}
@@ -79,13 +79,13 @@ def test_application_site_new_post_missing_project(users, dummy_request):
     }
 
     with pytest.raises(HTTPNotFound):
-        application_site_new(dummy_request)
+        application_new(dummy_request)
 
 
-def test_application_site_new_post_with_validation_error(users, dummy_request):
+def test_application_new_post_with_validation_error(users, dummy_request):
     from aarau.views.console.site.form import build_new_application_site_form
     from aarau.views.console.site.application.action import \
-        application_site_new
+        application_new
 
     user = users['oswald']
     project = user.projects[0]
@@ -106,7 +106,7 @@ def test_application_site_new_post_with_validation_error(users, dummy_request):
         'project_id': project.id
     }
 
-    res = application_site_new(dummy_request)
+    res = application_new(dummy_request)
     form = build_new_application_site_form(dummy_request)
 
     assert dummy_request.session.peek_flash('failure')
@@ -119,7 +119,7 @@ def test_application_site_new_post_with_validation_error(users, dummy_request):
 
 def test_application_site_new_post(mocker, users, dummy_request):
     from aarau.views.console.site.application.action import \
-        application_site_new
+        application_new
 
     user = users['oswald']
     project = user.projects[0]
@@ -155,7 +155,7 @@ def test_application_site_new_post(mocker, users, dummy_request):
 
     assert 1 == len(project.application_sites)
 
-    res = application_site_new(dummy_request)
+    res = application_new(dummy_request)
 
     assert dummy_request.session.peek_flash('success')
     assert isinstance(res, HTTPFound)
@@ -171,11 +171,79 @@ def test_application_site_new_post(mocker, users, dummy_request):
     assert 1 == dummy_service.replicate.call_count
 
 
-# GET application_site_view_badge
+# -- GET application_overview
 
-def test_application_site_view_badge_missing_project(users, dummy_request):
+# -- GET application_insights
+
+def test_application_insights_missing_project(users, dummy_request):
     from aarau.views.console.site.application.action import \
-        application_site_view_badge
+        application_insights
+
+    user = users['oswald']
+    project = user.projects[0]
+    site = project.application_sites[0]
+    dummy_request.user = user
+    dummy_request.params = dummy_request.GET = NestedMultiDict({
+        'type': 'application',
+    })
+    dummy_request.matchdict = {
+        'project_id': 0,  # invalid
+        'id': site.id,
+    }
+
+    with pytest.raises(HTTPNotFound):
+        application_insights(dummy_request)
+
+
+def test_application_insights_missing_site(users, dummy_request):
+    from aarau.views.console.site.application.action import \
+        application_insights
+
+    user = users['oswald']
+    dummy_request.user = user
+    dummy_request.params = dummy_request.GET = NestedMultiDict({
+        'type': 'application',
+    })
+    project = user.projects[0]
+    dummy_request.matchdict = {
+        'project_id': project.id,
+        'id': 0,  # invalid
+    }
+
+    with pytest.raises(HTTPNotFound):
+        application_insights(dummy_request)
+
+
+def test_application_insights(users, dummy_request):
+    from aarau.views.console.site.application.action import \
+        application_insights
+
+    user = users['oswald']
+    project = user.projects[0]
+    site = project.application_sites[0]
+    dummy_request.user = user
+    dummy_request.params = dummy_request.GET = NestedMultiDict({
+        'type': 'application',
+    })
+    dummy_request.matchdict = {
+        'project_id': project.id,
+        'id': site.id,
+    }
+
+    res = application_insights(dummy_request)
+
+    assert isinstance(res, Mapping)
+    assert ('application', 'project', 'site') == tuple(sorted(res.keys()))
+    assert project == res['project']
+    assert site == res['site']
+    assert site.application == res['application']
+
+
+# -- GET application_settings_badges
+
+def test_application_settings_badges_missing_project(users, dummy_request):
+    from aarau.views.console.site.application.action import \
+        application_settings_badges
 
     user = users['oswald']
     project = user.projects[0]
@@ -190,12 +258,12 @@ def test_application_site_view_badge_missing_project(users, dummy_request):
     }
 
     with pytest.raises(HTTPNotFound):
-        application_site_view_badge(dummy_request)
+        application_settings_badges(dummy_request)
 
 
-def test_application_site_view_badge_missing_site(users, dummy_request):
+def test_application_settings_badges_missing_site(users, dummy_request):
     from aarau.views.console.site.application.action import \
-        application_site_view_badge
+        application_settings_badges
 
     user = users['oswald']
     project = user.projects[0]
@@ -209,12 +277,12 @@ def test_application_site_view_badge_missing_site(users, dummy_request):
     }
 
     with pytest.raises(HTTPNotFound):
-        application_site_view_badge(dummy_request)
+        application_settings_badges(dummy_request)
 
 
-def test_application_site_view_badge(users, dummy_request):
+def test_application_settings_badges(users, dummy_request):
     from aarau.views.console.site.application.action import \
-        application_site_view_badge
+        application_settings_badges
 
     user = users['oswald']
     project = user.projects[0]
@@ -227,7 +295,7 @@ def test_application_site_view_badge(users, dummy_request):
         'project_id': project.id,
         'id': site.id,
     }
-    res = application_site_view_badge(dummy_request)
+    res = application_settings_badges(dummy_request)
 
     assert isinstance(res, Mapping)
     assert ('application', 'project', 'site') == tuple(sorted(res.keys()))
@@ -236,78 +304,12 @@ def test_application_site_view_badge(users, dummy_request):
     assert site.application == res['application']
 
 
-# GET application_site_view_result
+# -- GET application_settings_scripts
 
-def test_application_site_view_result_missing_project(users, dummy_request):
-    from aarau.views.console.site.application.action import \
-        application_site_view_result
-
-    user = users['oswald']
-    project = user.projects[0]
-    site = project.application_sites[0]
-    dummy_request.user = user
-    dummy_request.params = dummy_request.GET = NestedMultiDict({
-        'type': 'application',
-    })
-    dummy_request.matchdict = {
-        'project_id': 0,  # invalid
-        'id': site.id,
-    }
-
-    with pytest.raises(HTTPNotFound):
-        application_site_view_result(dummy_request)
-
-
-def test_application_site_view_result_missing_site(users, dummy_request):
-    from aarau.views.console.site.application.action import \
-        application_site_view_result
-
-    user = users['oswald']
-    dummy_request.user = user
-    dummy_request.params = dummy_request.GET = NestedMultiDict({
-        'type': 'application',
-    })
-    project = user.projects[0]
-    dummy_request.matchdict = {
-        'project_id': project.id,
-        'id': 0,  # invalid
-    }
-
-    with pytest.raises(HTTPNotFound):
-        application_site_view_result(dummy_request)
-
-
-def test_application_site_view_result(users, dummy_request):
-    from aarau.views.console.site.application.action import \
-        application_site_view_result
-
-    user = users['oswald']
-    project = user.projects[0]
-    site = project.application_sites[0]
-    dummy_request.user = user
-    dummy_request.params = dummy_request.GET = NestedMultiDict({
-        'type': 'application',
-    })
-    dummy_request.matchdict = {
-        'project_id': project.id,
-        'id': site.id,
-    }
-
-    res = application_site_view_result(dummy_request)
-
-    assert isinstance(res, Mapping)
-    assert ('application', 'project', 'site') == tuple(sorted(res.keys()))
-    assert project == res['project']
-    assert site == res['site']
-    assert site.application == res['application']
-
-
-# GET application_site_view_script
-
-def test_application_site_view_script_missing_project(
+def test_application_settings_scripts_missing_project(
         mocker, users, dummy_request):
     from aarau.views.console.site.application.action import \
-        application_site_view_script
+        application_settings_scripts
 
     user = users['oswald']
     project = user.projects[0]
@@ -336,17 +338,17 @@ def test_application_site_view_script_missing_project(
     dummy_request.find_service = (lambda *args, **kwargs: dummy_service)
 
     with pytest.raises(HTTPNotFound):
-        application_site_view_script(dummy_request)
+        application_settings_scripts(dummy_request)
 
     # pylint: disable=no-member
     assert 0 == dummy_service.assign.call_count
     assert 0 == dummy_service.validate.call_count
 
 
-def test_application_site_view_script_missing_site(
+def test_application_settings_scripts_missing_site(
         mocker, users, dummy_request):
     from aarau.views.console.site.application.action import \
-        application_site_view_script
+        application_settings_scripts
 
     user = users['oswald']
     project = user.projects[0]
@@ -374,16 +376,16 @@ def test_application_site_view_script_missing_site(
     dummy_request.find_service = (lambda *args, **kwargs: dummy_service)
 
     with pytest.raises(HTTPNotFound):
-        application_site_view_script(dummy_request)
+        application_settings_scripts(dummy_request)
 
     # pylint: disable=no-member
     assert 0 == dummy_service.assign.call_count
     assert 0 == dummy_service.validate.call_count
 
 
-def test_application_site_view_script(mocker, users, dummy_request):
+def test_application_settings_scripts(mocker, users, dummy_request):
     from aarau.views.console.site.application.action import \
-        application_site_view_script
+        application_settings_scripts
 
     user = users['oswald']
     project = user.projects[0]
@@ -411,7 +413,7 @@ def test_application_site_view_script(mocker, users, dummy_request):
 
     dummy_request.find_service = (lambda *args, **kwargs: dummy_service)
 
-    res = application_site_view_script(dummy_request)
+    res = application_settings_scripts(dummy_request)
 
     assert isinstance(res, Mapping)
     assert ('application', 'project', 'replication_state', 'site') == \

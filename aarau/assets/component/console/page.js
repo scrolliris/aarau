@@ -56,8 +56,8 @@ let handlePageLinkClick = (instance, page) => {
 class PageTable extends Component {
   constructor(props) {
     super(props);
-    let url = '/api/project/' + this.props.projectId +
-              '/site/' + this.props.siteId + '/result.json';
+    let url = '/api/projects/' + this.props.projectId +
+              '/sites/' + this.props.siteId + '/insights.json';
     url += '?type=application';
     this.props['url'] = url;
     this.props['pageWindow'] = 2;
@@ -93,14 +93,14 @@ class PageTable extends Component {
       });
     }).catch((reason) => {
       // pass
-      // console.log(reason.status);
+      //console.log(reason.status);
     });
   }
 
   _linkTo(pageId, text) {
     // TODO: set link to page view
-    //const url = '/project/' + this.props.projectId + '/site/' +
-    //  this.props.siteId + '/page/' + pageId;
+    //const url = '/projects/' + this.props.projectId + '/sites/' +
+    //  this.props.siteId + '/pages/' + pageId;
     //return h('a', {'href': this._buildPageURL(pageId)}, text);
     return text;
   }

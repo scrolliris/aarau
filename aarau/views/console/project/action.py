@@ -19,11 +19,20 @@ def tpl(path, resource='project'):
     return 'aarau:templates/console/{0:s}/{1:s}'.format(resource, path)
 
 
+def get_hosting_type(req):
+    type_ = req.params.get('type', '')
+    if type_ in ('publication', 'application'):
+        return type_
+    return 'publication'
+
+
 @view_config(route_name='console.project.view',
              renderer=tpl('view.mako'))
 @login_required
 def project_view(req):
     """Renders a project by id."""
+    type_ = get_hosting_type(req)
+
     project_id = req.matchdict.get('id')
     user = req.user
     project = Project.select().join(Membership).join(User).where(
@@ -32,7 +41,7 @@ def project_view(req):
     ).get()
     if not project:
         raise HTTPNotFound
-    return dict(project=project)
+    return dict(project=project, hosting_type=type_)
 
 
 @view_config(route_name='console.project.new',

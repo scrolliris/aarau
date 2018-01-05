@@ -41,11 +41,11 @@ class PaginatedQuery:
         return self._query.paginate(self.page, self._items_per_page)
 
 
-@view_config(route_name='api.console.site.application.result',
+@view_config(route_name='api.console.site.application.insights',
              request_method='GET',
              renderer='json')
 @login_required
-def api_application_site_result(req):
+def api_application_insights(req):
     project_id = req.matchdict.get('project_id')
     site_id = req.matchdict.get('id')
 

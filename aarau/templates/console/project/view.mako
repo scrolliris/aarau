@@ -13,52 +13,52 @@
 </div>
 </%block>
 
+<%block name='sidebar'>
+  <%include file='aarau:templates/console/project/_sidebar.mako'/>
+</%block>
+
 <%block name='footer'>
 </%block>
 
-<div id ="publication" class="content">
+<div id="project" class="content">
   ${render_notice()}
 
   <div class="grid">
     <div class="row">
       <div class="column-16">
-        <h3>${project.name}</h3>
+        <h4>${project.name}</h4>
         <label class="primary label">${project.namespace}</label>
+
         <p class="description">${project.description}</p>
-        <form class="inline form" method="get" action="${req.route_path('console.site.application.new', project_id=project.id)}">
-          <div class="field-2 field-v-4 field-l-16">
-            <select name="type">
-              <option value="publication">Publication</option>
-              <option value="application">Application</option>
-            </select>
-          </div>
-          <div class="field-3 field-v-6 field-l-16">
-            <input class="primary button" type="submit" value="New Site">
-          </div>
+        <form class="inline form" method="get" action="${req.route_path('console.site.{:s}.new'.format(hosting_type), project_id=project.id)}">
+          <input type="hidden" name="type" value="${hosting_type}">
+          <input class="primary button" type="submit" value="New Site">
         </form>
       </div>
     </div>
+
     <div class="row">
-    % for site in project.application_sites:
-      <div class="column-4 column-v-8 column-l-16">
-        <div class="blue flat box">
-          <a href="${req.route_path('console.site.application.view.result', project_id=project.id, id=site.id, _query={'type':'application'})}"><h5 class="header">${util.truncate(site.application.name, 25)}</h5></a>
-          <label class="secondary rounded label">${site.domain}</label>
-          <p class="text">${util.truncate(site.application.description, 30)}</p>
-          <p class="link"><a class="petit flat button" href="${req.route_path('console.site.application.edit', project_id=project.id, id=site.id, _query={'type':'application'})}">Edit</a></p>
+    % if hosting_type == 'publication':
+      % for site in project.publication_sites:
+        <div class="column-4 column-v-8 column-l-16">
+          <div class="gray flat site box">
+            <a href="${req.route_path('console.site.publication.overview', project_id=project.id, id=site.id, _query={'type':'publication'})}"><h5 class="header">${util.truncate(site.publication.name, 25)}</h5></a>
+            <label class="secondary rounded label">${site.domain}</label>
+            <p class="text">${util.truncate(site.publication.description, 30)}</p>
+          </div>
         </div>
-      </div>
-    % endfor
-    % for site in project.publication_sites:
-      <div class="column-4 column-v-8 column-l-16">
-        <div class="gray flat box">
-          <a href="${req.route_path('console.site.publication.view', project_id=project.id, id=site.id, _query={'type':'publication'})}"><h5 class="header">${util.truncate(site.publication.name, 25)}</h5></a>
-          <label class="secondary rounded label">${site.domain}</label>
-          <p class="text">${util.truncate(site.publication.description, 30)}</p>
-          <p class="link"><a class="petit flat button" href="${req.route_path('console.site.publication.edit', project_id=project.id, id=site.id, _query={'type':'publication'})}">Edit</a></p>
+      % endfor
+    % elif hosting_type == 'application':
+      % for site in project.application_sites:
+        <div class="column-4 column-v-8 column-l-16">
+          <div class="blue flat site box">
+            <a href="${req.route_path('console.site.application.overview', project_id=project.id, id=site.id, _query={'type':'application'})}"><h5 class="header">${util.truncate(site.application.name, 25)}</h5></a>
+            <label class="secondary rounded label">${site.domain}</label>
+            <p class="text">${util.truncate(site.application.description, 30)}</p>
+          </div>
         </div>
-      </div>
-    % endfor
+      % endfor
+    % endif
     </div>
   </div>
 </div>

@@ -65,9 +65,11 @@ def subdomain_manager_factory(config):
     return subdomain_manager(config)
 
 
-def site_type_of(hosting_type):
+def site_type_of(hosting_type_or_types):
+    """Create predicator for hosting_types which splitted by pipe."""
     def predicate(_, req):
-        if 'type' not in req.params or req.params['type'] != hosting_type:
+        values = hosting_type_or_types.split('|')
+        if req.params.get('type', '') not in values:
             return False
         return True
     return predicate
@@ -97,45 +99,70 @@ def includeme(config):
     with subdomain('console') as c:
         # pylint: disable=anomalous-backslash-in-string
         c.add_route('console.top', '/')
-        c.add_route('console.project.new', '/project/new')
-        c.add_route('console.project.view', '/project/{id:\d+}')
-        c.add_route('console.project.edit', '/project/{id:\d+}/edit')
+
+        # project
+        # NOTE: empty string is ?type=publication (default)
+        both_type = site_type_of('|publication|application')
+        c.add_route('console.project.new', '/projects/new',
+                    custom_predicates=(both_type,))
+        c.add_route('console.project.view', '/projects/{id:\d+}',
+                    custom_predicates=(both_type,))
+        c.add_route('console.project.edit', '/projects/{id:\d+}/edit',
+                    custom_predicates=(both_type,))
 
         # application
         application_type = site_type_of('application')
         c.add_route('console.site.application.new',
-                    '/project/{project_id:\d+}/site/new',
+                    '/projects/{project_id:\d+}/site/new',
                     custom_predicates=(application_type,))
-        c.add_route('console.site.application.edit',
-                    '/project/{project_id:\d+}/site/{id:\d+}/edit',
+        # application - overview
+        c.add_route('console.site.application.overview',
+                    '/projects/{project_id:\d+}/sites/{id:\d+}',
                     custom_predicates=(application_type,))
-        c.add_route('console.site.application.view.result',
-                    '/project/{project_id:\d+}/site/{id:\d+}/result',
+        # application - insights
+        c.add_route('console.site.application.insights',
+                    '/projects/{project_id:\d+}/sites/{id:\d+}'
+                    '/insights',
                     custom_predicates=(application_type,))
-        c.add_route('console.site.application.view.script',
-                    '/project/{project_id:\d+}/site/{id:\d+}/script',
+        # application - settings
+        c.add_route('console.site.application.settings',
+                    '/projects/{project_id:\d+}/sites/{id:\d+}'
+                    '/settings',
                     custom_predicates=(application_type,))
-        c.add_route('console.site.application.view.badge',
-                    '/project/{project_id:\d+}/site/{id:\d+}/badge',
+        c.add_route('console.site.application.settings.scripts',
+                    '/projects/{project_id:\d+}/sites/{id:\d+}'
+                    '/settings/scripts',
+                    custom_predicates=(application_type,))
+        c.add_route('console.site.application.settings.widgets',
+                    '/projects/{project_id:\d+}/sites/{id:\d+}'
+                    '/settings/widgets',
+                    custom_predicates=(application_type,))
+        c.add_route('console.site.application.settings.badges',
+                    '/projects/{project_id:\d+}/sites/{id:\d+}'
+                    '/settings/badges',
                     custom_predicates=(application_type,))
 
         # publication
         publication_type = site_type_of('publication')
         c.add_route('console.site.publication.new',
-                    '/project/{project_id:\d+}/site/new',
+                    '/projects/{project_id:\d+}/sites/new',
                     custom_predicates=(publication_type,))
-        c.add_route('console.site.publication.edit',
-                    '/project/{project_id:\d+}/site/{id:\d+}/edit',
+        # publication - overview
+        c.add_route('console.site.publication.overview',
+                    '/projects/{project_id:\d+}/sites/{id:\d+}',
                     custom_predicates=(publication_type,))
-        c.add_route('console.site.publication.view',
-                    '/project/{project_id:\d+}/site/{id:\d+}',
+        # publication - settings
+        c.add_route('console.site.publication.settings',
+                    '/projects/{project_id:\d+}/sites/{id:\d+}'
+                    '/settings',
                     custom_predicates=(publication_type,))
 
     # internal api
     with subdomain('console') as c:
         # pylint: disable=anomalous-backslash-in-string
-        c.add_route('api.console.site.application.result',
-                    '/api/project/{project_id:\d+}/site/{id:\d+}/result.json',
+        c.add_route('api.console.site.application.insights',
+                    '/api/projects/{project_id:\d+}/sites/{id:\d+}'
+                    '/insights.json',
                     custom_predicates=(application_type,))
 
     with subdomain(None) as c:

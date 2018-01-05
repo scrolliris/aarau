@@ -15,6 +15,15 @@
 </div>
 </%block>
 
+<%block name='sidebar'>
+<div class="sidebar">
+  <div class="item">
+    <a href="${req.route_url('console.top')}"><img class="logo" width="32" height="32" src="${util.static_url('img/scrolliris-logo-64x64.png')}"></a>
+  </div>
+  <a class="item active">New Publication</a>
+</div>
+</%block>
+
 <div id="publication" class="content">
   <div class="grid">
     <div class="row">
