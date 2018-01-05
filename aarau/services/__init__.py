@@ -17,6 +17,7 @@ def activator_factory(activation_type='user_email'):
             return UserEmailActivator(req)
         elif activation_type == 'account':
             return AccountActivator(req)
+        return None
 
     return _activator_factory
 
@@ -26,6 +27,7 @@ def replicator_factory(replication_obj='site'):
     def _replicator_factory(_, req):
         if replication_obj == 'site':
             return SiteReplicator(req)
+        return None
 
     return _replicator_factory
 

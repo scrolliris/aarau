@@ -89,6 +89,7 @@ class TemplateUtil(object):
         route = self.req.matched_route
         if route:
             return route.name
+        return None
 
     @reify
     def manifest_json(self) -> dict:

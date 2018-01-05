@@ -9,6 +9,7 @@ class AuthenticationPolicy(AuthTktAuthenticationPolicy):
         user = request.user
         if user is not None:
             return user.id
+        return None
 
 
 def current_user(req):
@@ -22,6 +23,7 @@ def current_user(req):
             return user
         except User.DoesNotExist:
             return None
+    return None
 
 
 def includeme(config):

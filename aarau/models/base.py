@@ -42,7 +42,7 @@ class EnumField(Field):
     def coerce(self, value):
         """Validates as valid choice & sanitize as string."""
         if value not in self.choices:
-            raise Exception("Invalid Enum value `%s`", value)
+            raise Exception("Invalid Enum value `%s`" % value)
         return str(value)
 
     def get_column_type(self):
