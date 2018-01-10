@@ -1,7 +1,5 @@
 <div class="sidebar">
-  <div class="item">
-    <a href="${req.route_url('console.top')}"><img class="logo" width="32" height="32" src="${util.static_url('img/scrolliris-logo-64x64.png')}"></a>
-  </div>
+  <%include file='aarau:templates/console/_sidebar_navi.mako'/>
 
   <%def name="link_to(route_name, text)">
     <a class="${application_item_class(route_name)}" href="${req.route_url(route_name, project_id=project.id, id=site.id, _query={'type': 'application'})}">${text}</a>

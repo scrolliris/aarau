@@ -17,9 +17,7 @@
 
 <%block name='sidebar'>
 <div class="sidebar">
-  <div class="item">
-    <a href="${req.route_url('console.top')}"><img class="logo" width="32" height="32" src="${util.static_url('img/scrolliris-logo-64x64.png')}"></a>
-  </div>
+  <%include file='aarau:templates/console/_sidebar_navi.mako'/>
   <a class="item active">New Publication</a>
 </div>
 </%block>

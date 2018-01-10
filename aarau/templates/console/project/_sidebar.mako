@@ -1,8 +1,7 @@
 <div class="sidebar">
-  <div class="item">
-    <a href="${req.route_url('console.top')}"><img class="logo" width="32" height="32" src="${util.static_url('img/scrolliris-logo-64x64.png')}"></a>
-  </div>
-  <span class="item active">
+  <%include file='aarau:templates/console/_sidebar_navi.mako'/>
+
+  <span class="item active expanded">
     <%def name="link_to(route_name, type_name, text, default_link=False)">
       <a class="${site_item_class(route_name, type_name, default_link)}" href="${req.route_url(route_name, id=project.id, _query={'type': type_name})}">${text}</a>
     </%def>
@@ -16,7 +15,7 @@
       %endif
     </%def>
 
-    <span class="item">Scrolls</span>
+    <span class="item">Overview</span>
     <span class="item-container">
       ${link_to('console.project.view', 'publication', 'Publications', default_link=True)}
       ${link_to('console.project.view', 'application', 'Applications')}

@@ -5,7 +5,9 @@
     background-color #ffffff
   .top.menu
     margin 0
+    margin-left 3.33rem
     padding-left 0
+    padding-right 0
     > a.item,
     > span.item
       display block
@@ -13,6 +15,9 @@
       padding-left 0
       &:hover
         background none
+    .right.menu
+      .item:first-child
+        margin 0
   .secondary.menu
     padding-left 0.02rem
 
@@ -29,53 +34,130 @@
 
   section.container
     padding 0.78rem 1.42rem
+    // header
+    > .row .column-13
+      padding-top 0
+      padding-bottom 0
 
+// sidebar
+#console
   .sidebar
     > .item.active
       border-left 4px solid darken($gray1, 3%)
       padding-left 1.06rem
+      padding-right 0
       color $black1
       font-weight bold
       > .item:first-child
         padding-top 0
       > .item:last-child
         padding-bottom 0
-    .item
-      &.disabled
-        color lighten($gray1, 48%)
-        &:hover
-          background-color inherit !important
-          cursor not-allowed
-      &.active > .item
-        padding-left 0
-        color $black1
+
+    > .item.active.expanded
+      padding-left 0
+      padding-right 0
       .item
-        padding-left 1.18rem
+        padding-left 1.06rem
+        padding-right 0
+        color $black1
       .item-container
         font-weight normal
+        .item
+          padding-left 1.78rem
         .item.active
           color $black2
           background-color darken($gray0, 8%)
+
+    .item.disabled
+      color lighten($gray1, 48%)
+      &:hover
+        background-color inherit !important
+        cursor not-allowed
+
     .message
       border none
 
-.sidebar-container
-  > .sidebar
-    @media only screen and (max-width: 1280px)
-      min-width 13.97rem
-      max-width 17.97rem
-    @media only screen and (max-width: 980px)
-      min-width 10.97rem
-      max-width 14.97rem
-    @media only screen and (max-width: 768px)
-      min-width 7.97rem
-      max-width 11.97rem
-    @media only screen and (max-width: 640px)
-      min-width 4.97rem
-      max-width 8.97rem
-    @media only screen and (max-width: 480px)
+  // close
+  .sidebar
+    visibility hidden
+    display none
+    transition transform .28s ease 0.08s
+
+  #sidebar_checkbox.pinned + .sidebar
+      visibility visible
+      display block
+
+  .sidebar-checkbox
+    display none
+
+  .sidebar-checkbox,
+  .sidebar-show-button,
+  .sidebar-hold-button,
+  .sidebar-hide-button
+    &:focus
+      outline none
+    &::-moz-focus-inner
+      border 0
+
+  #sidebar_checkbox:checked + .sidebar
+    z-index 1
+    visibility visible
+    display block
+
+  #sidebar_checkbox:checked ~ .content .top.menu
+    margin-left 0
+
+  .sidebar-show-button
+    display inline-block
+    float left
+    margin-top 0.689rem
+    margin-left 0.562rem
+    border 0
+    cursor pointer
+    transition transform .22s ease 0.08s
+    &:hover
+      &::before
+        color #222222
+    &::before
+      display inline-block
+      width 1rem
+      height 0.75rem
+      content "☰"
+      color #777777
+
+  .sidebar-hold-button
+    color #444444
+
+  .sidebar-hide-button
+    color #444444
+    &:disabled
       display none
 
+  #sidebar_checkbox:checked ~ .content .sidebar-show-button
+    display none
+
+@media only screen and (max-width: 1280px)
+  #console .sidebar
+    min-width 13.97rem
+    max-width 17.97rem
+@media only screen and (max-width: 980px)
+  #console .sidebar
+    min-width 10.97rem
+    max-width 14.97rem
+@media only screen and (max-width: 768px)
+  #console .sidebar
+    min-width 7.97rem
+    max-width 11.97rem
+@media only screen and (max-width: 640px)
+  #console .sidebar
+    min-width 4.97rem
+    max-width 8.97rem
+@media only screen and (max-width: 480px)
+  #console .sidebar
+    display none
+@media print
+  #console .sidebar
+    display none
 
 // box
 #console

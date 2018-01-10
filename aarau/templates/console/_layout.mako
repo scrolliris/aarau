@@ -38,13 +38,20 @@
   </head>
   <body id="console"<%block name='body_attr'/>>
     <div class="wrapper sidebar-container">
+      ## sidebar
+      % if cookie.get('console.sidebar', '') == 'locked':
+        <input type="checkbox" id="sidebar_checkbox" class="sidebar-checkbox pinned" checked=checked>
+      % else:
+        <input type="checkbox" id="sidebar_checkbox" class="sidebar-checkbox">
+      % endif
       <%block name='sidebar'>
         <%include file='aarau:templates/console/_sidebar.mako'/>
       </%block>
 
-      ## sidebar content && main container
+      ## main container
       <section class="content container">
         <header>
+          <label class="sidebar-show-button" for="sidebar_checkbox" title="Show Sidebar"></label>
           <div class="top menu">
             <div class="item">
               <%block name='breadcrumb'>
