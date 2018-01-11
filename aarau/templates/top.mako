@@ -9,7 +9,7 @@
   <div class="grid">
 
     <div class="row landscape${' user' if req.user else ''}">
-      <div class="column-16" align="center">
+      <div class="offset-3 column-10 offset-v-2 column-v-12 column-16" align="center">
         ${render_notice()}
 
         % if not req.user:
@@ -23,7 +23,7 @@
     </div>
 
     <div class="row site">
-      <div class="offset-3 column-10">
+      <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16">
         <div class="warn message">
           <h5 class="header">NOTE</h5>
           <div class="description">
@@ -32,7 +32,7 @@
         </div>
       </div>
 
-      <div class="offset-3 column-10 offset-v-2 column-v-8 column-l-16">
+      <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16">
         <div class="tab menu">
         % if site_type == 'publication':
           <span class="item active">HOSTED</span>
@@ -50,7 +50,7 @@
             <% publication = site.publication %>
             <% project = site.project %>
 
-            <div class="column-4">
+            <div class="column-4 column-v-8 column-l-8 column-s-16">
               <div class="flat publication box" align="left">
                 <div class="cover">COMMING SOON</div>
                 <span class="primary label">${publication.license.identifier}</span>
@@ -73,7 +73,7 @@
           <div class="row">
 
           ## TODO
-          <div class="column-4">
+          <div class="column-4 column-v-8 column-l-8 column-s-16">
             <div class="flat application box" align="left">
               <div class="cover">doc.scrolliris.com</div>
 
@@ -91,7 +91,7 @@
             <% application = site.application %>
             <% project = site.project %>
 
-            <div class="column-4">
+            <div class="column-4 column-v-8 column-l-8 column-s-16">
               <div class="flat application box" align="left">
                 <div class="cover">${site.domain}</div>
                 <div class="meta">
