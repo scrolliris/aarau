@@ -14,42 +14,72 @@
     .primary.button
       margin 2.22rem 0
 
-  .card
-    .box
-      border-top 4px solid darkgray
-      .description
-        margin 1.66rem 0
+.site
+  > div > .description
+    margin-top 1.28rem
 
-  .label.active
-    color #f2f2f2
-    background-color #888888
-
+  .flat.box
+    min-height 18.88rem
+    margin-top 0.22rem
+    margin-bottom 0.66rem
+    padding 0.51rem 0.61rem
+    .cover
+      text-align center
+      vertical-align middle
+      border-radius 0.16rem
+      height 8.23rem
+      width 100%
+      font-size 0.88rem
+      color #888888
+      padding-top 3.58rem
+      margin-bottom 0.66rem
+      background-color #f2efe9
+    .label
+      margin-top -7.91rem
+      margin-left -0.98rem
+      font-size 0.78rem
+      float left
+    .meta
+      min-height 7.66rem
+      .date
+        color #888888
+        font-size 0.81rem
+      .project-namespace
+        display inline-block
+        margin 0.19rem 0 0.68rem 0.12rem
+      h5.header
+        font-size 1.08rem
+      .classification
+        font-size 0.81rem
+    .description
+      min-height 4.28rem
+      padding-top 0.36rem
+      padding-bottom 0.26rem
+      margin-left 0
+      p
+        font-size 0.86rem
+        margin-top 0.49rem
+        padding-top 0.58rem
+        border-top 1px solid #f2efe9
+    .note
+      font-size 0.92rem
+      margin 0.33rem 0
+    p
+      margin 0.11rem 0 0.32rem 0
+  .row
+    .column-4:first-child
+      padding-left 0
+    .column-4:last-child
+      padding-right 0
 
 .site
-  .box
-    border-color #f2f2f2
-    .description
-      margin 0
-      padding 0.033rem 0
+  .publication.box
+    border-top 3px solid #a9a9a9
 
-.site.box
-  .project-namespace
-    display inline-block
-    margin 0.19rem 0 0.68rem 0.12rem
-
-.publication.site.box
-  .classification
-    color #888888
-  p.note
-    margin 0.33rem 0
-  p
-    margin 0.11rem 0 0.32rem 0
-
-.application.site.box
-  p
-    margin 0.11rem 0 0.32rem 0
-
+  .application.box
+    border-top 3px solid #8383c3
 
 .pride
   font-size 90%
-  color $gray1
+  p
+    color darken($gray1, 30%)

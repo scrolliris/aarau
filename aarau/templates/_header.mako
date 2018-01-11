@@ -34,8 +34,9 @@
 <div class="global-message${' user' if req.user else ''}">
 % if not req.user:
   <p>Increase your Text Readability</p>
+
 % else:
-  <p class="user">Ahoj! If you have any questions, Please contact us support@scrolliris.com</p>
+  <div id="ticker" class="pride"></div>
 % endif
 </div>
 </%block>

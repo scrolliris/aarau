@@ -184,11 +184,12 @@ def includeme(config):
         c.add_route('site.publication.view',
                     '/publications/{slug}')
 
-        c.add_route('project.view', '/projects/{namespace}')
-
         # login_required
         c.add_route('project.new', '/projects/new')
 
+        c.add_route('project.view', '/projects/{namespace}')
+
+        # login_required
         c.add_route('settings', '/settings')
         c.add_route('settings.section', '/settings/{section}')
 
