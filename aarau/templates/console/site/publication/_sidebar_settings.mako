@@ -2,6 +2,7 @@
   <%include file='aarau:templates/console/_sidebar_navi.mako'/>
 
   <a class="item" href="${req.route_path('console.site.publication.overview', project_id=project.id, id=site.id, _query={'type':'publication'})}">Overview</a>
+  <a class="disabled item">Articles</a>
   <a class="disabled item">Insights</a>
   <a class="disabled item">Downloads</a>
 
