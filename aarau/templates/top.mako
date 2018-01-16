@@ -9,7 +9,7 @@
   <div class="grid">
 
     <div class="row landscape${' user' if req.user else ''}">
-      <div class="offset-3 column-10 offset-v-2 column-v-12 column-16" align="center">
+      <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16" align="center">
         ${render_notice()}
 
         % if not req.user:
