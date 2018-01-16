@@ -51,7 +51,7 @@
       ## main container
       <section class="content container">
         <header>
-          <label class="sidebar-show-button" for="sidebar_checkbox" title="Show Sidebar"></label>
+          <label class="sidebar-show-button" for="sidebar_checkbox" title="Show Sidebar">&#9776;</label>
           <div class="top menu">
             <div class="item">
               <%block name='breadcrumb'>
