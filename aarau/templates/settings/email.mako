@@ -70,7 +70,7 @@
                     <span class="negative rounded label">Pending</span>
                     <div class="action right">
                       ${delete_email_form(email_form['delete'], ue)}
-                      <button class="flat button">Resend confirmation email</button>
+                      <button class="flat petit button">Resend confirmation email</button>
                     </div>
                   % endif
                   </td>
