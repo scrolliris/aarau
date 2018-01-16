@@ -7,10 +7,7 @@
 
 <%block name='breadcrumb'>
 <div class="breadcrumb">
-  <a class="item" href="${req.route_path('console.project.view', id=project.id)}">${project.name}</a>
-  <span class="divider">/</span>
-  <a class="item" href="${req.route_path('console.site.publication.overview', project_id=project.id, id=site.id, _query={'type': 'publication'})}">${publication.name}</a>
-  <span class="divider">/</span>
+  <%include file='aarau:templates/console/site/publication/_breadcrumb_parent_items.mako'/>
   <span class="item active">General Settings</span>
 </div>
 </%block>

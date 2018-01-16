@@ -8,7 +8,7 @@
 
 <%block name='breadcrumb'>
 <div class="breadcrumb">
-  <a class="item" href="${req.route_path('console.project.view', id=project.id)}">${project.name}</a>
+  <a class="item" href="${req.route_path('console.project.view', id=project.id, _query={'type': 'application'})}">${project.name}</a>
   <span class="divider">/</span>
   <a class="item" href="${req.route_path('console.site.application.overview', project_id=project.id, id=site.id, _query={'type': 'application'})}">${application.name}</a>
   <span class="divider">/</span>
