@@ -24,9 +24,13 @@
 </%block>
 
 <div id="application" class="content">
-  ${render_notice()}
-
   <div class="grid">
+    <div class="row">
+      <div class="column-16">
+        ${render_notice()}
+      </div>
+    </div>
+
     <div class="row">
       <div class="column-16">
         <h3>${application.name}</h3>

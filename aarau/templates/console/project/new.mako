@@ -16,9 +16,13 @@
 <div id="project" class="content">
   <div class="grid">
     <div class="row">
-      <div class="column-8">
+      <div class="column-16">
         ${render_notice()}
+      </div>
+    </div>
 
+    <div class="row">
+      <div class="column-8">
         <%
           act = req.route_path('console.project.new')
           ctx = 'new'

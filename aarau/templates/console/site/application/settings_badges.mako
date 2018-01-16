@@ -19,10 +19,14 @@
 <%block name='footer'>
 </%block>
 
-<div id="site_badge" class="content">
-  ${render_notice()}
-
+<div id="application" class="content">
   <div class="grid">
+    <div class="row">
+      <div class="column-16">
+        ${render_notice()}
+      </div>
+    </div>
+
     <div class="row">
       <div class="column-16">
         <h4>${application.name}</h4>

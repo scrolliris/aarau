@@ -20,9 +20,13 @@
 </%block>
 
 <div id="publication" class="content">
-  ${render_notice()}
-
   <div class="grid">
+    <div class="row">
+      <div class="column-16">
+        ${render_notice()}
+      </div>
+    </div>
+
     <div class="row">
       <div class="column-16">
         <h4>${publication.name}</h4>

@@ -21,9 +21,13 @@
 </%block>
 
 <div id="project" class="content">
-  ${render_notice()}
-
   <div class="grid">
+    <div class="row">
+      <div class="column-16">
+        ${render_notice()}
+      </div>
+    </div>
+
     <div class="row">
       <div class="column-16">
         <h4>${project.name}</h4>

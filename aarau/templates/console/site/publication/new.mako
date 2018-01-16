@@ -22,8 +22,13 @@
 <div id="publication" class="content">
   <div class="grid">
     <div class="row">
-      <div class="column-9">
+      <div class="column-16">
         ${render_notice()}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="column-9">
         <p class="description">Create new publication which is published on Scrolliris.</p>
         <%
           act = req.route_url('console.site.publication.new', project_id=project.id, _query={'type':'publication'})

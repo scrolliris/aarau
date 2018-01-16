@@ -1,3 +1,4 @@
+<%namespace file='aarau:templates/macro/_flash_message.mako' import="render_notice"/>
 <%namespace file='aarau:templates/macro/_title.mako' import="render_title"/>
 
 <%inherit file='aarau:templates/console/_layout.mako'/>
@@ -9,6 +10,12 @@
 
 <div id="top" class="content">
   <div class="grid">
+    <div class="row">
+      <div class="column-16">
+        ${render_notice()}
+      </div>
+    </div>
+
     <div class="row">
       <div class="column-16">
         <a class="primary button" href="${req.route_path('console.project.new')}">New Project</a>

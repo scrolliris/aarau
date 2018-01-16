@@ -19,11 +19,16 @@
 </div>
 </%block>
 
-<div id="publication" class="content">
+<div id="application" class="content">
   <div class="grid">
     <div class="row">
-      <div class="column-9">
+      <div class="column-16">
         ${render_notice()}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="column-9">
         <p class="description">Enter your external web application (or website) which is integrated with Scrolliris&apos;s readability analysis.</p>
         <%
           act = req.route_url('console.site.application.new', project_id=project.id, _query={'type':'application'})
