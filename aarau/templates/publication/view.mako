@@ -5,35 +5,36 @@
 
 <%block name='title'>${render_title('')}</%block>
 
-<div class="content publication">
+<div id="publication" class="content">
   <div class="grid">
-
     <% publication = site.publication %>
 
     <div class="row">
-      <div class="column-16" align="center">
+      <div class="offset-3 column-10">
         ${render_notice()}
-
-        <div class="row" align="left">
-          <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16 breadcrumb">
-            <a class="item" href="${req.route_path('top')}">Top</a>
-            <span class="diviber">/</span>
-            <a class="item" href="${req.route_path('project.view', namespace=site.project.namespace)}">${site.project.name}</a>
-            <span class="diviber">/</span>
-            <span class="item">${publication.name}</a>
-          </div>
-        </div>
       </div>
+    </div>
 
+    <div class="row" align="left">
+      <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16 breadcrumb">
+        <a class="item" href="${req.route_path('top')}">Top</a>
+        <span class="diviber">/</span>
+        <a class="item" href="${req.route_path('project.view', namespace=site.project.namespace)}">${site.project.name}</a>
+        <span class="diviber">/</span>
+        <span class="item">${publication.name}</a>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="offset-3 column-7 offset-v-2 column-v-8 column-l-16">
-        <span class="rounded active label">HOSTED</span>
+        <span class="active hosted primary label">HOSTED</span>
 
         <div class="container">
           <div class="group flat box">
             <h3 class="header">${publication.name}</h3>
             <p class="author">${site.project.primary_owner.name}</p>
             <div class="description">
-              Published As <span class="primary label">${publication.license.identifier}</span>
+              Published As <span class="primary line label">${publication.license.identifier}</span>
               In&nbsp;<span class="classification">${publication.classification.name}</span>
               <p>${publication.description}</p>
             </div>
@@ -45,13 +46,14 @@
       </div>
 
       <div class="column-3 column-v-4 column-l-16 right-side-bar">
-        % if not req.user:
-          <div class="info message">
-            <h6 class="header">CREATE A PUBLICATION</h6>
-            <p class="description">Publish your articles, get reading intensity, and increase text readability.
-              <a href="${req.route_path('signup')}">Signup</a> now, or <a href="${req.route_path('login')}">Login</a>.</p>
-          </div>
-        % endif
+      % if not req.user:
+        <div class="info message">
+          <h6 class="header">CREATE A PUBLICATION</h6>
+          <p class="description">Publish your articles, get reading intensity, and increase text readability.
+            <a href="${req.route_path('signup')}">Signup</a> now, or <a href="${req.route_path('login')}">Login</a>.</p>
+        </div>
+      % endif
+
         <div class="container">
           <div class="group flat box" align="left">
             <p>${publication.copyright}</p>
@@ -71,7 +73,7 @@
             </p>
             <p class="description">
               <span class="label">UPDATED</span>
-                ${publication.updated_at.strftime('%Y-%m-%d %H:%M')}
+              ${publication.updated_at.strftime('%Y-%m-%d %H:%M')}
             </p>
           </div>
         </div>

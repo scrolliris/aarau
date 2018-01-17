@@ -11,8 +11,6 @@ import './css/signup.styl'
 import './css/top.styl'
 import './css/settings.styl'
 import './css/project.styl'
-import './css/application.styl'
-import './css/publication.styl'
 
 // -- basic (login, reset_password)
 import './css/basic/general.styl'

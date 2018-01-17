@@ -5,28 +5,29 @@
 
 <%block name='title'>${render_title('')}</%block>
 
-<div class="content application">
+<div id="application" class="content">
   <div class="grid">
-
     <% application = site.application %>
 
     <div class="row">
-      <div class="column-16" align="center">
+      <div class="offset-3 column-10">
         ${render_notice()}
-
-        <div class="row" align="left">
-          <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16 breadcrumb">
-            <a class="item" href="${req.route_path('top', _query={'type': 'application'})}">Top</a>
-            <span class="diviber">/</span>
-            <a class="item" href="${req.route_path('project.view', namespace=site.project.namespace, _query={'type': 'application'})}">${site.project.name}</a>
-            <span class="diviber">/</span>
-            <span class="item">${application.name}</a>
-          </div>
-        </div>
       </div>
+    </div>
 
+    <div class="row" align="left">
+      <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16 breadcrumb">
+        <a class="item" href="${req.route_path('top', _query={'type': 'application'})}">Top</a>
+        <span class="diviber">/</span>
+        <a class="item" href="${req.route_path('project.view', namespace=site.project.namespace, _query={'type': 'application'})}">${site.project.name}</a>
+        <span class="diviber">/</span>
+        <span class="item">${application.name}</a>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="offset-3 column-7 offset-v-2 column-v-8 column-l-16">
-        <span class="rounded active label">INTEGRATED</span>
+        <span class="active integrated primary label">INTEGRATED</span>
 
         <div class="container">
           <div class="group flat box">
@@ -34,7 +35,7 @@
             <p class="author">${site.project.primary_owner.name}</p>
             <div class="description">
               <span class="date">${application.created_at.strftime('%Y-%m-%d %H:%M')}</span>
-              <span class="secondary label">${site.domain}</span>
+              <span class="secondary line label">${site.domain}</span>
             </div>
             <p>${application.description}</p>
           </div>

@@ -5,13 +5,16 @@
 
 <%block name='title'>${render_title('')}</%block>
 
-<div class="content project">
+<div id="project" class="content">
   <div class="grid">
+    <div class="row">
+      <div class="column-16">
+        ${render_notice()}
+      </div>
+    </div>
 
     <div class="row">
       <div class="column-16" align="center">
-        ${render_notice()}
-
         <div class="row" align="left">
           <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16 breadcrumb">
             <a class="item" href="${req.route_path('top')}">Top</a>
@@ -34,20 +37,16 @@
           </div>
         </div>
 
-        <div class="tab menu">
-          <div class="item active">Texts</div>
-          <div class="disabled item">Slides</div>
-        </div>
 
-        <p>
+        <div class="tab menu">
         % if site_type == 'publication':
-          <span class="rounded label publication active">HOSTED</span>
-          <span class="rounded line label application"><a href="${req.route_path('project.view', namespace=project.namespace, _query={'type': 'application'})}">INTEGRATED</a></span>
+          <span class="item active">HOSTED</span>
+          <a class="item" href="${req.route_path('project.view', namespace=project.namespace, _query={'type': 'application'})}">INTEGRATED</a>
         % else:
-          <span class="rounded line label publication"><a href="${req.route_path('project.view', namespace=project.namespace)}">HOSTED</a></span>
-          <span class="rounded label application active">INTEGRATED</span>
+          <a class="item" href="${req.route_path('project.view', namespace=project.namespace)}">HOSTED</a>
+          <span class="item active">INTEGRATED</span>
         % endif
-        </p>
+        </div>
 
         % if site_type == 'application':
           % for site in sites:
@@ -67,10 +66,11 @@
             <div class="flat publication site box">
               <a href="${req.route_path('site.publication.view', slug=site.slug)}">
                 <h5 class="header">${util.truncate(publication.name, length=25)}</h5></a>
+              <span class="date">${publication.created_at.strftime('%Y-%m-%d %H:%M')}</span>
               <span class="classification">${util.truncate(publication.classification.name, length=85)}</span>
               <div class="description">
                 <p class="note">Published As&nbsp;<span class="primary label">${publication.license.identifier}</span>
-                  @&nbsp;<span class="secondary label date">${publication.created_at.strftime('%Y-%m-%d %H:%M')}</span></p>
+                  @&nbsp;<span class="secondary line label date">${publication.created_at.strftime('%Y-%m-%d %H:%M')}</span></p>
                 <p>${util.truncate(publication.description, length=120)}</p>
               </div>
             </div>
