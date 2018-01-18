@@ -243,7 +243,8 @@ def test_application_site_insights(users, dummy_request):
 
 # -- GET site_settings_badges (application)
 
-def test_application_site_settings_badges_missing_project(users, dummy_request):
+def test_application_site_settings_badges_missing_project(
+        users, dummy_request):
     from aarau.views.console.site.action import site_settings_badges
 
     user = users['oswald']

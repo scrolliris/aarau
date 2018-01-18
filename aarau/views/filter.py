@@ -37,6 +37,7 @@ def namespace_filter():
     from aarau.views.console.project.form import NAMESPACE_PATTERN
 
     pattern = re.compile(NAMESPACE_PATTERN)
+
     def filter_(namespace):
         if not namespace:
             return False

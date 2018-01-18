@@ -147,7 +147,6 @@ def site_settings(req):
             req.session.flash(_('site.{:s}.update.failure'.format(site.type)),
                               queue='failure', allow_duplicate=False)
 
-
     req.override_renderer = tpl('settings.mako', type_=site.type)
     return dict(project=project, site=site, form=form, instance=site.instance)
 

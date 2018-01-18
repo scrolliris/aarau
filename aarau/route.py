@@ -69,6 +69,7 @@ def namespace_predicator():
     from aarau.views.filter import namespace_filter
 
     filter_ = namespace_filter()
+
     def predicate(inf, _):
         match = inf.get('match', {})
         if not match:

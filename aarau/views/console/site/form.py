@@ -57,7 +57,6 @@ class SiteForm(object):
             v.Length(min=3, max=32),
         ])
 
-
     class PublicationBaseMixin(SiteInstanceMixin):
         pass
 
