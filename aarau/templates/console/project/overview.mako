@@ -49,7 +49,7 @@
         <div class="column-4 column-v-8 column-l-16">
           <div class="gray flat site box">
             <a href="${req.route_path('console.site.overview', namespace=project.namespace, slug=site.slug)}"><h5 class="header">${util.truncate(site.instance.name, 25)}</h5></a>
-            <label class="secondary rounded label">${site.domain}</label>
+            <label class="secondary label">${site.domain}</label>
             <p class="text">${util.truncate(site.instance.description, 30)}</p>
           </div>
         </div>
@@ -57,7 +57,7 @@
         <div class="column-4 column-v-8 column-l-16">
           <div class="blue flat site box">
             <a href="${req.route_path('console.site.overview', namespace=project.namespace, slug=site.slug)}"><h5 class="header">${util.truncate(site.instance.name, 25)}</h5></a>
-            <label class="secondary rounded label">${site.domain}</label>
+            <label class="primary label">scrolliris.com</label>
             <p class="text">${util.truncate(site.instance.description, 30)}</p>
           </div>
         </div>

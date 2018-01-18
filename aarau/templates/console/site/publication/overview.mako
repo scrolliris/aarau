@@ -30,7 +30,7 @@
     <div class="row">
       <div class="column-16">
         <h3>${instance.name}</h3>
-        <label class="primary rounded label">${site.domain}</label>
+        <label class="primary label">scrolliris.com</label>
       </div>
     </div>
 
