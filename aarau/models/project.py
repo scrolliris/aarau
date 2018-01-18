@@ -65,19 +65,19 @@ class Project(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
             cls.billing_state == 'none' or cls.billing_state == 'valid').get()
 
     @property
-    def application_sites(self):
+    def applications(self):
         # pylint: disable=no-member
         return Site.select().join(Application, on=(
-            (Site.hosting_type == 'Application') &
-            (Site.hosting_id == Application.id))).where(
+            (Site.instance_type == 'Application') &
+            (Site.instance_id == Application.id))).where(
                 Site.project_id == self.id)
 
     @property
-    def publication_sites(self):
+    def publications(self):
         # pylint: disable=no-member
         return Site.select().join(Publication, on=(
-            (Site.hosting_type == 'Publication') &
-            (Site.hosting_id == Publication.id))).where(
+            (Site.instance_type == 'Publication') &
+            (Site.instance_id == Publication.id))).where(
                 Site.project_id == self.id)
 
     @property

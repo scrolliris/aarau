@@ -2,9 +2,9 @@
 sites:
   - project: !project.namespace "'piano-music-club'"
     domain: example.org
-    slug:
-    hosting_id: !application.name "'How to score music playing piano'"
-    hosting_type: Application
+    slug: playing-piano-blog
+    instance_id: !application.name "'How to score music playing piano'"
+    instance_type: Application
     calculation_state: 'on'
     read_key: LOTw78qpLVmV9QY3ZHohJJRogNTdX0XFW1V7
     write_key: sQ0_kVrAGsIpgaFMB5jREZPd8LoBjuYm_giU
@@ -16,8 +16,8 @@ sites:
   - project: !project.namespace "'piano-music-club'"
     domain:
     slug: playing-piano
-    hosting_id: !publication.name "'How to score music playing piano'"
-    hosting_type: Publication
+    instance_id: !publication.name "'How to score music playing piano'"
+    instance_type: Publication
     calculation_state: 'on'
     read_key: iBylwDZTsLovooF3VLVwb1NWffIHCH0eeeG0
     write_key: cHVNbwFRBbZBr7_7gM1VtvD46Helg21uFzaH

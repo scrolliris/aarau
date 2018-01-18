@@ -1,6 +1,10 @@
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
 
+from aarau.views import (
+    get_site_type,
+    tpl
+)
 from aarau.views.filter import login_required
 from aarau.models import (
     Membership,
@@ -13,20 +17,9 @@ from aarau.views.project.form import build_new_project_form
 from aarau.queries.site import get_sites
 
 
-def get_site_type(params):
-    site_type = 'publication' if (
-        'type' not in params or params['type'] == 'publication'
-    ) else 'application'
-    return site_type
-
-
-def tpl(path, resource='project'):
-    return 'aarau:templates/{0:s}/{1:s}'.format(resource, path)
-
-
-@view_config(route_name='project.view',
-             renderer=tpl('view.mako'))
-def project_view(req):
+@view_config(route_name='project.overview',
+             renderer=tpl('overview.mako', resource='project'))
+def project_overview(req):
     project = Project.select().where(
         Project.namespace == req.matchdict['namespace']
     ).get()
@@ -39,7 +32,8 @@ def project_view(req):
     return dict(project=project, site_type=site_type, sites=sites)
 
 
-@view_config(route_name='project.new', renderer=tpl('new.mako'))
+@view_config(route_name='project.new',
+             renderer=tpl('new.mako', resource='project'))
 @login_required
 def project_new(req):
     """Renders a form new project/Create new project."""
@@ -73,8 +67,8 @@ def project_new(req):
 
             req.session.flash(_('project.creation.success'),
                               queue='success', allow_duplicate=False)
-            next_path = req.route_url('console.project.view', id=project.id,
-                                      namespace='console')
+            next_path = req.route_url(
+                'console.project.overview', namespace=project.namspace)
             return HTTPFound(location=next_path)
         else:
             req.session.flash(_('project.creation.failure'),

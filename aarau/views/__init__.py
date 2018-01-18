@@ -1,7 +1,7 @@
-def tpl(path, namespace=None):
+def tpl(path, resource=None):
     """Returns template path from package root."""
-    if namespace:
-        return 'aarau:templates/{0:s}/{1:s}'.format(namespace, path)
+    if resource:
+        return 'aarau:templates/{0:s}/{1:s}'.format(resource, path)
 
     return 'aarau:templates/{0:s}'.format(path)
 
@@ -17,6 +17,13 @@ def subdomain(request):
     return parts[0]
 
 
+def get_site_type(params):
+    site_type = 'publication' if (
+        'type' not in params or params['type'] == 'publication'
+    ) else 'application'
+    return site_type
+
+
 def includeme(config):
     """Initializes views for aarau app.
 
@@ -24,9 +31,9 @@ def includeme(config):
     """
     config.include('.signup')
     config.include('.settings')
-    config.include('.application')
-    config.include('.publication')
+
     config.include('.project')
+    config.include('.site')
 
     config.include('.console')
 

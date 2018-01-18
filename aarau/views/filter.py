@@ -30,3 +30,15 @@ def forbidden_redirect(req):
     req.session.flash(_('login.needed'),
                       queue='failure', allow_duplicate=False)
     return HTTPFound(location=req.route_url('login', namespace=None))
+
+
+def namespace_filter():
+    import re
+    from aarau.views.console.project.form import NAMESPACE_PATTERN
+
+    pattern = re.compile(NAMESPACE_PATTERN)
+    def filter_(namespace):
+        if not namespace:
+            return False
+        return pattern.match(namespace)
+    return filter_

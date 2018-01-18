@@ -27,7 +27,7 @@ class SignupFormBase(SecureForm):
     ])
     name = StringField(_('signup.label.name'), [
         v.Optional(),
-        v.Length(min=2, max=64),
+        v.Length(min=3, max=64),
     ])
     username = StringField(_('signup.label.username'), [
         v.Optional(),
@@ -37,7 +37,7 @@ class SignupFormBase(SecureForm):
     password = PasswordField(_('signup.label.password'), [
         v.Required(),
         v.Regexp(PASSWORD_PATTERN),
-        v.Length(min=6, max=32)
+        v.Length(min=8, max=32)
     ])
     submit = SubmitField(_('signup.submit.create'))
 

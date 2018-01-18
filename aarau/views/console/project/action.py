@@ -6,42 +6,31 @@ from aarau.models import (
     Membership,
     Plan,
     Project,
+    Site,
     User,
 )
 
+from aarau.views.console.project import tpl
 from aarau.views.console.project.form import (
     build_edit_project_form,
     build_new_project_form,
 )
 
 
-def tpl(path, resource='project'):
-    return 'aarau:templates/console/{0:s}/{1:s}'.format(resource, path)
-
-
-def get_hosting_type(req):
-    type_ = req.params.get('type', '')
-    if type_ in ('publication', 'application'):
-        return type_
-    return 'publication'
-
-
-@view_config(route_name='console.project.view',
-             renderer=tpl('view.mako'))
+@view_config(route_name='console.project.overview',
+             renderer=tpl('overview.mako'))
 @login_required
-def project_view(req):
-    """Renders a project by id."""
-    type_ = get_hosting_type(req)
-
-    project_id = req.matchdict.get('id')
+def project_overview(req):
+    """Renders a project by namespace."""
     user = req.user
     project = Project.select().join(Membership).join(User).where(
         User.id == user.id,
-        Project.id == project_id
-    ).get()
+        Project.namespace == req.matchdict.get('namespace', '')
+    ).first()
     if not project:
         raise HTTPNotFound
-    return dict(project=project, hosting_type=type_)
+    sites = project.sites.order_by(Site.id.asc())
+    return dict(project=project, sites=sites)
 
 
 @view_config(route_name='console.project.new',
@@ -52,6 +41,8 @@ def project_new(req):
     """Renders a form new project/Create new project."""
     user = req.user
     form = build_new_project_form(req)
+
+    # create
     if 'submit' in req.POST:
         _ = req.translate
         if form.validate():
@@ -76,7 +67,8 @@ def project_new(req):
 
             req.session.flash(_('project.creation.success'),
                               queue='success', allow_duplicate=False)
-            next_path = req.route_path('console.project.view', id=project.id)
+            next_path = req.route_path(
+                'console.project.overview', namespace=project.namespace)
             return HTTPFound(location=next_path)
         else:
             req.session.flash(_('project.creation.failure'),
@@ -90,14 +82,15 @@ def project_new(req):
 @login_required
 def project_edit(req):
     """Renders a form for project/Update a project."""
-    project_id = req.matchdict.get('id')
     user = req.user
     project = Project.select().join(Membership).join(User).where(
         User.id == user.id,
-        Project.id == project_id
+        Project.namespace == req.matchdict.get('namespace', '')
     ).get()
     if not project:
         raise HTTPNotFound
+
+    # update
     form = build_edit_project_form(req, project)
     if 'submit' in req.POST:
         _ = req.translate
@@ -111,7 +104,7 @@ def project_edit(req):
             req.session.flash(_('project.update.success'),
                               queue='success', allow_duplicate=False)
             return HTTPFound(location=req.route_path(
-                'console.project.view', id=project.id))
+                'console.project.overview', namespace=project.namespace))
         else:
             req.session.flash(_('project.update.failure'),
                               queue='failure', allow_duplicate=False)

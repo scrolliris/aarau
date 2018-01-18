@@ -30,13 +30,14 @@ class Site(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
     """
 
     calculation_states = ('off', 'on')
+    instance_types = ('Application', 'Publication')
 
     id = PrimaryKeyField()
     project = ForeignKeyField(
         rel_model=DeferredProject, db_column='project_id', to_field='id',
         related_name='sites', null=False, index=True)
-    hosting_id = IntegerField(null=True)
-    hosting_type = CharField(max_length=32, null=True)
+    instance_id = IntegerField(null=True)
+    instance_type = CharField(max_length=32, null=True)
     domain = CharField(max_length=32, null=True)
     slug = CharField(max_length=255, null=True)
     calculation_state = EnumField(
@@ -54,24 +55,25 @@ class Site(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
             self.id, self.project_id, self.domain, self.slug)
 
     @reify
+    def type(self):
+        """Lower case alias to instance_type attribute."""
+        return str(self.instance_type).lower()
+
+    @reify
+    def instance(self):
+        return getattr(self, self.type)
+
+    def instantiate(self, *args, **kwargs):
+        return globals()[self.instance_type](*args, **kwargs)
+
+    @reify
     def application(self):
-        if self.hosting_type != 'Application':
+        if self.type != 'application' or not self.instance_id:
             return None
-        return Application.get(Application.id == self.hosting_id)
+        return Application.get(Application.id == self.instance_id)
 
     @reify
     def publication(self):
-        if self.hosting_type != 'Publication':
+        if self.type != 'publication' or not self.instance_id:
             return None
-        return Publication.get(Publication.id == self.hosting_id)
-
-    @classmethod
-    def by_type(cls, type_name):
-        if type_name not in ('application', 'publication'):
-            return cls.select()
-        hosting_type = type_name.capitalize()
-        type_class = globals()[hosting_type]
-
-        return cls.select(cls, type_class).join(type_class, on=(
-            (cls.hosting_type == hosting_type) &
-            (cls.hosting_id == type_class.id)))
+        return Publication.get(Publication.id == self.instance_id)

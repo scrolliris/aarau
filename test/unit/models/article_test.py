@@ -60,7 +60,7 @@ def test_published_at_assignment_by_save(users):
     user = users['oswald']
     project = user.projects.where(
         Project.namespace == 'piano-music-club').get()
-    site = project.sites.where(Site.hosting_type == 'Publication').get()
+    site = project.sites.where(Site.instance_type == 'Publication').get()
 
     attrs = {
         'publication': site.publication,

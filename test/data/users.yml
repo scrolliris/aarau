@@ -10,7 +10,7 @@ users:
   - name: Weenie-girl
     email: weenie@example.org
     username: weenie
-    password: Hot1Dog
+    password: Hot_Dog_
     activation_state: active
 
   - name: Henry the Penguin

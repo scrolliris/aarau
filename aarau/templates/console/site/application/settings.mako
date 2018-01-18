@@ -29,7 +29,7 @@
 
     <div class="row">
       <div class="column-16">
-        <h4>${application.name}</h4>
+        <h4>${instance.name}</h4>
         <label class="primary rounded label">${site.domain}</label>
       </div>
     </div>
@@ -42,7 +42,7 @@
 
         <div class="attached box">
           <%
-            act = req.route_url('console.site.application.settings', project_id=project.id, id=site.id, _query={'type':'application'})
+            act = req.route_url('console.site.settings', namespace=project.namespace, slug=site.slug)
             ctx = 'edit'
             err = form.errors
             obj = site

@@ -5,9 +5,9 @@
 
 <%block name='title'>${render_title('')}</%block>
 
-<div id="publication" class="content">
+<div id="application" class="content">
   <div class="grid">
-    <% publication = site.publication %>
+    <% application = site.application %>
 
     <div class="row">
       <div class="offset-3 column-10">
@@ -17,63 +17,53 @@
 
     <div class="row" align="left">
       <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16 breadcrumb">
-        <a class="item" href="${req.route_path('top')}">Top</a>
+        <a class="item" href="${req.route_path('top', _query={'type': 'application'})}">Top</a>
         <span class="diviber">/</span>
-        <a class="item" href="${req.route_path('project.view', namespace=site.project.namespace)}">${site.project.name}</a>
+        <a class="item" href="${req.route_path('project.overview', namespace=site.project.namespace, _query={'type': 'application'})}">${site.project.name}</a>
         <span class="diviber">/</span>
-        <span class="item">${publication.name}</a>
+        <span class="item">${application.name}</a>
       </div>
     </div>
 
     <div class="row">
       <div class="offset-3 column-7 offset-v-2 column-v-8 column-l-16">
-        <span class="active hosted primary label">HOSTED</span>
+        <span class="active integrated primary label">INTEGRATED</span>
 
         <div class="container">
           <div class="group flat box">
-            <h3 class="header">${publication.name}</h3>
+            <h3 class="header">${application.name}</h3>
             <p class="author">${site.project.primary_owner.name}</p>
             <div class="description">
-              Published As <span class="primary line label">${publication.license.identifier}</span>
-              In&nbsp;<span class="classification">${publication.classification.name}</span>
-              <p>${publication.description}</p>
+              <span class="date">${application.created_at.strftime('%Y-%m-%d %H:%M')}</span>
+              <span class="secondary line label">${site.domain}</span>
             </div>
-          </div>
-          <div class="group flat box">
-            <h5>Articles</h5>
+            <p>${application.description}</p>
           </div>
         </div>
       </div>
 
       <div class="column-3 column-v-4 column-l-16 right-side-bar">
-      % if not req.user:
-        <div class="info message">
-          <h6 class="header">CREATE A PUBLICATION</h6>
-          <p class="description">Publish your articles, get reading intensity, and increase text readability.
-            <a href="${req.route_path('signup')}">Signup</a> now, or <a href="${req.route_path('login')}">Login</a>.</p>
-        </div>
-      % endif
-
-        <div class="container">
-          <div class="group flat box" align="left">
-            <p>${publication.copyright}</p>
+        % if not req.user:
+          <div class="info message">
+            <h6 class="header">Create a Project</h6>
+            <p class="description">Include just a single javascript, get anonymous tracking works, and increase readability.
+              <a href="${req.route_path('signup')}">Signup</a> now, or <a href="${req.route_path('login')}">Login</a>.</p>
           </div>
+        % endif
+        <div class="container">
           <div class="group flat box" align="left">
             <h6>Languages</h6>
             <p><span class="rounded secondary label">English</span></p>
           </div>
           <div class="group flat box" align="left">
-            <h6>Authors</h6>
-          </div>
-          <div class="group flat box" align="left">
             <h6>Dates</h6>
             <p class="description">
               <span class="label">CREATED</span>
-              ${publication.updated_at.strftime('%Y-%m-%d %H:%M')}
+              ${application.updated_at.strftime('%Y-%m-%d %H:%M')}
             </p>
             <p class="description">
               <span class="label">UPDATED</span>
-              ${publication.updated_at.strftime('%Y-%m-%d %H:%M')}
+                ${application.updated_at.strftime('%Y-%m-%d %H:%M')}
             </p>
           </div>
         </div>

@@ -8,22 +8,23 @@ from aarau.models import (  # noqa  # pylint: disable=unused-import
 )
 
 
-def get_sites(site_type, limit=10):
-    site_class = globals()[site_type.capitalize()]
+def get_sites(type_, limit=10):
+    instance_type = type_.capitalize()
+    instance_class = globals()[instance_type]
 
     sites = Site.select().join(
-        site_class,
-        on=(Site.hosting_id == site_class.id).alias(site_type)
+        instance_class,
+        on=(Site.instance_id == instance_class.id).alias(type_)
     ).switch(Site).join(
         Project
     )
-    if site_type == 'application':
+    if type_ == 'application':
         sites = sites.select(
-            Site, Project, site_class
+            Site, Project, instance_class
         )
     else:
         sites = sites.select(
-            Site, Project, site_class, License, Classification
+            Site, Project, instance_class, License, Classification
         ).switch(Publication).join(
             License,
             on=(Publication.license_id == License.id)
@@ -31,9 +32,8 @@ def get_sites(site_type, limit=10):
             Classification,
             on=(Publication.classification_id == Classification.id)
         )
-
     sites = sites.where(
-        Site.hosting_type == site_type.capitalize()
+        Site.instance_type == instance_type
     ).limit(limit)
 
     return sites

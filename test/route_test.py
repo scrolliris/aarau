@@ -58,9 +58,9 @@ def test_routing_to_console_application_settings_badges(
     user = users['oswald']
     with login_as(user):
         project = user.projects[0]
-        site = project.application_sites[0]
-        url = '/projects/{}/sites/{}/settings/badges?type=application'.format(
-            project.id, site.id)
+        site = project.applications[0]
+        url = '/{namespace:s}/{slug:s}/settings/badges'.format(
+            namespace=project.namespace, slug=site.slug)
         app = dummy_app.switch_target('console')
         res = app.get(url, status=200)
         assert 200 == res.status_code

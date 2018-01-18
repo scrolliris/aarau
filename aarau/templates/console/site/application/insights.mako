@@ -8,9 +8,9 @@
 
 <%block name='breadcrumb'>
 <div class="breadcrumb">
-  <a class="item" href="${req.route_path('console.project.view', id=project.id, _query={'type': 'application'})}">${project.name}</a>
+  <a class="item" href="${req.route_path('console.project.overview', namespace=project.namespace)}">${project.name}</a>
   <span class="divider">/</span>
-  <a class="item" href="${req.route_path('console.site.application.overview', project_id=project.id, id=site.id, _query={'type': 'application'})}">${application.name}</a>
+  <a class="item" href="${req.route_path('console.site.overview', namespace=project.namespace, slug=site.slug)}">${instance.name}</a>
   <span class="divider">/</span>
   <span class="item active">Insights</span>
 </div>
@@ -33,7 +33,7 @@
 
     <div class="row">
       <div class="column-16">
-        <h3>${application.name}</h3>
+        <h3>${instance.name}</h3>
         <label class="primary rounded label">${site.domain}</label>
       </div>
     </div>
@@ -47,7 +47,7 @@
 
       <div class="column-16">
         <h5>Pages</h5>
-        <div id="page_table_container" data-project-id="${project.id}", data-site-id="${site.id}"></div>
+        <div id="page_table_container" data-namespace="${project.namespace}", data-slug="${site.slug}"></div>
       </div>
     </div>
   </div>

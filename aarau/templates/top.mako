@@ -38,7 +38,7 @@
           <span class="item active">HOSTED</span>
           <a class="item" href="${req.route_path('top', _query={'type': 'application'})}">INTEGRATED</a>
         % else:
-          <a class="item" href="${req.route_path('top')}">HOSTED</a>
+          <a class="item" href="${req.route_path('top', _query={'type': 'publication'})}">HOSTED</a>
           <span class="item active">INTEGRATED</span>
         % endif
         </div>
@@ -56,7 +56,7 @@
                 <span class="primary label">${publication.license.identifier}</span>
                 <div class="meta">
                   <span class="date">${publication.created_at.strftime('%Y-%m-%d %H:%M')}</span>
-                  <a href="${req.route_path('site.publication.view', slug=site.slug)}"><h5 class="header">${project.name}&nbsp;/&nbsp;${util.truncate(publication.name, length=25)}</h5></a>
+                  <a href="${req.route_path('site.overview', namespace=project.namespace, slug=site.slug)}"><h5 class="header">${project.name}&nbsp;/&nbsp;${util.truncate(publication.name, length=25)}</h5></a>
                   <span class="classification">${util.truncate(publication.classification.name, length=55)}</span>
                 </div>
                 <div class="description">
@@ -96,7 +96,7 @@
                 <div class="cover">${site.domain}</div>
                 <div class="meta">
                   <span class="date">${application.created_at.strftime('%Y-%m-%d %H:%M')}</span>
-                  <a href="${req.route_path('project.view', namespace=project.namespace, _query={'type': 'application'})}"><h5 class="header">${project.name}&nbsp;/&nbsp;${util.truncate(application.name, length=25)}</h5></a>
+                  <a href="${req.route_path('project.overview', namespace=project.namespace, _query={'type': 'application'})}"><h5 class="header">${project.name}&nbsp;/&nbsp;${util.truncate(application.name, length=25)}</h5></a>
                 </div>
                 <div class="description">
                   <p>${util.truncate(application.description, length=65)}</p>

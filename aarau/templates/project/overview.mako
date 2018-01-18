@@ -39,43 +39,39 @@
 
 
         <div class="tab menu">
-        % if site_type == 'publication':
-          <span class="item active">HOSTED</span>
-          <a class="item" href="${req.route_path('project.view', namespace=project.namespace, _query={'type': 'application'})}">INTEGRATED</a>
-        % else:
-          <a class="item" href="${req.route_path('project.view', namespace=project.namespace)}">HOSTED</a>
+        % if site_type == 'application':
+          <a class="item" href="${req.route_path('project.overview', namespace=project.namespace, _query={'type': 'publication'})}">HOSTED</a>
           <span class="item active">INTEGRATED</span>
+        % else:
+          <span class="item active">HOSTED</span>
+          <a class="item" href="${req.route_path('project.overview', namespace=project.namespace, _query={'type': 'application'})}">INTEGRATED</a>
         % endif
         </div>
 
-        % if site_type == 'application':
-          % for site in sites:
-            <% application = site.application %>
+        % for site in sites:
+          % if site.type == 'application':
             <div class="flat application site box">
-              <a href="${req.route_path('site.application.view', id=site.hosting_id)}">
-                <h5 class="header">${util.truncate(application.name, length=25)}</h5></a>
+              <a href="${req.route_path('site.overview', namespace=project.namespace, slug=site.slug)}">
+                <h5 class="header">${util.truncate(site.instance.name, length=25)}</h5></a>
               <div class="description">
-                <p class="note">Registered @&nbsp;<span class="basic line label date">${application.created_at.strftime('%Y-%m-%d %H:%M')}</span></p>
-                <p>${util.truncate(application.description, length=120)}</p>
+                <p class="note">Registered @&nbsp;<span class="basic line label date">${site.instance.created_at.strftime('%Y-%m-%d %H:%M')}</span></p>
+                <p>${util.truncate(site.instance.description, length=120)}</p>
               </div>
             </div>
-          % endfor
-        % else:
-          % for site in sites:
-            <% publication = site.publication %>
+          % else:
             <div class="flat publication site box">
-              <a href="${req.route_path('site.publication.view', slug=site.slug)}">
-                <h5 class="header">${util.truncate(publication.name, length=25)}</h5></a>
-              <span class="date">${publication.created_at.strftime('%Y-%m-%d %H:%M')}</span>
-              <span class="classification">${util.truncate(publication.classification.name, length=85)}</span>
+              <a href="${req.route_path('site.overview', namespace=project.namespace, slug=site.slug)}">
+                <h5 class="header">${util.truncate(site.instance.name, length=25)}</h5></a>
+              <span class="date">${site.instance.created_at.strftime('%Y-%m-%d %H:%M')}</span>
+              <span class="classification">${util.truncate(site.instance.classification.name, length=85)}</span>
               <div class="description">
-                <p class="note">Published As&nbsp;<span class="primary label">${publication.license.identifier}</span>
-                  @&nbsp;<span class="secondary line label date">${publication.created_at.strftime('%Y-%m-%d %H:%M')}</span></p>
-                <p>${util.truncate(publication.description, length=120)}</p>
+                <p class="note">Published As&nbsp;<span class="primary label">${site.instance.license.identifier}</span>
+                  @&nbsp;<span class="secondary line label date">${site.instance.created_at.strftime('%Y-%m-%d %H:%M')}</span></p>
+                <p>${util.truncate(site.instance.description, length=120)}</p>
               </div>
             </div>
-          % endfor
-        % endif
+          % endif
+        % endfor
       </div>
 
       <div class="column-3 column-v-4 column-l-16">

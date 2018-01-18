@@ -64,9 +64,14 @@
         font-weight normal
         .item
           padding-left 1.78rem
-        .item.active
-          color $black2
-          background-color darken($gray0, 8%)
+          &.active
+            color $black2
+            background-color darken($gray0, 8%)
+          &.disabled
+            color lighten($gray1, 48%)
+            &:hover
+              background-color inherit !important
+              cursor not-allowed
 
     .item.disabled
       color lighten($gray1, 48%)

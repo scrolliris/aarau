@@ -10,45 +10,56 @@ from wtforms.form import Form
 
 from aarau.views.form import SecureForm, build_form
 
-DOMAIN_PATTERN = r'\A([A-Za-z0-9]\.|[A-Za-z0-9][A-Za-z0-9-]{0,61}' \
-    r'[A-Za-z0-9]\.){1,3}[A-Za-z]{2,6}\Z'
 
-SLUG_PATTERN = r'\A[A-Za-z0-9-]{0,32}\Z'
+DOMAIN_PATTERN = r'\A([A-z0-9]\.|[A-z0-9][A-z0-9-]{0,61}' \
+    r'[A-z0-9]\.){1,3}[A-z]{2,6}\Z'
+
+SLUG_PATTERN = r'\A[A-z]([A-Za-z0-9-]{5,31})\Z'
+
+
+class SiteInstanceMixin(object):
+    slug = StringField('Slug', [
+        v.Required(),
+        v.Regexp(SLUG_PATTERN),
+        v.Length(min=6, max=32),
+    ])
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._site = None
+
+    @property
+    def current_site(self):
+        return self._site
+
+    @current_site.setter
+    def current_site(self, site):
+        self._site = site
+
+    def validate_slug(self, field):   # pylint: disable=no-self-use
+        from aarau.models.site import Site
+
+        query = Site.select().where(
+            Site.slug == field.data)
+        if hasattr(self, 'current_site') and self.current_site:
+            # allow itself
+            query = query.where(
+                Site.id != self.current_site.id)
+        if query.first():
+            raise ValidationError('Slug is already taken.')
 
 
 class SiteForm(object):
-    class ApplicationBaseMixin(object):
+    class ApplicationBaseMixin(SiteInstanceMixin):
         domain = StringField('Domain', [
             v.Required(),
             v.Regexp(DOMAIN_PATTERN),
             v.Length(min=3, max=32),
         ])
 
-        slug = StringField('Slug', [
-            v.Optional(),
-            v.Regexp(SLUG_PATTERN),
-            v.Length(min=6, max=32),
-        ])
 
-    class PublicationBaseMixin(object):
-        slug = StringField('Slug', [
-            v.Required(),
-            v.Regexp(SLUG_PATTERN),
-            v.Length(min=6, max=32),
-        ])
-
-        def validate_slug(self, field):   # pylint: disable=no-self-use
-            from aarau.models.site import Site
-
-            query = Site.select().where(
-                Site.domain >> None,
-                Site.slug == field.data)
-            if hasattr(self, 'current_site'):
-                # allow itself
-                query = query.where(
-                    Site.id != self.current_site.id)
-            if query.first():
-                raise ValidationError('Slug is already taken.')
+    class PublicationBaseMixin(SiteInstanceMixin):
+        pass
 
 
 # nested form
@@ -122,10 +133,18 @@ class NewApplicationSiteForm(SiteForm.ApplicationBaseMixin, SecureForm):
     application = FormField(ApplicationForm)
     submit = SubmitField('Create')
 
+    @property
+    def instance(self):
+        return getattr(self, 'application')  # alias
+
 
 class EditApplicationSiteForm(SiteForm.ApplicationBaseMixin, SecureForm):
     application = FormField(ApplicationForm)
     submit = SubmitField('Update')
+
+    @property
+    def instance(self):
+        return getattr(self, 'application')  # alias
 
 
 def build_new_application_site_form(req):
@@ -133,7 +152,9 @@ def build_new_application_site_form(req):
 
 
 def build_edit_application_site_form(req, site):
-    return build_form(EditApplicationSiteForm, req, site)
+    form = build_form(EditApplicationSiteForm, req, site)
+    form.current_site = site
+    return form
 
 
 # publication
@@ -142,22 +163,18 @@ class NewPublicationSiteForm(SiteForm.PublicationBaseMixin, SecureForm):
     publication = FormField(PublicationForm)
     submit = SubmitField('Create')
 
+    @property
+    def instance(self):
+        return getattr(self, 'publication')  # alias
+
 
 class EditPublicationSiteForm(SiteForm.PublicationBaseMixin, SecureForm):
     publication = FormField(PublicationForm)
     submit = SubmitField('Update')
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._site = None
-
     @property
-    def current_site(self):
-        return self._site
-
-    @current_site.setter
-    def current_site(self, site):
-        self._site = site
+    def instance(self):
+        return getattr(self, 'publication')  # alias
 
 
 def build_new_publication_site_form(req):
@@ -168,3 +185,22 @@ def build_edit_publication_site_form(req, site):
     form = build_form(EditPublicationSiteForm, req, site)
     form.current_site = site
     return form
+
+
+def build_site_form(req, site=None):
+    from aarau.models import Site
+    try:
+        if not isinstance(site, Site):
+            raise AttributeError
+        if site.is_dirty():
+            if site.type == 'application':
+                return build_new_application_site_form(req)
+            elif site.type == 'publication':
+                return build_new_publication_site_form(req)
+        if site.type == 'application':
+            return build_edit_application_site_form(req, site)
+        elif site.type == 'publication':
+            return build_edit_publication_site_form(req, site)
+        return None
+    except AttributeError:
+        return None

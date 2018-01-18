@@ -9,7 +9,9 @@
 <div class="breadcrumb">
   <a class="item" href="${req.route_path('console.top')}">Projects</a>
   <span class="divider">/</span>
-  <span class="item active">${project.name}</span>
+  <a class="item" href="${req.route_url('console.project.overview', namespace=project.namespace)}">${project.name}</a>
+  <span class="divider">/</span>
+  <span class="item active">Overview</span>
 </div>
 </%block>
 
@@ -34,35 +36,33 @@
         <label class="primary label">${project.namespace}</label>
 
         <p class="description">${project.description}</p>
-        <form class="inline form" method="get" action="${req.route_path('console.site.{:s}.new'.format(hosting_type), project_id=project.id)}">
-          <input type="hidden" name="type" value="${hosting_type}">
-          <input class="primary button" type="submit" value="New Site">
+        <form class="inline form" method="get" action="${req.route_path('console.site.new', namespace=project.namespace)}">
+          <input type="hidden" name="type" value="publication">
+          <input class="primary button" type="submit" value="New Publication">
         </form>
       </div>
     </div>
 
     <div class="row">
-    % if hosting_type == 'publication':
-      % for site in project.publication_sites:
+    % for site in sites:
+      % if site.type == 'application':
         <div class="column-4 column-v-8 column-l-16">
           <div class="gray flat site box">
-            <a href="${req.route_path('console.site.publication.overview', project_id=project.id, id=site.id, _query={'type':'publication'})}"><h5 class="header">${util.truncate(site.publication.name, 25)}</h5></a>
+            <a href="${req.route_path('console.site.overview', namespace=project.namespace, slug=site.slug)}"><h5 class="header">${util.truncate(site.instance.name, 25)}</h5></a>
             <label class="secondary rounded label">${site.domain}</label>
-            <p class="text">${util.truncate(site.publication.description, 30)}</p>
+            <p class="text">${util.truncate(site.instance.description, 30)}</p>
           </div>
         </div>
-      % endfor
-    % elif hosting_type == 'application':
-      % for site in project.application_sites:
+      % elif site.type == 'publication':
         <div class="column-4 column-v-8 column-l-16">
           <div class="blue flat site box">
-            <a href="${req.route_path('console.site.application.overview', project_id=project.id, id=site.id, _query={'type':'application'})}"><h5 class="header">${util.truncate(site.application.name, 25)}</h5></a>
+            <a href="${req.route_path('console.site.overview', namespace=project.namespace, slug=site.slug)}"><h5 class="header">${util.truncate(site.instance.name, 25)}</h5></a>
             <label class="secondary rounded label">${site.domain}</label>
-            <p class="text">${util.truncate(site.application.description, 30)}</p>
+            <p class="text">${util.truncate(site.instance.description, 30)}</p>
           </div>
         </div>
-      % endfor
-    % endif
+      % endif
+    % endfor
     </div>
   </div>
 </div>

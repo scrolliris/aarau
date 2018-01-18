@@ -9,7 +9,7 @@
 <div class="breadcrumb">
   <a class="item" href="${req.route_path('console.top')}">Projects</a>
   <span class="divider">/</span>
-  <a class="item" href="${req.route_url('console.project.view', id=project.id)}">${project.name}</a>
+  <a class="item" href="${req.route_url('console.project.overview', namespace=project.namespace)}">${project.name}</a>
   <span class="divider">/</span>
   <span class="active item">Edit</span>
 </div>
@@ -26,7 +26,7 @@
     <div class="row">
       <div class="column-8">
         <%
-          act = req.route_path('console.project.edit', id=project.id)
+          act = req.route_path('console.project.edit', namespace=project.namespace)
           ctx = 'edit'
           err = ''
           obj = project

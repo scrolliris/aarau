@@ -29,9 +29,9 @@
 
     <div class="row">
       <div class="column-16">
-        <h4>${application.name}</h4>
+        <h4>${instance.name}</h4>
         <label class="primary rounded label">${site.domain}</label>
-        <p>${application.description}</p>
+        <p>${instance.description}</p>
       </div>
     </div>
 

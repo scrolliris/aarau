@@ -76,7 +76,7 @@ def test_signup_with_valid_credentials(dummy_request):
         'name': 'Leo The Egg Twins',
         'username': 'leotheegg',
         'email': 'leo@example.org',
-        'password': 'Yes*2!',
+        'password': 'Yes*2__!',
     }
 
     dummy_request.user = None

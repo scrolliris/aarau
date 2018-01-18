@@ -3,7 +3,7 @@
 
 <%inherit file='aarau:templates/console/_layout.mako'/>
 
-<%block name='title'>${render_title('New Application')}</%block>
+<%block name='title'>${render_title('New Publication')}</%block>
 
 <%block name='breadcrumb'>
 <div class="breadcrumb">
@@ -29,9 +29,21 @@
 
     <div class="row">
       <div class="column-9">
+        <form id="site" class="form" action="" method="get">
+          <div class="field-6">
+            <label class="label" for="site_type">Type</label>
+            <select id="site_type">
+              <option value="publication" selected>Hosted on Scrolliris.com</option>
+              <option value="application">Integration to Your Site</option>
+            </select>
+          </div>
+        </form>
+      </div>
+
+      <div class="column-9">
         <p class="description">Create new publication which is published on Scrolliris.</p>
         <%
-          act = req.route_url('console.site.publication.new', project_id=project.id, _query={'type':'publication'})
+          act = req.route_url('console.site.new', namespace=project.namespace, _query={'type':'publication'})
           ctx = 'new'
           err = form.errors
           obj = site

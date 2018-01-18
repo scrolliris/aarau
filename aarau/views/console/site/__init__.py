@@ -8,38 +8,42 @@ from aarau.models import (
 )
 
 
-def get_project(project_id, user_id=None):
-    """Gets a project belongs to user.
+def get_project(namespace, user=None):
+    """Gets a project belongs to the user.
 
     If it does not exist, raises HTTPNotFound error.
     """
+    if not user:
+        return None
     project = Project.select().join(Membership).join(User).where(
-        User.id == user_id,
-        Project.id == project_id
+        User.id == user.id,
+        Project.namespace == namespace
     ).first()
     if not project:
         raise HTTPNotFound
     return project
 
 
-def get_site(site_id, project_id=None, type_=''):
-    """Gets a site by type belongs to porject.
+def get_site(slug, project=None):
+    """Gets a site by type belongs to the porject.
 
     If it does not exist, raises HTTPNotFound error.
     """
+    if not project:
+        return None
     try:
-        site = Site.by_type(type_).where(
-            Site.id == site_id,
-            Site.project_id == project_id).get()  # pylint: disable=no-member
+        site = Site.select().where(
+            Site.slug == slug,
+            Site.project_id == project.id).get()  # pylint: disable=no-member
     except Site.DoesNotExist:  # pylint: disable=no-member
         raise HTTPNotFound
     return site
 
 
 def tpl(path, type_=''):
+    """Genarets template path by instance type."""
     return 'aarau:templates/console/site/{0:s}/{1:s}'.format(type_, path)
 
 
-def includeme(config):
-    config.include('.application')
-    config.include('.publication')
+def includeme(_config):
+    pass

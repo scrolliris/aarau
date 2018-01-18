@@ -56,10 +56,8 @@ let handlePageLinkClick = (instance, page) => {
 class PageTable extends Component {
   constructor(props) {
     super(props);
-    let url = '/api/projects/' + this.props.projectId +
-              '/sites/' + this.props.siteId + '/insights.json';
-    url += '?type=application';
-    this.props['url'] = url;
+    this.props['url'] = '/api/' + this.props.namespace +
+                        '/' + this.props.slug + '/insights.json';
     this.props['pageWindow'] = 2;
     this.state = {
       data: []
@@ -99,9 +97,6 @@ class PageTable extends Component {
 
   _linkTo(pageId, text) {
     // TODO: set link to page view
-    //const url = '/projects/' + this.props.projectId + '/sites/' +
-    //  this.props.siteId + '/pages/' + pageId;
-    //return h('a', {'href': this._buildPageURL(pageId)}, text);
     return text;
   }
 

@@ -41,17 +41,17 @@ class PaginatedQuery:
         return self._query.paginate(self.page, self._items_per_page)
 
 
-@view_config(route_name='api.console.site.application.insights',
+@view_config(route_name='api.console.site.insights',
              request_method='GET',
              renderer='json')
 @login_required
 def api_application_insights(req):
-    project_id = req.matchdict.get('project_id')
-    site_id = req.matchdict.get('id')
+    namespace = req.matchdict.get('namespace')
+    slug = req.matchdict.get('slug')
 
     try:
-        project = get_project(project_id, user_id=req.user.id)
-        site = get_site(site_id, project_id=project.id, type_='application')
+        project = get_project(namespace, user=req.user)
+        site = get_site(slug, project=project)
     except HTTPNotFound:
         return Response(status=404, json_body={
             'error': 'The project or site was not found'})

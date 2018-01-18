@@ -23,10 +23,10 @@
     % for project in projects:
       <div class="column-4 column-v-8 column-l-16">
         <div class="attached box">
-          <a href="${req.route_url('console.project.view', id=project.id)}"><h4 class="header">${project.name}</h4></a>
+          <a href="${req.route_url('console.project.overview', namespace=project.namespace)}"><h4 class="header">${project.name}</h4></a>
           <label class="primary label">${project.plan.name}</label>
           <p>${project.description}</p>
-          <a class="petit flat button" href="${req.route_path('console.project.edit', id=project.id)}">Edit</a>
+          <a class="petit flat button" href="${req.route_path('console.project.edit', namespace=project.namespace)}">Edit</a>
         </div>
         <div class="attached message">
           <p class="text">${project.namespace}</p>

@@ -14,3 +14,4 @@ import './css/console/application.styl'
 
 // script
 import './js/console/ui.js'
+import './js/console/site.js'
