@@ -16,7 +16,7 @@
           <div class="banner">
             <h1 class="header">Beyond the Scroll</h1>
             <p>Include just a single javascript, get anonymous tracking works, and increase readability</p>
-            <a class="primary button" href="${req.route_path('project.new', namespace=None)}">Create a Project</a>
+            <a class="primary button" href="${req.route_path('project.new')}">Create a Project</a>
           </div>
         % endif
       </div>
@@ -33,7 +33,7 @@
         </div>
         % else:
           <p align="center">
-            <a class="primary petit flat button" href="${req.route_path('project.new', namespace=None)}">Create a Project</a>
+            <a class="primary petit flat button" href="${req.route_path('project.new')}">Create a Project</a>
           </p>
         % endif
       </div>
@@ -57,7 +57,7 @@
             <% project = site.project %>
 
             <div class="column-4 column-v-8 column-l-8 column-s-16">
-              <div class="flat publication box" align="left">
+              <div class="flat publication gray box" align="left">
                 <div class="cover">COMMING SOON</div>
                 <span class="primary label">${publication.license.identifier}</span>
                 <div class="meta">
@@ -80,7 +80,7 @@
 
           ## TODO
           <div class="column-4 column-v-8 column-l-8 column-s-16">
-            <div class="flat application box" align="left">
+            <div class="flat application blue box" align="left">
               <div class="cover">doc.scrolliris.com</div>
 
               <div class="meta">
@@ -98,7 +98,7 @@
             <% project = site.project %>
 
             <div class="column-4 column-v-8 column-l-8 column-s-16">
-              <div class="flat application box" align="left">
+              <div class="flat application blue box" align="left">
                 <div class="cover">${site.domain}</div>
                 <div class="meta">
                   <span class="date">${application.created_at.strftime('%Y-%m-%d %H:%M')}</span>

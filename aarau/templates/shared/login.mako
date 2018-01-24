@@ -11,7 +11,7 @@
       <div class="column-6 offset-5 column-v-8 offset-v-4 column-l-10 offset-l-3 column-m-16">
         <div class="embeded box">
           <div class="header">
-            <a href="${req.route_url('top', namespace=None)}"><img class="logo" width="32" height="32" src="${util.static_url('img/scrolliris-logo-64x64.png')}"></a>
+            <a href="${req.route_url('top', subdomain=None)}"><img class="logo" width="32" height="32" src="${util.static_url('img/scrolliris-logo-64x64.png')}"></a>
           </div>
 
           <form id="login" class="form${' error' if err_msg  else ' success' if suc_msg else ''}" action="${req.route_url('login')}" method="post">

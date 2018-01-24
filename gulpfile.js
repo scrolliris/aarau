@@ -46,6 +46,10 @@ gulp.task('build:master', ['env'], function() {
   return build(['master.js']);
 });
 
+gulp.task('build:number', ['env'], function() {
+  return build(['number.js']);
+});
+
 gulp.task('build:author', ['env'], function() {
   return build(['author.js']);
 });
@@ -74,6 +78,7 @@ gulp.task('copy:txt', ['env'], function() {
 // this run webpack each times.
 gulp.task('build', [
   'build:master'
+, 'build:number'
 , 'build:author'
 , 'build:vendor'
 ]);
@@ -83,6 +88,7 @@ gulp.task('build', [
 gulp.task('build:all', ['env'], function() {
   return build([
     'master.js'
+  , 'number.js'
   , 'author.js'
   , 'vendor.js'
   ]);
@@ -109,6 +115,10 @@ gulp.task('build-install:master', function(done) {
   return run('build:master', 'distribute', done);
 });
 
+gulp.task('build-install:number', function(done) {
+  return run('build:number', 'distribute', done);
+});
+
 gulp.task('build-install:author', function(done) {
   return run('build:author', 'distribute', done);
 });
@@ -125,6 +135,13 @@ var paths = {
   , path.join('!' + assetsDir, 'js/console/**/*.js')
   , path.join(assetsDir, 'component/**/*.{style,js}')
   , path.join('!' + assetsDir, 'component/console/**/*.{style,js}')
+  ]
+, number: [
+    path.join(assetsDir, 'number.js')
+  , path.join(assetsDir, 'css/shared/**/*.styl')
+  , path.join(assetsDir, 'css/console/**/*.styl')
+  , path.join(assetsDir, 'js/console/**/*.js')
+  , path.join(assetsDir, 'component/console/**/*.{styl,js}')
   ]
 , author: [
     path.join(assetsDir, 'author.js')
@@ -172,6 +189,7 @@ gulp.task('install', [
 gulp.task('watch', ['env'], function() {
   gulp.watch('gulpfile.js', ['default']);
   gulp.watch(paths.master, ['build-install:master']);
+  gulp.watch(paths.number, ['build-install:number']);
   gulp.watch(paths.author, ['build-install:author']);
   gulp.watch(paths.img, ['copy']);
 });

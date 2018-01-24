@@ -30,11 +30,11 @@
     <style>html{background-color:#454545;}</style>
     <style>.not-ready{visibility: hidden;}</style>
     <link rel="stylesheet" href="${util.hashed_asset_url('vendor.css')}">
-    <link rel="stylesheet" href="${util.hashed_asset_url('master.css')}">
+    <link rel="stylesheet" href="${util.hashed_asset_url('number.css')}">
     <script><%include file='aarau:assets/_fouc.js'/></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300|Roboto+Slab:300" rel="stylesheet">
   </head>
-  <body id="standard">
+  <body id="registry">
     <div class="wrapper">
       <%block name='header'>
         <%include file='aarau:templates/_header.mako'/>
@@ -51,7 +51,7 @@
     </div>
 
     ## <script src="${util.hashed_asset_url('vendor.js')}" charset="utf-8"></script>
-    <script src="${util.hashed_asset_url('master.js')}" charset="utf-8" async></script>
+    <script src="${util.hashed_asset_url('number.js')}" charset="utf-8" async></script>
     <%block name='script'>
     </%block>
   </body>

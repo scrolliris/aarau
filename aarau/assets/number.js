@@ -9,11 +9,9 @@ import './css/shared/overwrite.styl'
 // -- standard
 import './css/general.styl'
 import './css/top.styl'
-import './css/signup.styl'
-import './css/settings.styl'
 
-// -- basic (login, reset_password)
-import './css/basic/general.styl'
+// -- registry
+import './css/registry/project.styl'
 
 // [javascript]
 import './js/ui.js'

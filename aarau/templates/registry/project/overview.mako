@@ -1,7 +1,7 @@
 <%namespace file='aarau:templates/macro/_flash_message.mako' import="render_notice"/>
 <%namespace file='aarau:templates/macro/_title.mako' import="render_title"/>
 
-<%inherit file='aarau:templates/_layout.mako'/>
+<%inherit file='aarau:templates/registry/_layout.mako'/>
 
 <%block name='title'>${render_title('')}</%block>
 
