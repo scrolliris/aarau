@@ -7,23 +7,22 @@
 
 <div id="project" class="content">
   <div class="grid">
+
     <div class="row">
-      <div class="column-16">
+      <div class="offset-3 column-10">
         ${render_notice()}
       </div>
     </div>
 
-    <div class="row">
-      <div class="column-16" align="center">
-        <div class="row" align="left">
-          <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16 breadcrumb">
-            <a class="item" href="${req.route_path('top')}">Top</a>
-            <span class="diviber">/</span>
-            <span class="item">${project.name}</span>
-          </div>
-        </div>
+    <div class="row" align="left">
+      <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16 breadcrumb">
+        <span class="item">${project.name}</span>
+        <span class="diviber">/</span>
+        <span class="item">Overview</span>
       </div>
+    </div>
 
+    <div class="row">
       <div class="offset-3 column-7 offset-v-2 column-v-8 column-l-16">
         <div class="container">
           <div class="attached box">
@@ -36,7 +35,6 @@
             <p><span class="primary label">${project.namespace}</span></p>
           </div>
         </div>
-
 
         <div class="tab menu">
         % if site_type == 'application':
@@ -60,7 +58,7 @@
             </div>
           % else:
             <div class="flat publication site box">
-              <a href="${req.route_path('site.overview', namespace=project.namespace, slug=site.slug)}">
+              <a href="${req.route_path('site.overview',  namespace=project.namespace, slug=site.slug)}">
                 <h5 class="header">${util.truncate(site.instance.name, length=25)}</h5></a>
               <span class="date">${site.instance.created_at.strftime('%Y-%m-%d %H:%M')}</span>
               <span class="classification">${util.truncate(site.instance.classification.name, length=85)}</span>

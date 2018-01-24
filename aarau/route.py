@@ -139,9 +139,17 @@ def includeme(config):
 
     # internal api
     with subdomain('console') as c:
-        # pylint: disable=anomalous-backslash-in-string
         c.add_route('api.console.site.insights',
                     '/api/projects/{namespace}/{slug}/insights.json',
+                    custom_predicates=(namespace,))
+
+    # public view
+    with subdomain('registry') as c:
+        c.add_route('project.overview',
+                    '/{namespace}/overview',
+                    custom_predicates=(namespace,))
+        c.add_route('site.overview',
+                    '/{namespace}/{slug}/overview',
                     custom_predicates=(namespace,))
 
     with subdomain(None) as c:
@@ -168,11 +176,3 @@ def includeme(config):
                     '/settings/email/change')
         c.add_route('settings.email_activate',
                     '/settings/email/confirm/{token}')
-
-        # public view
-        c.add_route('project.overview',
-                    '/{namespace}/overview',
-                    custom_predicates=(namespace,))
-        c.add_route('site.overview',
-                    '/{namespace}/{slug}/overview',
-                    custom_predicates=(namespace,))

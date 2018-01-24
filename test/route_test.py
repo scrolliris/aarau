@@ -18,26 +18,9 @@ def test_routing_to_favicon(dummy_app):
     assert 200 == res.status_code
 
 
-@pytest.mark.usefixtures('login')
-def test_routing_to_favicon_as_logged_in_user(dummy_app, login_as, users):
-    user = users['oswald']
-    with login_as(user):
-        app = dummy_app.switch_target('console')
-        res = app.get('/favicon.ico', status=200)
-        assert 200 == res.status_code
-
-
 def test_routing_to_humans(dummy_app):
     res = dummy_app.get('/humans.txt', status=200)
     assert 200 == res.status_code
-
-
-def test_routing_to_humans_as_logged_in_user(dummy_app, login_as, users):
-    user = users['oswald']
-    with login_as(user):
-        app = dummy_app.switch_target('console')
-        res = app.get('/humans.txt', status=200)
-        assert 200 == res.status_code
 
 
 def test_routing_to_robots(dummy_app):
@@ -45,7 +28,56 @@ def test_routing_to_robots(dummy_app):
     assert 200 == res.status_code
 
 
-def test_routing_to_robots_as_logged_in_user(dummy_app, login_as, users):
+# registry
+
+@pytest.mark.usefixtures('login')
+def test_routing_to_favicon_on_registry_as_logged_in_user(
+        dummy_app, login_as, users):
+    user = users['oswald']
+    with login_as(user):
+        app = dummy_app.switch_target('registry')
+        res = app.get('/favicon.ico', status=200)
+        assert 200 == res.status_code
+
+
+@pytest.mark.usefixtures('login')
+def test_routing_to_project_on_registry_as_logged_in_user(
+        dummy_app, login_as, users):
+    user = users['oswald']
+    with login_as(user):
+        project = user.projects[0]
+        url = '/{namespace:s}/overview'.format(
+            namespace=project.namespace)
+        app = dummy_app.switch_target('registry')
+        res = app.get(url, status=200)
+        assert 200 == res.status_code
+
+
+# console
+
+@pytest.mark.usefixtures('login')
+def test_routing_to_favicon_on_console_as_logged_in_user(
+        dummy_app, login_as, users):
+    user = users['oswald']
+    with login_as(user):
+        app = dummy_app.switch_target('console')
+        res = app.get('/favicon.ico', status=200)
+        assert 200 == res.status_code
+
+
+@pytest.mark.usefixtures('login')
+def test_routing_to_humans_on_console_as_logged_in_user(
+        dummy_app, login_as, users):
+    user = users['oswald']
+    with login_as(user):
+        app = dummy_app.switch_target('console')
+        res = app.get('/humans.txt', status=200)
+        assert 200 == res.status_code
+
+
+@pytest.mark.usefixtures('login')
+def test_routing_to_robots_on_console_as_logged_in_user(
+        dummy_app, login_as, users):
     user = users['oswald']
     with login_as(user):
         app = dummy_app.switch_target('console')
@@ -53,7 +85,8 @@ def test_routing_to_robots_as_logged_in_user(dummy_app, login_as, users):
         assert 200 == res.status_code
 
 
-def test_routing_to_console_application_settings_badges(
+@pytest.mark.usefixtures('login')
+def test_routing_to_application_site_settings_badges_on_console(
         dummy_app, login_as, users):
     user = users['oswald']
     with login_as(user):

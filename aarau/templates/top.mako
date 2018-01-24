@@ -24,12 +24,18 @@
 
     <div class="row site">
       <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16">
+        % if not req.user or req.user.projects:
         <div class="warn message">
           <h5 class="header">NOTE</h5>
           <div class="description">
             <p>Scrolliris is currently under development as public beta. If you have any questions, please contact us <a href="mailto:support@scrolliris.com">support@scrolliris.com</a></p>
           </div>
         </div>
+        % else:
+          <p align="center">
+            <a class="primary petit flat button" href="${req.route_path('project.new', namespace=None)}">Create a Project</a>
+          </p>
+        % endif
       </div>
 
       <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16">
@@ -56,7 +62,7 @@
                 <span class="primary label">${publication.license.identifier}</span>
                 <div class="meta">
                   <span class="date">${publication.created_at.strftime('%Y-%m-%d %H:%M')}</span>
-                  <a href="${req.route_path('site.overview', namespace=project.namespace, slug=site.slug)}"><h5 class="header">${project.name}&nbsp;/&nbsp;${util.truncate(publication.name, length=25)}</h5></a>
+                  <a href="${req.route_url('site.overview', subdomain='registry', namespace=project.namespace, slug=site.slug)}"><h5 class="header">${project.name}&nbsp;/&nbsp;${util.truncate(publication.name, length=25)}</h5></a>
                   <span class="classification">${util.truncate(publication.classification.name, length=55)}</span>
                 </div>
                 <div class="description">
@@ -96,7 +102,7 @@
                 <div class="cover">${site.domain}</div>
                 <div class="meta">
                   <span class="date">${application.created_at.strftime('%Y-%m-%d %H:%M')}</span>
-                  <a href="${req.route_path('project.overview', namespace=project.namespace, _query={'type': 'application'})}"><h5 class="header">${project.name}&nbsp;/&nbsp;${util.truncate(application.name, length=25)}</h5></a>
+                  <a href="${req.route_url('project.overview', subdomain='registry', namespace=project.namespace, _query={'type': 'application'})}"><h5 class="header">${project.name}&nbsp;/&nbsp;${util.truncate(application.name, length=25)}</h5></a>
                 </div>
                 <div class="description">
                   <p>${util.truncate(application.description, length=65)}</p>

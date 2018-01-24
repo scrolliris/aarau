@@ -28,6 +28,6 @@ def site_overview(req):
         Site.slug == slug
     ).get()
 
-    req.override_renderer = tpl('overview.mako', resource='site/{:s}'.format(
-        site.type))
+    req.override_renderer = tpl(
+        'overview.mako', resource='registry/site/{:s}'.format(site.type))
     return dict(project=project, site=site)

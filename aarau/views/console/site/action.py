@@ -117,6 +117,8 @@ def site_settings(req):
     if 'submit' in req.POST:
         _ = req.translate
         if form.validate():
+            update_slug = False
+
             with req.db.cardinal.atomic():
                 _f = form.instance.form
 
@@ -126,8 +128,6 @@ def site_settings(req):
 
                 # TODO: remove these blocks
                 if site.type == 'publication':
-                    site.slug = form.slug.data
-
                     instance.classification = _f.classification.data
                     instance.license = _f.license.data
                     instance.copyright = _f.copyright.data
@@ -135,6 +135,11 @@ def site_settings(req):
                     site.domain = form.domain.data
 
                 instance.save()
+
+                if site.slug != form.slug.data:
+                    update_slug = True
+                    site.slug = form.slug.data
+
                 site.save()
 
             replicator = req.find_service(iface=IReplicator, name='site')
@@ -143,6 +148,11 @@ def site_settings(req):
 
             req.session.flash(_('site.{:s}.update.success'.format(site.type)),
                               queue='success', allow_duplicate=False)
+            if update_slug:
+                next_path = req.route_path(
+                    'console.site.settings', namespace=project.namespace,
+                    slug=site.slug)
+                return HTTPFound(location=next_path)
         else:
             req.session.flash(_('site.{:s}.update.failure'.format(site.type)),
                               queue='failure', allow_duplicate=False)

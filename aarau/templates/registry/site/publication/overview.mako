@@ -17,9 +17,7 @@
 
     <div class="row" align="left">
       <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16 breadcrumb">
-        <a class="item" href="${req.route_path('top')}">Top</a>
-        <span class="diviber">/</span>
-        <a class="item" href="${req.route_path('project.overview', namespace=site.project.namespace)}">${site.project.name}</a>
+        <a class="item" href="${req.route_url('project.overview', subdomain='registry', namespace=site.project.namespace)}">${site.project.name}</a>
         <span class="diviber">/</span>
         <span class="item">${publication.name}</a>
       </div>
@@ -50,7 +48,7 @@
         <div class="info message">
           <h6 class="header">CREATE A PUBLICATION</h6>
           <p class="description">Publish your articles, get reading intensity, and increase text readability.
-            <a href="${req.route_path('signup')}">Signup</a> now, or <a href="${req.route_path('login')}">Login</a>.</p>
+            <a href="${req.route_url('signup', subdomain=None)}">Signup</a> now, or <a href="${req.route_url('login', subdomain=None)}">Login</a>.</p>
         </div>
       % endif
 

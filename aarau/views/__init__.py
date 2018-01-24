@@ -33,9 +33,10 @@ def includeme(config):
     config.include('.settings')
 
     config.include('.project')
-    config.include('.site')
 
+    # subdomain
     config.include('.console')
+    config.include('.registry')
 
     # make request.subdomain available for use in app
     config.add_request_method(subdomain, 'subdomain', reify=True)
