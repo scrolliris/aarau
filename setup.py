@@ -55,7 +55,6 @@ development_requires = [
 
 testing_requires = [
     'colorlog',
-    'PyYAML',
 
     'mixer',
     'pytest',
