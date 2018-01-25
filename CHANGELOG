@@ -1,3 +1,9 @@
+Thu 25 Jan 2018 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
+	* Add reserved word validation for Project.namespace
+
+Wed 24 Jan 2018 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
+	* Add registry subdomain
+
 Thu 14 Nov 2017 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
 	* Update env var names for bucket static url (cdn)
 	* Update urls for script, widget and api (scrolliris.com)
