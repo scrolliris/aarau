@@ -32,6 +32,7 @@ requires = [
     'pyramid_mailer',
     'pyramid_secure_response',
     'pyramid_services',
+    'PyYAML',
     'requests',
     'transaction',
     'webob',
@@ -42,7 +43,6 @@ requires = [
 
 development_requires = [
     'colorlog',
-    'PyYAML',
     'waitress',
 
     'flake8',
