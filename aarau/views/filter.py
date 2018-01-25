@@ -34,6 +34,7 @@ def forbidden_redirect(req):
 
 def namespace_filter():
     import re
+    # reuse from a pattern for validator in form
     from aarau.views.console.project.form import NAMESPACE_PATTERN
 
     pattern = re.compile(NAMESPACE_PATTERN)

@@ -19,6 +19,9 @@ cors-file.json
 /db/seeds/*.yml
 !/db/seeds/*.sample.yml
 
+/config/*.yml
+!/config/*.sample.yml
+
 /locale
 
 /lib/*sdk*

@@ -9,7 +9,8 @@ from aarau.models import (
     Project,
 )
 
-from aarau.views.project.form import build_new_project_form
+# for first project (from console)
+from aarau.views.console.project.form import build_new_project_form
 
 
 @view_config(route_name='project.new',

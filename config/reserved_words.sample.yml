@@ -1,0 +1,15 @@
+---
+reserved_words:
+  common:
+    - scrolliris
+    - scroll-iris
+    - lupinesoftware
+    - lupinesoftware-llc
+    - lupine-software
+    - lupine-software-llc
+  project:
+    namespace: []
+  site:
+    slug: []
+  user:
+    username: []
