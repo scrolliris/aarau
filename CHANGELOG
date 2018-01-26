@@ -1,3 +1,6 @@
+Fri 26 Jan 2018 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
+	* Update styr to v0.0.26
+
 Thu 25 Jan 2018 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
 	* Add reserved word validation for Project.namespace
 
