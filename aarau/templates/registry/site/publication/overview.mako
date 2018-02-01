@@ -28,7 +28,7 @@
         <span class="active hosted primary label">HOSTED</span>
 
         <div class="container">
-          <div class="group flat box">
+          <div class="grouped flat box">
             <h3 class="header">${publication.name}</h3>
             <p class="author">${site.project.primary_owner.name}</p>
             <div class="description">
@@ -37,7 +37,7 @@
               <p>${publication.description}</p>
             </div>
           </div>
-          <div class="group flat box">
+          <div class="grouped flat box">
             <h5>Articles</h5>
           </div>
         </div>
@@ -53,17 +53,17 @@
       % endif
 
         <div class="container">
-          <div class="group flat box" align="left">
+          <div class="grouped flat box" align="left">
             <p>${publication.copyright}</p>
           </div>
-          <div class="group flat box" align="left">
+          <div class="grouped flat box" align="left">
             <h6>Languages</h6>
             <p><span class="rounded secondary label">English</span></p>
           </div>
-          <div class="group flat box" align="left">
+          <div class="grouped flat box" align="left">
             <h6>Authors</h6>
           </div>
-          <div class="group flat box" align="left">
+          <div class="grouped flat box" align="left">
             <h6>Dates</h6>
             <p class="description">
               <span class="label">CREATED</span>

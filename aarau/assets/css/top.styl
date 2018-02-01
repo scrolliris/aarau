@@ -1,81 +1,35 @@
 @import './shared/_colour.styl'
 
-#standard
-  .header h3
-    display inline-block
+// top
+.top
+  position absolute
+  top 7.9em
 
-  .row.landscape
-    background-color $paper3
-    &.user
-      background-color $paper2
-
-  .banner
-    padding 2.66rem 1.86rem 1.66rem 1.86rem
-    .primary.button
-      margin 2.22rem 0
-
-.site
-  > div > .description
-    margin-top 1.28rem
-
-  .tab.menu
-    margin-left 0.6rem
-    margin-right 0.6rem
-  .description
-    padding-left 0.6rem
-    padding-right 0.6rem
-
-  .flat.box
-    min-height 18.88rem
-    margin-top 0.22rem
-    margin-bottom 0.66rem
-    padding 0.51rem 0.61rem
-    .cover
-      text-align center
-      vertical-align middle
-      border-radius 0.16rem
-      height 8.23rem
-      width 100%
-      font-size 0.88rem
-      color #888888
-      padding-top 3.58rem
-      margin-bottom 0.66rem
-      background-color #f2efe9
-    .label
-      margin-top -7.91rem
-      margin-left -0.98rem
-      font-size 0.78rem
-      float left
-    .meta
-      min-height 7.66rem
-      .date
-        color #888888
-        font-size 0.81rem
-      .project-namespace
-        display inline-block
-        margin 0.19rem 0 0.68rem 0.12rem
-      h5.header
-        font-size 1.08rem
-      .classification
-        font-size 0.81rem
-    .description
-      min-height 4.28rem
-      padding-top 0.36rem
-      padding-bottom 0.26rem
+  .menu:first-child
+    margin-top 2.2rem
+    margin-bottom 1.2rem
+    .item:first-child
       margin-left 0
-      p
-        font-size 0.86rem
-        margin-top 0.49rem
-        padding-top 0.58rem
-        border-top 1px solid #f2efe9
-    .note
-      font-size 0.92rem
-      margin 0.33rem 0
-    p
-      margin 0.11rem 0 0.32rem 0
+      padding-left 0.11rem
+      &:hover
+        background none
 
-#standard
-  .pride
-    font-size 90%
-    p
-      color darken($gray1, 30%)
+  .form
+    input[type="text"]
+      height 3.12em
+
+  .warn.message
+    margin-top 4.86rem
+
+.pride
+  font-size 90%
+  p
+    color darken($gray1, 30%)
+
+
+@media screen and (min-width: 768px)
+  .top
+  .main.row
+    div:first-child
+      padding-left 2.6rem
+      padding-right 2.6rem

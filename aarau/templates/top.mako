@@ -1,118 +1,73 @@
 <%namespace file='aarau:templates/macro/_flash_message.mako' import="render_notice"/>
 <%namespace file='aarau:templates/macro/_title.mako' import="render_title"/>
 
-<%inherit file='aarau:templates/_layout.mako'/>
+<%inherit file='aarau:templates/_layout-basic.mako'/>
 
 <%block name='title'>${render_title('')}</%block>
 
 <div class="content">
-  <div class="grid">
-
-    <div class="row landscape${' user' if req.user else ''}">
+  <div class="top grid">
+    <div class="row">
       <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16" align="center">
         ${render_notice()}
-
-        % if not req.user:
-          <div class="banner">
-            <h1 class="header">Beyond the Scroll</h1>
-            <p>Include just a single javascript, get anonymous tracking works, and increase readability</p>
-            <a class="primary button" href="${req.route_path('project.new')}">Create a Project</a>
-          </div>
-        % endif
       </div>
     </div>
 
-    <div class="row site">
-      <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16">
-        % if not req.user or req.user.projects:
+    <div class="row">
+      <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16" align="center">
+        <a href="${req.route_url('top', subdomain=None)}"><img class="logo" width="64" height="64" src="${util.static_url('img/scrolliris-logo-64x64.png')}"></a>
+        <h1 class="logo"><span class="logo-type inverse"><span class="scroll">Scroll</span><span class="iris">iris</span></span></h1>
+        <p class="description">Publication platform which utilizes text readability analysis.</p>
+      </div>
+    </div>
+
+    <div class="main row">
+      <div class="offset-4 column-8 offset-v-2 column-v-12 column-l-16" align="center">
+        <div class="menu">
+          <div class="item container">
+            <a class="grouped primary flat button" href="https://about.scrolliris.com/">About</a>
+            <a class="grouped flat button" href="https://log.scrolliris.com/">Changelog</a>
+            <a class="grouped flat button" href="https://help.scrolliris.com/">Support</a>
+            % if not req.user:
+            <a class="grouped positive flat button" href="https://try.scrolliris.com/" target="_blank">Demo</a>
+            % endif:
+          </div>
+
+          <div class="right menu">
+            % if not req.user:
+            <a class="item" href="${req.route_url('signup', subdomain=None)}">Signup</a>
+            <a class="item" href="${req.route_url('login', subdomain=None)}">Login</a>
+            % else:
+            <a class="item" href="${req.route_url('console.top')}">Console</a>
+            % endif
+          </div>
+        </div>
+
+        <div id="ticker" class="pride"></div>
+        <form class="form">
+          <div class="field">
+            <input type="text" placeholder="Search (under development)">
+          </div>
+          <input type="submit" class="primary flat disabled button" value="Search" disabled>
+          <p>&nbsp;Or&nbsp;</p>
+          % if not req.user:
+          <a class="link" href="${req.route_path('project.new')}">Create a Project</a>,&nbsp;
+          % endif
+          <a class="link" href="">Check the Registry</a>
+        </form>
+      </div>
+
+      % if not req.user or req.user.projects:
+      <div class="offset-5 column-6 offset-v-2 column-v-12 column-l-16">
         <div class="warn message">
           <h5 class="header">NOTE</h5>
           <div class="description">
-            <p>Scrolliris is currently under development as public beta. If you have any questions, please contact us <a href="mailto:support@scrolliris.com">support@scrolliris.com</a></p>
+            <p>Scrolliris is developed by <a href="https://lupine-software.com/">Lupine Software LLC</a>. It's still <span class="secondary label">PUBLIC BETA</span>. If you have any questions, please contact us <a href="mailto:support@scrolliris.com">support@scrolliris.com</a></p>
+            <p></p>
           </div>
         </div>
-        % else:
-          <p align="center">
-            <a class="primary petit flat button" href="${req.route_path('project.new')}">Create a Project</a>
-          </p>
-        % endif
       </div>
-
-      <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16">
-        <div class="tab menu">
-        % if site_type == 'publication':
-          <span class="item active">HOSTED</span>
-          <a class="item" href="${req.route_path('top', _query={'type': 'application'})}">INTEGRATED</a>
-        % else:
-          <a class="item" href="${req.route_path('top', _query={'type': 'publication'})}">HOSTED</a>
-          <span class="item active">INTEGRATED</span>
-        % endif
-        </div>
-
-        % if site_type == 'publication':
-          <p class="description">Hosted publications on <code>scrolliris.com</code></p>
-          <div class="row">
-          % for site in sites:
-            <% publication = site.publication %>
-            <% project = site.project %>
-
-            <div class="column-4 column-v-8 column-l-8 column-s-16">
-              <div class="flat publication gray box" align="left">
-                <div class="cover">COMMING SOON</div>
-                <span class="primary label">${publication.license.identifier}</span>
-                <div class="meta">
-                  <span class="date">${publication.created_at.strftime('%Y-%m-%d %H:%M')}</span>
-                  <a href="${req.route_url('site.overview', subdomain='registry', namespace=project.namespace, slug=site.slug)}"><h5 class="header">${project.name}&nbsp;/&nbsp;${util.truncate(publication.name, length=25)}</h5></a>
-                  <span class="classification">${util.truncate(publication.classification.name, length=55)}</span>
-                </div>
-                <div class="description">
-                  <p>${util.truncate(publication.description, length=40)}</p>
-                </div>
-              </div>
-            </div>
-          % endfor
-          </div>
-        % endif
-
-        % if site_type == 'application':
-          <p class="description">External applications which is integrated Scrolliris's measure script and heatmap widget.</p>
-          <div class="row">
-
-          ## TODO
-          <div class="column-4 column-v-8 column-l-8 column-s-16">
-            <div class="flat application blue box" align="left">
-              <div class="cover">doc.scrolliris.com</div>
-
-              <div class="meta">
-                <span class="date">2017-07-07 10:00</span>
-                <a href="https://doc.scrolliris.com/how_it_works/overview.html"><h5 class="header">Scrolliris / How it works</h5></a>
-              </div>
-              <div class="description">
-                <p class="note">Learn how our readability analysis works.</p>
-              </div>
-            </div>
-          </div>
-
-          % for site in sites:
-            <% application = site.application %>
-            <% project = site.project %>
-
-            <div class="column-4 column-v-8 column-l-8 column-s-16">
-              <div class="flat application blue box" align="left">
-                <div class="cover">${site.domain}</div>
-                <div class="meta">
-                  <span class="date">${application.created_at.strftime('%Y-%m-%d %H:%M')}</span>
-                  <a href="${req.route_url('project.overview', subdomain='registry', namespace=project.namespace, _query={'type': 'application'})}"><h5 class="header">${project.name}&nbsp;/&nbsp;${util.truncate(application.name, length=25)}</h5></a>
-                </div>
-                <div class="description">
-                  <p>${util.truncate(application.description, length=65)}</p>
-                </div>
-              </div>
-            </div>
-          % endfor
-          </div>
-        % endif
-      </div>
+      % endif
     </div>
   </div>
 </div>

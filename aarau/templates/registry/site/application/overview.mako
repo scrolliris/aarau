@@ -30,12 +30,12 @@
         <span class="active integrated primary label">INTEGRATED</span>
 
         <div class="container">
-          <div class="group flat box">
+          <div class="grouped flat box">
             <h3 class="header">${application.name}</h3>
             <p class="author">${site.project.primary_owner.name}</p>
             <div class="description">
               <span class="date">${application.created_at.strftime('%Y-%m-%d %H:%M')}</span>
-              <span class="secondary line label">${site.domain}</span>
+              <span class="secondary lined label">${site.domain}</span>
             </div>
             <p>${application.description}</p>
           </div>
@@ -51,11 +51,11 @@
           </div>
         % endif
         <div class="container">
-          <div class="group flat box" align="left">
+          <div class="grouped flat box" align="left">
             <h6>Languages</h6>
             <p><span class="rounded secondary label">English</span></p>
           </div>
-          <div class="group flat box" align="left">
+          <div class="grouped flat box" align="left">
             <h6>Dates</h6>
             <p class="description">
               <span class="label">CREATED</span>
@@ -71,7 +71,7 @@
         <div class="container">
           <div class="attached box" align="left">
             <p><span class="positive label">Finish Reading Rate</span>&nbsp; avr. 0%</p>
-            <p><span class="positive line label">Reading Intensity</span>&nbsp; 0</p>
+            <p><span class="positive lined label">Reading Intensity</span>&nbsp; 0</p>
           </div>
           <div class="attached warn message">
             <h6 class="header">NOTE</h6>

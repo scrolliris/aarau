@@ -36,7 +36,7 @@
           </div>
         </div>
 
-        <div class="tab menu">
+        <div class="tabbed menu">
         % if site_type == 'application':
           <a class="item" href="${req.route_path('project.overview', namespace=project.namespace, _query={'type': 'publication'})}">HOSTED</a>
           <span class="item active">INTEGRATED</span>
@@ -52,7 +52,7 @@
               <a href="${req.route_path('site.overview', namespace=project.namespace, slug=site.slug)}">
                 <h5 class="header">${util.truncate(site.instance.name, length=25)}</h5></a>
               <div class="description">
-                <p class="note">Registered @&nbsp;<span class="basic line label date">${site.instance.created_at.strftime('%Y-%m-%d %H:%M')}</span></p>
+                <p class="note">Registered @&nbsp;<span class="basic lined label date">${site.instance.created_at.strftime('%Y-%m-%d %H:%M')}</span></p>
                 <p>${util.truncate(site.instance.description, length=120)}</p>
               </div>
             </div>
@@ -64,7 +64,7 @@
               <span class="classification">${util.truncate(site.instance.classification.name, length=85)}</span>
               <div class="description">
                 <p class="note">Published As&nbsp;<span class="primary label">${site.instance.license.identifier}</span>
-                  @&nbsp;<span class="secondary line label date">${site.instance.created_at.strftime('%Y-%m-%d %H:%M')}</span></p>
+                  @&nbsp;<span class="secondary lined label date">${site.instance.created_at.strftime('%Y-%m-%d %H:%M')}</span></p>
                 <p>${util.truncate(site.instance.description, length=120)}</p>
               </div>
             </div>

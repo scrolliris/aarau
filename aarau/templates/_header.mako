@@ -1,6 +1,6 @@
 <%block name='header'>
 <header>
-  <div class="top menu">
+  <div class="menu">
     <a href="${req.route_url('top', namespace=None)}">
       <h1 class="logo item">
         <img class="logo-mark" width="26" height="26" src="${util.static_url('img/scrolliris-logo-fbfaf8-64x64.png')}">

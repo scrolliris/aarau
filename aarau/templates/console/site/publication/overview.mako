@@ -36,7 +36,7 @@
 
     <div class="row">
       <div class="column-16">
-        <div class="tab menu">
+        <div class="tabbed menu">
           <a class="active item">Repository</a>
           <a class="disabled item">Authors</a>
         </div>
