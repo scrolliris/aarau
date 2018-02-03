@@ -1,18 +1,44 @@
 @import './_colour.styl'
 
-.wrapper
-  position relative
+html
+  height 100%
+  box-sizing border-box
+
+body
   min-height 100%
+  position relative
+
+.wrapper
+  min-height 100%
+  position relative
+  padding 0
+  margin 0
 
 #basic .wrapper,
 #standard .wrapper
+  // footer fix
+  display -webkit-box
+  display -moz-box
+  display -ms-flexbox
+  display -webkit-flex
+  display box
+  display flex
+  -webkit-box-orient vertical
+  -moz-box-orient vertical
+  -o-box-orient vertical
+  -webkit-flex-direction column
+  -ms-flex-direction column
+  flex-direction column
   background-color #fbfaf8
   > section.container
     width 100%
 
-#standard
-  .wrapper > section.container
+#standard .wrapper
+  > section.container
     padding-bottom 14.22rem
+
+#console .wrapper
+  display flex
 
 // header
 header.user
@@ -54,6 +80,8 @@ header
 // footer
 footer
   position absolute
+  right 0
+  left 0
   bottom 0
   width 100%
   background-color #222222
