@@ -1,4 +1,5 @@
 <%block name='header'>
+% if req.path != req.route_path('top'):
 <header>
   <div class="menu">
     <a href="${req.route_url('top', namespace=None)}">
@@ -30,6 +31,7 @@
     </nav>
   </div>
 </header>
+% endif
 
 <div class="global-message${' user' if req.user else ''}">
 % if not req.user:
