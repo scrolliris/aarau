@@ -11,7 +11,7 @@
     <div class="field-8">
       <label class="label" for="domain">Domain</label>
       <p class="description">Custom domain or subdomain support is still TBD.</p>
-      <span class="secondary line label">scrolliris.com</span>
+      <span class="secondary lined label">scrolliris.com</span>
     </div>
   </div>
 

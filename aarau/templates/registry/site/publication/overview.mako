@@ -32,7 +32,7 @@
             <h3 class="header">${publication.name}</h3>
             <p class="author">${site.project.primary_owner.name}</p>
             <div class="description">
-              Published As <span class="primary line label">${publication.license.identifier}</span>
+              Published As <span class="primary lined label">${publication.license.identifier}</span>
               In&nbsp;<span class="classification">${publication.classification.name}</span>
               <p>${publication.description}</p>
             </div>
@@ -79,7 +79,7 @@
         <div class="container">
           <div class="attached box" align="left">
             <p><span class="positive label">Finish Reading Rate</span>&nbsp; avr. 0%</p>
-            <p><span class="positive line label">Reading Intensity</span>&nbsp; 0</p>
+            <p><span class="positive lined label">Reading Intensity</span>&nbsp; 0</p>
           </div>
           <div class="attached warn message">
             <h6 class="header">NOTE</h6>
