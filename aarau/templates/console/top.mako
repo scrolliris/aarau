@@ -18,7 +18,7 @@
 
     <div class="row">
       <div class="column-16">
-        <a class="primary button" href="${req.route_path('console.project.new')}">New Project</a>
+        <a class="primary flat button" href="${req.route_path('console.project.new')}">New Project</a>
       </div>
     % for project in projects:
       <div class="column-4 column-v-8 column-l-16">

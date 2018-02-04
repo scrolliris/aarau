@@ -36,10 +36,21 @@
         <label class="primary label">${project.namespace}</label>
 
         <p class="description">${project.description}</p>
-        <form class="inline form" method="get" action="${req.route_path('console.site.new', namespace=project.namespace)}">
-          <input type="hidden" name="type" value="publication">
-          <input class="primary button" type="submit" value="New Publication">
-        </form>
+        <div class="dropdown-container">
+          <a class="action" href="${req.route_path('console.site.new', namespace=project.namespace)}">New Publication</a>
+          <input id="site_type" type="checkbox">
+          <label for="site_type"></label>
+          <div class="dropdown">
+            <a class="item" href="${req.route_path('console.site.new', namespace=project.namespace, _query={'type': 'publication'})}">
+              <h5 class="header">Hosted Publication</h5>
+              <span class="description">You publication will be published on scrolliris.com.</span>
+            </a>
+            <a class="item" href="${req.route_path('console.site.new', namespace=project.namespace, _query={'type': 'application'})}">
+              <h5 class="header">Integrated Publication</h5>
+              <span class="description">Choose this if you want to integrate readability measurement into you existing site.</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
 
