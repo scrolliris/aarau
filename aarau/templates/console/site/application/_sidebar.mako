@@ -14,7 +14,8 @@
   <a class="disabled item">Downloads</a>
   ${link_to('console.site.settings', 'Settings')}
 
-  <div class="bottom item">
+  ## desktop only
+  <div class="bottom note item">
     <%include file='aarau:templates/console/_sidebar_note.mako'/>
   </div>
 </div>

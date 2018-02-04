@@ -61,7 +61,7 @@ if (container !== null) {
       sidebar.checked = 'checked';
       sidebar.classList.add('pinned');
 
-      holdBtn.innerHTML = 'Pinned';
+      holdBtn.innerHTML = 'Unpin';
     } else {
       saveSidebarState('console.sidebar', 'unlocked');
 

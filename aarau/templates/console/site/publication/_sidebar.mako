@@ -7,7 +7,8 @@
   <a class="disabled item">Downloads</a>
   <a class="item" href="${req.route_url('console.site.settings', namespace=project.namespace, slug=site.slug)}">Settings</a>
 
-  <div class="bottom item">
+  ## desktop only
+  <div class="bottom note item">
     <%include file='aarau:templates/console/_sidebar_note.mako'/>
   </div>
 </div>

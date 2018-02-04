@@ -8,7 +8,8 @@
   <a class="item" href="${req.route_url('top', subdomain=None)}">Scrolliris Top</a>
   <a class="item" href="${req.route_url('settings', subdomain=None)}">Account Settings</a>
 
-  <div class="bottom item">
+  ## desktop only
+  <div class="bottom note item">
     <%include file='aarau:templates/console/_sidebar_note.mako'/>
   </div>
 </div>

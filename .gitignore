@@ -13,7 +13,10 @@ codequality.txt
 app.yaml
 cors-file.json
 
+# deployment script
 /bin/deliver
+/bin/cleanup
+
 /bin/gitlab-ci-multi-runner
 
 /db/seeds/*.yml

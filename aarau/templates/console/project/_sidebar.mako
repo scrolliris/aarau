@@ -19,7 +19,8 @@
   <a class="disabled item">Members</a>
   <a class="disabled item">Settings</a>
 
-  <div class="bottom item">
+  ## desktop only
+  <div class="bottom note item">
     <%include file='aarau:templates/console/_sidebar_note.mako'/>
   </div>
 </div>

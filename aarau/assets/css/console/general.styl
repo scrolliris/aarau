@@ -42,6 +42,9 @@
 // sidebar
 #console
   .sidebar
+    background-color #ffffff
+    z-index 2147483647
+    position fixed
     > .item.active
       border-left 4px solid darken($gray1, 3%)
       padding-left 1.06rem
@@ -89,8 +92,9 @@
     transition transform .28s ease 0.08s
 
   #sidebar_checkbox.pinned + .sidebar
-      visibility visible
-      display block
+    position relative
+    visibility visible
+    display block
 
   .sidebar-checkbox
     display none
@@ -105,7 +109,6 @@
       border 0
 
   #sidebar_checkbox:checked + .sidebar
-    z-index 1
     visibility visible
     display block
 
@@ -140,24 +143,24 @@
   #sidebar_checkbox:checked ~ .content .sidebar-show-button
     display none
 
+
 @media only screen and (max-width: 1280px)
   #console .sidebar
-    min-width 13.97rem
-    max-width 17.97rem
+    min-width 16.97rem
+    max-width 25%
 @media only screen and (max-width: 980px)
   #console .sidebar
-    min-width 10.97rem
-    max-width 14.97rem
+    min-width 14.97rem
+    max-width 30%
 @media only screen and (max-width: 768px)
   #console .sidebar
-    min-width 7.97rem
-    max-width 11.97rem
+    min-width 12.97rem
+    max-width 40%
 @media only screen and (max-width: 640px)
   #console .sidebar
-    min-width 4.97rem
-    max-width 8.97rem
-@media only screen and (max-width: 480px)
-  #console .sidebar
+    min-width 10.97rem
+    max-width 30%
+  #console .sidebar .note.item
     display none
 @media print
   #console .sidebar
