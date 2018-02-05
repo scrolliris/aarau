@@ -1,0 +1,55 @@
+@import '../shared/_colour.styl'
+
+// registry
+.registry.grid
+  .menu:first-child
+    margin-top 0.062rem
+    margin-bottom 0.392rem
+    .item
+      margin-left 0
+      padding-left 0.11rem
+      &:hover
+        background none
+
+  .form
+    display block
+    min-height 1.2rem
+    .search.field
+      padding-right 0.22rem
+      margin-bottom 0.71rem
+    input[type="text"]
+      height 2.92em
+      padding-top 0.78rem
+      padding-left 0.88rem
+      padding-bottom 0.88rem
+
+
+  .row.main
+    background-color #fbfaf8
+    padding-top 0.28rem
+    padding-bottom 0
+    > div:first-child
+      padding-top 0
+      padding-bottom 0
+
+  .row.banner
+    padding-top 0.28rem
+    padding-bottom 0.28rem
+    > div:first-child
+      padding-top 0
+      padding-bottom 0
+
+    .logo
+      display block
+      filter gray
+      -webkit-filter grayscale(1)
+      filter grayscale(1)
+      opacity 0.66
+      &:hover
+        -webkit-filter grayscale(0)
+        filter none
+        opacity 1
+
+  .row.content
+    padding-top 2.66rem
+    padding-bottom 2.66rem

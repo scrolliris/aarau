@@ -145,6 +145,7 @@ def includeme(config):
 
     # public view
     with subdomain('registry') as c:
+        c.add_route('search', '/')
         c.add_route('project.overview',
                     '/{namespace}/overview',
                     custom_predicates=(namespace,))

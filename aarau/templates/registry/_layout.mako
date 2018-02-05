@@ -37,7 +37,7 @@
   <body id="registry">
     <div class="wrapper">
       <%block name='header'>
-        <%include file='aarau:templates/_header.mako'/>
+        <%include file='aarau:templates/registry/_header.mako'/>
       </%block>
 
       <section class="container">

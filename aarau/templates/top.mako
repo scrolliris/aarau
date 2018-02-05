@@ -28,8 +28,8 @@
       <div class="offset-4 column-8 offset-v-2 column-v-12 column-l-16" align="center">
         <div class="menu">
           <div class="item container">
-            <a class="grouped primary flat button" href="https://about.scrolliris.com/">About</a>
-            <a class="grouped flat button" href="https://help.scrolliris.com/">Support</a>
+            <a class="grouped primary flat button" href="https://about.scrolliris.com/" target="_blank">About</a>
+            <a class="grouped flat button" href="https://help.scrolliris.com/" target="_blank">Support</a>
           </div>
           <div class="item container">
             % if not req.user:
@@ -43,21 +43,22 @@
             <a class="item" href="${req.route_url('login', subdomain=None)}">Login</a>
             % else:
             <a class="item" href="${req.route_url('console.top')}">Console</a>
+            <a class="item" href="${req.route_url('logout', subdomain=None)}">Logout</a>
             % endif
           </div>
         </div>
 
         <div id="ticker" class="pride"></div>
-        <form class="form">
+        <form id="search_form" class="form" action="${req.route_url('search', subdomain='registry')}" method="GET">
           <div class="field">
-            <input type="text" placeholder="Search (under development)">
+            <input id="q" type="text" name="q" placeholder="Title,Abstract">
           </div>
-          <input type="submit" class="primary flat disabled button" value="Search" disabled>
+          <input type="submit" class="primary flat button" value="Search">
           <p>&nbsp;Or&nbsp;</p>
           % if not req.user:
           <a class="link" href="${req.route_path('project.new')}">Create a Project</a>,&nbsp;
           % endif
-          <a class="link" href="">Check the Registry</a>
+          <a class="link" href="${req.route_url('search', subdomain='registry')}">Check the Registry</a>
         </form>
       </div>
 
@@ -76,7 +77,6 @@
           </div>
         </div>
         % endif
-
       </div>
     </div>
 

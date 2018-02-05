@@ -130,20 +130,20 @@ var paths = {
   master: [
     path.join(assetsDir, 'master.js')
   , path.join(assetsDir, 'css/**/*.styl')
-  , path.join('!' + assetsDir, 'css/console/**/*.styl')
+  , path.join('!' + assetsDir, 'css/{console,registry}/**/*.styl')
   , path.join(assetsDir, 'js/**/*.js')
-  , path.join('!' + assetsDir, 'js/console/**/*.js')
+  , path.join('!' + assetsDir, 'js/{console,registry}/**/*.js')
   , path.join(assetsDir, 'component/**/*.{style,js}')
-  , path.join('!' + assetsDir, 'component/console/**/*.{style,js}')
+  , path.join('!' + assetsDir, 'component/{console,registry}/**/*.{style,js}')
   ]
-, number: [
+, number: [ // registry
     path.join(assetsDir, 'number.js')
   , path.join(assetsDir, 'css/shared/**/*.styl')
-  , path.join(assetsDir, 'css/console/**/*.styl')
-  , path.join(assetsDir, 'js/console/**/*.js')
-  , path.join(assetsDir, 'component/console/**/*.{styl,js}')
+  , path.join(assetsDir, 'css/registry/**/*.styl')
+  , path.join(assetsDir, 'js/registry/**/*.js')
+  , path.join(assetsDir, 'component/registry/**/*.{styl,js}')
   ]
-, author: [
+, author: [ // console
     path.join(assetsDir, 'author.js')
   , path.join(assetsDir, 'css/shared/**/*.styl')
   , path.join(assetsDir, 'css/console/**/*.styl')

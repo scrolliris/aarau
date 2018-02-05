@@ -7,7 +7,6 @@ import './css/shared/typography.styl'
 import './css/shared/overwrite.styl'
 
 // -- standard
-import './css/general.styl'
 import './css/top.styl'
 import './css/signup.styl'
 import './css/settings.styl'
