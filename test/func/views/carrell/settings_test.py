@@ -294,7 +294,72 @@ def test_settings_email_delete_with_valid_email(
             assert user_email.refresh()
 
 
-# TODO: Add test_settings_email_change here
+def test_settings_email_change_with_invalid_email(
+        users, login_as, dummy_app):
+    from aarau.models.user_email import UserEmail
+
+    user = users['henry']
+    with login_as(user):
+        alt_user_email = user.emails.where(
+            UserEmail.email != user.email,
+            UserEmail.type == 'normal',
+            UserEmail.activation_state == 'pending').get()
+
+        dummy_app.switch_target('carrell')
+        res = dummy_app.get('/settings/email', status=200)
+        res.charset = None
+        token = res.html.select_one('input[name=csrf_token]')['value']
+        params = {
+            'csrf_token': token,
+            'email': alt_user_email.email,
+            'submit': '1',
+        }
+
+        res = dummy_app.post(
+            '/settings/email/change', params=params, status=302)
+        res = res.follow(status=200)
+
+        assert '200 OK' == res.status
+        res.charset = None
+        assert ('Primary email address could not been changed'
+                '') in res.html.select_one('.failure.message p')
+
+        user.refresh()
+        assert alt_user_email.email != user.email  # not changed
+
+
+def test_settings_email_change_with_valid_email(
+        users, login_as, dummy_app):
+    from aarau.models.user_email import UserEmail
+
+    user = users['oswald']
+    with login_as(user):
+        alt_user_email = user.emails.where(
+            UserEmail.email != user.email,  # alternative email
+            UserEmail.type == 'normal',
+            UserEmail.activation_state == 'active').get()
+
+        dummy_app.switch_target('carrell')
+        res = dummy_app.get('/settings/email', status=200)
+        res.charset = None
+        token = res.html.select_one('input[name=csrf_token]')['value']
+        params = {
+            'csrf_token': token,
+            'email': alt_user_email.email,
+            'submit': '1',
+        }
+
+        res = dummy_app.post(
+            '/settings/email/change', params=params, status=302)
+        res = res.follow(status=200)
+
+        assert '200 OK' == res.status
+        res.charset = None
+        assert ('Primary email address successfully changed'
+                '') in res.html.select_one('.success.message p')
+
+        user.refresh()
+        assert alt_user_email.email == user.email
 
 
 def test_settings_password_with_empty_params(users, login_as, dummy_app):
