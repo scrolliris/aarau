@@ -361,13 +361,20 @@ Translations for frontend (json) needs `i18next-conv`.
 3. compile
 
 
+## Note
+
+* carrell
+* console
+* registry
+
+
 ## License
 
 This project is distributed as various licenses by parts.
 
 ```txt
 Aarau
-Copyright (c) 2017 Lupine Software LLC
+Copyright (c) 2017-2018 Lupine Software LLC
 ```
 
 ### Documentation
