@@ -24,7 +24,7 @@ case $1 in
     $bin_dir/_cleanup $2
     ;;
   "deliver"|"deli")
-    $bin_dir/_deliver
+    $bin_dir/_deliver $2
     ;;
   "version"|"list")
     $bin_dir/_version

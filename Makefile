@@ -170,5 +170,10 @@ expose:
 	  grep -vE '(\.coverage|\.*-version|bin\/gitlab*)'
 .PHONY: expose
 
+# -- deployment
+plate:
+	./bin/plate $(ACTION) $(VERSION)
+.PHONY: plate
+
 .DEFAULT_GOAL = coverage
 default: coverage
