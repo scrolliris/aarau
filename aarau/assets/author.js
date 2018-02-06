@@ -3,6 +3,7 @@ import './css/shared/general.styl'
 import './css/shared/layout.styl'
 import './css/shared/form.styl'
 import './css/shared/typography.styl'
+import './css/shared/pagination.styl'
 import './css/shared/overwrite.styl'
 
 // -- console

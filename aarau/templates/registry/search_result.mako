@@ -39,16 +39,41 @@
       </div>
     </div>
 
-    <div class="banner row" align="center">
-      <div class="offset-4 column-8 offset-v-2 column-v-12 column-l-16" align="center">
-        <img class="logo" width="32" height="32" src="${util.static_url('img/scrolliris-logo-64x64.png')}">
-      </div>
-    </div>
-
+    % if pq:
     <div class="content row" align="center">
+      <div class="offset-4 column-8" align="center">
+        <span class="search-result-count">Found ${pq.total_count} Publication(s)</span>
+      </div>
+
       <div class="offset-4 column-8 offset-v-2 column-v-12 column-l-16" align="center">
-        <p>Under Development</p>
+        % for site in pq.get_objects():
+          % if site.publication:
+            <% publication = site.publication %>
+          <div class="embedded flat box" align="left">
+            <h5 class="title">${util.truncate(publication.name, length=80)}</h5>
+            <p class="description">${util.truncate(publication.description, length=200)}</p>
+            <span class="url">${req.route_url('site.overview', namespace=site.project.namespace, slug=site.slug)}</span>
+          </div>
+          % endif
+        % endfor
+
+        % if pq.page_count > 1:
+        <div class="pagination">
+          % if not pq.prev_page:
+            <span class="prev item">Prev</span>
+          % else:
+            <a class="prev item" href="?q=${req.params.get('q')}&page=${pq.prev_page}">Prev</a>
+          % endif
+
+          % if not pq.next_page:
+            <span class="next item">Next</span>
+          % else:
+            <a class="next item" href="?q=${req.params.get('q')}&page=${pq.next_page}">Next</a>
+          % endif
+        </div>
+        % endif
       </div>
     </div>
+    % endif
   </div>
 </div>

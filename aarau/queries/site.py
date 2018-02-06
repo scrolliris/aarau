@@ -34,6 +34,17 @@ def get_sites(type_, limit=10):
         )
     sites = sites.where(
         Site.instance_type == instance_type
-    ).limit(limit)
+    )
 
+    if limit > 0:
+        sites = sites.limit(limit)
+
+    return sites
+
+
+def get_publication_sites_with_params(query):
+    query = query.replace('%', '\\%')
+    query = query.replace('_', '\\_')
+    sites = get_sites('publication', -1).where(
+        Publication.name ** '%{:s}%'.format(query))
     return sites

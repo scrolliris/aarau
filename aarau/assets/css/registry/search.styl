@@ -32,24 +32,28 @@
       padding-top 0
       padding-bottom 0
 
-  .row.banner
-    padding-top 0.28rem
-    padding-bottom 0.28rem
+  .row.content
+    padding-top 0.98rem
+    padding-bottom 2.66rem
     > div:first-child
       padding-top 0
       padding-bottom 0
 
-    .logo
-      display block
-      filter gray
-      -webkit-filter grayscale(1)
-      filter grayscale(1)
-      opacity 0.66
-      &:hover
-        -webkit-filter grayscale(0)
-        filter none
-        opacity 1
+    .search-result-count
+      font-size 0.82em
+      color darken($gray1, 9%)
 
-  .row.content
-    padding-top 2.66rem
-    padding-bottom 2.66rem
+    .embedded.box
+      padding-left 0.68rem
+      padding-right 0.68rem
+      border 0
+      &:hover
+        background-color #fbfaf8
+      .title
+        margin-top 0
+        font-size 1.23rem
+      .description
+        font-size 0.82em
+        color $gray2
+      .url
+        color darken($gray1, 9%)
