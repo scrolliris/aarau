@@ -1,6 +1,9 @@
 Tue 06 Feb 2018 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
 	* Add carrell resource (subdomain)
 
+Mon 05 Feb 2018 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
+	* Add search functionality for registry
+
 Fri 26 Jan 2018 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
 	* Update styr to v0.0.26
 
