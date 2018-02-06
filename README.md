@@ -226,7 +226,7 @@ Use `CherryPy` as wsgi server.
 (venv) % honcho start
 ```
 
-### Publishing
+### Delivery
 
 E.g. Google App Engine
 
@@ -245,17 +245,19 @@ E.g. Google App Engine
 : setup lib/ as a root for sdk
 (venv) % CLOUDSDK_ROOT_DIR=. ./google-cloud-sdk/install.sh
 (venv) % cd ../
-
-: load sdk tools
-(venv) % source ./bin/load-gcloud
-(venv) % gcloud init
 ```
 
 ```zs
-: publish website
-(venv) % source ./bin/load-gcloud
-(venv) % gcloud app deploy ./app.yaml --project <project-id> --verbosity=info
+: check current versions (default service)
+(venv) % ACTION=list make plate
+
+: see delivery script `plate`
+(venv) % ACTION=delivery VERSION=v9 make plate
+
+: put plate (delete)
+(venv) % ACTION=clean VERSION=v8 make plate
 ```
+
 
 
 ## Testing
