@@ -120,25 +120,30 @@ def settings_email_delete(request):
 
 @view_config(route_name='carrell.settings.email_change', request_method='POST')
 @login_required
-def settings_email_change(request):
+def settings_email_change(req):
     """Changes user email."""
-    user = request.user
+    user = req.user
     user_email = user.emails.where(
-        UserEmail.email == request.params['email'],
+        UserEmail.email == req.params['email'],
         UserEmail.type != 'primary',
     ).first()
 
-    form = build_change_email_form(request, user_email)
-    if 'submit' in request.POST:
-        _ = request.translate
-        if form.validate() and user_email.make_as_primary():
-            request.session.flash(_('settings.email.change.success'),
-                                  queue='success', allow_duplicate=False)
-        else:
-            request.session.flash(_('settings.email.change.failure'),
-                                  queue='failure', allow_duplicate=False)
+    form = build_change_email_form(req, user_email)
+    if 'submit' in req.POST:
+        _ = req.translate
+        if form.validate():
+            with req.db.cardinal.atomic():
+                user_email.make_as_primary()
+                user.email = req.params['email']
+                user.save()
 
-    return HTTPFound(location=request.route_path(
+            req.session.flash(_('settings.email.change.success'),
+                              queue='success', allow_duplicate=False)
+        else:
+            req.session.flash(_('settings.email.change.failure'),
+                              queue='failure', allow_duplicate=False)
+
+    return HTTPFound(location=req.route_path(
         'carrell.settings.section', section='email'))
 
 

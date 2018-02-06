@@ -225,7 +225,7 @@ def test_settings_email_activate_with_unexpected_error(
         from aarau import get_settings
         settings = get_settings()
         secret = settings['token.secret']
-        settings['token.secret'] = None  # as missing
+        settings['token.secret'] = None  # emulate as not set
 
         res = settings_email_activate(dummy_request)
 
@@ -233,6 +233,7 @@ def test_settings_email_activate_with_unexpected_error(
         assert '302 Found' == res.status
         assert '/settings/email' == res.location
     finally:
+        # restore for following tests
         settings['token.secret'] = secret
 
 
@@ -302,7 +303,88 @@ def test_settings_email_delete_with_valid_email(
     assert '/settings/email' == res.location
 
 
-# TODO: Add test_settings_email_change, here
+def test_settings_email_change_with_missing_csrf(
+        users, dummy_request):
+    from aarau.views.carrell.settings.action import settings_email_change
+    from aarau.models.user_email import UserEmail
+
+    user = users['oswald']
+    alt_user_email = user.emails.where(
+        UserEmail.email != user.email).get()
+    dummy_request.subdomain = 'carrell'
+    dummy_request.user = user
+    dummy_request.POST = dummy_request.params = MultiDict({
+        # 'csrf_token': '',
+        'email': alt_user_email.email,
+        'submit': '1',
+    })
+    res = settings_email_change(dummy_request)
+
+    assert '302 Found' == res.status
+    assert '/settings/email' == res.location
+    assert dummy_request.session.peek_flash('failure')
+
+
+def test_settings_email_change_with_invalid_csrf(
+        users, dummy_request):
+    from aarau.views.carrell.settings.action import settings_email_change
+    from aarau.models.user_email import UserEmail
+
+    user = users['oswald']
+    alt_user_email = user.emails.where(
+        UserEmail.email != user.email).get()
+    dummy_request.subdomain = 'carrell'
+    dummy_request.user = user
+    dummy_request.POST = dummy_request.params = MultiDict({
+        'csrf_token': 'invalid',
+        'email': alt_user_email.email,
+        'submit': '1',
+    })
+    res = settings_email_change(dummy_request)
+
+    assert '302 Found' == res.status
+    assert '/settings/email' == res.location
+    assert dummy_request.session.peek_flash('failure')
+
+
+def test_settings_email_change_with_current_primary_email(
+        users, dummy_request):
+    from aarau.views.carrell.settings.action import settings_email_change
+
+    user = users['oswald']
+    dummy_request.subdomain = 'carrell'
+    dummy_request.user = user
+    dummy_request.POST = dummy_request.params = MultiDict({
+        'csrf_token': dummy_request.session.get_csrf_token(),
+        'email': user.email,  # (current) primary email
+        'submit': '1',
+    })
+    res = settings_email_change(dummy_request)
+
+    assert '302 Found' == res.status
+    assert '/settings/email' == res.location
+    assert dummy_request.session.peek_flash('failure')
+
+
+def test_settings_email_change(users, dummy_request):
+    from aarau.views.carrell.settings.action import settings_email_change
+    from aarau.models.user_email import UserEmail
+
+    user = users['oswald']
+    alt_user_email = user.emails.where(
+        UserEmail.email != user.email).get()
+    dummy_request.subdomain = 'carrell'
+    dummy_request.user = user
+    dummy_request.POST = dummy_request.params = MultiDict({
+        'csrf_token': dummy_request.session.get_csrf_token(),
+        'email': alt_user_email.email,
+        'submit': '1',
+    })
+    res = settings_email_change(dummy_request)
+
+    assert '302 Found' == res.status
+    assert '/settings/email' == res.location
+    assert dummy_request.session.peek_flash('success')
 
 
 def test_settings_password_with_empty_params(users, dummy_request):
