@@ -1,0 +1,36 @@
+#!/usr/bin/env zsh
+
+# plate: dePLoyment wrApper fronTEnd
+#
+# serve plate ;-)
+#
+# * cleanup
+# * deliver
+# * version
+
+dot_env="$(pwd)/.env"
+if [ -f "${dot_env}" ]; then
+  while IFS='' read -r line || [[ -n "$line" ]]; do
+    if [ "${line:0:10}" = "PROJECT_ID" ]; then
+      export $(echo "${line}" | tr -d '"')
+    fi
+  done < "${dot_env}"
+fi
+
+bin_dir=$(dirname $0)
+
+case $1 in
+  "cleanup"|"clean")
+    $bin_dir/_cleanup $2
+    ;;
+  "deliver"|"deli")
+    $bin_dir/_deliver
+    ;;
+  "version"|"list")
+    $bin_dir/_version
+    ;;
+  *)
+    echo "Unknown action :'("
+    exit 2
+    ;;
+esac

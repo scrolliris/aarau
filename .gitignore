@@ -13,9 +13,10 @@ codequality.txt
 app.yaml
 cors-file.json
 
-# deployment script
-/bin/deliver
-/bin/cleanup
+# deployment raw scripts (plate)
+/bin/_deliver
+/bin/_cleanup
+/bin/_version
 
 /bin/gitlab-ci-multi-runner
 
