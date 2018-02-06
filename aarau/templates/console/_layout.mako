@@ -56,6 +56,7 @@
               </%block>
             </div>
             <div class="right menu">
+              <a class="item" href="${req.route_url('carrell.settings')}">Carrell</a>
               <a class="item" href="${req.route_url('logout')}">Log out</a>
             </div>
           </div>

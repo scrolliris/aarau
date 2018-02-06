@@ -20,7 +20,7 @@ def setup(request, config, mailer_outbox):  # pylint: disable=unused-argument
 
 
 def assert_user_email_forms(user_emails, email_forms):
-    from aarau.views.settings.form import (
+    from aarau.views.carrell.settings.form import (
         FailureForm,
         ChangeEmailForm,
         DeleteEmailForm,
@@ -39,8 +39,9 @@ def assert_user_email_forms(user_emails, email_forms):
 
 
 def test_settings_account(users, dummy_request):
-    from aarau.views.settings.action import settings_account
+    from aarau.views.carrell.settings.action import settings_account
 
+    dummy_request.subdomain = 'carrell'
     dummy_request.user = users['oswald']
     res = settings_account(dummy_request)
 
@@ -48,10 +49,11 @@ def test_settings_account(users, dummy_request):
 
 
 def test_settings_email_with_empty_params(users, dummy_request):
-    from aarau.views.settings.action import settings_email
-    from aarau.views.settings.form import NewEmailForm
+    from aarau.views.carrell.settings.action import settings_email
+    from aarau.views.carrell.settings.form import NewEmailForm
 
     user = users['oswald']
+    dummy_request.subdomain = 'carrell'
     dummy_request.user = user
     dummy_request.POST = MultiDict({})
     res = settings_email(dummy_request)
@@ -63,10 +65,11 @@ def test_settings_email_with_empty_params(users, dummy_request):
 
 
 def test_settings_email_with_missing_csrf(users, dummy_request):
-    from aarau.views.settings.action import settings_email
-    from aarau.views.settings.form import NewEmailForm
+    from aarau.views.carrell.settings.action import settings_email
+    from aarau.views.carrell.settings.form import NewEmailForm
 
     user = users['oswald']
+    dummy_request.subdomain = 'carrell'
     dummy_request.user = user
     dummy_request.POST = MultiDict({
         # 'csrf_token': '',
@@ -83,10 +86,11 @@ def test_settings_email_with_missing_csrf(users, dummy_request):
 
 
 def test_settings_email_with_invalid_csrf(users, dummy_request):
-    from aarau.views.settings.action import settings_email
-    from aarau.views.settings.form import NewEmailForm
+    from aarau.views.carrell.settings.action import settings_email
+    from aarau.views.carrell.settings.form import NewEmailForm
 
     user = users['oswald']
+    dummy_request.subdomain = 'carrell'
     dummy_request.user = user
     dummy_request.POST = MultiDict({
         'csrf_token': 'invalid',
@@ -104,9 +108,10 @@ def test_settings_email_with_invalid_csrf(users, dummy_request):
 
 def test_settings_email_with_pending_email(
         users, dummy_request):
-    from aarau.views.settings.action import settings_email
+    from aarau.views.carrell.settings.action import settings_email
 
     user = users['henry']
+    dummy_request.subdomain = 'carrell'
     dummy_request.user = user
     dummy_request.POST = MultiDict({
         'csrf_token': dummy_request.session.get_csrf_token(),
@@ -122,10 +127,11 @@ def test_settings_email_with_pending_email(
 
 
 def test_settings_email_with_invalid_email(users, dummy_request):
-    from aarau.views.settings.action import settings_email
-    from aarau.views.settings.form import NewEmailForm
+    from aarau.views.carrell.settings.action import settings_email
+    from aarau.views.carrell.settings.form import NewEmailForm
 
     user = users['oswald']
+    dummy_request.subdomain = 'carrell'
     dummy_request.user = user
     dummy_request.POST = MultiDict({
         'csrf_token': dummy_request.session.get_csrf_token(),
@@ -144,8 +150,9 @@ def test_settings_email_with_invalid_email(users, dummy_request):
 
 
 def test_settings_email_with_valid_email(users, dummy_request):
-    from aarau.views.settings.action import settings_email
+    from aarau.views.carrell.settings.action import settings_email
 
+    dummy_request.subdomain = 'carrell'
     dummy_request.user = users['oswald']
     dummy_request.POST = MultiDict({
         'csrf_token': dummy_request.session.get_csrf_token(),
@@ -165,8 +172,9 @@ def test_settings_email_with_valid_email(users, dummy_request):
 def test_settings_email_activate_with_invalid_token(
         users, dummy_request):
     from pyramid.httpexceptions import HTTPNotFound
-    from aarau.views.settings.action import settings_email_activate
+    from aarau.views.carrell.settings.action import settings_email_activate
 
+    dummy_request.subdomain = 'carrell'
     dummy_request.user = users['oswald']
     dummy_request.matchdict = {
         'token': 'invalid'
@@ -180,12 +188,13 @@ def test_settings_email_activate_with_invalid_token(
 
 def test_settings_email_activate_with_expired_token(
         users, dummy_request):
-    from aarau.views.settings.action import settings_email_activate
+    from aarau.views.carrell.settings.action import settings_email_activate
     from aarau.models.user_email import UserEmail
 
     user_email = users['henry'].emails.where(
         UserEmail.email == 'henry.expired@example.org').get()
 
+    dummy_request.subdomain = 'carrell'
     dummy_request.user = users['henry']
     dummy_request.matchdict = {
         'token': user_email.activation_token
@@ -199,13 +208,14 @@ def test_settings_email_activate_with_expired_token(
 
 def test_settings_email_activate_with_unexpected_error(
         users, dummy_request):
-    from aarau.views.settings.action import settings_email_activate
+    from aarau.views.carrell.settings.action import settings_email_activate
     from aarau.models.user_email import UserEmail
 
     user_email = users['weenie'].emails.where(
         UserEmail.email == 'weenie.private@example.org').get()
     assert 'pending' == user_email.activation_state
 
+    dummy_request.subdomain = 'carrell'
     dummy_request.user = users['weenie']
     dummy_request.matchdict = {
         'token': user_email.activation_token
@@ -228,13 +238,14 @@ def test_settings_email_activate_with_unexpected_error(
 
 def test_settings_email_activate_with_valid_token(
         users, dummy_request):
-    from aarau.views.settings.action import settings_email_activate
+    from aarau.views.carrell.settings.action import settings_email_activate
     from aarau.models.user_email import UserEmail
 
     user_email = users['weenie'].emails.where(
         UserEmail.email == 'weenie.private@example.org').get()
     assert 'pending' == user_email.activation_state
 
+    dummy_request.subdomain = 'carrell'
     dummy_request.user = users['weenie']
     dummy_request.matchdict = {
         'token': user_email.activation_token
@@ -248,13 +259,14 @@ def test_settings_email_activate_with_valid_token(
 
 def test_settings_email_delete_with_primary_email(
         users, dummy_request):
-    from aarau.views.settings.action import settings_email_delete
+    from aarau.views.carrell.settings.action import settings_email_delete
     from aarau.models.user_email import UserEmail
 
     user_email = users['weenie'].emails.where(
         UserEmail.type == 'primary').get()
     assert 'active' == user_email.activation_state
 
+    dummy_request.subdomain = 'carrell'
     dummy_request.user = users['weenie']
     dummy_request.POST = dummy_request.params = MultiDict({
         'csrf_token': dummy_request.session.get_csrf_token(),
@@ -269,7 +281,7 @@ def test_settings_email_delete_with_primary_email(
 
 def test_settings_email_delete_with_valid_email(
         users, dummy_request):
-    from aarau.views.settings.action import settings_email_delete
+    from aarau.views.carrell.settings.action import settings_email_delete
     from aarau.models.user_email import UserEmail
 
     user_email = users['henry'].emails.where(
@@ -277,6 +289,7 @@ def test_settings_email_delete_with_valid_email(
     assert 'pending' == user_email.activation_state
     assert 'normal' == user_email.type
 
+    dummy_request.subdomain = 'carrell'
     dummy_request.user = users['henry']
     dummy_request.POST = dummy_request.params = MultiDict({
         'csrf_token': dummy_request.session.get_csrf_token(),
@@ -293,9 +306,10 @@ def test_settings_email_delete_with_valid_email(
 
 
 def test_settings_password_with_empty_params(users, dummy_request):
-    from aarau.views.settings.action import settings_password
-    from aarau.views.settings.form import ChangePasswordForm
+    from aarau.views.carrell.settings.action import settings_password
+    from aarau.views.carrell.settings.form import ChangePasswordForm
 
+    dummy_request.subdomain = 'carrell'
     dummy_request.user = users['oswald']
     dummy_request.POST = MultiDict({})
     res = settings_password(dummy_request)
@@ -304,9 +318,10 @@ def test_settings_password_with_empty_params(users, dummy_request):
 
 
 def test_settings_password_with_invalid_csrf(users, dummy_request):
-    from aarau.views.settings.action import settings_password
-    from aarau.views.settings.form import ChangePasswordForm
+    from aarau.views.carrell.settings.action import settings_password
+    from aarau.views.carrell.settings.form import ChangePasswordForm
 
+    dummy_request.subdomain = 'carrell'
     dummy_request.user = users['oswald']
     dummy_request.POST = MultiDict({
         'csrf_token': 'invalid',
@@ -324,9 +339,10 @@ def test_settings_password_with_invalid_csrf(users, dummy_request):
 
 def test_settings_password_with_wrong_current_password(
         users, dummy_request):
-    from aarau.views.settings.action import settings_password
-    from aarau.views.settings.form import ChangePasswordForm
+    from aarau.views.carrell.settings.action import settings_password
+    from aarau.views.carrell.settings.form import ChangePasswordForm
 
+    dummy_request.subdomain = 'carrell'
     dummy_request.user = users['oswald']
     dummy_request.POST = MultiDict({
         'csrf_token': dummy_request.session.get_csrf_token(),
@@ -344,9 +360,10 @@ def test_settings_password_with_wrong_current_password(
 
 def test_settings_password_with_invalid_new_password(
         users, dummy_request):
-    from aarau.views.settings.action import settings_password
-    from aarau.views.settings.form import ChangePasswordForm
+    from aarau.views.carrell.settings.action import settings_password
+    from aarau.views.carrell.settings.form import ChangePasswordForm
 
+    dummy_request.subdomain = 'carrell'
     dummy_request.user = users['oswald']
     dummy_request.POST = MultiDict({
         'submit': '1',
@@ -366,9 +383,10 @@ def test_settings_password_with_invalid_new_password(
 
 def test_settings_password_with_invalid_new_password_confirmation(
         users, dummy_request):
-    from aarau.views.settings.action import settings_password
-    from aarau.views.settings.form import ChangePasswordForm
+    from aarau.views.carrell.settings.action import settings_password
+    from aarau.views.carrell.settings.form import ChangePasswordForm
 
+    dummy_request.subdomain = 'carrell'
     dummy_request.user = users['oswald']
     dummy_request.POST = MultiDict({
         'csrf_token': dummy_request.session.get_csrf_token(),
@@ -387,8 +405,9 @@ def test_settings_password_with_invalid_new_password_confirmation(
 
 
 def test_settings_password_with_valid_params(users, dummy_request):
-    from aarau.views.settings.action import settings_password
+    from aarau.views.carrell.settings.action import settings_password
 
+    dummy_request.subdomain = 'carrell'
     dummy_request.user = users['oswald']
     dummy_request.POST = MultiDict({
         'csrf_token': dummy_request.session.get_csrf_token(),

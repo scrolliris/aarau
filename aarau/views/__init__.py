@@ -30,12 +30,10 @@ def includeme(config):
     Activate this setup using ``config.include('aarau.views')``.
     """
     config.include('.signup')
-    config.include('.settings')
 
-    config.include('.project')
-
-    # subdomain
+    # subdomains
     config.include('.console')
+    config.include('.carrell')
     config.include('.registry')
 
     # make request.subdomain available for use in app

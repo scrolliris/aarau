@@ -38,6 +38,21 @@
   .dropdown
     z-index 2222222
 
+    > .item:first-child
+      margin-left 0
+
+
+// TODO: fix styr's modal
+.modal-container
+  overflow-y auto
+@media screen and (max-width: 768px)
+  .modal-container .modal
+    margin-top 2rem
+    margin-left auto
+    margin-right auto
+    width 95%
+    min-width 95%
+
 .box
   .description,
   .text

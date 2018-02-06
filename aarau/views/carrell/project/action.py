@@ -13,7 +13,7 @@ from aarau.models import (
 from aarau.views.console.project.form import build_new_project_form
 
 
-@view_config(route_name='project.new',
+@view_config(route_name='carrell.project.new',
              renderer=tpl('new.mako', resource='project'))
 @login_required
 def project_new(req):

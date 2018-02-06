@@ -5,8 +5,9 @@
   <a class="disabled item" href="#">Preferences</a>
   <a class="disabled item" href="#">Feedback</a>
   <hr>
-  <a class="item" href="${req.route_url('top', subdomain=None)}">Scrolliris Top</a>
-  <a class="item" href="${req.route_url('settings', subdomain=None)}">Account Settings</a>
+  <h6 class="section-title">LEAVE CONSOLE</h6>
+  <a class="item" href="${req.route_url('carrell.settings')}">Your Carrell</a>
+  <a class="item" href="${req.route_url('top', subdomain=None)}">Publication Registry</a>
 
   ## desktop only
   <div class="bottom note item">

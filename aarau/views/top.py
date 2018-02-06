@@ -1,15 +1,10 @@
 from pyramid.view import view_config
 
-from aarau.queries.site import get_sites
-from aarau.views import (
-    get_site_type,
-    tpl
-)
+from aarau.views import tpl
+from aarau.views.console.project.form import build_new_project_form
 
 
 @view_config(route_name='top', renderer=tpl('top.mako'))
 def top(req):
-    site_type = get_site_type(req.params)
-    sites = get_sites(site_type)
-
-    return dict(site_type=site_type, sites=sites)
+    form = build_new_project_form(req)
+    return dict(form=form)

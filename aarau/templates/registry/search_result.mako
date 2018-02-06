@@ -16,7 +16,7 @@
           <div class="item container">
             <a class="grouped secondary flat button" href="${req.route_url('top', namespace=None)}" title="Back to Toppage">←&nbsp;&nbsp;Back</a>
             % if not req.user:
-              <a class="grouped flat button" href="${req.route_url('project.new', subdomain=None)}">Create a Project</a>
+              <a class="grouped flat button" href="${req.route_url('carrell.project.new', subdomain='carrell')}">Create a Project</a>
             % endif
           </div>
 
@@ -25,8 +25,10 @@
             <a class="item" href="${req.route_url('signup', subdomain=None)}">Signup</a>
             <a class="item" href="${req.route_url('login', subdomain=None)}">Login</a>
             % else:
-            <a class="item" href="${req.route_url('console.top')}">Console</a>
-            <a class="item" href="${req.route_url('logout', subdomain=None)}">Logout</a>
+              <a class="item" href="${req.route_url('carrell.settings')}">Carrell</a>
+              % if req.user.projects:
+                <a class="item" href="${req.route_url('console.top')}">Console</a>
+              % endif
             % endif
           </div>
         </div>

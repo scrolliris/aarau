@@ -10,7 +10,7 @@
 
       <div class="row">
         <div class="offset-2 column-3 offset-v-1 column-v-4 column-l-16">
-          <%include file='aarau:templates/settings/_menu.mako'/>
+          <%include file='aarau:templates/carrell/settings/_menu.mako'/>
         </div>
 
         <div class="column-8 column-v-10 column-l-16">

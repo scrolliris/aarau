@@ -143,6 +143,20 @@ def includeme(config):
                     '/api/projects/{namespace}/{slug}/insights.json',
                     custom_predicates=(namespace,))
 
+    with subdomain('carrell') as c:
+        # TODO: move to console or None
+        c.add_route('carrell.project.new', '/projects/new')
+
+        c.add_route('carrell.settings', '/settings')
+        c.add_route('carrell.settings.section', '/settings/{section}')
+
+        c.add_route('carrell.settings.email_delete',
+                    '/settings/email/delete')
+        c.add_route('carrell.settings.email_change',
+                    '/settings/email/change')
+        c.add_route('carrell.settings.email_activate',
+                    '/settings/email/confirm/{token}')
+
     # public view
     with subdomain('registry') as c:
         c.add_route('search', '/')
@@ -154,7 +168,6 @@ def includeme(config):
                     custom_predicates=(namespace,))
 
     with subdomain(None) as c:
-        # pylint: disable=anomalous-backslash-in-string
         c.add_route('top', '/')
 
         c.add_route('login', '/login')
@@ -165,15 +178,3 @@ def includeme(config):
 
         c.add_route('signup', '/signup')
         c.add_route('signup.activate', '/user/activate/{token}')
-
-        # login_required
-        c.add_route('project.new', '/projects/new')
-        c.add_route('settings', '/settings')
-        c.add_route('settings.section', '/settings/{section}')
-
-        c.add_route('settings.email_delete',
-                    '/settings/email/delete')
-        c.add_route('settings.email_change',
-                    '/settings/email/change')
-        c.add_route('settings.email_activate',
-                    '/settings/email/confirm/{token}')

@@ -37,13 +37,46 @@
             % endif:
           </div>
 
-          <div class="right menu">
+          <div class="right menu" align="right">
             % if not req.user:
             <a class="item" href="${req.route_url('signup', subdomain=None)}">Signup</a>
             <a class="item" href="${req.route_url('login', subdomain=None)}">Login</a>
             % else:
-            <a class="item" href="${req.route_url('console.top')}">Console</a>
-            <a class="item" href="${req.route_url('logout', subdomain=None)}">Logout</a>
+              % if req.user.projects:
+                <a class="item" href="${req.route_url('carrell.settings')}">Carrell</a>
+                <a class="item" href="${req.route_url('console.top')}">Console</a>
+              % else:
+                <div class="dropdown-container" align="left">
+                  <input type="checkbox" id="getting_started">
+                  <label for="getting_started"></label>
+                  <a class="action" href="#new_project">New Project</a>
+                  <div class="dropdown">
+                    <a class="item" href="${req.route_url('carrell.settings')}">
+                      <h6>Carrell</h6>
+                      <p class="description">User Settings & Preferences</p>
+                    </a>
+                    <a class="disabled item" href="${req.route_url('console.top')}" disabled=disabled>
+                      <h6>Console</h6>
+                      <p class="description">Writing Workspace.</p>
+                      <span class="note">Create new project, at first.</span>
+                    </a>
+                  </div>
+                </div>
+
+                <div id="new_project" class="modal-container" align="left">
+                  <div class="modal">
+                    <a class="close button" href="#">&times;</a>
+                    <div class="modal-content">
+                      ${render_notice()}
+                      <%
+                        act = req.route_url('carrell.project.new')
+                        ctx = 'new'
+                      %>
+                      <%include file="aarau:templates/carrell/project/_form.mako" args="f=form, act=act, ctx=ctx, err=None, obj=None"/>
+                    </div>
+                  </div>
+                </div>
+              % endif
             % endif
           </div>
         </div>
@@ -56,7 +89,7 @@
           <input type="submit" class="primary flat button" value="Search">
           <p>&nbsp;Or&nbsp;</p>
           % if not req.user:
-          <a class="link" href="${req.route_path('project.new')}">Create a Project</a>,&nbsp;
+            <a class="link" href="${req.route_url('carrell.project.new', subdomain='carrell')}">Create a Project</a>,&nbsp;
           % endif
           <a class="link" href="${req.route_url('search', subdomain='registry')}">Check the Registry</a>
         </form>
@@ -66,7 +99,7 @@
 
     <div class="content row">
       <div class="column-16" align="center">
-        % if not req.user or req.user.projects:
+        % if not req.user or not req.user.projects:
         <div class="offset-5 column-6 offset-v-2 column-v-12 column-l-16">
           <div class="warn message">
             <h5 class="header">NOTE</h5>

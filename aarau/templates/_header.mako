@@ -9,7 +9,7 @@
       </h1>
     </a>
     % if not req.user:
-      <a class="item" href="https://about.scrolliris.com/">About</a>
+      <a class="item" href="https://about.scrolliris.com/" target="_blank">About</a>
       <a class="item" href="https://log.scrolliris.com/" target="_blank">Changelog</a>
     % else:
       <a class="item" href="https://help.scrolliris.com/" target="_blank">Help</a>
@@ -20,7 +20,6 @@
         % if req.user.memberships:
           <a class="mobile hidden item" href="${req.route_url('console.top')}">Console</a>
         % endif
-        <a class="item${' active' if util.route_name.startswith('settings') else ''}" href="${req.route_url('settings')}">Settings</a>
         <a class="item" href="${req.route_url('logout')}">Log out</a>
       % else:
         % if not req.path.startswith('/signup'):

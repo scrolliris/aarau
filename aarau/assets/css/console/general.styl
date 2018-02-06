@@ -6,6 +6,7 @@
   .top.menu
     margin 0
     margin-left 3.33rem
+    padding-top 0
     padding-left 0
     padding-right 0
     > a.item,
@@ -17,7 +18,10 @@
         background none
     .right.menu
       .item:first-child
+        padding-right 1.62rem
         margin 0
+      .item:last-child
+        padding-right 0.22rem
   .secondary.menu
     padding-left 0.02rem
 
@@ -42,6 +46,12 @@
 // sidebar
 #console
   .sidebar
+    h6.section-title
+      margin-left 1.189rem
+      font-weight bold
+      font-size 0.71em
+      color $gray2
+
     background-color #ffffff
     z-index 2147483647
     position fixed

@@ -5,7 +5,7 @@ from aarau.models.user_email import UserEmail
 from aarau.services.interface import IActivator
 from aarau.views import tpl
 from aarau.views.filter import login_required
-from aarau.views.settings.form import (
+from aarau.views.carrell.settings.form import (
     build_change_password_form,
     build_new_email_form,
     build_delete_email_form,
@@ -13,25 +13,27 @@ from aarau.views.settings.form import (
 )
 
 
-@view_config(route_name='settings',
-             renderer=tpl('settings/account.mako'))
-@view_config(route_name='settings.section', match_param='section=account',
-             renderer=tpl('settings/account.mako'))
+@view_config(route_name='carrell.settings',
+             renderer=tpl('account.mako', resource='carrell/settings'))
+@view_config(route_name='carrell.settings.section',
+             match_param='section=account',
+             renderer=tpl('account.mako', resource='carrell/settings'))
 @login_required
 def settings_account(_request):
     """Renders account settings view."""
     return {}
 
 
-@view_config(route_name='settings.section', match_param='section=email',
+@view_config(route_name='carrell.settings.section',
+             match_param='section=email',
              request_method=('GET', 'POST'),
-             renderer=tpl('settings/email.mako'))
+             renderer=tpl('email.mako', resource='carrell/settings'))
 @login_required
 def settings_email(request):
     """Renders email settings view and adds new email via POST."""
     user = request.user
 
-    next_path = request.route_path('settings.section', section='email')
+    next_path = request.route_path('carrell.settings.section', section='email')
     user_emails = user.emails.order_by(
         UserEmail.type.asc(), UserEmail.id.asc())
 
@@ -63,7 +65,8 @@ def settings_email(request):
     return dict(form=form, user_emails=user_emails, email_forms=email_forms)
 
 
-@view_config(route_name='settings.email_activate', request_method='GET')
+@view_config(route_name='carrell.settings.email_activate',
+             request_method='GET')
 @login_required
 def settings_email_activate(request):
     """Activates user email."""
@@ -87,10 +90,10 @@ def settings_email_activate(request):
             request.session.flash(_('settings.email.confirmation.success'),
                                   queue='success', allow_duplicate=False)
     return HTTPFound(location=request.route_path(
-        'settings.section', section='email'))
+        'carrell.settings.section', section='email'))
 
 
-@view_config(route_name='settings.email_delete', request_method='POST')
+@view_config(route_name='carrell.settings.email_delete', request_method='POST')
 @login_required
 def settings_email_delete(request):
     """Deletes user email."""
@@ -112,10 +115,10 @@ def settings_email_delete(request):
                                   queue='failure', allow_duplicate=False)
 
     return HTTPFound(location=request.route_path(
-        'settings.section', section='email'))
+        'carrell.settings.section', section='email'))
 
 
-@view_config(route_name='settings.email_change', request_method='POST')
+@view_config(route_name='carrell.settings.email_change', request_method='POST')
 @login_required
 def settings_email_change(request):
     """Changes user email."""
@@ -136,12 +139,13 @@ def settings_email_change(request):
                                   queue='failure', allow_duplicate=False)
 
     return HTTPFound(location=request.route_path(
-        'settings.section', section='email'))
+        'carrell.settings.section', section='email'))
 
 
-@view_config(route_name='settings.section', match_param='section=password',
+@view_config(route_name='carrell.settings.section',
+             match_param='section=password',
              request_method=('GET', 'POST'),
-             renderer=tpl('settings/password.mako'))
+             renderer=tpl('password.mako', resource='carrell/settings'))
 @login_required
 def settings_password(request):
     """Renders password settings view and changes password via POST."""
@@ -157,7 +161,7 @@ def settings_password(request):
                 request.session.flash(_('settings.password.change.success'),
                                       queue='success', allow_duplicate=False)
                 return HTTPFound(location=request.route_path(
-                    'settings.section', section='password'))
+                    'carrell.settings.section', section='password'))
             else:
                 request.session.flash(_('settings.password.change.invalid'),
                                       queue='failure', allow_duplicate=False)
