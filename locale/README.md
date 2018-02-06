@@ -16,13 +16,12 @@ Neuchâtel; translatioN projEct Using gnu gettext, it's called neuCHÂTEL
 
 This is translation project for the Scrolliris [Application](
 https://scrolliris.com/) which called as [Aarau](
-https://gitlab.com/lupine-software/aarau) (code name).
+https://gitlab.com/scrolliris/aarau) (code name).
 
 
 ## Repository
 
-[https://gitlab.com/lupine-software/neuchatel](
-https://gitlab.com/lupine-software/neuchatel)
+https://gitlab.com/scrolliris/neuchatel
 
 
 ## Requirements
@@ -108,7 +107,7 @@ Open your `terminal` application, follow these steps, normally.
 ```
 
 And then, create a merge request on this [repository](
-https://gitlab.com/lupine-software/neuchatel.git).
+https://gitlab.com/scrolliris/neuchatel.git).
 
 ### How to generate new `*.po` file
 
@@ -254,5 +253,5 @@ Free Documentation License".
 See [LICENSE](LICENSE).
 
 
-[pipeline]: https://gitlab.com/lupine-software/neuchatel/badges/master/pipeline.svg
-[commit]: https://gitlab.com/lupine-software/neuchatel/commits/master
+[pipeline]: https://gitlab.com/scrolliris/neuchatel/badges/master/pipeline.svg
+[commit]: https://gitlab.com/scrolliris/neuchatel/commits/master
