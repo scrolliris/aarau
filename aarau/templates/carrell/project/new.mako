@@ -21,7 +21,7 @@
           err = is_failure
           obj = None
         %>
-        <%include file="aarau:templates/project/_form.mako" args="f=form, act=act, ctx=ctx, err=err, obj=obj"/>
+        <%include file="aarau:templates/carrell/project/_form.mako" args="f=form, act=act, ctx=ctx, err=err, obj=obj"/>
       </div>
 
       <div class="column-4 offset-1 column-v-6 column-l-16">
