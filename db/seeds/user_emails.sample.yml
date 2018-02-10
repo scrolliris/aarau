@@ -2,14 +2,14 @@
 user_emails:
   - user: !user.username "'yasuhiro'"
     type: primary
-    email: yasuhiro.asaka@grauwoelfchen.net
+    email: yasuhiro.asaka@lupine-software.com
     activation_state: active
     activation_token:
     activation_token_expires_at:
 
   - user: !user.username "'misaki'"
     type: primary
-    email: misaki.asaka@grauwoelfchen.net
+    email: misaki.asaka@lupine-software.com
     activation_state: active
     activation_token:
     activation_token_expires_at:
@@ -17,7 +17,7 @@ user_emails:
   - user: !user.username "'yasuhiro'"
     type: normal
     activation_state: pending
-    email: yasuhiro.asaka@lupine-software.com
+    email: yasuhiro.asaka@grauwoelfchen.net
     activation_state: pending
     activation_token: !token.user_email_activation 3600
     activation_token_expires_at: !datetime.utcnow+timedelta 3600
@@ -25,8 +25,8 @@ user_emails:
   - user: !user.username "'misaki'"
     type: normal
     activation_state: pending
-    email: misaki.asaka@lupine-software.com
+    email: misaki.asaka@grauwoelfchen.net
     activation_state: pending
-    activation_token: !token.user_email_activation -3600
-    activation_token_expires_at: !datetime.utcnow+timedelta -3600
+    activation_token: !token.user_email_activation 3600
+    activation_token_expires_at: !datetime.utcnow+timedelta 3600
 

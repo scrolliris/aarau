@@ -1,8 +1,29 @@
 ---
 plans:
   - payment_type_id: 1
-    name: plan.free.name
+    name: plan.essential.name
     price: 0.0
-    description: plan.free.description
+    description: plan.essential.description
+    created_at: !datetime.utcnow+timedelta -10800
+    updated_at: !datetime.utcnow+timedelta -10800
+
+  - payment_type_id: 2
+    name: plan.professional.name
+    price: 36.0
+    description: plan.professional.description
+    created_at: !datetime.utcnow+timedelta -10800
+    updated_at: !datetime.utcnow+timedelta -10800
+
+  - payment_type_id: 3
+    name: plan.epical.name
+    price: 63.0
+    description: plan.epical.description
+    created_at: !datetime.utcnow+timedelta -10800
+    updated_at: !datetime.utcnow+timedelta -10800
+
+  - payment_type_id: 4
+    name: plan.academic.name
+    price: 0.0
+    description: plan.academic.description
     created_at: !datetime.utcnow+timedelta -10800
     updated_at: !datetime.utcnow+timedelta -10800

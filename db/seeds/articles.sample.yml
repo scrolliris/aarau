@@ -1,6 +1,6 @@
 ---
 articles:
-  - publication: !publication.name "'Sample Application'"
+  - publication: !publication.name "'Sample Publication'"
     code: a9a11643e9b89a16a15cd735aef1780f05fa893b
     slug: lorem-ipsum
     title: Lorem ipsum

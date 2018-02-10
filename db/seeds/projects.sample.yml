@@ -1,7 +1,7 @@
 ---
 projects:
-  - access_key_id: hj2v9RRzMnk6WgRnuRVxWHuv6d8WBsCs
-    plan: !plan.name "'plan.free.name'"
+  - access_key_id: z675274a4f3c2cae2de649f64f5c05ecc912c180
+    plan: !plan.name "'plan.essential.name'"
     subscription_id: 164567
     namespace: sample-project
     name: Sample Project

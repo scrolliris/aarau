@@ -1,0 +1,19 @@
+---
+pages:
+  - application: !application.name "'Sample Application'"
+    code: 75Vv1YiQFeBTwoydOiRKoyCK1szBKXI4l3ZeFaECDk6vhT9s5Y8nZGoWv8F4qSbI
+    path: /articles/sample-article-00
+    title: ''
+    scope: public
+    created_at: !datetime.utcnow+timedelta -7200
+    updated_at: !datetime.utcnow+timedelta -7200
+    deleted_at:
+
+  - application: !application.name "'Sample Application'"
+    code: sNBcohj9ofMJxNVZz0GNnXfoSubFpIVH5eizyDOCDqT8NnN_7Jfi64mzoC2fhokp
+    path: /articles/sample-article-01
+    title: ''
+    scope: public
+    created_at: !datetime.utcnow+timedelta -3600
+    updated_at: !datetime.utcnow+timedelta -3600
+    deleted_at:

@@ -2,8 +2,9 @@
 sites:
   - project: !project.namespace "'sample-project'"
     domain: example.com
-    hosting_id: !application.name "'Sample Application'"
-    hosting_type: Application
+    slug: 'example-com'
+    instance_id: !application.name "'Sample Application'"
+    instance_type: Application
     calculation_state: 'on'
     read_key: omVf6c9gnGPbhxnhJyfoVtffrTOIbbX7
     write_key: EYC4DfopPLWe17uODNGGumVd8oqARunA
@@ -14,8 +15,9 @@ sites:
 
   - project: !project.namespace "'sample-project'"
     domain: example.org
-    hosting_id: !publication.name "'Sample Publication'"
-    hosting_type: Publication
+    slug: 'example-org'
+    instance_id: !publication.name "'Sample Publication'"
+    instance_type: Publication
     calculation_state: 'on'
     read_key: 23V3Fus6fkM1Rh9pAkrQLPhNoDtm6oNN
     write_key: lnds5gmlGL0SQaXvXXVi1uZ8LsPCwHDv
