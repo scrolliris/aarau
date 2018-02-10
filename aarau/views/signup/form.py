@@ -17,22 +17,44 @@ from aarau.views.form import (
 )
 
 
-class SignupFormBase(SecureForm):
-    """Base signup form definition."""
+def validate_username_uniqueness(_form, field):
+    """Unique username check in db."""
+    from ...models.user import User
+    user = User.select().where(
+        User.username == field.data).first()
+    if user:
+        raise ValidationError('This username is already taken')
 
+
+def validate_email_uniqueness(_form, field):
+    """Unique email address check in db."""
+    from ...models.user_email import UserEmail
+    user_email = UserEmail.select().where(
+        (UserEmail.email == field.data) &
+        ((UserEmail.activation_token_expires_at >= datetime.utcnow()) |
+         (UserEmail.activation_state == 'active'))).first()
+    if user_email:
+        raise ValidationError('The email address is already registered')
+
+
+class SignupForm(SecureForm):
     email = StringField(_('signup.label.email'), [
         v.Required(),
         v.Length(min=6, max=64),
         v.Email(),
+        validate_email_uniqueness,
     ])
     name = StringField(_('signup.label.name'), [
         v.Optional(),
-        v.Length(min=3, max=64),
+        v.Length(min=4, max=32),
     ])
     username = StringField(_('signup.label.username'), [
         v.Optional(),
-        v.Regexp(USERNAME_PATTERN, message=None),
-        v.Length(min=4, max=16),
+        v.Regexp(USERNAME_PATTERN, message=(
+            'You must use only lowercase alphanumeric characters, and '
+            'start with a-z')),
+        v.Length(min=4, max=12),
+        validate_username_uniqueness,
     ])
     password = PasswordField(_('signup.label.password'), [
         v.Required(),
@@ -40,28 +62,6 @@ class SignupFormBase(SecureForm):
         v.Length(min=8, max=32)
     ])
     submit = SubmitField(_('signup.submit.create'))
-
-
-class SignupForm(SignupFormBase):
-    # pylint: disable=no-self-use
-
-    def validate_email(self, field):
-        """Valites email address existing."""
-        from ...models.user_email import UserEmail
-        user_email = UserEmail.select().where(
-            (UserEmail.email == field.data) &
-            ((UserEmail.activation_token_expires_at >= datetime.utcnow()) |
-             (UserEmail.activation_state == 'active'))).first()
-        if user_email:
-            raise ValidationError('Email address is already registered')
-
-    def validate_username(self, field):
-        """Validates username existing."""
-        from ...models.user import User
-        user = User.select().where(
-            User.username == field.data).first()
-        if user:
-            raise ValidationError('This username is already taken')
 
 
 def build_signup_form(request):

@@ -39,8 +39,8 @@ def test_signup(dummy_app):
     assert '302 Found' == res.status
     res = res.follow(status=200)
     res.charset = None
-    assert ('Your signup has been successfully requested'
-            '') in res.html.select_one('.success.message p')
+    assert 'Your signup has been successfully requested' in \
+        res.html.select_one('.success.message p')
 
     mailer = get_mailer(dummy_app.app.registry)
     message = mailer.outbox[0]

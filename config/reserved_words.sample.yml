@@ -3,10 +3,17 @@ reserved_words:
   common:
     - scrolliris
     - scroll-iris
+    - scroll_iris
     - lupinesoftware
-    - lupinesoftware-llc
     - lupine-software
+    - lupine_software
+    - lupinesoftwarellc
+    - lupinesoftware-llc
+    - lupinesoftware_llc
     - lupine-software-llc
+    - lupine-software_llc
+    - lupine_software_llc
+    - lupine_software-llc
   project:
     namespace: []
   site:
