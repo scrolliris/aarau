@@ -11,7 +11,7 @@ def add_console_renderer_globals(evt) -> None:
         evt['cookie'] = {'console.sidebar': ''}
         key = 'console.sidebar'
         if key in req.cookies:
-            evt['cookie']['console.sidebar'] = str(req.cookies[key])
+            evt['cookie'][key] = str(req.cookies[key])
 
 
 def includeme(config):

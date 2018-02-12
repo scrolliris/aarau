@@ -29,13 +29,12 @@ class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
         'rejected', 'archived')
 
     id = PrimaryKeyField()
-    code = CharField(max_length=128, null=False)
+    path = CharField(max_length=255, null=False)
 
     publication = ForeignKeyField(
         rel_model=Publication, db_column='publication_id', to_field='id',
         related_name='articles', null=False)
     code = CharField(max_length=128, null=False)
-    slug = CharField(max_length=255, null=False)
     title = CharField(max_length=255, null=True)
     scope = EnumField(choices=scopes, null=False, default='public')
 
@@ -66,9 +65,9 @@ class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
 
     def __repr__(self):
         return (
-            '<Article id:{} publication_id:{} title:{} progress_state:{}>'
+            '<Article id:{} publication_id:{} progress_state:{} path:{}>'
         ).format(
-            self.id, self.publication_id, self.title, self.progress_state)
+            self.id, self.publication_id, self.progress_state, self.path)
 
     @classproperty
     def progress_state_as_choices(cls):
@@ -85,15 +84,6 @@ class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
         # pylint: disable=no-member
         return Article.select().join(Publication).where(
             Publication.id == publication.id)
-
-    @classmethod
-    def get_by_slug(cls, slug):
-        # pylint: disable=no-member
-        return cls.select().where(
-            cls.slug == slug,
-            cls.scope == 'public',
-            cls.progress_state == 'published'
-        ).get()
 
 
 @pre_save(sender=Article)

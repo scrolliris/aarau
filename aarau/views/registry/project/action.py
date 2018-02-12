@@ -12,7 +12,7 @@ from aarau.models import (
 from aarau.queries.site import get_sites
 
 
-@view_config(route_name='project.overview',
+@view_config(route_name='registry.project.overview',
              renderer=tpl('overview.mako', resource='registry/project'))
 def project_overview(req):
     project = Project.select().where(

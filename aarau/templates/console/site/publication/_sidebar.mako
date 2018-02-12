@@ -1,5 +1,6 @@
 <div class="sidebar">
-  <%include file='aarau:templates/console/_sidebar_navi.mako'/>
+  <% locked = cookie.get('console.sidebar') %>
+  <%include file='aarau:templates/shared/_sidebar_navi.mako' args="locked=locked,"/>
 
   <a class="item active">Overview</a>
   <a class="disabled item">Articles</a>

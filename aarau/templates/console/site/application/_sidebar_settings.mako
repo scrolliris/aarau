@@ -1,5 +1,6 @@
 <div class="sidebar">
-  <%include file='aarau:templates/console/_sidebar_navi.mako'/>
+  <% locked = cookie.get('console.sidebar') %>
+  <%include file='aarau:templates/shared/_sidebar_navi.mako' args="locked=locked,"/>
 
   <a class="item" href="${req.route_path('console.site.overview', namespace=project.namespace, slug=site.slug)}">Overview</a>
   <a class="item" href="${req.route_path('console.site.insights', namespace=project.namespace, slug=site.slug)}">Insights</a>

@@ -17,7 +17,9 @@
 
     <div class="row" align="left">
       <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16 breadcrumb">
-        <a class="item" href="${req.route_path('project.overview', namespace=site.project.namespace, _query={'type': 'application'})}">${site.project.name}</a>
+        <span class="item"><a href="${req.route_path('registry.search')}">Registry</a></span>
+        <span class="diviber">/</span>
+        <a class="item" href="${req.route_path('registry.project.overview', namespace=site.project.namespace, _query={'type': 'application'})}">${site.project.name}</a>
         <span class="diviber">/</span>
         <span class="item">${application.name}</a>
         <span class="diviber">/</span>
@@ -47,7 +49,7 @@
           <div class="info message">
             <h6 class="header">Create a Project</h6>
             <p class="description">Include just a single javascript, get anonymous tracking works, and increase readability.
-              <a href="${req.route_path('signup')}">Signup</a> now, or <a href="${req.route_path('login')}">Login</a>.</p>
+              <a href="${req.route_url('signup')}">Signup</a> now, or <a href="${req.route_url('login')}">Login</a>.</p>
           </div>
         % endif
         <div class="container">

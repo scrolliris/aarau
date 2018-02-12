@@ -13,8 +13,8 @@ from aarau.models import (
 from aarau.views.console.project.form import build_new_project_form
 
 
-@view_config(route_name='carrell.project.new',
-             renderer=tpl('new.mako', resource='carrell/project'))
+@view_config(route_name='project.new',
+             renderer=tpl('new.mako', resource='project'))
 @login_required
 def project_new(req):
     """Renders a form new project/Create new project."""

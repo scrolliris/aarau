@@ -46,7 +46,7 @@ def test_routing_to_project_on_registry_as_logged_in_user(
     user = users['oswald']
     with login_as(user):
         project = user.projects[0]
-        url = '/{namespace:s}/overview'.format(
+        url = '/{namespace:s}'.format(
             namespace=project.namespace)
         app = dummy_app.switch_target('registry')
         res = app.get(url, status=200)

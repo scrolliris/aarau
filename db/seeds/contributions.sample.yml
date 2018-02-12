@@ -1,0 +1,13 @@
+---
+contributions:
+  - user: !user.username "'yasuhiro'"
+    article: !article.path "'lorem-ipsum-article'"
+    role: primary_author
+    created_at: !datetime.utcnow+timedelta -7200
+    updated_at: !datetime.utcnow+timedelta -7200
+
+  - user: !user.username "'misaki'"
+    article: !article.path "'lorem-ipsum-article'"
+    role: author
+    created_at: !datetime.utcnow+timedelta -7200
+    updated_at: !datetime.utcnow+timedelta -7200

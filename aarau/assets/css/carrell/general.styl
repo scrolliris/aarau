@@ -1,0 +1,57 @@
+@import '../shared/_colour.styl'
+@import '../shared/_sidebar.styl'
+
+#carrell
+  header
+    background-color #ffffff
+  .top.menu
+    margin 0
+    margin-left 3.33rem
+    padding-top 0
+    padding-left 0
+    padding-right 0
+    > a.item,
+    > span.item
+      display block
+    > .item:first-child
+      padding-left 0
+      &:hover
+        background none
+    .right.menu
+      .item:first-child
+        padding-right 1.62rem
+        margin 0
+      .item:last-child
+        padding-right 0.22rem
+  .secondary.menu
+    padding-left 0.02rem
+
+  .breadcrumb
+    display block
+    padding-left 0.09rem
+    .item.active
+      background none
+    > a.item,
+    > span.item
+      padding 0.331rem 0.764rem
+    > .item:first-child
+      padding-left 0
+
+  section.container
+    padding 0.78rem 1.42rem
+    // header
+    > .row .column-13
+      padding-top 0
+      padding-bottom 0
+
+// sidebar
+#carrell
+  build-sidebar()
+
+
+.dropdown-container
+  .dropdown
+    .header
+      font-size 1.03rem
+    .description
+      color darken($gray1, 9%)

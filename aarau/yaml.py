@@ -57,7 +57,7 @@ BY_NAMES = [
     ('publication', 'name'),
     ('application', 'name'),
     ('classification', 'notation'),
-    ('article', 'slug'),
+    ('article', 'path'),
 ]
 
 

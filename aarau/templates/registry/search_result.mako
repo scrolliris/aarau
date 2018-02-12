@@ -16,7 +16,7 @@
           <div class="item container">
             <a class="grouped secondary flat button" href="${req.route_url('top', namespace=None)}" title="Back to Toppage">←&nbsp;&nbsp;Back</a>
             % if not req.user:
-              <a class="grouped flat button" href="${req.route_url('carrell.project.new', subdomain='carrell')}">Create a Project</a>
+              <a class="grouped flat button" href="${req.route_url('project.new', subdomain='None')}">Create a Project</a>
             % endif
           </div>
 
@@ -25,7 +25,7 @@
             <a class="item" href="${req.route_url('signup', subdomain=None)}">Signup</a>
             <a class="item" href="${req.route_url('login', subdomain=None)}">Login</a>
             % else:
-              <a class="item" href="${req.route_url('carrell.settings')}">Carrell</a>
+              <a class="item" href="${req.route_url('settings')}">Settings</a>
               % if req.user.projects:
                 <a class="item" href="${req.route_url('console.top')}">Console</a>
               % endif
@@ -33,7 +33,7 @@
           </div>
         </div>
 
-        <form id="search_form" class="form" action="${req.route_url('search', subdomain='registry')}" method="GET">
+        <form id="search_form" class="form" action="${req.route_path('registry.search', subdomain='registry')}" method="GET">
           <div class="search field">
             <input id="q" type="text" name="q" value="${req.params.get('q', '')}" placeholder="Title,Abstract">
           </div>
@@ -52,9 +52,11 @@
           % if site.publication:
             <% publication = site.publication %>
           <div class="embedded flat box" align="left">
+            <a href="${req.route_path('registry.site.overview', namespace=site.project.namespace, slug=site.slug)}">
             <h5 class="title">${util.truncate(publication.name, length=80)}</h5>
             <p class="description">${util.truncate(publication.description, length=200)}</p>
-            <span class="url">${req.route_url('site.overview', namespace=site.project.namespace, slug=site.slug)}</span>
+            <span class="url">${req.route_url('registry.site.overview', namespace=site.project.namespace, slug=site.slug)}</span>
+            </a>
           </div>
           % endif
         % endfor

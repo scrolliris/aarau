@@ -43,7 +43,7 @@
             <a class="item" href="${req.route_url('login', subdomain=None)}">Login</a>
             % else:
               % if req.user.projects:
-                <a class="item" href="${req.route_url('carrell.settings')}">Carrell</a>
+                <a class="item" href="${req.route_url('settings')}">Settings</a>
                 <a class="item" href="${req.route_url('console.top')}">Console</a>
               % else:
                 <div class="dropdown-container" align="left">
@@ -51,9 +51,13 @@
                   <label for="getting_started"></label>
                   <a class="action" href="#new_project">New Project</a>
                   <div class="dropdown">
-                    <a class="item" href="${req.route_url('carrell.settings')}">
+                    <a class="item" href="${req.route_url('settings')}">
+                      <h6>Settings</h6>
+                      <p class="description">Account Management</p>
+                    </a>
+                    <a class="item" href="${req.route_url('carrell.top')}">
                       <h6>Carrell</h6>
-                      <p class="description">User Settings & Preferences</p>
+                      <p class="description">Reading Room</p>
                     </a>
                     <a class="disabled item" href="${req.route_url('console.top')}" disabled=disabled>
                       <h6>Console</h6>
@@ -69,10 +73,10 @@
                     <div class="modal-content">
                       ${render_notice()}
                       <%
-                        act = req.route_url('carrell.project.new')
+                        act = req.route_url('project.new')
                         ctx = 'new'
                       %>
-                      <%include file="aarau:templates/carrell/project/_form.mako" args="f=form, act=act, ctx=ctx, err=None, obj=None"/>
+                      <%include file="aarau:templates/project/_form.mako" args="f=form, act=act, ctx=ctx, err=None, obj=None"/>
                     </div>
                   </div>
                 </div>
@@ -82,16 +86,16 @@
         </div>
 
         <div id="ticker" class="pride"></div>
-        <form id="search_form" class="form" action="${req.route_url('search', subdomain='registry')}" method="GET">
+        <form id="search_form" class="form" action="${req.route_url('registry.search', subdomain='registry')}" method="GET">
           <div class="field">
             <input id="q" type="text" name="q" placeholder="Title,Abstract">
           </div>
           <input type="submit" class="primary flat button" value="Search">
           <p>&nbsp;Or&nbsp;</p>
           % if not req.user:
-            <a class="link" href="${req.route_url('carrell.project.new', subdomain='carrell')}">Create a Project</a>,&nbsp;
+            <a class="link" href="${req.route_path('project.new')}">Create a Project</a>,&nbsp;
           % endif
-          <a class="link" href="${req.route_url('search', subdomain='registry')}">Check the Registry</a>
+          <a class="link" href="${req.route_url('registry.search', subdomain='registry')}">Check the Registry</a>
         </form>
       </div>
 

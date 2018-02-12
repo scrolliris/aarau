@@ -40,42 +40,43 @@ body
 #console .wrapper
   display flex
 
-// header
-header.user
-  background-color #242424
+#standard
+  // header
+  header.user
+    background-color #242424
 
-header
-  background-color #404040
-  .top.menu
-    padding-top 0
-    padding-bottom 0
-    margin 0
-    > a h1.logo
-      margin 0.62rem 0 0.62rem 0.38em
+  header
+    background-color #404040
+    .top.menu
+      padding-top 0
+      padding-bottom 0
+      margin 0
+      > a h1.logo
+        margin 0.62rem 0 0.62rem 0.38em
+        padding 0
+    .logo-mark
+      display inline-block
+      margin 0 0.18rem 0.14rem 0
+    .logo-type
+      display inline-block
+      min-height 0.9rem
+      vertical-align top
+      margin -0.12rem 0 0 0.78rem
       padding 0
-  .logo-mark
-    display inline-block
-    margin 0 0.18rem 0.14rem 0
-  .logo-type
-    display inline-block
-    min-height 0.9rem
-    vertical-align top
-    margin -0.12rem 0 0 0.78rem
-    padding 0
-  .menu
-    > a:first-child
-      margin-right 1.3rem
-      &:hover
-        text-decoration none
-    .item
-      padding-top 0.34rem
-      color #d0d0d0
-      &:hover
-        color #f1f1f1
-        background none
-      &.active
-        background none
-        color #ffffff
+    .menu
+      > a:first-child
+        margin-right 1.3rem
+        &:hover
+          text-decoration none
+      .item
+        padding-top 0.34rem
+        color #d0d0d0
+        &:hover
+          color #f1f1f1
+          background none
+        &.active
+          background none
+          color #ffffff
 
 // footer
 footer

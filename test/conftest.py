@@ -283,7 +283,7 @@ def publications():
 def articles():
     from aarau.models.article import Article
 
-    return {a.slug: a for a in Article.select()}
+    return {a.path: a for a in Article.select()}
 
 
 @pytest.fixture(scope='function')

@@ -7,7 +7,7 @@ from aarau.views import tpl
 ITEMS_PER_PAGE = 9
 
 
-@view_config(route_name='search',
+@view_config(route_name='registry.search',
              renderer=tpl('search_result.mako', resource='registry'))
 def search(req):
     pq = None

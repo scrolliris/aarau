@@ -33,13 +33,14 @@ class Site(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
     instance_types = ('Application', 'Publication')
 
     id = PrimaryKeyField()
+    slug = CharField(max_length=255, null=True)
+
     project = ForeignKeyField(
         rel_model=DeferredProject, db_column='project_id', to_field='id',
         related_name='sites', null=False, index=True)
     instance_id = IntegerField(null=True)
     instance_type = CharField(max_length=32, null=True)
     domain = CharField(max_length=32, null=True)
-    slug = CharField(max_length=255, null=True)
     calculation_state = EnumField(
         choices=calculation_states,
         null=False, default='off')

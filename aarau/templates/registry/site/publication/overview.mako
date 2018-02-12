@@ -17,7 +17,9 @@
 
     <div class="row" align="left">
       <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16 breadcrumb">
-        <a class="item" href="${req.route_url('project.overview', subdomain='registry', namespace=site.project.namespace)}">${site.project.name}</a>
+        <span class="item"><a href="${req.route_path('registry.search')}">Registry</a></span>
+        <span class="diviber">/</span>
+        <a class="item" href="${req.route_url('registry.project.overview', subdomain='registry', namespace=site.project.namespace)}">${site.project.name}</a>
         <span class="diviber">/</span>
         <span class="item">${publication.name}</a>
       </div>
@@ -38,7 +40,7 @@
             </div>
           </div>
           <div class="grouped flat box">
-            <h5>Articles</h5>
+            <a href="${req.route_url('publication', namespace=site.project.namespace, slug=site.slug)}">Open</a>
           </div>
         </div>
       </div>

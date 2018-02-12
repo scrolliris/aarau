@@ -169,7 +169,7 @@ def test_project_new_post(users, dummy_request):
     assert ['project.creation.success'] == \
         dummy_request.session.peek_flash('success')
     assert isinstance(res, HTTPFound)
-    assert '/my-new-project/overview' == res.location
+    assert '/my-new-project' == res.location
 
     user.refresh()
     assert 2 == len(user.projects)

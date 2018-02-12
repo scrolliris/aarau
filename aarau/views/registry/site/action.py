@@ -8,7 +8,7 @@ from aarau.models import (
 from aarau.views import tpl
 
 
-@view_config(route_name='site.overview', renderer='.mako')
+@view_config(route_name='registry.site.overview', renderer='.mako')
 def site_overview(req):
     namespace = req.matchdict.get('namespace')
     slug = req.matchdict.get('slug')

@@ -16,6 +16,8 @@
 
     <div class="row" align="left">
       <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16 breadcrumb">
+        <span class="item"><a href="${req.route_path('registry.search')}">Registry</a></span>
+        <span class="diviber">/</span>
         <span class="item">${project.name}</span>
         <span class="diviber">/</span>
         <span class="item">Overview</span>
@@ -38,18 +40,18 @@
 
         <div class="tabbed menu">
         % if site_type == 'application':
-          <a class="item" href="${req.route_path('project.overview', namespace=project.namespace, _query={'type': 'publication'})}">HOSTED</a>
+          <a class="item" href="${req.route_path('registry.project.overview', namespace=project.namespace, _query={'type': 'publication'})}">HOSTED</a>
           <span class="item active">INTEGRATED</span>
         % else:
           <span class="item active">HOSTED</span>
-          <a class="item" href="${req.route_path('project.overview', namespace=project.namespace, _query={'type': 'application'})}">INTEGRATED</a>
+          <a class="item" href="${req.route_path('registry.project.overview', namespace=project.namespace, _query={'type': 'application'})}">INTEGRATED</a>
         % endif
         </div>
 
         % for site in sites:
           % if site.type == 'application':
             <div class="flat application site box">
-              <a href="${req.route_path('site.overview', namespace=project.namespace, slug=site.slug)}">
+              <a href="${req.route_path('registry.site.overview', namespace=project.namespace, slug=site.slug)}">
                 <h5 class="header">${util.truncate(site.instance.name, length=25)}</h5></a>
               <div class="description">
                 <p class="note">Registered @&nbsp;<span class="basic lined label date">${site.instance.created_at.strftime('%Y-%m-%d %H:%M')}</span></p>
@@ -58,7 +60,7 @@
             </div>
           % else:
             <div class="flat publication site box">
-              <a href="${req.route_path('site.overview',  namespace=project.namespace, slug=site.slug)}">
+              <a href="${req.route_path('registry.site.overview',  namespace=project.namespace, slug=site.slug)}">
                 <h5 class="header">${util.truncate(site.instance.name, length=25)}</h5></a>
               <span class="date">${site.instance.created_at.strftime('%Y-%m-%d %H:%M')}</span>
               <span class="classification">${util.truncate(site.instance.classification.name, length=85)}</span>

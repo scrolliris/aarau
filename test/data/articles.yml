@@ -2,7 +2,7 @@
 articles:
   - publication: !publication.name "'How to score music playing piano'"
     code: 268bb1d2cf760b51b9c348bc424dde5851c3649f
-    slug: piano-lesson
+    path: piano-lesson
     title: Piano Lesson
     scope: public
     progress_state: published
@@ -15,7 +15,7 @@ articles:
 
   - publication: !publication.name "'How to score music playing piano'"
     code: a93c97b18dbfbbb243841e14fffa97227ecc37a9
-    slug: music-stand
+    path: music-stand
     title: Music stand
     scope: public
     progress_state: draft

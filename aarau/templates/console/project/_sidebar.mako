@@ -1,5 +1,6 @@
 <div class="sidebar">
-  <%include file='aarau:templates/console/_sidebar_navi.mako'/>
+  <% locked = cookie.get('console.sidebar') %>
+  <%include file='aarau:templates/shared/_sidebar_navi.mako' args="locked=locked,"/>
 
   <span class="item active expanded">
     <%def name="link_to(route_name, text, default_link=False)">

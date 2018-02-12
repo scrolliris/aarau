@@ -64,7 +64,7 @@ def test_published_at_assignment_by_save(users):
 
     attrs = {
         'publication': site.publication,
-        'slug': 'spring-concret',
+        'path': 'spring-concret',
         'title': 'Spring Concert',
         'copyright': '2017 Oswald & Weenie',
         'progress_state': 'draft'
@@ -99,12 +99,3 @@ def test_published_on(publications):
 
     assert articles
     assert isinstance(article, Article)
-
-
-def test_get_by_slug():
-    slug = 'piano-lesson'
-    article = Article.get_by_slug(slug)
-
-    assert slug == article.slug
-    assert 'public' == article.scope
-    assert 'published' == article.progress_state

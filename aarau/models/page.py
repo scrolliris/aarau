@@ -22,11 +22,12 @@ class Page(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
     scopes = ('public', 'private')
 
     id = PrimaryKeyField()
+    path = CharField(max_length=255, null=False)
+
     application = ForeignKeyField(
         rel_model=Application, db_column='application_id', to_field='id',
         related_name='pages', null=False)
     code = CharField(max_length=128, null=True)
-    path = CharField(max_length=255, null=False)
     title = CharField(max_length=128, null=True)
     scope = EnumField(choices=scopes, null=False, default='public')
 

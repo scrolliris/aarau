@@ -101,14 +101,13 @@ def includeme(config):
 
     namespace = namespace_predicator()
     with subdomain('console') as c:
-        # pylint: disable=anomalous-backslash-in-string
         c.add_route('console.top', '/')
 
         # project
         c.add_route('console.project.new', '/projects/new')
-        c.add_route('console.project.overview', '/{namespace}/overview',
-                    custom_predicates=(namespace,))
         c.add_route('console.project.edit', '/{namespace}/edit',
+                    custom_predicates=(namespace,))
+        c.add_route('console.project.overview', '/{namespace}',
                     custom_predicates=(namespace,))
 
         # site
@@ -134,37 +133,26 @@ def includeme(config):
                     custom_predicates=(namespace,))
         # site - overview
         c.add_route('console.site.overview',
-                    '/{namespace}/{slug}/overview',
+                    '/{namespace}/{slug}',
                     custom_predicates=(namespace,))
 
-    # internal api
-    with subdomain('console') as c:
+        # internal api
         c.add_route('api.console.site.insights',
                     '/api/projects/{namespace}/{slug}/insights.json',
                     custom_predicates=(namespace,))
 
     with subdomain('carrell') as c:
-        # TODO: move to console or None
-        c.add_route('carrell.project.new', '/projects/new')
+        c.add_route('carrell.top', '/')
+        c.add_route('carrell.read', '/read')
 
-        c.add_route('carrell.settings', '/settings')
-        c.add_route('carrell.settings.section', '/settings/{section}')
-
-        c.add_route('carrell.settings.email_delete',
-                    '/settings/email/delete')
-        c.add_route('carrell.settings.email_change',
-                    '/settings/email/change')
-        c.add_route('carrell.settings.email_activate',
-                    '/settings/email/confirm/{token}')
-
-    # public view
     with subdomain('registry') as c:
-        c.add_route('search', '/')
-        c.add_route('project.overview',
-                    '/{namespace}/overview',
+        c.add_route('registry.search', '/')
+
+        c.add_route('registry.project.overview',
+                    '/{namespace}',
                     custom_predicates=(namespace,))
-        c.add_route('site.overview',
-                    '/{namespace}/{slug}/overview',
+        c.add_route('registry.site.overview',
+                    '/{namespace}/{slug}',
                     custom_predicates=(namespace,))
 
     with subdomain(None) as c:
@@ -173,8 +161,27 @@ def includeme(config):
         c.add_route('login', '/login')
         c.add_route('logout', '/logout')
 
+        c.add_route('signup', '/signup')
+
+        c.add_route('signup.activate', '/activate/{token}')
         c.add_route('reset_password.request', '/password/reset')
         c.add_route('reset_password', '/password/reset/{token}')
 
-        c.add_route('signup', '/signup')
-        c.add_route('signup.activate', '/user/activate/{token}')
+        # -- login required
+        c.add_route('project.new', '/projects/new')
+
+        c.add_route('settings', '/settings')
+        c.add_route('settings.section', '/settings/{section}')
+
+        c.add_route('settings.email_delete',
+                    '/settings/email/delete')
+        c.add_route('settings.email_change',
+                    '/settings/email/change')
+        c.add_route('settings.email_activate',
+                    '/settings/email/confirm/{token}')
+
+    # public view
+    # TODO: move to org?
+    with subdomain(None) as c:
+        c.add_route('publication', '/{namespace}/{slug}')
+        c.add_route('article', '/{namespace}/{slug}/{path}')

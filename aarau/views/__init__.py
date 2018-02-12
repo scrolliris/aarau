@@ -1,3 +1,19 @@
+from pyramid.events import subscriber
+from pyramid.events import BeforeRender
+
+
+@subscriber(BeforeRender)
+def add_article_renderer_globals(evt) -> None:
+    """Adds global variables for article (public reader) renderer."""
+    req = evt['request']
+
+    if req and not req.subdomain:
+        evt['cookie'] = {'article.sidebar': ''}
+        key = 'article.sidebar'
+        if key in req.cookies:
+            evt['cookie'][key] = str(req.cookies[key])
+
+
 def tpl(path, resource=None):
     """Returns template path from package root."""
     if resource:
@@ -30,6 +46,12 @@ def includeme(config):
     Activate this setup using ``config.include('aarau.views')``.
     """
     config.include('.signup')
+
+    config.include('.settings')
+    config.include('.project')
+
+    config.include('.site')
+    config.include('.article')
 
     # subdomains
     config.include('.console')

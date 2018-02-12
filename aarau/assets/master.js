@@ -12,6 +12,9 @@ import './css/top.styl'
 import './css/signup.styl'
 import './css/settings.styl'
 
+// -- article
+import './css/article.styl'
+
 // -- basic (login, reset_password)
 import './css/basic/general.styl'
 

@@ -17,6 +17,7 @@
 
     <nav class="right menu">
       % if req.user:
+        <a class="mobile hidden item" href="${req.route_url('carrell.top')}">Carrell</a>
         % if req.user.memberships:
           <a class="mobile hidden item" href="${req.route_url('console.top')}">Console</a>
         % endif

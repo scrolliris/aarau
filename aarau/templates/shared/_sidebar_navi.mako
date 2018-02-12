@@ -1,5 +1,6 @@
+<%page args="locked=None"/>
 <div class="right item">
-  % if cookie.get('console.sidebar', '') == 'locked':
+  % if locked == 'locked':
     <button class="sidebar-hide-button flat button" title="Hide Sidebar" disabled>Hide</button>
     <button class="sidebar-hold-button flat button" title="Unpin Sidebar">Unpin</button>
   % else:
