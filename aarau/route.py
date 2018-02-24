@@ -78,6 +78,74 @@ def namespace_predicator():
     return predicate
 
 
+def define_carrell_routes(c):
+    c.add_route('carrell.top', '/')
+    c.add_route('carrell.read', '/read')
+
+
+def define_registry_routes(c, namespace):
+    c.add_route('registry.search', '/')
+
+    c.add_route('registry.project.overview',
+                '/{namespace}',
+                custom_predicates=(namespace,))
+    c.add_route('registry.site.overview',
+                '/{namespace}/{slug}',
+                custom_predicates=(namespace,))
+
+
+def define_console_routes(c, namespace):
+    c.add_route('console.top', '/')
+
+    # project
+    c.add_route('console.project.new', '/projects/new')
+    c.add_route('console.project.edit', '/{namespace}/edit',
+                custom_predicates=(namespace,))
+    c.add_route('console.project.overview', '/{namespace}',
+                custom_predicates=(namespace,))
+
+    # site
+    c.add_route('console.site.new',
+                '/{namespace}/new',
+                custom_predicates=(namespace,))
+    # site:application - insights
+    c.add_route('console.site.insights',
+                '/{namespace}/{slug}/insights',
+                custom_predicates=(namespace,))
+    # site:application - settings
+    c.add_route('console.site.settings.scripts',
+                '/{namespace}/{slug}/settings/scripts',
+                custom_predicates=(namespace,))
+    c.add_route('console.site.settings.widgets',
+                '/{namespace}/{slug}/settings/widgets',
+                custom_predicates=(namespace,))
+    c.add_route('console.site.settings.badges',
+                '/{namespace}/{slug}/settings/badges',
+                custom_predicates=(namespace,))
+    c.add_route('console.site.settings',
+                '/{namespace}/{slug}/settings',
+                custom_predicates=(namespace,))
+    # site - overview
+    c.add_route('console.site.overview',
+                '/{namespace}/{slug}',
+                custom_predicates=(namespace,))
+
+    c.add_route('console.article.list',
+                '/{namespace}/{slug}/articles',
+                custom_predicates=(namespace,))
+    c.add_route('console.article.new',
+                '/{namespace}/{slug}/articles/new',
+                custom_predicates=(namespace,))
+    c.add_route('console.article.edit',
+                '/{namespace}/{slug}/{path}/edit',
+                custom_predicates=(namespace,))
+
+    # internal api
+    c.add_route('api.console.site.insights',
+                '/api/projects/{namespace}/{slug}/insights.json',
+                custom_predicates=(namespace,))
+
+
 def includeme(config):
     env = Env()
 
@@ -101,69 +169,13 @@ def includeme(config):
 
     namespace = namespace_predicator()
     with subdomain('console') as c:
-        c.add_route('console.top', '/')
-
-        # project
-        c.add_route('console.project.new', '/projects/new')
-        c.add_route('console.project.edit', '/{namespace}/edit',
-                    custom_predicates=(namespace,))
-        c.add_route('console.project.overview', '/{namespace}',
-                    custom_predicates=(namespace,))
-
-        # site
-        c.add_route('console.site.new',
-                    '/{namespace}/new',
-                    custom_predicates=(namespace,))
-        # site:application - insights
-        c.add_route('console.site.insights',
-                    '/{namespace}/{slug}/insights',
-                    custom_predicates=(namespace,))
-        # site:application - settings
-        c.add_route('console.site.settings.scripts',
-                    '/{namespace}/{slug}/settings/scripts',
-                    custom_predicates=(namespace,))
-        c.add_route('console.site.settings.widgets',
-                    '/{namespace}/{slug}/settings/widgets',
-                    custom_predicates=(namespace,))
-        c.add_route('console.site.settings.badges',
-                    '/{namespace}/{slug}/settings/badges',
-                    custom_predicates=(namespace,))
-        c.add_route('console.site.settings',
-                    '/{namespace}/{slug}/settings',
-                    custom_predicates=(namespace,))
-        # site - overview
-        c.add_route('console.site.overview',
-                    '/{namespace}/{slug}',
-                    custom_predicates=(namespace,))
-
-        c.add_route('console.article.list',
-                    '/{namespace}/{slug}/articles',
-                    custom_predicates=(namespace,))
-        c.add_route('console.article.new',
-                    '/{namespace}/{slug}/articles/new',
-                    custom_predicates=(namespace,))
-        c.add_route('console.article.edit',
-                    '/{namespace}/{slug}/{path}/edit',
-                    custom_predicates=(namespace,))
-
-        # internal api
-        c.add_route('api.console.site.insights',
-                    '/api/projects/{namespace}/{slug}/insights.json',
-                    custom_predicates=(namespace,))
+        define_console_routes(c, namespace)
 
     with subdomain('carrell') as c:
-        c.add_route('carrell.top', '/')
-        c.add_route('carrell.read', '/read')
+        define_carrell_routes(c)
 
     with subdomain('registry') as c:
-        c.add_route('registry.search', '/')
-
-        c.add_route('registry.project.overview',
-                    '/{namespace}',
-                    custom_predicates=(namespace,))
-        c.add_route('registry.site.overview',
-                    '/{namespace}/{slug}',
-                    custom_predicates=(namespace,))
+        define_registry_routes(c, namespace)
 
     with subdomain(None) as c:
         c.add_route('top', '/')

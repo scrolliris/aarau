@@ -1,7 +1,6 @@
 from wtforms import (
     StringField,
     SubmitField,
-    TextAreaField,
 )
 from wtforms import validators as v, ValidationError
 
