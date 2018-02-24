@@ -136,6 +136,16 @@ def includeme(config):
                     '/{namespace}/{slug}',
                     custom_predicates=(namespace,))
 
+        c.add_route('console.article.list',
+                    '/{namespace}/{slug}/articles',
+                    custom_predicates=(namespace,))
+        c.add_route('console.article.new',
+                    '/{namespace}/{slug}/articles/new',
+                    custom_predicates=(namespace,))
+        c.add_route('console.article.edit',
+                    '/{namespace}/{slug}/{path}/edit',
+                    custom_predicates=(namespace,))
+
         # internal api
         c.add_route('api.console.site.insights',
                     '/api/projects/{namespace}/{slug}/insights.json',

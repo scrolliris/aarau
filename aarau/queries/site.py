@@ -1,3 +1,5 @@
+from pyramid.httpexceptions import HTTPNotFound
+
 from aarau.models import (  # noqa  # pylint: disable=unused-import
     Site,
     Project,
@@ -6,6 +8,22 @@ from aarau.models import (  # noqa  # pylint: disable=unused-import
     License,
     Classification,
 )
+
+
+def get_site(slug, project=None):
+    """Gets a site by type belongs to the porject.
+
+    If it does not exist, raises HTTPNotFound error.
+    """
+    if not project:
+        return None
+    try:
+        site = Site.select().where(
+            Site.slug == slug,
+            Site.project_id == project.id).get()  # pylint: disable=no-member
+    except Site.DoesNotExist:  # pylint: disable=no-member
+        raise HTTPNotFound
+    return site
 
 
 def get_sites(type_, limit=10):
