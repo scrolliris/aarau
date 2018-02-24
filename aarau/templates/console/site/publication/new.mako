@@ -14,7 +14,7 @@
 
 <%block name='sidebar'>
 <div class="sidebar">
-  <%include file='aarau:templates/console/_sidebar_navi.mako'/>
+  <%include file='aarau:templates/shared/_sidebar_navi.mako'/>
   <a class="item active">New Publication</a>
 </div>
 </%block>
