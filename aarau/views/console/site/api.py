@@ -2,16 +2,11 @@ from pyramid.httpexceptions import HTTPNotFound
 from pyramid.response import Response
 from pyramid.view import view_config
 
+from aarau.models import ReadingResult
 from aarau.queries import PaginatedQuery
+from aarau.queries.project import get_project
+from aarau.queries.site import get_site
 from aarau.views.filter import login_required
-from aarau.models import (
-    ReadingResult,
-)
-
-from aarau.views.console.site import (
-    get_project,
-    get_site,
-)
 
 ITEMS_PER_PAGE = 20
 

@@ -7,11 +7,9 @@ from aarau.services.interface import IReplicator
 
 from aarau.views import get_site_type
 
-from aarau.views.console.site import (
-    get_project,
-    get_site,
-    tpl,
-)
+from aarau.queries.project import get_project
+from aarau.queries.site import get_site
+from aarau.views.console.site import tpl
 from aarau.views.console.site.form import build_site_form
 
 
