@@ -14,8 +14,16 @@ from aarau.views.console.article.form import (
 
 
 @pytest.fixture(autouse=True)
-def setup(request, config):  # pylint: disable=unused-argument
-    pass
+def setup(request, config, monkeypatch):  # pylint: disable=unused-argument
+    from aarau.views.console.article import form
+
+    monkeypatch.setattr(form, 'RESERVED_WORDS_FILE',
+                        'aarau:../config/reserved_words.sample.yml')
+
+    def teardown():
+        monkeypatch.undo()
+
+    request.addfinalizer(teardown)
 
 
 def test_build_new_article_form(dummy_request):
