@@ -2,8 +2,12 @@ import Cookie from './_cookie.js';
 
 
 let handleSidebar = (cookieKey, doc) => {
-  // sidebar
+  // sidebar (checkbox)
   let sidebar = doc.getElementById('sidebar_checkbox');
+  if (sidebar === null || sidebar === undefined) {
+    return;
+  }
+  // controls
   let hideBtn = doc.getElementsByClassName('sidebar-hide-button')[0]
     , holdBtn = doc.getElementsByClassName('sidebar-hold-button')[0]
     ;
@@ -21,6 +25,10 @@ let handleSidebar = (cookieKey, doc) => {
     };
   })(Cookie);
 
+  if (hideBtn === null || hideBtn === undefined) {
+    return;
+  }
+
   hideBtn.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -28,6 +36,10 @@ let handleSidebar = (cookieKey, doc) => {
 
     sidebar.checked = false;
   });
+
+  if (holdBtn === null || holdBtn === undefined) {
+    return;
+  }
 
   holdBtn.addEventListener('click', (e) => {
     e.preventDefault();

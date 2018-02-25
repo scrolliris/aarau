@@ -46,18 +46,19 @@
         <%include file='aarau:templates/console/_sidebar.mako'/>
       </%block>
 
+      ## toolbar
+      <%block name='toolbar_checkbox'/>
+
       ## main container
       <section class="content container">
         <header>
           <label class="sidebar-show-button" for="sidebar_checkbox" title="Show Sidebar">&#9776;</label>
+
           <div class="top menu">
             <div class="item">
-              <%block name='breadcrumb'>
-              </%block>
+              <%block name='breadcrumb'/>
             </div>
-            <div class="right menu">
-              <a class="item" href="${req.route_url('logout')}">Log out</a>
-            </div>
+            <%block name='right_menu'/>
           </div>
         </header>
 
@@ -71,11 +72,13 @@
           <%include file='aarau:templates/console/_footer.mako'/>
         </%block>
       </section>
+
+      ## toolbar
+      <%block name='toolbar'/>
     </div>
 
     ## <script src="${util.hashed_asset_url('vendor.js')}" charset="utf-8"></script>
     <script src="${util.hashed_asset_url('author.js')}" charset="utf-8" async></script>
-    <%block name='script'>
-    </%block>
+    <%block name='script'/>
   </body>
 </html>

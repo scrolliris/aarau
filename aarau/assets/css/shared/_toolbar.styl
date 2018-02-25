@@ -1,21 +1,26 @@
 @import './_colour.styl'
 
-build-sidebar()
-  .sidebar
-    position fixed
+build-toolbar()
+  .toolbar
+    position static
 
-    background-color #ffffff
+    box-shadow 0 0 .04rem darken(#e5decf, 13%)
+
+    background-color #fbfaf8
     z-index 2147483647
 
-    min-width 14.78rem
-    max-width 16.97rem
+    min-width 19.78rem
+    max-width 22.97rem
 
     .section-title
       margin-left 1.189rem
       margin-bottom 0.45rem
       font-weight bold
-      font-size 0.71em
+      font-size 1.02em
       color $gray2
+
+    hr
+      border-bottom 1px solid #e5decf
 
     > .item.active
       border-left 4px solid darken($gray1, 3%)
@@ -48,99 +53,81 @@ build-sidebar()
               background-color inherit !important
               cursor not-allowed
 
-    .item > span.description
-      display block
-      font-size 0.79em
-      margin-top 0.18rem
-      margin-left 0.11rem
-      color $gray1
-
-    .item.disabled
-      color lighten($gray1, 48%)
-      &:hover
-        background-color inherit !important
-        cursor not-allowed
-
-    .message
-      border none
-
   // close
-  .sidebar
+  .toolbar
     visibility hidden
     display none
     transition transform .28s ease 0.08s
+    .embedded.button
+      border none
+      border-radius 0.18rem
+      background transparent
+      font-size 1.78em
+      color #777777
+      &:hover
+        color #222222
+        background #f3f3f3
 
-  #sidebar_checkbox.pinned + .sidebar
-    position relative
-    visibility visible
-    display block
-
-  .sidebar-checkbox
+  .toolbar-checkbox
     display none
 
-  .sidebar-checkbox,
-  .sidebar-show-button,
-  .sidebar-hold-button,
-  .sidebar-hide-button
+  .toolbar-checkbox,
+  .toolbar-show-button,
+  .toolbar-hide-button
     &:focus
       outline none
     &::-moz-focus-inner
       border 0
 
-  #sidebar_checkbox:checked + .sidebar
+  #toolbar_checkbox:checked ~ .content + .toolbar
     visibility visible
     display block
 
-  #sidebar_checkbox:checked ~ .content .top.menu
+  #toolbar_checkbox:checked ~ .content .top.menu
     margin-left 0
 
-  .sidebar-show-button
-    display inline-block
-    float left
-    margin-top 0.679rem
-    margin-left 0.522rem
-    padding 0.16rem 0.36rem
+  .toolbar-show-button
+    display block
+    margin 0
+    margin-right 1.59rem
+    padding 0.51rem 0.88rem !important
     border 0
     cursor pointer
-    transition transform .22s ease 0.08s
     font-family monospace
     font-weight bold
-    font-size 1.22em
+    font-size 2.22em
     color #777777
     &:hover
       color #222222
       background-color #f3f3f3
 
-  .sidebar-hold-button
-    color #444444
-
-  .sidebar-hide-button
+  .toolbar-hide-button
     color #444444
     &:disabled
       display none
 
-  #sidebar_checkbox:checked ~ .content .sidebar-show-button
+  #toolbar_checkbox:checked ~ .content .toolbar-show-button
     display none
 
 
 @media only screen and (max-width: 1280px)
-  .sidebar
+  .toolbar
     min-width 16.97rem
     max-width 25%
 @media only screen and (max-width: 980px)
-  .sidebar
+  .toolbar
     min-width 14.97rem
     max-width 30%
 @media only screen and (max-width: 768px)
-  .sidebar
+  .toolbar
     min-width 12.97rem
     max-width 40%
 @media only screen and (max-width: 640px)
-  .sidebar
+  .toolbar
     min-width 10.97rem
     max-width 30%
-  .sidebar .note.item
+  .toolbar .note.item
     display none
 @media print
-  .sidebar
+  .toolbar
     display none
