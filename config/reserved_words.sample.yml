@@ -18,5 +18,7 @@ reserved_words:
     namespace: []
   site:
     slug: []
+  article:
+    path: []
   user:
     username: []

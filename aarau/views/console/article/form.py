@@ -1,3 +1,7 @@
+import itertools
+import yaml
+
+from pyramid.path import AssetResolver
 from wtforms import (
     StringField,
     SubmitField,
@@ -7,7 +11,38 @@ from wtforms import validators as v, ValidationError
 from aarau.views.form import SecureForm, build_form
 
 
-PATH_PATTERN = r'\A[a-z0-9-]+\Z'
+PATH_PATTERN = r'\A[a-z0-9]{1}[a-z0-9-]+\Z'
+RESERVED_WORDS_FILE = 'aarau:../config/reserved_words.yml'
+
+
+def path_duplication_check(form, field):
+    from aarau.models.article import Article
+
+    query = Article.select().where(
+        Article.path == field.data)
+    if hasattr(form, 'current_article') and form.current_article:
+        # allow itself
+        query = query.where(
+            Article.id != form.current_article.id)
+    if query.first():
+        raise ValidationError('That path is already in use.')
+
+
+def path_reserved_words_check(_form, field):
+    """Check user input with reserved words loaded from yml file."""
+    a = AssetResolver('aarau')
+    resolver = a.resolve(RESERVED_WORDS_FILE)
+    try:
+        with open(resolver.abspath(), 'r') as f:
+            data = yaml.safe_load(f).get('reserved_words', {})
+            reserved_words = set(itertools.chain(
+                data.get('common', []),
+                data.get('article', {}).get('path', []),
+            ))
+            if field.data in reserved_words:
+                raise ValidationError('That path is unavailable.')
+    except FileNotFoundError:
+        pass
 
 
 class ArticleBaseMixin(object):
@@ -28,24 +63,14 @@ class ArticleBaseMixin(object):
     def current_article(self, article):
         self._article = article
 
-    def validate_path(self, field):   # pylint: disable=no-self-use
-        from aarau.models.article import Article
-
-        query = Article.select().where(
-            Article.path == field.data)
-        if hasattr(self, 'current_article') and self.current_article:
-            # allow itself
-            query = query.where(
-                Article.id != self.current_article.id)
-        if query.first():
-            raise ValidationError('This path is already in use.')
-
 
 class NewArticleForm(ArticleBaseMixin, SecureForm):
     path = StringField('Path', [
         v.Required(),
         v.Regexp(PATH_PATTERN),
         v.Length(min=6, max=64),
+        path_duplication_check,
+        path_reserved_words_check,
     ])
 
     submit = SubmitField('Create')
