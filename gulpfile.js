@@ -149,23 +149,20 @@ var paths = {
   ]
 , number: [ // registry
     path.join(assetsDir, 'number.js')
-  , path.join(assetsDir, 'css/shared/**/*.styl')
-  , path.join(assetsDir, 'css/registry/**/*.styl')
-  , path.join(assetsDir, 'js/registry/**/*.js')
+  , path.join(assetsDir, 'css/{shared,registry}/**/*.styl')
+  , path.join(assetsDir, 'js/{shared,registry}/**/*.js')
   , path.join(assetsDir, 'component/registry/**/*.{styl,js}')
   ]
 , author: [ // console
     path.join(assetsDir, 'author.js')
-  , path.join(assetsDir, 'css/shared/**/*.styl')
-  , path.join(assetsDir, 'css/console/**/*.styl')
-  , path.join(assetsDir, 'js/console/**/*.js')
+  , path.join(assetsDir, 'css/{shared,console}/**/*.styl')
+  , path.join(assetsDir, 'js/{shared,console}/**/*.js')
   , path.join(assetsDir, 'component/console/**/*.{styl,js}')
   ]
 , reader: [ // carrell
     path.join(assetsDir, 'reader.js')
-  , path.join(assetsDir, 'css/shared/**/*.styl')
-  , path.join(assetsDir, 'css/carrell/**/*.styl')
-  , path.join(assetsDir, 'js/carrell/**/*.js')
+  , path.join(assetsDir, 'css/{shared,carrell}/**/*.styl')
+  , path.join(assetsDir, 'js/{shared,carrell}/**/*.js')
   , path.join(assetsDir, 'component/carrell/**/*.{styl,js}')
   ]
 , img: [

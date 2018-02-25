@@ -1,3 +1,8 @@
+Mon 25 Feb 2018 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
+	* Add toolbar (right secondary sidebar)
+	* Update article form
+	* Add unit tests for new/edit article
+
 Mon 12 Feb 2018 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
 	* Add carrell reader view
 

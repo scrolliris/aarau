@@ -5,6 +5,7 @@ import { loadI18n } from './i18n.js';
 import PageTable from '../../component/console/page.js';
 
 import handleSidebar from '../shared/_sidebar.js';
+import handleToolbar from '../shared/_toolbar.js';
 
 
 ((doc) => {
@@ -21,4 +22,5 @@ import handleSidebar from '../shared/_sidebar.js';
   }
 
   handleSidebar('console.sidebar', doc);
+  handleToolbar(doc);
 })(document);

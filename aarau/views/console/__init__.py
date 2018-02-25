@@ -5,11 +5,14 @@ from pyramid.events import BeforeRender
 @subscriber(BeforeRender)
 def add_console_renderer_globals(evt) -> None:
     """Adds global variables for console renderer."""
-    req = evt['request']
+    req = evt.get('request')
 
     if req and req.subdomain == 'console':
-        evt['cookie'] = {'console.sidebar': ''}
+        # sidebar (cookie)
         key = 'console.sidebar'
+        evt['cookie'] = {
+            key: '',
+        }
         if key in req.cookies:
             evt['cookie'][key] = str(req.cookies[key])
 

@@ -1,5 +1,6 @@
 @import '../shared/_colour.styl'
 @import '../shared/_sidebar.styl'
+@import '../shared/_toolbar.styl'
 
 #console
   header
@@ -21,8 +22,6 @@
       .item:first-child
         padding-right 1.62rem
         margin 0
-      .item:last-child
-        padding-right 0.22rem
   .secondary.menu
     padding-left 0.02rem
 
@@ -47,6 +46,15 @@
 // sidebar
 #console
   build-sidebar()
+
+// toolbar
+#console
+  build-toolbar()
+
+  .toolbar
+    form.form
+      padding-left 1.03rem
+      padding-right 1.03rem
 
 .dropdown-container
   .dropdown

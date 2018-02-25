@@ -4,7 +4,6 @@
 
 <form id="${ctx}_article" class="form${' error' if err is not None else ''}" action="${act}" method="post">
   ${f.csrf_token}
-  <h4 class="header">${ctx.upper()}</h4>
 
   <div class="row">
     <div class="required field-16${' error' if f.title.errors else ''}">
@@ -24,14 +23,8 @@
       ${f.path(class_='', placeholder='article-001')}
       ${render_error_message(f.path)}
     </div>
-    % else:
-    <div class="field-16">
-      <label class="label" for="path">Path</label>
-      ${article.path}
-    </div>
     % endif
   </div>
 
-
-  ${f.submit(class_='primary button')}
+  ${f.submit(class_='primary flat button')}
 </form>
