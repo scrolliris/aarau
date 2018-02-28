@@ -4,8 +4,11 @@ articles:
     code: 268bb1d2cf760b51b9c348bc424dde5851c3649f
     path: piano-lesson
     title: Piano Lesson
-    scope: public
+    content: >-
+    content_html: >-
+    content_updated_at: !datetime.utcnow+timedelta -7200
     progress_state: published
+    scope: public
     license: !license.identifier "'CC-BY-NC-SA-4.0'"
     copyright: 2017 Oswald & Weenie
     published_at: !datetime.utcnow+timedelta -3600
@@ -17,7 +20,9 @@ articles:
     code: a93c97b18dbfbbb243841e14fffa97227ecc37a9
     path: music-stand
     title: Music stand
-    scope: public
+    content: >-
+    content_html: >-
+    content_updated_at: !datetime.utcnow+timedelta -7200
     progress_state: draft
     scope: public
     license: !license.identifier "'CC-BY-NC-SA-4.0'"

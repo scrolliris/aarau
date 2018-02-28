@@ -47,13 +47,13 @@ var config = {
 , resolve: {
     extensions: ['', '.css', '.js']
   , alias: {
-      'inferno-component.js': 'inferno/dist/inferno-component.min.js'
-    , 'inferno-hyperscript.js': 'inferno/dist/inferno-hyperscript.min.js'
-    , 'inferno.js': 'inferno/dist/inferno.min.js'
+      'inferno.js': 'inferno/dist/inferno.min.js'
+    , 'inferno-hyperscript.js':
+       'inferno-hyperscript/dist/inferno-hyperscript.min.js'
     , 'i18next.js': 'i18next/i18next.min.js'
     , 'i18next-xhr-backend.js': 'i18next-xhr-backend/i18nextXHRBackend.min.js'
     , 'i18next-browser-languagedetector.js':
-        'i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js'
+       'i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js'
     , 'moment\.js$': 'moment/moment.js'
     , 'moment-locale-en-gb\.js$': 'moment/locale/en-gb.js'
     , 'styr\.css$': 'styr/dst/styr.min.css'

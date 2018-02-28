@@ -4,6 +4,7 @@ from peewee import (
     CharField,
     DateTimeField,
     ForeignKeyField,
+    TextField,
     PrimaryKeyField,
 )
 from playhouse.signals import pre_save
@@ -37,6 +38,10 @@ class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
     code = CharField(max_length=128, null=False)
     title = CharField(max_length=255, null=True)
     scope = EnumField(choices=scopes, null=False, default='public')
+
+    content = TextField(null=True)
+    content_html = TextField(null=True)
+    content_updated_at = DateTimeField(null=True)
 
     license = ForeignKeyField(
         rel_model=License, db_column='license_id', to_field='id',

@@ -1,12 +1,15 @@
 ---
 articles:
   - publication: !publication.name "'Sample Publication'"
+    code: a9a11643e9b89a16a15cd735aef1780f05fa893b
     path: lorem-ipsum-article
     title: Lorem ipsum
-    scope: public
-    code: a9a11643e9b89a16a15cd735aef1780f05fa893b
-    license: !license.identifier "'CC-BY-NC-SA-4.0'"
+    content: >-
+    content_html: >-
+    content_updated_at: !datetime.utcnow+timedelta -7200
     progress_state: published
+    scope: public
+    license: !license.identifier "'CC-BY-NC-SA-4.0'"
     copyright: 2017 Yasuhiro Asaka
     published_at: !datetime.utcnow+timedelta -3600
     created_at: !datetime.utcnow+timedelta -7200

@@ -32,7 +32,7 @@
         <h3>Articles</h3>
       </div>
       <div class="column-14" align="right">
-        <a class="primary flat button" href="${req.route_path('console.article.new', namespace=project.namespace, slug=site.slug)}">New Article</a>
+        <a class="primary flat button" href="${req.route_path('console.article.editor.new', namespace=project.namespace, slug=site.slug)}">New Article</a>
       </div>
     </div>
 
@@ -40,10 +40,10 @@
       <div class="column-16">
         % for article in articles:
         <div class="embedded flat article box" align="left">
-          <a href="${req.route_path('console.article.edit', namespace=project.namespace, slug=site.slug, path=article.path)}">
-            <h5 class="title">${article.title}</h5>
+          <a href="${req.route_path('console.article.editor.edit', namespace=project.namespace, slug=site.slug, _query={'code': article.code})}">
+            <h5 class="title">${article.title or 'Untitled'}</h5>
           </a>
-          <p class="path">${article.path}</p>
+          <p class="path">${article.path or 'none'}</p>
           <span class="primary lined label">${article.progress_state}</span>
         </div>
         % endfor

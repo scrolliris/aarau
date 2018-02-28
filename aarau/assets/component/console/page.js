@@ -1,6 +1,5 @@
-import { linkEvent } from 'inferno.js';
-import Component from 'inferno-component.js';
-import h from 'inferno-hyperscript.js';
+import { linkEvent, Component } from 'inferno.js';
+import { h } from 'inferno-hyperscript.js';
 
 import { i18n } from '../../js/console/i18n.js';
 

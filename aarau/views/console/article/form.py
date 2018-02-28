@@ -3,8 +3,10 @@ import yaml
 
 from pyramid.path import AssetResolver
 from wtforms import (
+    HiddenField,
     StringField,
     SubmitField,
+    TextAreaField,
 )
 from wtforms import validators as v, ValidationError
 
@@ -46,11 +48,6 @@ def path_reserved_words_check(_form, field):
 
 
 class ArticleBaseMixin(object):
-    title = StringField('Title', [
-        v.Required(),
-        v.Length(min=3, max=128),
-    ])
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._article = None
@@ -64,7 +61,36 @@ class ArticleBaseMixin(object):
         self._article = article
 
 
-class NewArticleForm(ArticleBaseMixin, SecureForm):
+class ArticleEditorForm(ArticleBaseMixin, SecureForm):
+    code = HiddenField([
+        v.Required(),
+    ])
+    content = TextAreaField('Content', [
+        v.Optional(),
+        v.Length(max=9999),
+    ])
+
+    context = HiddenField([
+        v.Required(),
+        v.AnyOf(('editor',))
+    ])
+    submit = SubmitField('Save')
+
+
+def build_article_editor_form(req, article=None):
+    form = build_form(ArticleEditorForm, req, article)
+    form.current_article = article
+    return form
+
+
+class ArticleConfigForm(ArticleBaseMixin, SecureForm):
+    code = HiddenField([
+        v.Required(),
+    ])
+    title = StringField('Title', [
+        v.Required(),
+        v.Length(min=3, max=128),
+    ])
     path = StringField('Path', [
         v.Required(),
         v.Regexp(PATH_PATTERN),
@@ -73,32 +99,14 @@ class NewArticleForm(ArticleBaseMixin, SecureForm):
         path_reserved_words_check,
     ])
 
-    submit = SubmitField('Create')
+    context = HiddenField([
+        v.Required(),
+        v.AnyOf(('config',))
+    ])
+    submit = SubmitField('Save')
 
 
-class EditArticleForm(ArticleBaseMixin, SecureForm):
-    submit = SubmitField('Update')
-
-
-def build_new_article_form(req):
-    return build_form(NewArticleForm, req)
-
-
-def build_edit_article_form(req, article):
-    form = build_form(EditArticleForm, req, article)
+def build_article_config_form(req, article=None):
+    form = build_form(ArticleConfigForm, req, article)
     form.current_article = article
     return form
-
-
-def build_article_form(req, article=None):
-    from aarau.models import Article
-    try:
-        if not isinstance(article, Article):
-            raise AttributeError
-
-        if article.is_dirty():
-            return build_new_article_form(req)
-
-        return build_edit_article_form(req, article)
-    except AttributeError:
-        return None

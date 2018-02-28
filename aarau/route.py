@@ -130,17 +130,25 @@ def define_console_routes(c, namespace):
                 '/{namespace}/{slug}',
                 custom_predicates=(namespace,))
 
+    # article
     c.add_route('console.article.list',
                 '/{namespace}/{slug}/articles',
                 custom_predicates=(namespace,))
-    c.add_route('console.article.new',
-                '/{namespace}/{slug}/articles/new',
+    c.add_route('console.article.editor.new',
+                '/{namespace}/{slug}/editor',
                 custom_predicates=(namespace,))
-    c.add_route('console.article.edit',
-                '/{namespace}/{slug}/{path}/edit',
+    c.add_route('console.article.editor.edit',
+                '/{namespace}/{slug}/editor',  # code={code}
                 custom_predicates=(namespace,))
 
-    # internal api
+    # internal api - article
+    c.add_route('api.console.article.editor',
+                '/api/{namespace}/{slug}/article/editor.json',
+                custom_predicates=(namespace,))
+    c.add_route('api.console.article.config',
+                '/api/{namespace}/{slug}/article/config.json',
+                custom_predicates=(namespace,))
+    # internal api - insights
     c.add_route('api.console.site.insights',
                 '/api/projects/{namespace}/{slug}/insights.json',
                 custom_predicates=(namespace,))

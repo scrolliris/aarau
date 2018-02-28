@@ -1,5 +1,5 @@
-import Component from 'inferno-component.js';
-import h from 'inferno-hyperscript.js';
+import { Component } from 'inferno.js';
+import { h } from 'inferno-hyperscript.js';
 
 import './ticker.styl';
 

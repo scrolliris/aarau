@@ -1,5 +1,5 @@
 import { render } from 'inferno.js';
-import h from 'inferno-hyperscript.js';
+import { h } from 'inferno-hyperscript.js';
 
 import Ticker from '../component/ticker.js';
 
