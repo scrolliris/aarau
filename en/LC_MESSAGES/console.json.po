@@ -16,6 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+# page
 msgid "page.empty.message.description"
 msgstr ""
 "Otherwise, please check `Scripts` tab. It takes few minutes stating "
@@ -33,3 +34,27 @@ msgstr "PATH"
 
 msgid "page.table.header.total_count"
 msgstr "TOTAL COUNT"
+
+# validation
+msgid "validation.error.min_length"
+msgstr "This field must be at least {{min}} characters long."
+
+msgid "validation.error.max_length"
+msgstr "This field must be maximum {{max}} characters long."
+
+# ui message
+msgid "message.sending"
+msgstr "sending..."
+
+# article
+msgid "article.path.label"
+msgstr "Path"
+
+msgid "article.path.description"
+msgstr "It must be unique in your publication. You can use {{- code0}} and {{- code1}} in {{length}} characters long."
+
+msgid "article.title.label"
+msgstr "Title"
+
+msgid "article.title.description"
+msgstr "HTML Title. It must be {{length}} characters long."
