@@ -113,6 +113,10 @@ catalog-update:
 	done
 .PHONY: catalog-update
 
+catalog-sync:
+	./bin/sync-catalog
+.PHONY: catalog-sync
+
 catalog: | catalog-compile
 .PHONY: catalog
 
