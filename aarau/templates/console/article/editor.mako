@@ -41,9 +41,8 @@
           data-csrf-token="${editor_form.csrf_token.current_token}"
           data-namespace="${project.namespace}"
           data-slug="${site.slug}"
-          data-code="${article.code or ''}"
-          data-content="${article.content or ''}"></div>
-      </div>
+          data-code="${article.code or ''}"></div>
+        <div id="content">${article.content or ''}</div>
     </div>
   </div>
 </div>

@@ -41,6 +41,7 @@ var config = {
     , loader: 'babel-loader'
     , include: [
         path.resolve(__dirname, appName + '/assets')
+      , path.resolve(__dirname, 'node_modules/vergil/dst')
       ]
     }]
   }
@@ -54,6 +55,7 @@ var config = {
     , 'i18next-xhr-backend.js': 'i18next-xhr-backend/i18nextXHRBackend.min.js'
     , 'i18next-browser-languagedetector.js':
        'i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js'
+    , 'vergil.js': 'vergil/dst/index.min.js'
     , 'moment\.js$': 'moment/moment.js'
     , 'moment-locale-en-gb\.js$': 'moment/locale/en-gb.js'
     , 'styr\.css$': 'styr/dst/styr.min.css'

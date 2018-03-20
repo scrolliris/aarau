@@ -1,0 +1,55 @@
+#article
+  #content
+    display none
+
+  #article_editor_form
+    // editor
+    .vergil
+      width 100%
+
+      .ProseMirror
+        width 100%
+        word-wrap break-word
+        white-space pre-wrap
+        -webkit-font-variant-ligatures none
+        font-variant-ligatures none
+        padding-top 0.91rem
+        padding-left 0.21rem
+
+      // placeholder
+      .ProseMirror .placeholder
+        color #aaaaaa
+        pointer-events none
+        height 0
+
+      .ProseMirror:focus .placeholder
+        display none
+
+      p
+        margin-block-start 1.45em
+        margin-block-end 1.45em
+        margin-top 0
+        margin-bottom 0
+        padding-top 0.36rem
+        padding-bottom 0.36rem
+
+    // bottom action bar
+    .action-bar
+      border-top 1px solid #e6e6e6
+      padding 1.13rem 0.38rem 0.16rem 0.38rem
+      position fixed
+      bottom 0
+      width inherit
+      margin-bottom 1.16rem
+
+    .row
+      .field-16
+        display block
+        position relative
+
+    .wrapper.action
+      display block
+      position relative
+      margin-right 10%
+      width 80%
+      max-width 100%

@@ -4,7 +4,7 @@ import { h } from 'inferno-hyperscript.js';
 import { i18n } from '../../js/console/i18n.js';
 
 
-function handleChange(instance, event) {
+function handleOnInput(instance, event) {
   const name = event.target.name;
   const value = event.target.value;
 
@@ -44,7 +44,7 @@ function handleChange(instance, event) {
   instance.setState(newState);
 }
 
-function handleSubmit(instance, event) {
+function handleOnSubmit(instance, event) {
   instance.setState({message: i18n.t('message.sending')});
 
   if (event !== null) {
@@ -72,7 +72,13 @@ function handleSubmit(instance, event) {
           // update editor form
           const form = document.getElementById('article_editor_form');
           let code = form.querySelector('#editor_form_code');
-          code.value = res.code;
+          if (code.value === null || code.value === "") {
+            code.value = res.code;
+            // notify
+            if (code.onchange && typeof code.onchange === 'function') {
+              code.onchange();
+            }
+          }
         } else { // validation error
           for (let f in errors) {
             if (errors.hasOwnProperty(f)) {
@@ -93,12 +99,24 @@ function handleSubmit(instance, event) {
   return false;
 }
 
-function handleFocusOut(instance, event) {
+function handleOnFocusOut(instance, event) {
+  event.stopImmediatePropagation();
+  event.preventDefault();
+
   const name = event.target.name;
   if (instance.state.hasOwnProperty(name)) {
     const form = document.getElementById('article_config_form');
-    handleSubmit(instance, null);
+
+    // TODO: save in local
   }
+}
+
+// called via update by editor form
+function notifyCodeOnChange(instance) {
+  const form = document.getElementById('article_config_form');
+  let code = form.querySelector('#config_form_code');
+
+  instance.state.code.value = code.value;
 }
 
 /**
@@ -177,15 +195,19 @@ class ArticleConfigForm extends Component {
     return h('form#article_config_form.form', {
       action: this.props.action || ''
     , method: 'POST'
-    , onSubmit: this.handleSubmit
+    , onSubmit: linkEvent(this, handleOnSubmit)
     }, [
       h('input', {
         type: 'hidden', name: 'csrf_token', value: this.state.csrfToken.value})
     , h('input#config_form_code', {
-        type: 'hidden', name: 'code', value: this.state.code.value})
+        type: 'hidden'
+      , name: 'code'
+      , value: this.state.code.value
+      , onChange: linkEvent(this, notifyCodeOnChange)
+      })
     , h('input', {type: 'hidden', name: 'context', value: 'config'})
-    , h('div.row', [
-        h('div.field-16', [
+    , h('.row', [
+        h('.field-16', [
           h('label.label', {for: 'path'}, i18n.t('article.path.label'))
         , h('p.description', {dangerouslySetInnerHTML: {
             __html: i18n.t('article.path.description', {
@@ -200,14 +222,14 @@ class ArticleConfigForm extends Component {
           , value: this.state.path.value
           , placeholder: 'chapter-001'
           , autocomplete: 'off'
-          , onInput: linkEvent(this, handleChange)
-          , onFocusOut: linkEvent(this, handleFocusOut)
+          , onInput: linkEvent(this, handleOnInput)
+          , onFocusOut: linkEvent(this, handleOnFocusOut)
           })
         , buildErrorMessage(this.state.path)
         ])
       ])
-    , h('div.row', [
-        h('div.field-16', [
+    , h('.row', [
+        h('.field-16', [
           h('label.label', {for: 'title'}, i18n.t('article.title.label'))
         , h('p.description', {dangerouslySetInnerHTML: {
             __html: i18n.t('article.title.description', {
@@ -220,13 +242,18 @@ class ArticleConfigForm extends Component {
           , value: this.state.title.value
           , placeholder: 'Title'
           , autocomplete: 'off'
-          , onInput: linkEvent(this, handleChange)
-          , onFocusOut: linkEvent(this, handleFocusOut)
+          , onInput: linkEvent(this, handleOnInput)
+          , onFocusOut: linkEvent(this, handleOnFocusOut)
           })
         , buildErrorMessage(this.state.title)
         ])
       ])
-    , h('span.message', null, this.state.message)
+    , h('.row', [
+        h('.field-16', [
+          h('button.flat.button', 'Save')
+        , h('span.message', this.state.message)
+        ])
+      ])
     ]);
   }
 }

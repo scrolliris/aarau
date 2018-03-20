@@ -1,12 +1,14 @@
-import { linkEvent, Component } from 'inferno.js';
-import { h } from 'inferno-hyperscript.js';
+import {linkEvent, Component} from 'inferno.js';
+import {h} from 'inferno-hyperscript.js';
+import {Editor, setPlaceholder} from 'vergil.js';
 
-import { i18n } from '../../js/console/i18n.js';
+import {i18n} from '../../js/console/i18n.js';
 
 
-function handleChange(instance, event) {
-  const name = event.target.name;
-  const value = event.target.value;
+function handleOnInput(instance, event) {
+  const name = 'content'
+      , value = event.target.innerText
+      ;
 
   let newState = {};
   newState[name] = {};
@@ -44,7 +46,7 @@ function handleChange(instance, event) {
   instance.setState(newState);
 }
 
-function handleSubmit(instance, event) {
+function handleOnSubmit(instance, event) {
   instance.setState({message: i18n.t('message.sending')});
 
   if (event !== null) {
@@ -71,7 +73,13 @@ function handleSubmit(instance, event) {
           // update config form
           const form = document.getElementById('article_config_form');
           let code = form.querySelector('#config_form_code');
-          code.value = res.code;
+          if (code.value === null || code.value === "") {
+            code.value = res.code;
+            // notify
+            if (code.onchange && typeof code.onchange === 'function') {
+              code.onchange();
+            }
+          }
         } else { // validation error
           for (let f in errors) {
             if (errors.hasOwnProperty(f)) {
@@ -92,12 +100,42 @@ function handleSubmit(instance, event) {
   return false;
 }
 
-function handleFocusOut(instance, event) {
-  const name = event.target.name;
+function handleOnFocusIn(instance, event) {
+  event.stopImmediatePropagation();
+  event.preventDefault();
+
+  const name = 'content';
+
   if (instance.state.hasOwnProperty(name)) {
     const form = document.getElementById('article_editor_form');
-    handleSubmit(instance, null);
+
+    form.setAttribute('style', 'background-color: #f1f1f1;');
+    setTimeout(() => {
+      form.setAttribute('style', 'background-color: #ffffff;');
+    }, 900);
   }
+}
+
+function handleOnFocusOut(instance, event) {
+  event.stopImmediatePropagation();
+  event.preventDefault();
+
+  const name = 'content';
+
+  if (instance.state.hasOwnProperty(name)) {
+    const form = document.getElementById('article_editor_form');
+    const editor = form.querySelector('.vergil').firstChild;
+
+    // TODO: save in local
+  }
+}
+
+// called via update by config form
+function notifyCodeOnChange(instance) {
+  const form = document.getElementById('article_editor_form');
+  let code = form.querySelector('#editor_form_code');
+
+  instance.state.code.value = code.value;
 }
 
 /**
@@ -159,7 +197,7 @@ class ArticleEditorForm extends Component {
       }
     , content: {
         errors: []
-      , value: props.content
+      , value: null
       }
     };
   }
@@ -168,27 +206,47 @@ class ArticleEditorForm extends Component {
     return h('form#article_editor_form.form', {
       action: this.props.action || ''
     , method: 'POST'
-    , onSubmit: this.handleSubmit
+    , onSubmit: linkEvent(this, handleOnSubmit)
     }, [
       h('input', {
         type: 'hidden', name: 'csrf_token', value: this.state.csrfToken.value})
     , h('input#editor_form_code', {
-        type: 'hidden', name: 'code', value: this.state.code.value})
+        type: 'hidden'
+      , name: 'code'
+      , value: this.state.code.value
+      , onChange: linkEvent(this, notifyCodeOnChange)
+      })
     , h('input', {type: 'hidden', name: 'context', value: 'editor'})
-    , h('div.row', [
-        h('div.field-16', [
-          h('textarea', {
-            name: 'content'
-          , value: this.state.content.value
-          , placeholder: '# writing here...'
-          , rows: 18
-          , onInput: linkEvent(this, handleChange)
-          , onFocusOut: linkEvent(this, handleFocusOut)
-          })
+    , h('.row', [
+        h('.field-16', [
+          h('.wrapper.editor', [
+            h(Editor, {
+              name: 'content'
+            , config: {
+                className: '.vergil'
+              , content: document.querySelector('#content')
+              , plugins: [
+                  setPlaceholder('Write something here...')
+                ]
+              }
+            , onFocusIn: linkEvent(this, handleOnFocusIn)
+            , onFocusOut: linkEvent(this, handleOnFocusOut)
+            , onInput: linkEvent(this, handleOnInput)
+            })
+          ])
         , buildErrorMessage(this.state.content)
         ])
       ])
-    , h('span.message', this.state.message)
+    , h('.row', [
+        h('.field-16', [
+          h('.wrapper.action', [
+            h('.action-bar', [
+              h('button.flat.button', 'Save')
+            , h('span.message', this.state.message)
+            ])
+          ])
+        ])
+      ])
     ]);
   }
 }
