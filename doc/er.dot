@@ -865,7 +865,7 @@ has_many: tags<br align="left"/>
       <tr>
         <td border="1" align="left">copyright</td>
         <td border="1" align="left">string</td>
-        <td border="1" align="left">not null</td>
+        <td border="1" align="left"></td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
