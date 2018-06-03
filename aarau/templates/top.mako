@@ -29,7 +29,7 @@
         <div class="menu">
           <div class="item container">
             <a class="grouped primary flat button" href="https://about.scrolliris.com/" target="_blank">About</a>
-            <a class="grouped flat button" href="https://help.scrolliris.com/" target="_blank">Support</a>
+            <a class="grouped flat button" href="https://support.scrolliris.com/" target="_blank">Support</a>
           </div>
           <div class="item container">
             % if not req.user:
