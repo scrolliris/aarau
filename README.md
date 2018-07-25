@@ -1,6 +1,6 @@
-# Aarau
+# Scrolliris Console
 
-`/ɑ́ːràu/`
+Code Name: `/ɑ́ːràu/`
 
 [![pipeline status][pipeline]][commit] [![coverage report][coverage]][commit]
 
@@ -20,8 +20,8 @@ The application of [https://scrolliris.com/](https://scrolliris.com/).
 
 ## Repository
 
-[https://gitlab.com/scrolliris/aarau](
-https://gitlab.com/scrolliris/aarau)
+[https://gitlab.com/scrolliris/scrolliris-console](
+https://gitlab.com/scrolliris/scrolliris-console)
 
 
 ## Requirements
@@ -34,7 +34,7 @@ https://gitlab.com/scrolliris/aarau)
 * Datastore (emulator)
 * Node.js `>= 7.10.1` (build)
 * GNU gettext `>= 0.19.8.1` (translation)
-* [Neuchâtel](https://gitlab.com/scrolliris/neuchatel) as git subtree
+* [Scrolliris Console Translation (Neuchâtel)](https://gitlab.com/scrolliris/scrolliris-console-translation) as git subtree
 * Graphviz (document)
 
 
@@ -67,18 +67,18 @@ TODO
 
 #### Neuchâtel
 
-See translation project [Neuchâtel](
-https://gitlab.com/scrolliris/neuchatel).
+See translation project [Scrolliris Console Translation (Neuchâtel)](
+https://gitlab.com/scrolliris/scrolliris-console-translation).
 
 Don't commit directly the changes on above translation project into this repo.
 
 ```zsh
 : setup `locale`
-% git remote add neuchatel https://gitlab.com/scrolliris/neuchatel.git
-% git subtree add --prefix locale neuchatel master
+% git remote add translation https://gitlab.com/scrolliris/scrolliris-console-translation.git
+% git subtree add --prefix locale translation master
 
 : synchronize with updates into specified branch
-% git  pull -s subtree -Xsubtree=locale neuchatel master
+% git  pull -s subtree -Xsubtree=locale translation master
 
 : subtree list
 % git log | grep git-subtree-dir | tr -d ' ' | cut -d ":" -f2 | sort | uniq
@@ -325,7 +325,7 @@ See documents.
 ## Translation
 
 See `./bin/linguine --help` and translation project [repository](
-https://gitlab.com/scrolliris/neuchatel)
+https://gitlab.com/scrolliris/scrolliris-console-translation)
 
 ### Generate new catalog
 
