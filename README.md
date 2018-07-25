@@ -1,6 +1,6 @@
 # Scrolliris Console
 
-Code Name: `/ɑ́ːràu/`
+Code Name: `Aarau /ɑ́ːràu/`
 
 [![pipeline status][pipeline]][commit] [![coverage report][coverage]][commit]
 
@@ -375,7 +375,7 @@ Translations for frontend (json) needs `i18next-conv`.
 This project is distributed as various licenses by parts.
 
 ```txt
-Aarau
+Scrolliris Console
 Copyright (c) 2017-2018 Lupine Software LLC
 ```
 
@@ -435,6 +435,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 See [LICENSE](LICENSE).
 
 
-[pipeline]: https://gitlab.com/scrolliris/aarau/badges/master/pipeline.svg
-[coverage]: https://gitlab.com/scrolliris/aarau/badges/master/coverage.svg
-[commit]: https://gitlab.com/scrolliris/aarau/commits/master
+[pipeline]: https://gitlab.com/scrolliris/scrolliris-console/badges/master/pipeline.svg
+[coverage]: https://gitlab.com/scrolliris/scrolliris-console/badges/master/coverage.svg
+[commit]: https://gitlab.com/scrolliris/scrolliris-console/commits/master
