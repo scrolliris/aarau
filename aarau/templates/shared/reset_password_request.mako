@@ -40,7 +40,7 @@
               ${form.email(class_='', placeholder='Email address')}
             </div>
 
-            ${form.submit(class_='secondary button')}
+            ${form.submit(class_='secondary flat button')}
           % endif
           </form>
           <p class="text"><a class="link" href="${req.route_url('login')}">Log in</a>&nbsp;or&nbsp;<a class="link" href="${req.route_url('signup')}">Sign up</a></p>

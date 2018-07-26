@@ -29,7 +29,7 @@
               <label class="label" for="password">Password</label>
               <input type="password" id="password" name="password" title="Secret password" placeholder="Secret password" autocomplete="off">
             </div>
-            <button class="primary button" type="submit" name="submit" value="1">Log in</button>
+            <button class="primary flat button" type="submit" name="submit" value="1">Log in</button>
           </form>
           <p><a href="${req.route_url('reset_password.request')}">Fogot your password?</a>&nbsp;or new to Scrolliris?&nbsp;<a class="link" href="${req.route_url('signup')}">Sign up</a></p>
         </div>

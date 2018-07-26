@@ -33,7 +33,7 @@
               ${render_error_message(form.new_password_confirmation)}
             </div>
 
-            ${form.submit(class_='secondary button')}
+            ${form.submit(class_='secondary flat button')}
           </form>
           <p class="text"><a class="link" href="${req.route_path('login')}">Log in</a>&nbsp;or Go to&nbsp;<a class="link" href="/">Top</a></p>
         </div>

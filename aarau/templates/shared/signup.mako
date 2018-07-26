@@ -81,7 +81,7 @@
           </div>
 
           <div class="field-13">
-            ${form.submit(class_='ui large primary button', value=__(form.submit.label.text))}
+            ${form.submit(class_='ui large primary flat button', value=__(form.submit.label.text))}
           </div>
         % endif
         </form>
