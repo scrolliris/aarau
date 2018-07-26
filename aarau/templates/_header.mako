@@ -12,7 +12,7 @@
       <a class="item" href="https://about.scrolliris.com/" target="_blank">About</a>
       <a class="item" href="https://log.scrolliris.com/" target="_blank">Changelog</a>
     % else:
-      <a class="item" href="https://support.scrolliris.com/" target="_blank">Help</a>
+      <a class="item" href="https://support.scrolliris.com/" target="_blank">Support</a>
     % endif
 
     <nav class="right menu">
