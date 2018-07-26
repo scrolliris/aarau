@@ -252,7 +252,7 @@ E.g. Google App Engine
 (venv) % ACTION=list make plate
 
 : see delivery script `plate`
-(venv) % ACTION=delivery VERSION=v9 make plate
+(venv) % ACTION=deliver VERSION=v9 make plate
 
 : put plate (delete)
 (venv) % ACTION=clean VERSION=v8 make plate
