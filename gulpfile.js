@@ -10,11 +10,11 @@ var gulp = require('gulp')
   , clean = require('gulp-clean')
   , webpack = require('webpack-stream')
   , named = require('vinyl-named')
-  , run = require('run-sequence')
   ;
 
 var appName = 'aarau';
 var assetsDir = path.resolve(__dirname, appName + '/assets/');
+
 
 // -- [shared tasks]
 
@@ -29,6 +29,7 @@ gulp.task('env', function(done) {
   }
 })
 
+
 // -- [build tasks]
 
 var build = function(files) {
@@ -42,55 +43,63 @@ var build = function(files) {
   .pipe(gulp.dest(path.resolve(__dirname, 'tmp/builds/')));
 }
 
-gulp.task('build:master', ['env'], function() {
-  return build(['master.js']);
-});
+gulp.task('build:master', gulp.series('env', function(done) {
+  build(['master.js']);
+  return done();
+}));
 
-gulp.task('build:vendor', ['env'], function() {
-  return build(['vendor.js']);
-});
+gulp.task('build:vendor', gulp.series('env', function(done) {
+  build(['vendor.js']);
+  return done();
+}));
 
-gulp.task('build:number', ['env'], function() {
-  return build(['number.js']);
-});
+gulp.task('build:number', gulp.series('env', function(done) {
+  build(['number.js']);
+  return done();
+}));
 
-gulp.task('build:author', ['env'], function() {
-  return build(['author.js']);
-});
+gulp.task('build:author', gulp.series('env', function(done) {
+  build(['author.js']);
+  return done();
+}));
 
-gulp.task('build:reader', ['env'], function() {
-  return build(['reader.js']);
-});
+gulp.task('build:reader', gulp.series('env', function(done) {
+  build(['reader.js']);
+  return done();
+}));
 
 // copy
-gulp.task('copy:img', ['env'], function() {
-  return gulp.src(path.resolve(assetsDir, 'img/*'))
-  .pipe(copy('static/', {prefix: 2}));
-})
+gulp.task('copy:img', gulp.series('env', function(done) {
+  gulp.src(path.resolve(assetsDir, 'img/*'))
+    .pipe(copy('static/', {prefix: 2}));
+  return done();
+}));
 
-gulp.task('copy:ico', ['env'], function() {
-  return gulp.src(path.resolve(assetsDir, 'favicon.ico'))
-  .pipe(copy('static/', {prefix: 3}));
-})
+gulp.task('copy:ico', gulp.series('env', function(done) {
+  gulp.src(path.resolve(assetsDir, 'favicon.ico'))
+    .pipe(copy('static/', {prefix: 3}));
+  return done();
+}));
 
-gulp.task('copy:txt', ['env'], function() {
-  return gulp.src(path.resolve(assetsDir, '{robots,humans}.txt'))
-  .pipe(copy('static/', {prefix: 3}));
-})
+gulp.task('copy:txt', gulp.series('env', function(done) {
+  gulp.src(path.resolve(assetsDir, '{robots,humans}.txt'))
+    .pipe(copy('static/', {prefix: 3}));
+  return done();
+}));
 
 // builds all .js into %(appName)/tmp/builds
 // this run webpack each times.
-gulp.task('build', [
+gulp.task('build', gulp.parallel(
   'build:master'
 , 'build:vendor'
 , 'build:number'
 , 'build:author'
 , 'build:reader'
-]);
+));
 
 // builds all scripts at once with license plugin for production mode
 // this run webpack only once.
-gulp.task('build:all', ['env'], function() {
+gulp.task('build:all', gulp.series('env', function() {
   return build([
     'master.js'
   , 'vendor.js'
@@ -98,7 +107,7 @@ gulp.task('build:all', ['env'], function() {
   , 'author.js'
   , 'reader.js'
   ]);
-});
+}));
 
 
 // -- [make tasks]
@@ -133,9 +142,40 @@ gulp.task('build-install:reader', function(done) {
   return run('build:reader', 'distribute', done);
 });
 
+
 // -- [development tasks]
 
-// watch targets
+gulp.task('clean', function() {
+  return gulp.src([
+    'tmp/builds/*'
+  , 'static/*.js'
+  , 'static/*.json'
+  , 'static/*.css'
+  , 'static/*.txt'
+  , 'static/*.csv'
+  , 'static/**/*.{eot,svg,ttf,woff,woff2}'
+  , 'static/*.ico'
+  , 'static/**/*.png'
+  ], {
+    read: false
+  })
+  .pipe(clean());
+});
+
+// copies other static files from assets into %(appName)/tmp/builds
+gulp.task('copy', gulp.series(
+  'copy:img'
+, 'copy:ico'
+, 'copy:txt'
+));
+
+// distribute and copy
+gulp.task('install', gulp.series(
+  'distribute'
+, 'copy'
+));
+
+// watches
 var paths = {
   master: [
     path.join(assetsDir, 'master.js')
@@ -170,53 +210,26 @@ var paths = {
   ]
 };
 
-gulp.task('clean', function() {
-  return gulp.src([
-    'tmp/builds/*'
-  , 'static/*.js'
-  , 'static/*.json'
-  , 'static/*.css'
-  , 'static/*.txt'
-  , 'static/*.csv'
-  , 'static/**/*.{eot,svg,ttf,woff,woff2}'
-  , 'static/*.ico'
-  , 'static/**/*.png'
-  ], {
-    read: false
-  })
-  .pipe(clean());
-});
-
-// copies other static files from assets into %(appName)/tmp/builds
-gulp.task('copy', [
-  'copy:img'
-, 'copy:ico'
-, 'copy:txt'
-]);
-
-// distribute and copy
-gulp.task('install', [
-  'distribute'
-, 'copy'
-]);
-
-// watches
-gulp.task('watch', ['env'], function() {
-  gulp.watch('gulpfile.js', ['default']);
-  gulp.watch(paths.master, ['build-install:master']);
-  gulp.watch(paths.number, ['build-install:number']);
-  gulp.watch(paths.author, ['build-install:author']);
-  gulp.watch(paths.reader, ['build-install:reader']);
-  gulp.watch(paths.img, ['copy']);
-});
+gulp.task('watch', gulp.series('env', function(done) {
+  gulp.watch('gulpfile.js', gulp.series('default'));
+  gulp.watch(paths.master, gulp.series('build-install:master'));
+  gulp.watch(paths.number, gulp.series('build-install:number'));
+  gulp.watch(paths.author, gulp.series('build-install:author'));
+  gulp.watch(paths.reader, gulp.series('build-install:reader'));
+  gulp.watch(paths.img, gulp.series('copy'));
+  return done();
+}));
 
 
 // -- [main tasks]
 
-gulp.task('default', ['env'], function(done) {
+//gulp.hasTask = function(n) { return true; }
+
+gulp.task('default', gulp.series('env', function(done) {
   var nodeEnv = process.env.NODE_ENV || 'production';
   console.log('» gulp:', nodeEnv);
 
   var build = (nodeEnv === 'production') ? 'build:all' : 'build';
-  return run('clean', build, 'install', done);
-});
+  var run = gulp.series('clean', build, 'install');
+  run(done);
+}));
