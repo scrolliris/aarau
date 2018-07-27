@@ -6,7 +6,6 @@ var fs = require('fs')
 
 var gulp = require('gulp')
   , env = require('gulp-env')
-  , copy = require('gulp-copy')
   , clean = require('gulp-clean')
   , webpack = require('webpack-stream')
   , named = require('vinyl-named')
@@ -70,20 +69,20 @@ gulp.task('build:reader', gulp.series('env', function(done) {
 
 // copy
 gulp.task('copy:img', gulp.series('env', function(done) {
-  gulp.src(path.resolve(assetsDir, 'img/*'))
-    .pipe(copy('static/', {prefix: 2}));
+  gulp.src(path.resolve(assetsDir, 'img/*.{png,jpg,gif}'))
+    .pipe(gulp.dest('static/img'));
   return done();
 }));
 
 gulp.task('copy:ico', gulp.series('env', function(done) {
   gulp.src(path.resolve(assetsDir, 'favicon.ico'))
-    .pipe(copy('static/', {prefix: 3}));
+    .pipe(gulp.dest('static/'));
   return done();
 }));
 
 gulp.task('copy:txt', gulp.series('env', function(done) {
   gulp.src(path.resolve(assetsDir, '{robots,humans}.txt'))
-    .pipe(copy('static/', {prefix: 3}));
+    .pipe(gulp.dest('static/'));
   return done();
 }));
 
@@ -121,8 +120,8 @@ gulp.task('distribute', function(done) {
   , 'tmp/builds/**/*.{eot,svg,ttf,woff,woff2}'
   , 'tmp/builds/*.json'
   ])
-  .pipe(named())
-  .pipe(copy('static/', {prefix: 2}));
+    .pipe(named())
+    .pipe(gulp.dest('static/'));
 })
 
 // applies changes of application files to static/app.js
