@@ -18,53 +18,46 @@ var assetsDir = path.resolve(__dirname, appName + '/assets/');
 // -- [shared tasks]
 
 // loads environment vars from .env
-gulp.task('env', function(done) {
+gulp.task('env', function() {
   var dotenv_file = '.env';
   if (fs.existsSync(dotenv_file)) {
     return gulp.src(dotenv_file)
-    .pipe(env({file: dotenv_file, type: '.ini'}));
-  } else {
-    return done();
+      .pipe(env({file: dotenv_file, type: '.ini'}));
   }
 })
 
 
 // -- [build tasks]
 
-var build = function(files) {
+var builder = function(files) {
   // eslint-disable-next-line global-require
   var webpackConfig = require('./webpack.config.js');
   return gulp.src(files.map(function(file) {
     return path.resolve(assetsDir, file)
   }))
-  .pipe(named())
-  .pipe(webpack(webpackConfig))
-  .pipe(gulp.dest(path.resolve(__dirname, 'tmp/builds/')));
+    .pipe(named())
+    .pipe(webpack(webpackConfig))
+    .pipe(gulp.dest(path.resolve(__dirname, 'tmp/builds/')));
 }
 
-gulp.task('build:master', gulp.series('env', function(done) {
-  build(['master.js']);
-  return done();
+gulp.task('build:master', gulp.series('env', function() {
+  return builder(['master.js']);
 }));
 
-gulp.task('build:vendor', gulp.series('env', function(done) {
-  build(['vendor.js']);
-  return done();
+gulp.task('build:vendor', gulp.series('env', function() {
+  return builder(['vendor.js']);
 }));
 
-gulp.task('build:number', gulp.series('env', function(done) {
-  build(['number.js']);
-  return done();
+gulp.task('build:number', gulp.series('env', function() {
+  return builder(['number.js']);
 }));
 
-gulp.task('build:author', gulp.series('env', function(done) {
-  build(['author.js']);
-  return done();
+gulp.task('build:author', gulp.series('env', function() {
+  return builder(['author.js']);
 }));
 
-gulp.task('build:reader', gulp.series('env', function(done) {
-  build(['reader.js']);
-  return done();
+gulp.task('build:reader', gulp.series('env', function() {
+  return builder(['reader.js']);
 }));
 
 // copy
@@ -88,7 +81,7 @@ gulp.task('copy:txt', gulp.series('env', function(done) {
 
 // builds all .js into %(appName)/tmp/builds
 // this run webpack each times.
-gulp.task('build', gulp.parallel(
+gulp.task('build', gulp.series(
   'build:master'
 , 'build:vendor'
 , 'build:number'
@@ -99,7 +92,7 @@ gulp.task('build', gulp.parallel(
 // builds all scripts at once with license plugin for production mode
 // this run webpack only once.
 gulp.task('build:all', gulp.series('env', function() {
-  return build([
+  return builder([
     'master.js'
   , 'vendor.js'
   , 'number.js'
@@ -112,7 +105,7 @@ gulp.task('build:all', gulp.series('env', function() {
 // -- [make tasks]
 
 // places assets files from tmp/builds into static/
-gulp.task('distribute', function(done) {
+gulp.task('distribute', function() {
   return gulp.src([
     'tmp/builds/*.js'
   , 'tmp/builds/*.css'
@@ -126,19 +119,23 @@ gulp.task('distribute', function(done) {
 
 // applies changes of application files to static/app.js
 gulp.task('build-install:master', function(done) {
-  return run('build:master', 'distribute', done);
+  var run = gulp.series('build:master', 'distribute');
+  return run(done);
 });
 
 gulp.task('build-install:number', function(done) {
-  return run('build:number', 'distribute', done);
+  var run = gulp.series('build:number', 'distribute');
+  return run(done);
 });
 
 gulp.task('build-install:author', function(done) {
-  return run('build:author', 'distribute', done);
+  var run = gulp.series('build:author', 'distribute');
+  return run(done);
 });
 
 gulp.task('build-install:reader', function(done) {
-  return run('build:reader', 'distribute', done);
+  var run = gulp.series('build:reader', 'distribute');
+  return run(done);
 });
 
 
@@ -157,8 +154,7 @@ gulp.task('clean', function() {
   , 'static/**/*.png'
   ], {
     read: false
-  })
-  .pipe(clean());
+  }).pipe(clean());
 });
 
 // copies other static files from assets into %(appName)/tmp/builds
@@ -209,14 +205,13 @@ var paths = {
   ]
 };
 
-gulp.task('watch', gulp.series('env', function(done) {
+gulp.task('watch', gulp.series('env', function() {
   gulp.watch('gulpfile.js', gulp.series('default'));
   gulp.watch(paths.master, gulp.series('build-install:master'));
   gulp.watch(paths.number, gulp.series('build-install:number'));
   gulp.watch(paths.author, gulp.series('build-install:author'));
   gulp.watch(paths.reader, gulp.series('build-install:reader'));
   gulp.watch(paths.img, gulp.series('copy'));
-  return done();
 }));
 
 
