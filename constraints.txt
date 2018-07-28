@@ -11,7 +11,7 @@ Paste==2.0.3
 PasteScript==2.0.2
 peewee==3.6.3
 peewee-migrate==1.0.0
-psycopg2==2.7.5
+--no-binary :all: psycopg2==2.7.5
 pylibmc==1.5.2
 python-dotenv==0.6.0
 pyramid==1.9.1
