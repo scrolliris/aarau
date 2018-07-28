@@ -63,6 +63,7 @@ compile:
     - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
       gettext
     - node --version
+    - npm cache clean --force
     - npm install --global npm@6.2.0
     - npm --version
     - npm install --global i18next-conv
@@ -88,6 +89,7 @@ build:
     NODE_ENV: production
   before_script:
     - node --version
+    - npm cache clean --force
     - npm install --global npm@6.2.0
     - npm --version
     - npm install --global gulp-cli
