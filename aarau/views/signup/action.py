@@ -48,7 +48,7 @@ def signup_activate(request):
     try:
         activator = request.find_service(iface=IActivator, name='account')
         activator.assign(token=request.matchdict.get('token'))
-    except:
+    except Exception:
         raise HTTPNotFound
     else:
         _ = request.translate

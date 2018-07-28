@@ -56,7 +56,7 @@ def reset_password(request):
         user = User.select().where(
             User.activation_state == 'active',
             User.reset_password_token == token).get()
-    except:
+    except User.DoesNotExist:
         raise HTTPNotFound
 
     _ = request.translate
