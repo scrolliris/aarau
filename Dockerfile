@@ -5,13 +5,15 @@ RUN virtualenv /env -p python3.5
 ENV VIRTUAL_ENV /env
 ENV PATH /env/bin:$PATH
 
+# peewee
+ENV NO_SQLITE 1
+
 RUN apt-get update &&\
  apt-get install -y --no-install-recommends apt-utils &&\
  apt-get install -y --no-install-recommends gcc zlib1g zlib1g-dev &&\
  apt-get install -y --no-install-recommends gettext &&\
  apt-get install -y --no-install-recommends\
  libsasl2-dev libsasl2-modules sasl2-bin libmemcached11 libmemcached-dev &&\
- apt-get install -y --no-install-recommends libsqlite3-dev &&\
  apt-get install -y --no-install-recommends libpq-dev
 
 ADD requirements.txt /app/requirements.txt
