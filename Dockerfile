@@ -11,6 +11,7 @@ RUN apt-get update &&\
  apt-get install -y --no-install-recommends gettext &&\
  apt-get install -y --no-install-recommends\
  libsasl2-dev libsasl2-modules sasl2-bin libmemcached11 libmemcached-dev &&\
+ apt-get install -y --no-install-recommends libsqlite3-dev &&\
  apt-get install -y --no-install-recommends libpq-dev
 
 ADD requirements.txt /app/requirements.txt
