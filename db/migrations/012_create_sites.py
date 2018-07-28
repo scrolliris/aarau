@@ -15,7 +15,7 @@ from aarau.models.base import CardinalBase, EnumField
 
 class Project(CardinalBase):
     class Meta:
-        db_table = 'projects'
+        table_name = 'projects'
 
 
 class Site(CardinalBase):
@@ -23,8 +23,8 @@ class Site(CardinalBase):
 
     id = PrimaryKeyField()
     project = ForeignKeyField(
-        rel_model=Project, db_column='project_id', to_field='id',
-        related_name='projects', null=False, index=True)
+        model=Project, column_name='project_id', field='id',
+        backref='projects', null=False, index=True)
     hosting_id = IntegerField(null=True)
     hosting_type = CharField(max_length=32, null=True)
     domain = CharField(max_length=32, null=False)
@@ -41,7 +41,7 @@ class Site(CardinalBase):
     deleted_at = DateTimeField(null=True)
 
     class Meta:
-        db_table = 'sites'
+        table_name = 'sites'
 
 
 def migrate(migrator, _database, **_kwargs):

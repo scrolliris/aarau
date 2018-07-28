@@ -1,6 +1,6 @@
 from peewee import (
-    CharField,
     PrimaryKeyField,
+    CharField,
 )
 
 from aarau.models.base import (
@@ -18,7 +18,7 @@ class Application(CardinalBase, TimestampMixin, DeletedAtMixin):
     description = CharField(max_length=255, null=True)
 
     class Meta:
-        db_table = 'applications'
+        table_name = 'applications'
 
     def __repr__(self):
         return '<Application id:{} name:{}>'.format(self.id, self.name)

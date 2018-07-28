@@ -19,7 +19,7 @@ class License(CardinalBase, TimestampMixin):
     url = CharField(max_length=128, null=False)
 
     class Meta:
-        db_table = 'licenses'
+        table_name = 'licenses'
 
     def __repr__(self):
         return '<License id:{}, identifier:{}>'.format(

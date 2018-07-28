@@ -57,7 +57,7 @@ def test_settings_email_with_empty_params(users, dummy_request):
     res = settings_email(dummy_request)
 
     assert isinstance(res['form'], NewEmailForm)
-    assert user.emails == res['user_emails']
+    assert user.emails.count() == res['user_emails'].count()
     assert_user_email_forms(res['user_emails'], res['email_forms'])
     assert not dummy_request.session.peek_flash()
 
@@ -67,16 +67,19 @@ def test_settings_email_with_missing_csrf(users, dummy_request):
     from aarau.views.settings.form import NewEmailForm
 
     user = users['oswald']
+    new_email = 'new.oswald@example.org'
     dummy_request.user = user
     dummy_request.POST = MultiDict({
         # 'csrf_token': '',
-        'new_email': 'new.oswald@example.org',
+        'new_email': new_email,
         'submit': '1',
     })
     res = settings_email(dummy_request)
 
     assert isinstance(res['form'], NewEmailForm)
-    assert user.emails == res['user_emails']
+    assert new_email not in [e.email for e in user.emails]
+    assert new_email not in [e.email for e in res['user_emails']]
+    assert user.emails.count() == res['user_emails'].count()
     assert_user_email_forms(res['user_emails'], res['email_forms'])
     assert {'csrf_token': ['Invalid CSRF']} == res['form'].errors
     assert dummy_request.session.peek_flash('failure')
@@ -87,16 +90,19 @@ def test_settings_email_with_invalid_csrf(users, dummy_request):
     from aarau.views.settings.form import NewEmailForm
 
     user = users['oswald']
+    new_email = 'new.oswald@example.org'
     dummy_request.user = user
     dummy_request.POST = MultiDict({
         'csrf_token': 'invalid',
-        'new_email': 'new.oswald@example.org',
+        'new_email': new_email,
         'submit': '1',
     })
     res = settings_email(dummy_request)
 
     assert isinstance(res['form'], NewEmailForm)
-    assert user.emails == res['user_emails']
+    assert new_email not in [e.email for e in user.emails]
+    assert new_email not in [e.email for e in res['user_emails']]
+    assert user.emails.count() == res['user_emails'].count()
     assert_user_email_forms(res['user_emails'], res['email_forms'])
     assert {'csrf_token': ['Invalid CSRF']} == res['form'].errors
     assert dummy_request.session.peek_flash('failure')

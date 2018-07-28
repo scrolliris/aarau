@@ -4,8 +4,8 @@ from peewee import (
     CharField,
     DateTimeField,
     ForeignKeyField,
-    TextField,
     PrimaryKeyField,
+    TextField,
 )
 from playhouse.signals import pre_save
 
@@ -33,8 +33,8 @@ class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
     path = CharField(max_length=255, null=False)
 
     publication = ForeignKeyField(
-        rel_model=Publication, db_column='publication_id', to_field='id',
-        related_name='articles', null=False)
+        model=Publication, column_name='publication_id', field='id',
+        backref='articles', null=False)
     code = CharField(max_length=128, null=False)
     title = CharField(max_length=255, null=True)
     scope = EnumField(choices=scopes, null=False, default='public')
@@ -44,27 +44,28 @@ class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
     content_updated_at = DateTimeField(null=True)
 
     license = ForeignKeyField(
-        rel_model=License, db_column='license_id', to_field='id',
-        related_name='articles', null=True)
+        model=License, column_name='license_id', field='id',
+        backref='articles', null=True)
     copyright = CharField(max_length=64, null=False)
     progress_state = EnumField(
         choices=progress_states, null=False, default='draft')
     published_at = DateTimeField(null=True)
 
+    users = None
+
     class Meta:
-        db_table = 'articles'
+        table_name = 'articles'
 
     def __init__(self, *args, **kwargs):
-        from playhouse.fields import ManyToManyField
+        from peewee import ManyToManyField
         # pylint: disable=cyclic-import
         from .contribution import Contribution
         from .user import User
         # pylint: enable=cyclic-import
 
-        field = ManyToManyField(
-            rel_model=User, related_name='users',
-            through_model=Contribution)
-        field.add_to_class(self.__class__, 'users')
+        users = ManyToManyField(
+            model=User, backref='articles', through_model=Contribution)
+        self._meta.add_field('users', users)
 
         super().__init__(*args, **kwargs)
 

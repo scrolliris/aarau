@@ -13,24 +13,24 @@ from aarau.models.base import CardinalBase
 
 class Classification(CardinalBase):
     class Meta:
-        db_table = 'classifications'
+        table_name = 'classifications'
 
 
 class License(CardinalBase):
     class Meta:
-        db_table = 'licenses'
+        table_name = 'licenses'
 
 
 class Publication(CardinalBase):
     id = PrimaryKeyField()
     classification = ForeignKeyField(
-        rel_model=Classification, db_column='classification_id', to_field='id',
-        related_name='publications', null=False, index=True)
+        model=Classification, column_name='classification_id', field='id',
+        backref='publications', null=False, index=True)
     name = CharField(max_length=128, null=False)
     description = CharField(max_length=255, null=True)
     license = ForeignKeyField(
-        rel_model=License, db_column='license_id', to_field='id',
-        related_name='publications', null=True, index=True)
+        model=License, column_name='license_id', field='id',
+        backref='publications', null=True, index=True)
     copyright = CharField(max_length=64, null=False)
 
     created_at = DateTimeField(null=False, default=datetime.utcnow)
@@ -39,7 +39,7 @@ class Publication(CardinalBase):
     deleted_at = DateTimeField(null=True)
 
     class Meta:
-        db_table = 'publications'
+        table_name = 'publications'
 
 
 def migrate(migrator, _database, **_kwargs):

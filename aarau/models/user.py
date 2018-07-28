@@ -36,7 +36,7 @@ class User(CardinalBase, TokenizerMixin, TimestampMixin):
         null=True, default=None)
 
     class Meta:
-        db_table = 'users'
+        table_name = 'users'
 
     @classmethod
     def encrypt_password(cls, pw):
@@ -44,7 +44,7 @@ class User(CardinalBase, TokenizerMixin, TimestampMixin):
         return pwhash.decode('utf8')
 
     def __init__(self, *args, **kwargs):
-        from playhouse.fields import ManyToManyField
+        from peewee import ManyToManyField
         # pylint: disable=cyclic-import
         from .article import Article
         from .contribution import Contribution
@@ -53,16 +53,14 @@ class User(CardinalBase, TokenizerMixin, TimestampMixin):
         # pylint: enable=cyclic-import
 
         # collaborator
-        p_field = ManyToManyField(
-            rel_model=Project, related_name='projects',
-            through_model=Membership)
-        p_field.add_to_class(self.__class__, 'projects')
+        projects = ManyToManyField(
+            model=Project, backref='users', through_model=Membership)
+        self._meta.add_field('projects', projects)
 
         # contributor
-        a_field = ManyToManyField(
-            rel_model=Article, related_name='articles',
-            through_model=Contribution)
-        a_field.add_to_class(self.__class__, 'articles')
+        articles = ManyToManyField(
+            Article, backref='users', through_model=Contribution)
+        self._meta.add_field('articles', articles)
 
         super().__init__(*args, **kwargs)
 

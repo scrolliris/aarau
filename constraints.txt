@@ -46,7 +46,7 @@ astroid==1.6.0
 colorlog==2.7.0
 
 # testing
-mixier==5.5.8
+mixier==6.0.1
 pytest==3.1.3
 pytest-cov==2.5.1
 pytest-mock==1.6.2

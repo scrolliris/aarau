@@ -33,7 +33,7 @@ def test_primary_owner(projects, plans, users):
     # default role
     assert 'member' == membership.role
 
-    with pytest.raises(user.__class__.DoesNotExist):
+    with pytest.raises(Membership.DoesNotExist):
         # pylint: disable=pointless-statement
         project.primary_owner
 

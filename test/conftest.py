@@ -8,6 +8,8 @@ from pyramid.request import Request
 from pyramid.router import Router
 from webtest.app import TestApp
 
+from .data import import_data
+
 # NOTE:
 # The request variable in py.test is special context of testing.
 # See http://doc.pytest.org/en/latest/fixture.html#request-context
@@ -124,11 +126,9 @@ def module_helper(settings, db):
     """A helper function for module scope."""
     import sys
 
-    from .data import import_data  # pylint: disable=import-error
-
     models = sys.modules['aarau.models']
     # pylint: disable=protected-access
-    tables = [m.db_table for m in
+    tables = [m.table_name for m in
               [getattr(models, k)._meta for k in models.__all__]
               if m.database != db['analysis']]
 
@@ -150,7 +150,7 @@ def module_helper(settings, db):
 
     truncate_tables(tables, cascade=True)
 
-    with db.cardinal.execution_context(with_transaction=True):
+    with db.cardinal:
         import_data(settings)
 
     yield
@@ -164,7 +164,7 @@ def module_helper(settings, db):
 @pytest.yield_fixture(autouse=True, scope='function')
 def function_helper(db):
     """A helper function for function scope."""
-    with db.cardinal.execution_context(with_transaction=True):
+    with db.cardinal:
         yield
 
         if db.cardinal.is_closed():

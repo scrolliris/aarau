@@ -2,10 +2,9 @@ from pyramid.decorator import reify
 from peewee import (
     BooleanField,
     CharField,
-    IntegerField,
     ForeignKeyField,
+    IntegerField,
     PrimaryKeyField,
-    DeferredRelation,
 )
 
 from aarau.models.base import (
@@ -16,10 +15,9 @@ from aarau.models.base import (
     TimestampMixin,
 )
 
+from aarau.models.project import Project
 from aarau.models.application import Application
 from aarau.models.publication import Publication
-
-DeferredProject = DeferredRelation()  # pylint: disable=invalid-name
 
 
 # pylint: disable=too-many-ancestors
@@ -35,9 +33,6 @@ class Site(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
     id = PrimaryKeyField()
     slug = CharField(max_length=255, null=True)
 
-    project = ForeignKeyField(
-        rel_model=DeferredProject, db_column='project_id', to_field='id',
-        related_name='sites', null=False, index=True)
     instance_id = IntegerField(null=True)
     instance_type = CharField(max_length=32, null=True)
     domain = CharField(max_length=32, null=True)
@@ -48,8 +43,12 @@ class Site(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
     write_key = CharField(max_length=128, null=False)
     is_pinned = BooleanField(default=False)
 
+    project = ForeignKeyField(
+        model=Project, column_name='project_id', field='id',
+        backref='sites', null=False, index=True)
+
     class Meta:
-        db_table = 'sites'
+        table_name = 'sites'
 
     def __repr__(self):
         return '<Site id:{} project_id:{} domain:{} slug:{}>'.format(
