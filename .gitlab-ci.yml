@@ -54,7 +54,7 @@ lint:
 
 compile:
   stage: compile
-  image: node:8.9.0
+  image: node:8.11.3
   variables:
     APT_CACHE_DIR: apt-cache
     NODE_ENV: production
@@ -82,7 +82,7 @@ compile:
 
 build:
   stage: build
-  image: node:8.9.0
+  image: node:8.11.3
   variables:
     NODE_ENV: production
   before_script:
