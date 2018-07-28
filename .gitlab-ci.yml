@@ -54,7 +54,7 @@ lint:
 
 compile:
   stage: compile
-  image: node:8.9.0
+  image: node:8.11.3
   variables:
     APT_CACHE_DIR: apt-cache
     NODE_ENV: production
@@ -63,7 +63,10 @@ compile:
     - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
       gettext
     - node --version
+    #- npm cache clean --force
+    - npm install --global npm@6.2.0
     - npm --version
+    - npm install --only=dev
     - npm install --global i18next-conv
   script:
     - make catalog
@@ -82,13 +85,17 @@ compile:
 
 build:
   stage: build
-  image: node:8.9.0
+  image: node:8.11.3
   variables:
     NODE_ENV: production
   before_script:
     - node --version
+    - npm install --global npm@6.2.0
     - npm --version
+    #- npm cache clean --force
     - npm install --global gulp-cli
+    - gulp --version
+    - npm install --only=dev
     - npm install --ignore-scripts
   script:
     - make build

@@ -18,12 +18,13 @@ var assetsDir = path.resolve(__dirname, appName + '/assets/');
 // -- [shared tasks]
 
 // loads environment vars from .env
-gulp.task('env', function() {
+gulp.task('env', function(done) {
   var dotenv_file = '.env';
   if (fs.existsSync(dotenv_file)) {
-    return gulp.src(dotenv_file)
+    gulp.src(dotenv_file)
       .pipe(env({file: dotenv_file, type: '.ini'}));
   }
+  return done();
 })
 
 
