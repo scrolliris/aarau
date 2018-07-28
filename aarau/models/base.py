@@ -76,6 +76,7 @@ class CardinalBase(Model):
 
     class Meta:
         database = db.cardinal
+        legacy_table_names = False
 
     @classmethod
     def create_table(cls, safe=True, **options):
@@ -104,10 +105,14 @@ class AnalysisBase(Model):
 
     class Meta:
         database = db.analysis
+        legacy_table_names = False
 
 
 class TimestampMixin(Model):
     """Mixin for timestamp fields."""
+
+    class Meta:
+        legacy_table_names = False
 
     created_at = DateTimeField(null=False, default=datetime.utcnow)
     updated_at = DateTimeField(null=False, default=datetime.utcnow)
@@ -124,6 +129,9 @@ class DeletedAtMixin(Model):
     """Mixin adding a deleted_at field."""
 
     deleted_at = DateTimeField(null=True)
+
+    class Meta:
+        legacy_table_names = False
 
     def delete_instance(self, *args, **kwargs):
         # TODO: Nullify columns :'(
