@@ -27,7 +27,7 @@ class User(CardinalBase):
     updated_at = DateTimeField(null=False, default=datetime.utcnow)
 
     class Meta:
-        db_table = 'users'
+        table_name = 'users'
 
 
 def migrate(migrator, _database, **_kwargs):

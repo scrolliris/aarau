@@ -1,7 +1,7 @@
 from peewee import (
+    PrimaryKeyField,
     CharField,
     ForeignKeyField,
-    PrimaryKeyField,
 )
 
 from aarau.models.base import (
@@ -13,7 +13,6 @@ from aarau.models.base import (
 )
 
 from aarau.models.plan import Plan
-from aarau.models.site import Site
 from aarau.models.application import Application
 from aarau.models.publication import Publication
 
@@ -27,8 +26,8 @@ class Project(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
     id = PrimaryKeyField()
     access_key_id = CharField(max_length=128, null=False)
     plan = ForeignKeyField(
-        rel_model=Plan, db_column='plan_id', to_field='id',
-        related_name='publications', null=False)
+        model=Plan, column_name='plan_id', field='id',
+        backref='publications', null=False)
     subscription_id = CharField(max_length=64, null=True)
     namespace = CharField(max_length=32, null=False)
     name = CharField(max_length=128, null=False)
@@ -37,18 +36,17 @@ class Project(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
         choices=billing_states, null=False, default='none')
 
     class Meta:
-        db_table = 'projects'
+        table_name = 'projects'
 
     def __init__(self, *args, **kwargs):
-        from playhouse.fields import ManyToManyField
+        from peewee import ManyToManyField
         # avoid circular dependencies
         from .membership import Membership
         from .user import User
 
-        field = ManyToManyField(
-            rel_model=User, related_name='users',
-            through_model=Membership)
-        field.add_to_class(self.__class__, 'users')
+        users = ManyToManyField(
+            model=User, backref='projects', through_model=Membership)
+        self._meta.add_field('users', users)
 
         super().__init__(*args, **kwargs)
 
@@ -66,6 +64,7 @@ class Project(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
 
     @property
     def applications(self):
+        from .site import Site
         # pylint: disable=no-member
         return Site.select().join(Application, on=(
             (Site.instance_type == 'Application') &
@@ -74,6 +73,7 @@ class Project(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
 
     @property
     def publications(self):
+        from .site import Site
         # pylint: disable=no-member
         return Site.select().join(Publication, on=(
             (Site.instance_type == 'Publication') &
@@ -82,9 +82,21 @@ class Project(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
 
     @property
     def primary_owner(self):
-        """Returns user as primary owner of this project."""
+        """Returns user as primary owner of this project.
+
+        This may raise MembeshipDoesNotExist Exception.
+        """
         from .membership import Membership
         from .user import User
 
-        return self.users.select(User, Membership).where(
-            Membership.role == 'primary_owner').get()
+        # pylint: disable=no-member
+        m = (Membership
+             .select(Membership, self.__class__, User)
+             .join(User)
+             .switch(Membership)
+             .join(self.__class__)
+             .where(
+                 (Membership.role == 'primary_owner') &
+                 (Membership.project_id == self.id)
+             ).get())
+        return m.user

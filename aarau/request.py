@@ -83,10 +83,12 @@ class CustomRequest(Request):  # pylint: disable=too-many-ancestors
     @classmethod
     def close_db(cls, req):
         """Closes database connections if it's not closed."""
-        if not req.db.cardinal.is_closed():
+        if not req.db.cardinal.in_transaction() and \
+           not req.db.cardinal.is_closed():
             req.db.cardinal.close()
 
-        if not req.db.analysis.is_closed():
+        if not req.db.analysis.in_transaction() and \
+           not req.db.analysis.is_closed():
             req.db.analysis.close()
 
     @property

@@ -25,8 +25,8 @@ class UserEmail(CardinalBase, TokenizerMixin, TimestampMixin):
 
     id = PrimaryKeyField()
     user = ForeignKeyField(
-        rel_model=User, db_column='user_id', to_field='id',
-        related_name='emails', null=False)
+        model=User, column_name='user_id', field='id',
+        backref='emails', null=False)
     email = CharField(max_length=64, null=False, unique=True)
     type = EnumField(
         choices=types, null=False, default='normal')
@@ -75,7 +75,7 @@ class UserEmail(CardinalBase, TokenizerMixin, TimestampMixin):
             return self.save()
 
     class Meta:
-        db_table = 'user_emails'
+        table_name = 'user_emails'
 
     def __repr__(self):
         return '<UserEmail id:{}, user_id:{}, email:{}, activation_state:{}>' \

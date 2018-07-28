@@ -17,7 +17,7 @@ def _db(db_kind):
 
     yield db
 
-    if not db.is_closed():
+    if not db.in_transaction() and not db.is_closed():
         db.close()
 
 

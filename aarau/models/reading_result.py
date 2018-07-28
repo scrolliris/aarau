@@ -33,7 +33,7 @@ class ReadingResult(AnalysisBase):
     updated_at = DateTimeField(null=False, default=datetime.utcnow)
 
     class Meta:
-        db_table = 'reading_results'
+        table_name = 'reading_results'
 
     def __repr__(self):
         return '<ReadingResult id:{} element_id:{} code:{} path:{}>'.format(

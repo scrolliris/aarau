@@ -2,8 +2,6 @@ from urllib.parse import urlparse, parse_qs
 
 from playhouse.pool import PooledPostgresqlDatabase
 
-PooledPostgresqlDatabase.register_fields({'enum': 'enum'})
-
 
 class DB(dict):
     """Database connections."""
@@ -15,8 +13,11 @@ class DB(dict):
 
 # pylint: disable=invalid-name
 db = DB({  # proxies
-    'cardinal': PooledPostgresqlDatabase(None, threadlocals=True),
-    'analysis': PooledPostgresqlDatabase(None, threadlocals=True)
+    'cardinal': PooledPostgresqlDatabase(None, field_types={
+        'e_user_activation_state': 'enum'
+    }),
+    'analysis': PooledPostgresqlDatabase(None, field_types={
+        'e_user_activation_state': 'enum'})
 })
 # pylint: enable=invalid-name
 
@@ -32,13 +33,11 @@ from .page import Page
 from .plan import Plan
 from .project import Project
 from .publication import Publication
-from .site import Site, DeferredProject
+from .site import Site
 from .user import User
 from .user_email import UserEmail
 from .reading_result import ReadingResult
 # pylint: enable=wrong-import-position
-
-DeferredProject.set_model(Project)
 
 __all__ = (
     'Project', 'Membership', 'Plan',
@@ -51,10 +50,10 @@ __all__ = (
 )
 
 
-def init_db(settings, db_kind):
+def init_db(settings, kind):
     """Initializes database connection."""
-    key_prefix = 'database.{}.'.format(db_kind)
-    url = urlparse(settings[key_prefix + 'url'])
+    prefix = 'database.{}.'.format(kind)
+    url = urlparse(settings[prefix + 'url'])
     host = url.hostname
     if not host and not url.port:
         # check `host` query for connection via unix socket
@@ -63,17 +62,18 @@ def init_db(settings, db_kind):
             host = q['host'][0]
 
     # http://docs.peewee-orm.com/en/latest/peewee/playhouse.html#connect
-    db[db_kind].init(
-        url.path[1:],
-        user=url.username,
-        password=url.password,
-        host=host,
-        port=url.port,
-        client_encoding=(settings[key_prefix + 'client_encoding'] or 'utf8'),
-        max_connections=(settings[key_prefix + 'max_connections'] or 20),
-        stale_timeout=(settings[key_prefix + 'stale_timeout'] or 300)
-    )
-    return db[db_kind]
+    if not db[kind] or db[kind].is_closed():
+        db[kind].init(
+            url.path[1:],
+            user=url.username,
+            password=url.password,
+            host=host,
+            port=url.port,
+            client_encoding=(settings[prefix + 'client_encoding'] or 'utf8'),
+            max_connections=(settings[prefix + 'max_connections'] or 20),
+            stale_timeout=(settings[prefix + 'stale_timeout'] or 300)
+        )
+    return db[kind]
 
 
 def includeme(config):

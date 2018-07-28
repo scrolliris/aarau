@@ -20,15 +20,15 @@ class Membership(CardinalBase, TimestampMixin):
 
     id = PrimaryKeyField()
     user = ForeignKeyField(
-        rel_model=User, db_column='user_id', to_field='id',
-        related_name='memberships', null=False)
+        model=User, column_name='user_id', field='id',
+        backref='memberships', null=False)
     project = ForeignKeyField(
-        rel_model=Project, db_column='project_id', to_field='id',
-        related_name='memberships', null=True)
+        model=Project, column_name='project_id', field='id',
+        backref='memberships', null=True)
     role = EnumField(choices=roles, null=False, default='member')
 
     class Meta:
-        db_table = 'memberships'
+        table_name = 'memberships'
 
     def __repr__(self):
         return (

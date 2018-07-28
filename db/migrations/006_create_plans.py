@@ -23,7 +23,7 @@ class Plan(CardinalBase):
     updated_at = DateTimeField(null=True, default=datetime.utcnow)
 
     class Meta:
-        db_table = 'plans'
+        table_name = 'plans'
 
 
 def migrate(migrator, _database, **_kwargs):

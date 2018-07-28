@@ -13,7 +13,7 @@ from aarau.models.base import CardinalBase, EnumField
 
 class Plan(CardinalBase):
     class Meta:
-        db_table = 'plans'
+        table_name = 'plans'
 
 
 class Project(CardinalBase):
@@ -23,8 +23,8 @@ class Project(CardinalBase):
     access_key_id = CharField(
         max_length=128, null=False, unique=True, index=True)
     plan = ForeignKeyField(
-        rel_model=Plan, db_column='plan_id', to_field='id',
-        related_name='projects', null=False, index=True)
+        model=Plan, column_name='plan_id', field='id',
+        backref='projects', null=False, index=True)
     subscription_id = CharField(max_length=64, null=True, index=True)
     namespace = CharField(max_length=32, null=False)
     name = CharField(max_length=128, null=False)
@@ -37,7 +37,7 @@ class Project(CardinalBase):
     deleted_at = DateTimeField(null=True)
 
     class Meta:
-        db_table = 'projects'
+        table_name = 'projects'
 
 
 def migrate(migrator, _database, **_kwargs):

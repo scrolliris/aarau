@@ -25,14 +25,14 @@ class Page(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
     path = CharField(max_length=255, null=False)
 
     application = ForeignKeyField(
-        rel_model=Application, db_column='application_id', to_field='id',
-        related_name='pages', null=False)
+        model=Application, column_name='application_id', field='id',
+        backref='pages', null=False)
     code = CharField(max_length=128, null=True)
     title = CharField(max_length=128, null=True)
     scope = EnumField(choices=scopes, null=False, default='public')
 
     class Meta:
-        db_table = 'pages'
+        table_name = 'pages'
 
     def __repr__(self):
         return '<Page id:{} application_id:{} title:{}>'.format(

@@ -20,15 +20,15 @@ class Contribution(CardinalBase, TimestampMixin):
 
     id = PrimaryKeyField()
     user = ForeignKeyField(
-        rel_model=User, db_column='user_id', to_field='id',
-        related_name='contributions', null=False)
+        model=User, column_name='user_id', field='id',
+        backref='contributions', null=False)
     article = ForeignKeyField(
-        rel_model=Article, db_column='article_id', to_field='id',
-        related_name='contributions', null=False)
+        model=Article, column_name='article_id', field='id',
+        backref='contributions', null=False)
     role = EnumField(choices=roles, null=False, default='primary_author')
 
     class Meta:
-        db_table = 'contributions'
+        table_name = 'contributions'
 
     def __repr__(self):
         return (

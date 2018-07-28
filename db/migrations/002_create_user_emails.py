@@ -13,7 +13,7 @@ from aarau.models.base import CardinalBase, EnumField
 
 class User(CardinalBase):
     class Meta:
-        db_table = 'users'
+        table_name = 'users'
 
 
 class UserEmail(CardinalBase):
@@ -22,8 +22,8 @@ class UserEmail(CardinalBase):
 
     id = PrimaryKeyField()
     user = ForeignKeyField(
-        rel_model=User, db_column='user_id', to_field='id',
-        related_name='emails', null=False, index=True)
+        model=User, column_name='user_id', field='id',
+        backref='emails', null=False, index=True)
     email = CharField(max_length=64, null=False, unique=True, index=True)
     type = EnumField(
         choices=types, null=False, index=True, default='normal')
@@ -39,7 +39,7 @@ class UserEmail(CardinalBase):
     updated_at = DateTimeField(null=False, default=datetime.utcnow)
 
     class Meta:
-        db_table = 'user_emails'
+        table_name = 'user_emails'
 
 
 def migrate(migrator, _database, **_kwargs):

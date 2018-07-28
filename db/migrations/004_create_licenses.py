@@ -20,7 +20,7 @@ class License(CardinalBase):
     updated_at = DateTimeField(null=False, default=datetime.utcnow)
 
     class Meta:
-        db_table = 'licenses'
+        table_name = 'licenses'
 
 
 def migrate(migrator, _database, **_kwargs):

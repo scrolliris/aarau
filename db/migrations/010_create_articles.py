@@ -13,12 +13,12 @@ from aarau.models.base import CardinalBase, EnumField
 
 class Publication(CardinalBase):
     class Meta:
-        db_table = 'publications'
+        table_name = 'publications'
 
 
 class License(CardinalBase):
     class Meta:
-        db_table = 'licenses'
+        table_name = 'licenses'
 
 
 class Article(CardinalBase):
@@ -29,14 +29,14 @@ class Article(CardinalBase):
 
     id = PrimaryKeyField()
     publication = ForeignKeyField(
-        rel_model=Publication, db_column='publication_id', to_field='id',
-        related_name='articles', null=False, index=True)
+        model=Publication, column_name='publication_id', field='id',
+        backref='articles', null=False, index=True)
     code = CharField(max_length=128, null=False, unique=True, index=True)
     slug = CharField(max_length=255, null=False, unique=True, index=True)
     title = CharField(max_length=255, null=False)
     license = ForeignKeyField(
-        rel_model=License, db_column='license_id', to_field='id',
-        related_name='articles', null=True, index=True)
+        model=License, column_name='license_id', field='id',
+        backref='articles', null=True, index=True)
     copyright = CharField(max_length=64, null=False)
     scope = EnumField(
         choices=scopes,
@@ -51,7 +51,7 @@ class Article(CardinalBase):
     deleted_at = DateTimeField(null=True)
 
     class Meta:
-        db_table = 'articles'
+        table_name = 'articles'
 
 
 def migrate(migrator, _database, **_kwargs):

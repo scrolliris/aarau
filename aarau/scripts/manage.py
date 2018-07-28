@@ -39,26 +39,26 @@ class DbCli(object):
         self.migrate_dir = os.path.join(os.getcwd(), 'db', 'migrations')
 
     @contextmanager
-    def _raw_db(self, db_kind):
+    def _raw_db(self, kind):
         from copy import copy
         from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
-        with self._db(db_kind) as db:
+        with self._db(kind) as db:
             datname = copy(db.database)
             db.database = 'template1'
-            conn = db.get_conn()
+            conn = db.connection()
             conn.set_isolation_level(
                 ISOLATION_LEVEL_AUTOCOMMIT
             )
             yield (db, datname)
 
     @contextmanager
-    def _db(self, db_kind):
+    def _db(self, kind):
         from aarau.models import db, init_db
 
-        db[db_kind] = init_db(self.settings, db_kind)
+        db[kind] = init_db(self.settings, kind)
 
-        yield db[db_kind]
+        yield db[kind]
 
     def help(self):  # pylint: disable=no-self-use
         print('usage: db {help|init|seed|drop} [var=value]')
@@ -128,7 +128,7 @@ class DbCli(object):
 
                 for model in models:
                     # pylint: disable=no-member,protected-access
-                    table = model._meta.db_table
+                    table = model._meta.table_name
                     seed_yml = os.path.join(os.getcwd(), 'db', 'seeds',
                                             '{}.yml'.format(table))
                     if os.path.isfile(seed_yml):
@@ -168,9 +168,9 @@ def main(argv=None):
     shared_actions = ('help', 'init', 'drop')
     err_msg = 'Run with valid action {0!s} :\'('
     if command == 'db':
-        db_actions = shared_actions + ('migrate', 'rollback', 'seed')
-        if action not in db_actions:
-            raise Exception(err_msg.format('|'.join(db_actions)))
+        actions = shared_actions + ('migrate', 'rollback', 'seed')
+        if action not in actions:
+            raise Exception(err_msg.format('|'.join(actions)))
 
     settings = get_appsettings(config_uri, options=options)
     settings = resolve_env_vars(dict(settings))

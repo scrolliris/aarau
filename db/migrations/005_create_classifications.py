@@ -14,8 +14,8 @@ from aarau.models.base import CardinalBase
 class Classification(CardinalBase):
     id = PrimaryKeyField()
     parent = ForeignKeyField(
-        rel_model='self', db_column='parent_id', to_field='id',
-        related_name='children', null=True, index=True)
+        model='self', column_name='parent_id', field='id',
+        backref='children', null=True, index=True)
     notation = CharField(max_length=64, null=False)
     name = CharField(max_length=128, null=False)
 
@@ -23,7 +23,7 @@ class Classification(CardinalBase):
     updated_at = DateTimeField(null=False, default=datetime.utcnow)
 
     class Meta:
-        db_table = 'classifications'
+        table_name = 'classifications'
 
 
 def migrate(migrator, _database, **_kwargs):

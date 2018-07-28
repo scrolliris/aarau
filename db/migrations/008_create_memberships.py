@@ -12,12 +12,12 @@ from aarau.models.base import CardinalBase, EnumField
 
 class User(CardinalBase):
     class Meta:
-        db_table = 'users'
+        table_name = 'users'
 
 
 class Project(CardinalBase):
     class Meta:
-        db_table = 'projects'
+        table_name = 'projects'
 
 
 class Membership(CardinalBase):
@@ -25,18 +25,18 @@ class Membership(CardinalBase):
 
     id = PrimaryKeyField()
     user = ForeignKeyField(
-        rel_model=User, db_column='user_id', to_field='id',
-        related_name='memberships', null=False, index=True)
+        model=User, column_name='user_id', field='id',
+        backref='memberships', null=False, index=True)
     project = ForeignKeyField(
-        rel_model=Project, db_column='project_id', to_field='id',
-        related_name='memberships', null=True, index=True)
+        model=Project, column_name='project_id', field='id',
+        backref='memberships', null=True, index=True)
     role = EnumField(choices=roles, null=False, default='member')
 
     created_at = DateTimeField(null=False, default=datetime.utcnow)
     updated_at = DateTimeField(null=False, default=datetime.utcnow)
 
     class Meta:
-        db_table = 'memberships'
+        table_name = 'memberships'
 
 
 def migrate(migrator, _database, **_kwargs):

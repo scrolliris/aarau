@@ -283,7 +283,7 @@ See also `.gitlab-ci.yml`.
 
 : run a test case
 (venv) % ENV=test py.test -c config/testing.ini \
-  aarau/test/unit/views/settings_test.py \
+  test/unit/views/settings_test.py \
   -k test_view_settings_account -v
 ```
 

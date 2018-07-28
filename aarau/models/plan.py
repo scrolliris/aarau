@@ -20,7 +20,7 @@ class Plan(CardinalBase, TimestampMixin):
     description = CharField(max_length=64, null=False)
 
     class Meta:
-        db_table = 'plans'
+        table_name = 'plans'
 
     def __repr__(self):
         return '<Plan id:{}, name:{}>'.format(self.id, self.name)

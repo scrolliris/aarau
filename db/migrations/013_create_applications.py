@@ -21,7 +21,7 @@ class Application(CardinalBase):
     deleted_at = DateTimeField(null=True)
 
     class Meta:
-        db_table = 'applications'
+        table_name = 'applications'
 
 
 def migrate(migrator, _database, **_kwargs):

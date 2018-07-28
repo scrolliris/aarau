@@ -7,7 +7,6 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import BadSignature, SignatureExpired
 from peewee import Field, SQL, DateTimeField
 from playhouse.signals import Model, pre_save, pre_delete
-from playhouse.read_slave import ReadSlaveModel
 from psycopg2.extras import NumericRange
 from pyramid.decorator import reify
 
@@ -17,55 +16,49 @@ from aarau.models import db
 class EnumField(Field):
     """Custom field as Enum."""
 
-    db_field = 'enum'
+    def __ddl_type_name(self):
+        # e.g. e_user_activation_state
+        model_name = re.sub(
+            '([A-Z])', '_\\1', self.model.__name__).lower()
+        return 'e{}_{}'.format(model_name, self.name)
 
     # https://www.postgresql.org/docs/9.5/static/datatype-enum.html
-    def pre_field_create(self, _model):
+    def pre_field_create(self, model):
         """A hook before field creation."""
-        field = self.__ddl__column_name__()
+        field_type = self.__ddl_type_name()
 
-        _db = self.get_database()
-        q = 'DROP TYPE IF EXISTS {0:s} CASCADE;'.format(field)
+        _db = model._meta.database  # pylint: disable=protected-access
+        q = 'DROP TYPE IF EXISTS {0:s} CASCADE;'.format(field_type)
         _db.execute_sql(q)
 
         tail = ', '.join(["'{}'"] * len(self.choices)).format(
             *self.choices)
-        q = 'CREATE TYPE {0:s} AS ENUM ({1:s});'.format(field, tail)
+        q = 'CREATE TYPE {0:s} AS ENUM ({1:s});'.format(field_type, tail)
         _db.execute_sql(q)
 
     def post_field_create(self, _model):
         """A hook after field creation."""
-        self.db_field = self.__ddl__column_name__()
+        pass
 
     # https://github.com/coleifer/peewee/blob/\
     #     dc0ac68f3a596e27e117698393b4ab64d2f92617/peewee.py#L888
-    def coerce(self, value):
+    #
+    # from peewee 3, coerce has been renamed to adapt.
+    def adapt(self, value):
         """Validates as valid choice & sanitize as string."""
         if value not in self.choices:
             raise Exception("Invalid Enum value `%s`" % value)
         return str(value)
 
-    def get_column_type(self):
-        return 'enum'
-
-    def __ddl__column_name__(self):
-        # e.g. e_user_activation_state
-        model_name = re.sub(
-            '([A-Z])', '_\\1', self.model_class.__name__).lower()
-        return 'e{}_{}'.format(model_name, self.name)
-
-    def __ddl_column__(self, _ctype):
-        return SQL(self.__ddl__column_name__())
+    def ddl_datatype(self, ctx):
+        return SQL(self.__ddl_type_name())
 
 
 class NumericRangeField(Field):
     # pylint: disable=no-self-use
     """Range type field definition for numeric value."""
 
-    db_field = 'numrange'
-
-    def get_column_type(self):
-        return 'numrange'
+    field_type = 'numrange'
 
     def db_value(self, value):
         """Returns value for database."""
@@ -85,20 +78,14 @@ class CardinalBase(Model):
         database = db.cardinal
 
     @classmethod
-    def get_by_id(cls, model_id):
-        """Fetches objects via its id attribute."""
-        # pylint: disable=no-member
-        return cls.get(cls.id == model_id)
-
-    @classmethod
-    def create_table(cls, fail_silently=False):
+    def create_table(cls, safe=True, **options):
         """Creates database table for class itself."""
         # pylint: disable=no-member
-        for field in cls._meta.declared_fields:
+        for field in cls._meta.sorted_fields:
             if hasattr(field, 'pre_field_create'):
                 field.pre_field_create(cls)
-        super().create_table(fail_silently)
-        for field in cls._meta.declared_fields:
+        super().create_table(safe, **options)
+        for field in cls._meta.sorted_fields:
             if hasattr(field, 'post_field_create'):
                 field.post_field_create(cls)
 
@@ -112,13 +99,11 @@ class CardinalBase(Model):
         return newer_self
 
 
-class AnalysisBase(ReadSlaveModel):
-    """Analysis base model class. (read only)."""
+class AnalysisBase(Model):
+    """Analysis base model class."""
 
     class Meta:
         database = db.analysis
-        # TODO: Use actual slave
-        read_slaves = [db.analysis]
 
 
 class TimestampMixin(Model):
@@ -129,7 +114,7 @@ class TimestampMixin(Model):
 
 
 @pre_save(sender=TimestampMixin)
-def before_save_timestamp_mixin(model_class, instance, created):
+def before_save_timestamp_mixin(_model_class, instance, **options):
     # pylint: disable=unused-argument
     """A hook before save for model mixed TimestampMixin."""
     instance.updated_at = datetime.utcnow()
@@ -146,7 +131,7 @@ class DeletedAtMixin(Model):
 
 
 @pre_delete(sender=DeletedAtMixin)
-def before_delete_deleted_at_mixin(model_class, instance):
+def before_delete_deleted_at_mixin(_model_class, instance):
     # pylint: disable=unused-argument
     """A hook before delete for model mixed DeletedAtMixin."""
     instance.deleted_at = datetime.utcnow()
