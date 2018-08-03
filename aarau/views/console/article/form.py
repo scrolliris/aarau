@@ -30,7 +30,7 @@ def path_duplication_check(form, field):
         raise ValidationError('That path is already in use.')
 
 
-def path_reserved_words_check(_form, field):
+def path_availability_check(_form, field):
     """Check user input with reserved words loaded from yml file."""
     a = AssetResolver('aarau')
     resolver = a.resolve(RESERVED_WORDS_FILE)
@@ -96,7 +96,7 @@ class ArticleConfigForm(ArticleBaseMixin, SecureForm):
         v.Regexp(PATH_PATTERN),
         v.Length(min=6, max=64),
         path_duplication_check,
-        path_reserved_words_check,
+        path_availability_check,
     ])
 
     context = HiddenField([

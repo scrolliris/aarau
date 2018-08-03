@@ -7,7 +7,7 @@ from aarau.views.console.article.form import (
     build_article_config_form,
     build_article_editor_form,
     path_duplication_check,
-    path_reserved_words_check,
+    path_availability_check,
     ArticleConfigForm,
     ArticleEditorForm,
 )
@@ -54,7 +54,7 @@ def test_path_duplication_check(mocker, users, dummy_request):
         path_duplication_check(form, field)
 
 
-def test_path_reserved_words_check(mocker, dummy_request):
+def test_path_availability_check(mocker, dummy_request):
     article = Article(path='scrolliris')
 
     dummy_request.params = dummy_request.POST = MultiDict()
@@ -62,7 +62,7 @@ def test_path_reserved_words_check(mocker, dummy_request):
 
     with pytest.raises(ValidationError):
         field = mocker.Mock('field', data=article.path)
-        path_reserved_words_check(form, field)
+        path_availability_check(form, field)
 
 
 @pytest.mark.parametrize('path', [

@@ -37,7 +37,7 @@ def namespace_duplication_check(form, field):
         raise ValidationError('Namespace is already taken.')
 
 
-def namespace_reserved_words_check(_form, field):
+def namespace_availability_check(_form, field):
     """Check user input with reserved words loaded from yml file."""
     a = AssetResolver('aarau')
     resolver = a.resolve(RESERVED_WORDS_FILE)
@@ -64,7 +64,7 @@ class ProjectFormBaseMixin(object):
         v.Regexp(NAMESPACE_PATTERN),
         v.Length(min=6, max=32),
         namespace_duplication_check,
-        namespace_reserved_words_check,
+        namespace_availability_check,
     ])
     description = TextAreaField('Description', [
         v.Optional(),
@@ -91,9 +91,14 @@ class NewProjectForm(ProjectFormBaseMixin, SecureForm):
 class EditProjectForm(ProjectFormBaseMixin, SecureForm):
     plan = SelectField('Plan', [
         v.Required(),
-    ], choices=Plan.as_choices)
+    ], choices=())  # delay
 
     submit = SubmitField('Update')
+
+    def __init__(self, *args, **kwargs):
+        self.__class__.plan.choices = Plan.as_choices
+
+        super().__init__(*args, **kwargs)
 
 
 def build_new_project_form(req):
@@ -104,3 +109,18 @@ def build_edit_project_form(req, project):
     form = build_form(EditProjectForm, req, project)
     form.current_project = project
     return form
+
+
+def build_project_form(req, project=None):
+    from aarau.models import Project
+
+    try:
+        if not isinstance(project, Project):
+            raise AttributeError
+
+        if project.is_dirty():
+            return build_new_project_form(req)
+
+        return build_edit_project_form(req, project)
+    except AttributeError:
+        return None
