@@ -4,12 +4,16 @@ import pytest
 from webob.multidict import MultiDict
 from wtforms import ValidationError
 
-from aarau.models import UserEmail
+from aarau.models import (
+    User,
+    UserEmail,
+)
 from aarau.views.signup.form import (
     build_signup_form,
     SignupForm,
     validate_username_uniqueness,
     validate_email_uniqueness,
+    username_availability_check,
 )
 
 
@@ -106,3 +110,14 @@ def test_validate_email_uniqueness_with_new_email(mocker, dummy_request):
         with pytest.raises(ValidationError):
             field = mocker.Mock('field', data='oswald.new@example.org')
             validate_email_uniqueness(form, field)
+
+
+def test_username_availability_check(mocker, dummy_request):
+    user = User(username='scrolliris')
+
+    dummy_request.params = dummy_request.POST = MultiDict()
+    form = build_signup_form(dummy_request)
+
+    with pytest.raises(ValidationError):
+        field = mocker.Mock('field', data=user.username)
+        username_availability_check(form, field)
