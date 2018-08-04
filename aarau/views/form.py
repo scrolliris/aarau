@@ -12,7 +12,6 @@ RESERVED_WORDS_FILE = 'aarau:../config/reserved_words.yml'
 
 def availability_checker(key):
     """Check user input with reserved words loaded from yml file."""
-
     keys = key.split('.')
     if len(keys) != 2:
         raise RuntimeError

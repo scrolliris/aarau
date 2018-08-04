@@ -8,13 +8,20 @@ from wtforms import (
 from wtforms import validators as v, ValidationError
 from wtforms.form import Form
 
-from aarau.views.form import SecureForm, build_form
-
+from aarau.views.form import (
+    SecureForm,
+    build_form,
+    availability_checker,
+)
 
 DOMAIN_PATTERN = r'\A([A-z0-9]\.|[A-z0-9][A-z0-9-]{0,61}' \
     r'[A-z0-9]\.){1,3}[A-z]{2,6}\Z'
-
 SLUG_PATTERN = r'\A[A-z]([A-Za-z0-9-]{5,31})\Z'
+
+
+def slug_availability_check(form, field):
+    checker = availability_checker('site.slug')
+    return checker(form, field)
 
 
 class SiteInstanceMixin(object):
@@ -22,6 +29,7 @@ class SiteInstanceMixin(object):
         v.Required(),
         v.Regexp(SLUG_PATTERN),
         v.Length(min=6, max=32),
+        slug_availability_check,
     ])
 
     def __init__(self, *args, **kwargs):
