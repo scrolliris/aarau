@@ -1,8 +1,5 @@
 from datetime import datetime
-import itertools
-import yaml
 
-from pyramid.path import AssetResolver
 from wtforms import (
     StringField,
     PasswordField,
@@ -17,9 +14,8 @@ from aarau.views.form import (
     _,
     SecureForm,
     build_form,
+    availability_checker,
 )
-
-RESERVED_WORDS_FILE = 'aarau:../config/reserved_words.yml'
 
 
 def validate_username_uniqueness(_form, field):
@@ -42,20 +38,9 @@ def validate_email_uniqueness(_form, field):
         raise ValidationError('The email address is already registered')
 
 
-def username_availability_check(_form, field):
-    """Check user input with reserved words loaded from yml file."""
-    resolver = AssetResolver('aarau').resolve(RESERVED_WORDS_FILE)
-    try:
-        with open(resolver.abspath(), 'r') as f:
-            data = yaml.safe_load(f).get('reserved_words', {})
-            reserved_words = set(itertools.chain(
-                data.get('common', []),
-                data.get('user', {}).get('username', []),
-            ))
-            if field.data in reserved_words:
-                raise ValidationError('Username is unavailable.')
-    except FileNotFoundError:
-        pass
+def username_availability_check(form, field):
+    checker = availability_checker('user.username')
+    return checker(form, field)
 
 
 class SignupForm(SecureForm):

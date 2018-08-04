@@ -1,7 +1,3 @@
-import itertools
-import yaml
-
-from pyramid.path import AssetResolver
 from wtforms import (
     SelectField,
     StringField,
@@ -15,11 +11,10 @@ from aarau.models import Plan
 from aarau.views.form import (
     SecureForm,
     build_form,
+    availability_checker,
 )
 
-
 NAMESPACE_PATTERN = r'\A[a-z][a-z0-9\-]+[a-z0-9]\Z'
-RESERVED_WORDS_FILE = 'aarau:../config/reserved_words.yml'
 
 
 def namespace_duplication_check(form, field):
@@ -37,21 +32,9 @@ def namespace_duplication_check(form, field):
         raise ValidationError('Namespace is already taken.')
 
 
-def namespace_availability_check(_form, field):
-    """Check user input with reserved words loaded from yml file."""
-    a = AssetResolver('aarau')
-    resolver = a.resolve(RESERVED_WORDS_FILE)
-    try:
-        with open(resolver.abspath(), 'r') as f:
-            data = yaml.safe_load(f).get('reserved_words', {})
-            reserved_words = set(itertools.chain(
-                data.get('common', []),
-                data.get('project', {}).get('namespace', []),
-            ))
-            if field.data in reserved_words:
-                raise ValidationError('Namespace is unavailable.')
-    except FileNotFoundError:
-        pass
+def namespace_availability_check(form, field):
+    checker = availability_checker('project.namespace')
+    return checker(form, field)
 
 
 class ProjectFormBaseMixin(object):

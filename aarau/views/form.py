@@ -1,6 +1,40 @@
+import itertools
+import yaml
+
 from pyramid.i18n import TranslationStringFactory
+from pyramid.path import AssetResolver
+from wtforms import ValidationError
 from wtforms.form import Form
 from wtforms.csrf.core import CSRF as _CSRF
+
+RESERVED_WORDS_FILE = 'aarau:../config/reserved_words.yml'
+
+
+def availability_checker(key):
+    """Check user input with reserved words loaded from yml file."""
+
+    keys = key.split('.')
+    if len(keys) != 2:
+        raise RuntimeError
+
+    def _check_availability(_form, field):
+        a = AssetResolver('aarau')
+        resolver = a.resolve(RESERVED_WORDS_FILE)
+        try:
+            with open(resolver.abspath(), 'r') as f:
+                data = yaml.safe_load(f).get('reserved_words', {})
+                reserved_words = set(itertools.chain(
+                    data.get('common', []),
+                    data.get(keys[0], {}).get(keys[1], []),
+                ))
+                # TODO: translate
+                if field.data in reserved_words:
+                    raise ValidationError(
+                        '{} is unavailable.'.format(keys[1].title()))
+        except FileNotFoundError:
+            pass
+
+    return _check_availability
 
 
 _ = TranslationStringFactory('form')

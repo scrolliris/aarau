@@ -1,7 +1,3 @@
-import itertools
-import yaml
-
-from pyramid.path import AssetResolver
 from wtforms import (
     HiddenField,
     StringField,
@@ -10,11 +6,13 @@ from wtforms import (
 )
 from wtforms import validators as v, ValidationError
 
-from aarau.views.form import SecureForm, build_form
-
+from aarau.views.form import (
+    SecureForm,
+    build_form,
+    availability_checker,
+)
 
 PATH_PATTERN = r'\A[a-z0-9]{1}[a-z0-9-]+\Z'
-RESERVED_WORDS_FILE = 'aarau:../config/reserved_words.yml'
 
 
 def path_duplication_check(form, field):
@@ -30,21 +28,9 @@ def path_duplication_check(form, field):
         raise ValidationError('That path is already in use.')
 
 
-def path_availability_check(_form, field):
-    """Check user input with reserved words loaded from yml file."""
-    a = AssetResolver('aarau')
-    resolver = a.resolve(RESERVED_WORDS_FILE)
-    try:
-        with open(resolver.abspath(), 'r') as f:
-            data = yaml.safe_load(f).get('reserved_words', {})
-            reserved_words = set(itertools.chain(
-                data.get('common', []),
-                data.get('article', {}).get('path', []),
-            ))
-            if field.data in reserved_words:
-                raise ValidationError('That path is unavailable.')
-    except FileNotFoundError:
-        pass
+def path_availability_check(form, field):
+    checker = availability_checker('article.path')
+    return checker(form, field)
 
 
 class ArticleBaseMixin(object):
