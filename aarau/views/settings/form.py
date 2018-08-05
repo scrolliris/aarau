@@ -17,12 +17,12 @@ from aarau.views.form import (
 class ChangePasswordFormBase(SecureForm):
     current_password = PasswordField('Current password', [
         v.Required(),
-        v.Length(min=6, max=32),
+        v.Length(min=8, max=32),
     ])
     new_password = PasswordField('New password', [
         v.Required(),
         v.Regexp(PASSWORD_PATTERN),
-        v.Length(min=6, max=32),
+        v.Length(min=8, max=32),
     ])
     new_password_confirmation = PasswordField('Password confirmation', [
         v.Required(),
