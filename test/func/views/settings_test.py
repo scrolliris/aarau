@@ -388,7 +388,7 @@ def test_settings_password_with_validation_errors(
         res.charset = None
         assert ('Password could not been changed'
                 '') in res.html.select_one('.failure.message p')
-        assert 'Field must be between 6 and 32 characters long.' in \
+        assert 'Field must be between 8 and 32 characters long.' in \
             res.html.form.text
         assert 'Password' in res.html.select_one('.header > h6')
 

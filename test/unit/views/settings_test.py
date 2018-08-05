@@ -443,7 +443,7 @@ def test_settings_password_with_invalid_new_password(
 
     assert isinstance(res['form'], ChangePasswordForm)
     assert {'new_password': [
-        'Field must be between 6 and 32 characters long.',
+        'Field must be between 8 and 32 characters long.',
     ]} == res['form'].errors
     assert dummy_request.session.peek_flash('failure')
 
