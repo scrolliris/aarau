@@ -87,7 +87,7 @@ def test_project_new_namespace_validation_error_with_invalid_pattern(
         'csrf_token': dummy_request.session.get_csrf_token(),
         'name': '',
         # invalid namespace
-        'namespace': '-start-with-hyphen',
+        'namespace': '-with-hyphen',
         'description': '',
         'submit': 'Create',
     }

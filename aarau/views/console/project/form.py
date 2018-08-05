@@ -45,7 +45,7 @@ class ProjectFormBaseMixin(object):
     namespace = StringField('Namespace', [
         v.Required(),
         v.Regexp(NAMESPACE_PATTERN),
-        v.Length(min=6, max=32),
+        v.Length(min=4, max=16),
         namespace_duplication_check,
         namespace_availability_check,
     ])

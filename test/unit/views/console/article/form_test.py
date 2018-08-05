@@ -72,7 +72,7 @@ def test_path_availability_check(mocker, dummy_request):
     # too long
     'super-looooooooooooooooooooooooooooooooooooooooooooooooooong-path',
 ])
-def test_validate_path_with_invalid_inputs(path, dummy_request):
+def test_path_validations_with_invalid_inputs(path, dummy_request):
     article = Article(path=path)
 
     dummy_request.params = dummy_request.POST = MultiDict({
@@ -92,7 +92,7 @@ def test_validate_path_with_invalid_inputs(path, dummy_request):
     '001-article-title',
     'super-loooooooooooooooooooooooooooooooooooooooooooooooooong-path',
 ])
-def test_validate_path_with_valid_inputs(path, dummy_request):
+def test_path_validations_with_valid_inputs(path, dummy_request):
     article = Article(path=path)
 
     dummy_request.params = dummy_request.POST = MultiDict({
