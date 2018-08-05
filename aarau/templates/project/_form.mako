@@ -23,7 +23,7 @@
     <div class="required field-16${' error' if f.namespace.errors else ''}">
       <label class="label" for="namespace">Namespace</label>
       <p class="description">It must be unique in our system.
-        You can use <code>a-z0-9</code> and <code>-</code> in 6-32 characters length. Start with alphabet.</p>
+        You can use <code>a-z0-9</code> and <code>-</code> in 4-16 characters length. Start with alphabet.</p>
       ${f.namespace(class_='', placeholder='sample-project')}
       ${render_error_message(f.namespace)}
     </div>
