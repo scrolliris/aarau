@@ -35,7 +35,7 @@ class Site(CardinalBase, TimestampMixin, DeletedAtMixin, KeyMixin):
 
     instance_id = IntegerField(null=True)
     instance_type = CharField(max_length=32, null=True)
-    domain = CharField(max_length=32, null=True)
+    domain = CharField(max_length=64, null=True)
     calculation_state = EnumField(
         choices=calculation_states,
         null=False, default='off')

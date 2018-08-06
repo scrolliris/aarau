@@ -6,17 +6,17 @@ def migrate(migrator, _database, **_kwargs):
 
     # `drop_index` from peewee_migrate (1.0.0) + peewee v3 will fail.
     # migrator.drop_index('articles', 'slug')
-    sql = "DROP INDEX IF EXISTS articles_slug;"
-    migrator.sql(sql)
+    q = "DROP INDEX IF EXISTS articles_slug"
+    migrator.sql(q)
     migrator.add_index('articles', 'path', unique=False)
 
 
 def rollback(migrator, _database, **_kwargs):
     # migrator.drop_index('articles', 'path')
-    sql = "DROP INDEX IF EXISTS articles_path;"
-    migrator.sql(sql)
+    q = "DROP INDEX IF EXISTS articles_path"
+    migrator.sql(q)
 
     # It does like below: (can't run it, because `slug` already doesn't exist)
     # migrator.add_index('articles', 'slug', unique=True)
-    sql = "CREATE UNIQUE INDEX articles_slug on articles (path);"
-    migrator.sql(sql)
+    q = "CREATE UNIQUE INDEX articles_slug on articles (path)"
+    migrator.sql(q)

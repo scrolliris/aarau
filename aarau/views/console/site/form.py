@@ -62,7 +62,7 @@ class SiteForm(object):
         domain = StringField('Domain', [
             v.Required(),
             v.Regexp(DOMAIN_PATTERN),
-            v.Length(min=3, max=32),
+            v.Length(min=3, max=64),
         ])
 
     class PublicationBaseMixin(SiteInstanceMixin):
