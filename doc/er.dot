@@ -402,7 +402,7 @@ has_many: transactions<br align="left"/>
       <tr>
         <td border="1" align="left">description</td>
         <td border="1" align="left">string</td>
-        <td border="1" align="left">not null</td>
+        <td border="1" align="left"></td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
@@ -1160,7 +1160,7 @@ has_many: articles<br align="left"/>
       <tr>
         <td border="1" align="left">url</td>
         <td border="1" align="left">string</td>
-        <td border="1" align="left">not null</td>
+        <td border="1" align="left"></td>
         <td border="1" align="left"></td>
       </tr>
       <tr>
