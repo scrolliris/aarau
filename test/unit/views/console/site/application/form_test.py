@@ -25,7 +25,8 @@ def test_build_new_application_site_form(dummy_request):
     'a.b.c',  # too short
     'comma,com',
     'not.-valid.com',  # invalid format
-    'super.looooooooooooooooooooong.com',  # too long
+    # too long
+    'super.loooooooooooooooooooooooooooooooooooooooooooooooooooong.com',
 ])
 def test_validate_domain_format_with_invalid_domain(domain, dummy_request):
     from aarau.views.console.site.form import build_new_application_site_form
