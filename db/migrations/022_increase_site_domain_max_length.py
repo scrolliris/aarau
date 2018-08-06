@@ -5,7 +5,7 @@ def migrate(migrator, _database, **_kwargs):
     # The `change_columns` won't work with peewee_migrate 1.0.0 (peewee v3)
     #
     # * https://github.com/klen/peewee_migrate/issues/87
-    # * https://github.com/klen/peewee_migrate/pull/74/commits/5549329ea45417368897bfcf5e0364799974f45e
+    # * https://github.com/klen/peewee_migrate/pull/74
     #
     # ```
     # migrator.change_columns(
@@ -23,7 +23,7 @@ def rollback(migrator, _database, **_kwargs):
     # The `change_columns` won't work with peewee_migrate 1.0.0 (peewee v3)
     #
     # * https://github.com/klen/peewee_migrate/issues/87
-    # * https://github.com/klen/peewee_migrate/pull/74/commits/5549329ea45417368897bfcf5e0364799974f45e
+    # * https://github.com/klen/peewee_migrate/pull/74
     #
     # ```
     # migrator.change_columns(
