@@ -17,7 +17,7 @@ class Plan(CardinalBase, TimestampMixin):
     payment_type_id = SmallIntegerField(null=False)
     name = CharField(max_length=32, null=False)
     price = FloatField(null=False, default=0.00)
-    description = CharField(max_length=64, null=False)
+    description = CharField(max_length=64, null=True)
 
     class Meta:
         table_name = 'plans'
