@@ -16,7 +16,7 @@ class License(CardinalBase, TimestampMixin):
     id = PrimaryKeyField()
     identifier = CharField(max_length=32, null=False, unique=True)
     fullname = CharField(max_length=64, null=False)
-    url = CharField(max_length=128, null=False)
+    url = CharField(max_length=128, null=True)
 
     class Meta:
         table_name = 'licenses'
