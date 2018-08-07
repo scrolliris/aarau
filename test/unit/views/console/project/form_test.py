@@ -35,6 +35,10 @@ def test_namespace_availability_check(mocker, dummy_request):
 @pytest.mark.parametrize('namespace', [
     'abc',  # too short
     '-abcde',  # invalid char position `-`
+    'abcde-',
+    'abc--de',  # sequencial hyphens
+    'abc--',
+    '--abc',
     '001-project',  # non-alphabet at start
     'scrolliris',  # reserved
     'loooong-namespace',  # too long
@@ -53,6 +57,7 @@ def test_namespace_validations_with_invalid_inputs(namespace, dummy_request):
 
 @pytest.mark.parametrize('namespace', [
     'abcdef',
+    'a-b-c-d-e',
     'lorem-ipsum',
     'project-01',
     'one-project-two',

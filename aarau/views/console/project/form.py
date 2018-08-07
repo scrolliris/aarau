@@ -15,6 +15,7 @@ from aarau.views.form import (
 )
 
 NAMESPACE_PATTERN = r'\A[a-z][a-z0-9\-]+[a-z0-9]\Z'
+NAMESPACE_PATTERN_INVALID = r'\A((?!--).)*\Z'
 
 
 def namespace_duplication_check(form, field):
@@ -45,6 +46,7 @@ class ProjectFormBaseMixin(object):
     namespace = StringField('Namespace', [
         v.Required(),
         v.Regexp(NAMESPACE_PATTERN),
+        v.regexp(NAMESPACE_PATTERN_INVALID),
         v.Length(min=4, max=16),
         namespace_duplication_check,
         namespace_availability_check,
