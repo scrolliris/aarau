@@ -2,6 +2,11 @@ import pytest
 
 from webob.multidict import MultiDict
 
+from aarau.views.console.site.form import (
+    build_new_application_site_form,
+    NewApplicationSiteForm,
+)
+
 
 @pytest.fixture(autouse=True)
 def setup(request, config):  # pylint: disable=unused-argument
@@ -9,11 +14,6 @@ def setup(request, config):  # pylint: disable=unused-argument
 
 
 def test_build_new_application_site_form(dummy_request):
-    from aarau.views.console.site.form import (
-        build_new_application_site_form,
-        NewApplicationSiteForm,
-    )
-
     dummy_request.params = dummy_request.POST = MultiDict()
     form = build_new_application_site_form(dummy_request)
     assert isinstance(form, NewApplicationSiteForm)
@@ -29,8 +29,6 @@ def test_build_new_application_site_form(dummy_request):
     'super.loooooooooooooooooooooooooooooooooooooooooooooooooooong.com',
 ])
 def test_validate_domain_format_with_invalid_domain(domain, dummy_request):
-    from aarau.views.console.site.form import build_new_application_site_form
-
     dummy_request.params = dummy_request.POST = MultiDict({
         'csrf_token': dummy_request.session.get_csrf_token(),
         'domain': domain,
@@ -49,8 +47,6 @@ def test_validate_domain_format_with_invalid_domain(domain, dummy_request):
     'goo.gl',
 ])
 def test_validate_domain_format_with_valid_domain(domain, dummy_request):
-    from aarau.views.console.site.form import build_new_application_site_form
-
     dummy_request.params = dummy_request.POST = MultiDict({
         'csrf_token': dummy_request.session.get_csrf_token(),
         'domain': domain,
@@ -64,19 +60,42 @@ def test_validate_domain_format_with_valid_domain(domain, dummy_request):
 
 @pytest.mark.parametrize('slug', [
     'help',  # too short
-    'foo-bar-baz-qux-quux' * 3,  # too long
-    'under_score',  # invalid format
-    '0-foo-bar',  # invalid format
+    '-abcde',  # invalid char
+    'under_score',
+    'abc--de',  # sequencial hyphens
+    'abc--',
+    '--abc',
+    '001-slug',  # non-alphabet at start
+    'scrolliris',  # reserved
+    'loooooooooooooooooooooooooooooong',  # too long
 ])
 def test_validate_slug_format_with_invalid_slug(slug, dummy_request):
-    from aarau.views.console.site.form import build_new_application_site_form
-
     dummy_request.params = dummy_request.POST = MultiDict({
         'csrf_token': dummy_request.session.get_csrf_token(),
-        'domain': 'example.com',
         'slug': slug,
-        'application-name': 'Test Site',
+        'domain': 'example.org',
+        'application-name': 'New site',
     })
     form = build_new_application_site_form(dummy_request)
     assert not form.validate()
     assert form.slug.errors
+
+
+@pytest.mark.parametrize('slug', [
+    'abcdef',
+    'a-b-c-d-e',
+    'lorem-ipsum',
+    'slug-01',
+    'one-slug-two',
+    'looooooooooooooooooooooooooooong',
+])
+def test_validate_slug_format_with_valid_slug(slug, dummy_request):
+    dummy_request.params = dummy_request.POST = MultiDict({
+        'csrf_token': dummy_request.session.get_csrf_token(),
+        'slug': slug,
+        'domain': 'example.org',
+        'application-name': 'New site',
+    })
+    form = build_new_application_site_form(dummy_request)
+    assert form.validate()
+    assert not form.slug.errors
