@@ -13,6 +13,7 @@ from aarau.views.form import (
 )
 
 PATH_PATTERN = r'\A[a-z0-9]{1}[a-z0-9-]+\Z'
+PATH_PATTERN_INVALID = r'\A((?!--).)*\Z'
 
 
 def path_duplication_check(form, field):
@@ -80,6 +81,7 @@ class ArticleConfigForm(ArticleBaseMixin, SecureForm):
     path = StringField('Path', [
         v.Required(),
         v.Regexp(PATH_PATTERN),
+        v.Regexp(PATH_PATTERN_INVALID),
         v.Length(min=6, max=64),
         path_duplication_check,
         path_availability_check,

@@ -66,8 +66,12 @@ def test_path_availability_check(mocker, dummy_request):
 
 @pytest.mark.parametrize('path', [
     'abc',  # too short
-    'aBcdef',  # invalid char `B`
-    '-abcde',  # invalid char position `-`
+    'aBcdef',  # invalid char
+    '-abcde',
+    'under_score',
+    'abc--de',  # sequencial hyphens
+    'abc--',
+    '--abc',
     'scrolliris',  # reserved
     # too long
     'super-looooooooooooooooooooooooooooooooooooooooooooooooooong-path',
@@ -87,6 +91,7 @@ def test_path_validations_with_invalid_inputs(path, dummy_request):
 
 @pytest.mark.parametrize('path', [
     'abcdef',
+    'a-b-c-d-e',
     'lorem-ipsum',
     'chapter-01',
     '001-article-title',
