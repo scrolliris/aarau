@@ -58,8 +58,9 @@ class CSRF(_CSRF):
             raise ValueError('Invalid CSRF')
 
 
-USERNAME_PATTERN = r'\A[a-z][a-z0-9\_\-]+\Z'
 PASSWORD_PATTERN = r'(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])'
+USERNAME_PATTERN = r'\A[a-z][a-z0-9\_\-]+\Z'
+USERNAME_PATTERN_INVALID = r'\A((?!--).)*\Z'
 
 
 class SecureForm(Form):  # pylint: disable=too-few-public-methods

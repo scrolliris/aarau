@@ -26,14 +26,14 @@ def test_username_min_length_errors(username, dummy_request):
     form = build_signup_form(dummy_request)
 
     assert not form.validate()
-    assert ['Field must be between 4 and 12 characters long.'] == \
+    assert ['Field must be between 4 and 16 characters long.'] == \
         form.username.errors
 
 
 @pytest.mark.parametrize('username', [
-    'loooooooooong',
-    'l___________g',
-    'loooooooooooooooooooooooong',
+    'loooooooooooooong',
+    'l_______________g',
+    'loooooooooooooog_',
 ])
 def test_username_max_length_errors(username, dummy_request):
     dummy_request.params = dummy_request.POST = MultiDict({
@@ -43,7 +43,7 @@ def test_username_max_length_errors(username, dummy_request):
     form = build_signup_form(dummy_request)
 
     assert not form.validate()
-    assert ['Field must be between 4 and 12 characters long.'] == \
+    assert ['Field must be between 4 and 16 characters long.'] == \
         form.username.errors
 
 
@@ -84,7 +84,7 @@ def test_username_invalid_pattern_and_min_length_errors(
     assert not form.validate()
     assert [('You must use only lowercase alphanumeric characters, and '
              'start with a-z'),
-            'Field must be between 4 and 12 characters long.'] == \
+            'Field must be between 4 and 16 characters long.'] == \
         form.username.errors
 
 

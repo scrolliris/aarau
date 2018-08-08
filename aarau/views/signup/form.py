@@ -10,6 +10,7 @@ from wtforms import (
 
 from aarau.views.form import (
     USERNAME_PATTERN,
+    USERNAME_PATTERN_INVALID,
     PASSWORD_PATTERN,
     _,
     SecureForm,
@@ -59,7 +60,8 @@ class SignupForm(SecureForm):
         v.Regexp(USERNAME_PATTERN, message=(
             'You must use only lowercase alphanumeric characters, and '
             'start with a-z')),
-        v.Length(min=4, max=12),
+        v.Regexp(USERNAME_PATTERN_INVALID),
+        v.Length(min=4, max=16),
         validate_username_uniqueness,
         username_availability_check,
     ])

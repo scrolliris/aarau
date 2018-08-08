@@ -128,3 +128,47 @@ def test_username_availability_check(mocker, dummy_request):
     with pytest.raises(ValidationError):
         field = mocker.Mock('field', data=user.username)
         username_availability_check(form, field)
+
+
+@pytest.mark.parametrize('username', [
+    'abc',  # too short
+    '-abcde',  # invalid char
+    '_abcde',
+    'abc--de',  # sequencial hyphens
+    'abc--',
+    '--abc',
+    '001-project',  # non-alphabet at start
+    'scrolliris',  # reserved
+    'loooooooooooooong',  # too long
+])
+def test_username_validations_with_invalid_inputs(username, dummy_request):
+    dummy_request.params = dummy_request.POST = MultiDict({
+        'csrf_token': dummy_request.session.get_csrf_token(),
+        'username': username,
+        'email': 'oswald.new@example.org',
+        'password': 'Passw0rd',
+    })
+    form = build_signup_form(dummy_request)
+    assert not form.validate()
+    assert form.errors['username']
+
+
+@pytest.mark.parametrize('username', [
+    'abcdef',
+    'a-b-c-d-e',
+    'user_',
+    'user_one',
+    'lorem-ipsum',
+    'user-01',
+    'loooong-username',
+])
+def test_username_validations_with_valid_inputs(username, dummy_request):
+    dummy_request.params = dummy_request.POST = MultiDict({
+        'csrf_token': dummy_request.session.get_csrf_token(),
+        'username': username,
+        'email': 'oswald.new@example.org',
+        'password': 'Passw0rd',
+    })
+    form = build_signup_form(dummy_request)
+    assert form.validate()
+    assert not form.errors
