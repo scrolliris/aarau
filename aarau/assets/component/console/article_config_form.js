@@ -213,7 +213,7 @@ class ArticleConfigForm extends Component {
             __html: i18n.t('article.path.description', {
               code0: '<code>a-z0-9</code>'
             , code1: '<code>-</code>'
-            , length: '6-32'
+            , length: '6-64'
             })
           }})
         , h('input', {

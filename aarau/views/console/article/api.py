@@ -17,7 +17,7 @@ def save_content(req, article):
 
     if form.validate():
         with req.db.cardinal.atomic():
-            article.content = form.content.data
+            article.content = form.content.data or ''
 
             article.save()
 
@@ -54,9 +54,10 @@ def handle_post(req):
         article = publication.articles.where(
             Article.code == code).get()
     else:
+        code = Article.grab_unique_code()
         article = Article(
-            code=Article.grab_unique_code(),
-            path='',
+            code=code,
+            path=code,
             title='',
             copyright='',
             publication=publication)

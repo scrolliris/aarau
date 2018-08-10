@@ -197,7 +197,7 @@ class ArticleEditorForm extends Component {
       }
     , content: {
         errors: []
-      , value: null
+      , value: ''
       }
     };
   }
