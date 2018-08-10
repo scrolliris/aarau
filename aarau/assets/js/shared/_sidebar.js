@@ -41,10 +41,30 @@ let handleSidebar = (cookieKey, doc) => {
     return;
   }
 
+  // fixed bottom bar
+  let actionBar = doc.getElementsByClassName('action-bar')[0];
+  if (actionBar !== undefined && actionBar !== null) {
+    if (actionBar.classList.contains('with-sidebar')) {
+      actionBar.classList.remove('with-sidebar');
+    } else {
+      actionBar.classList.add('with-sidebar');
+    }
+  }
+
   holdBtn.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
     holdBtn.blur();
+
+    // fixed bottom bar
+    let actionBar = doc.getElementsByClassName('action-bar')[0];
+    if (actionBar !== undefined && actionBar !== null) {
+      if (actionBar.classList.contains('with-sidebar')) {
+        actionBar.classList.remove('with-sidebar');
+      } else {
+        actionBar.classList.add('with-sidebar');
+      }
+    }
 
     let isPinned = sidebar.classList.contains('pinned');
     if (isPinned === null || typeof isPinned === 'undefined' ||

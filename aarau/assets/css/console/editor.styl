@@ -35,12 +35,16 @@
 
     // bottom action bar
     .action-bar
+      background-color white
+      z-index 999999
       border-top 1px solid #e6e6e6
-      padding 1.13rem 0.38rem 0.16rem 0.38rem
+      padding 1.13rem 0 1.16rem 0
       position fixed
       bottom 0
-      width inherit
-      margin-bottom 1.16rem
+      width calc(100% - 84px)
+
+    .action-bar.with-sidebar
+      width calc(100% - 235px - 64px)
 
     .row
       .field-16

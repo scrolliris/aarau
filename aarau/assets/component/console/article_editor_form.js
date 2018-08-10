@@ -5,6 +5,21 @@ import {Editor, setPlaceholder} from 'vergil.js';
 import {i18n} from '../../js/console/i18n.js';
 
 
+class Cookie {
+  static read(name) {
+    let ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; ++i) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1, c.length);
+      }
+      if (c.indexOf(name + '=') === 0) {
+        return c.substring(name.length + 1, c.length);
+      }
+    }
+  }
+}
+
 function handleOnInput(instance, event) {
   const name = 'content'
       , value = event.target.innerText
@@ -203,6 +218,10 @@ class ArticleEditorForm extends Component {
   }
 
   render() {
+    let actionBarClass = '.action-bar';
+    let c = Cookie.read('console.sidebar');
+    if (c !== undefined && c === 'locked') { actionBarClass += '.with-sidebar'; }
+
     return h('form#article_editor_form.form', {
       action: this.props.action || ''
     , method: 'POST'
@@ -240,7 +259,7 @@ class ArticleEditorForm extends Component {
     , h('.row', [
         h('.field-16', [
           h('.wrapper.action', [
-            h('.action-bar', [
+            h(actionBarClass, [
               h('button.flat.button', 'Save')
             , h('span.message', this.state.message)
             ])
