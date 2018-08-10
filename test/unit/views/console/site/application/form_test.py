@@ -21,6 +21,8 @@ def test_build_new_application_site_form(dummy_request):
 
 @pytest.mark.parametrize('domain', [
     'invalid',
+    'INVALID.example.org',
+    'in_valid.example.org',
     '-three.org',
     'a.b.c',  # too short
     'comma,com',

@@ -14,8 +14,8 @@ from aarau.views.form import (
     availability_checker,
 )
 
-DOMAIN_PATTERN = r'\A([A-z0-9]\.|[A-z0-9][A-z0-9-]{0,61}' \
-    r'[A-z0-9]\.){1,3}[A-z]{2,6}\Z'
+DOMAIN_PATTERN = r'\A([a-z0-9]\.|[a-z0-9][a-z0-9-]{0,61}' \
+    r'[a-z0-9]\.){1,3}[a-z]{2,6}\Z'
 SLUG_PATTERN = r'\A[A-Za-z][A-Za-z0-9\-]+[A-Za-z0-9]\Z'
 SLUG_PATTERN_INVALID = r'\A((?!--).)*\Z'
 

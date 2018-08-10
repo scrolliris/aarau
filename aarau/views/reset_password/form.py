@@ -30,7 +30,7 @@ class ResetPasswordFormBase(SecureForm):
         v.Required(),
         v.Regexp(
             r'(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])'
-            r'(?=.*[A-z0-9\-\_\+\=\$\%\#\&\!\?])'),
+            r'(?=.*[A-Za-z0-9\-\_\+\=\$\%\#\&\!\?])'),
         v.Length(min=6, max=32),
     ])
     new_password_confirmation = PasswordField('Password confirmation', [
