@@ -44,7 +44,7 @@
             <h5 class="title">${article.title or 'Untitled'}</h5>
           </a>
           <p class="path">${article.path or 'none'}</p>
-          <span class="primary lined label">${article.progress_state}</span>
+          <span class="primary rounded lined label">${article.progress_state}</span>
         </div>
         % endfor
       </div>

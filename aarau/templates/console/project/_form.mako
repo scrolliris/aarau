@@ -49,5 +49,5 @@
     </div>
   </div>
 
-  ${f.submit(class_='primary button')}
+  ${f.submit(class_='primary flat button')}
 </form>

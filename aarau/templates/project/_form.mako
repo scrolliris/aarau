@@ -39,7 +39,7 @@
 
   <div class="row">
     <div class="field-16">
-      ${f.submit(class_='primary button')}
+      ${f.submit(class_='primary flat button')}
     </div>
   </div>
 </form>
