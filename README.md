@@ -32,7 +32,7 @@ https://gitlab.com/scrolliris/scrolliris-console)
 * Memcached `>= 1.4.33`
   * libmemcached (via pylibmc) (worker)
 * Datastore (emulator)
-* Node.js `>= 7.10.1` (build)
+* Node.js `>= 8.11.3` (build)
 * GNU gettext `>= 0.19.8.1` (translation)
 * [Scrolliris Console Translation (Neuchâtel)](https://gitlab.com/scrolliris/scrolliris-console-translation) as git subtree
 * Graphviz (document)

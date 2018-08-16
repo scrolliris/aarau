@@ -168,6 +168,39 @@ test:
   except:
     - tags
 
+jstest:
+  stage: test
+  image: node:8.11.3
+  variables:
+    NODE_ENV: development
+    APT_CACHE_DIR: apt-cache
+  before_script:
+    - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
+    - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
+      xvfb firefox-esr
+    - firefox --version
+    - node --version
+    - npm install --global npm@6.2.0
+    - npm --version
+    #- npm cache clean --force
+    - npm install --global karma-cli
+    - npm install --only=dev
+    - npm install --ignore-scripts
+    - karma --version
+  script:
+    - xvfb-run karma start
+  cache:
+    untracked: true
+    paths:
+      - apt-cache
+      - node_modules
+  artifacts:
+    untracked: true
+    paths:
+      - static
+  except:
+    - tags
+
 codequality:
   stage: codequality
   image: docker:latest

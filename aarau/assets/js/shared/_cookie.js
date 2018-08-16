@@ -21,8 +21,8 @@ class Cookie {
     }
   }
 
-  static delete() {
-    this.write(name, '', -4320); // -3 * 24 * 60 (3days ago)
+  static delete(name) {
+    this.write(name, undefined, -4320); // -3 * 24 * 60 (3days ago)
   }
 }
 

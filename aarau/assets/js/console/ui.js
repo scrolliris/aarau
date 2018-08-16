@@ -12,6 +12,11 @@ import handleToolbar from '../shared/_toolbar.js';
 
 
 ((doc) => {
+  if (doc === undefined || doc === null ||
+      doc.body === null) {
+    return;
+  }
+
   let loadPath = doc.body.getAttribute('data-locale-file');
   if (loadPath !== null) {
     loadI18n((err, t) => {
