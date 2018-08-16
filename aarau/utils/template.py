@@ -29,6 +29,7 @@ def add_template_util_renderer_globals(evt) -> None:
         util = get_settings()['aarau.includes']['template_util'](ctx, req)
     evt['util'] = util
     evt['clean'] = clean
+    evt['nl2br'] = nl2br
     evt['unquote'] = unquote
     evt['formatting'] = formatting
 
@@ -52,6 +53,17 @@ def clean(**kwargs) -> 'function':
         return Markup(_clean(text, **kwargs))
 
     return __clean
+
+
+def nl2br(s) -> 'function':
+    r"""Returns line break as `<br />`.
+
+    >>> from aarau.utils.template import nl2br
+
+    >>> nl2br("foo\\nbar")
+    'foo<br />bar'
+    """
+    return s.replace("\n", Markup("<br />"))
 
 
 def unquote(text: str) -> str:

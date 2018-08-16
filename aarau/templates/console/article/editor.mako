@@ -42,7 +42,7 @@
           data-namespace="${project.namespace}"
           data-slug="${site.slug}"
           data-code="${article.code or ''}"></div>
-        <div id="content">${article.content or ''}</div>
+        <div id="content">${article.content or '' | h,nl2br}</div>
     </div>
   </div>
 </div>
