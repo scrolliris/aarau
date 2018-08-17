@@ -51,7 +51,7 @@ def project_new(req):
                     name=form.name.data,
                     namespace=form.namespace.data,
                     description=form.description.data)
-                project.plan = Plan.get_free_plan()
+                project.plan = Plan.get_essential_plan()
                 project.access_key_id = Project.grab_unique_key(
                     'access_key_id')
                 project.save()

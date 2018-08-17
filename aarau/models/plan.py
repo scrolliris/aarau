@@ -26,8 +26,8 @@ class Plan(CardinalBase, TimestampMixin):
         return '<Plan id:{}, name:{}>'.format(self.id, self.name)
 
     @classmethod
-    def get_free_plan(cls):
-        return cls.select().where(cls.name == 'plan.free.name').get()
+    def get_essential_plan(cls):
+        return cls.select().where(cls.name == 'plan.essential.name').get()
 
     @classproperty
     def as_choices(cls):  # pylint: disable=no-self-argument
