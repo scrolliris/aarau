@@ -1,7 +1,7 @@
 let handleToolbar = (doc) => {
   // toolbar (checkbox)
   let toolbar = doc.getElementById('toolbar_checkbox');
-  if (toolbar === null || sidebar === undefined) {
+  if (toolbar === null || toolbar === undefined) {
     return;
   }
   // controls
