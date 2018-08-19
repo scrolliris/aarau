@@ -71,7 +71,7 @@ def test_settings_email_with_pending_email(users, login_as, dummy_app):
         }
 
         res = dummy_app.post('/settings/email', params=params, status=302)
-        assert 'http://example.org/settings/email' == res.location
+        assert 'http://localhost/settings/email' == res.location
         res = res.follow(status=200)
         assert '200 OK' == res.status
         res.charset = None
@@ -406,7 +406,7 @@ def test_settings_password_with_valid_credentials(
         res = form.submit('submit', value='Change')
 
         assert '302 Found' == res.status
-        assert 'http://example.org/settings/password' == res.location
+        assert 'http://localhost/settings/password' == res.location
 
         res = res.follow(status=200)
         res.charset = None

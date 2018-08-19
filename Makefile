@@ -77,17 +77,31 @@ start:
 
 # -- testing
 
+# unit, functional tests
 test:
-	ENV=test py.test -c 'config/testing.ini' -s -q
+	ENV=test py.test -c 'config/testing.ini' -s -q test/{unit,func}
 .PHONY: test
+
+routetest:
+	ENV=test py.test -c 'config/testing.ini' -s -q test/route_test.py
+
+# integration tests
+browsertest:
+	ENV=test py.test -c 'config/testing.ini' -s -v \
+	  --driver Firefox test/integration
+.PHONY: browsertest
 
 doctest:
 	ENV=test ./bin/run_doctest
 .PHONY: doctest
 
+jstest:
+	NODE_ENV=development karma start
+.PHONY: jstest
+
 coverage:
 	ENV=test py.test -c 'config/testing.ini' -s -q --cov=${app} --cov-report \
-	  term-missing:skip-covered
+	  term-missing:skip-covered test/{unit,func}
 .PHONY: coverage
 
 # -- translation

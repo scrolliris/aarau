@@ -9,6 +9,7 @@ from pyramid.router import Router
 from webtest.app import TestApp
 
 from .data import import_data
+from .server import ServerThread
 
 # NOTE:
 # The request variable in py.test is special context of testing.
@@ -77,7 +78,7 @@ def new_extra_environ(domain) -> dict:
 
 @pytest.fixture(scope='session')
 def extra_environ(env) -> dict:
-    domain = env.get('DOMAIN', 'example.org')
+    domain = env.get('DOMAIN', 'localhost')
     return new_extra_environ(domain)
 
 
@@ -441,3 +442,27 @@ def login_as(login, logout):
         finally:
             logout()
     return _login_as
+
+
+# integration tests
+
+@pytest.fixture(scope='session')
+def server_run(request):
+    from pyramid.paster import get_app
+
+    app = get_app('config/testing.ini#aarau')
+    server = ServerThread(app)
+
+    def teardown():
+        server.quit()
+
+    request.addfinalizer(teardown)
+
+    server.start()
+    return server
+
+
+@pytest.fixture
+def firefox_options(firefox_options):
+    firefox_options.add_argument('--headless')
+    return firefox_options

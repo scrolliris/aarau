@@ -25,7 +25,7 @@ def test_reset_password_with_valid_email(users, dummy_app, mailbox):
     res = form.submit('submit', value='Request')
 
     assert '302 Found' == res.status
-    assert 'http://example.org/password/reset' == res.location
+    assert 'http://localhost/password/reset' == res.location
 
     res = res.follow(status=200)
     res.charset = None

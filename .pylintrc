@@ -162,7 +162,8 @@ disable=
   cyclic-import,
   # to be fixed (multiple imports)
   # https://github.com/PyCQA/pylint/issues/1422
-  duplicate-code
+  duplicate-code,
+  broad-except
 
 
 [REPORTS]
