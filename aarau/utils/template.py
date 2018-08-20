@@ -60,7 +60,7 @@ def nl2br(s) -> 'function':
 
     >>> from aarau.utils.template import nl2br
 
-    >>> nl2br("foo\\nbar")
+    >>> nl2br("foo\nbar")
     'foo<br />bar'
     """
     return s.replace("\n", Markup("<br />"))
