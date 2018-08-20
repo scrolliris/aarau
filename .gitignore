@@ -19,6 +19,7 @@ cors-file.json
 /bin/_version
 
 /bin/gitlab-ci-multi-runner
+/bin/geckodriver
 
 /db/seeds/*.yml
 !/db/seeds/*.sample.yml

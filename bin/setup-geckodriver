@@ -1,0 +1,33 @@
+#!/bin/sh
+set -eu
+
+bin_dir=$(dirname $(readlink -f "${0}"))
+path="./bin/geckodriver"
+platform="linux64"
+version="v0.21.0"
+
+indent() {
+  sed -u 's/^/       /'
+}
+
+echo "Platform: ${platform}" | indent
+echo "Version: ${version}" | indent
+echo ""
+echo "-----> Installing into: ${bin_dir}" | indent
+echo ""
+
+if [ ! -e "${path}" ]; then
+  url_base="https://github.com/mozilla/geckodriver"
+  file_name="geckodriver-${version}-linux64.tar.gz"
+
+  curl -sLO "${url_base}/releases/download/${version}/${file_name}"
+  tar zxvf $file_name
+
+  chmod +x geckodriver
+  mv geckodriver $path
+  rm $file_name
+fi
+
+$path --version | indent
+
+echo "Done" | indent
