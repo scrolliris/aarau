@@ -100,8 +100,8 @@ jstest:
 .PHONY: jstest
 
 coverage:
-	ENV=test py.test -c 'config/testing.ini' -s -q --cov=${app} --cov-report \
-	  term-missing:skip-covered test/{unit,func}
+	ENV=test py.test -c 'config/testing.ini' -s -q test/{unit,func} \
+	  --cov=${app} --cov-report term-missing:skip-covered
 .PHONY: coverage
 
 # -- translation
