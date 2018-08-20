@@ -79,11 +79,13 @@ start:
 
 # unit, functional tests
 test:
-	ENV=test py.test -c 'config/testing.ini' -s -q test/{unit,func}
+	ENV=test py.test -c 'config/testing.ini' -s -q \
+	  testunit test/func
 .PHONY: test
 
 routetest:
-	ENV=test py.test -c 'config/testing.ini' -s -q test/route_test.py
+	ENV=test py.test -c 'config/testing.ini' -s -q \
+	  test/route_test.py
 
 # integration tests
 browsertest:
@@ -100,7 +102,8 @@ jstest:
 .PHONY: jstest
 
 coverage:
-	ENV=test py.test -c 'config/testing.ini' -s -q test/{unit,func} \
+	ENV=test py.test -c 'config/testing.ini' -s -q \
+	  test/unit test/func \
 	  --cov=${app} --cov-report term-missing:skip-covered
 .PHONY: coverage
 
