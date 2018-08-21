@@ -55,6 +55,7 @@ development_requires = [
 
 testing_requires = [
     'colorlog',
+    'waitress',
 
     'mixer',
     'pytest',
