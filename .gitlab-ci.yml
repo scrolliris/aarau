@@ -182,6 +182,9 @@ test:
     POSTGRES_DB: aarau_test
     POSTGRES_USER: aarau
     POSTGRES_PASSWORD: aarau
+  dependencies:
+    - compile
+    - build
   before_script:
     - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
     - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
