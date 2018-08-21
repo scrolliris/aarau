@@ -295,11 +295,11 @@ Check test coverage
 
 ### CI
 
-You can check it by yourself using `gitlab-ci-multi-runner` on local machine.
+You can check it by yourself using `gitlab-runner` on local machine.
 It requires `docker`.
 
 ```zsh
-% ./bin/setup-gitlab-ci-multi-runner
+% ./bin/setup-gitlab-runner
 
 : use script
 % ./bin/ci-runner test
@@ -309,7 +309,7 @@ It requires `docker`.
 
 See documents.
 
-* https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/issues/312
+* https://docs.gitlab.com/runner/
 * https://docs.gitlab.com/runner/install/linux-manually.html
 
 
