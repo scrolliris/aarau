@@ -61,6 +61,7 @@ testing_requires = [
     'pytest-cov',
     'pytest-mock',
     'pytest-selenium',
+    'selenium',
     'WebTest',
 ]
 
