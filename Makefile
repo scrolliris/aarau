@@ -90,7 +90,7 @@ routetest:
 # integration tests
 browsertest:
 	ENV=test py.test -c 'config/testing.ini' -s -v \
-	  --driver Firefox test/integration
+	  --driver Firefox --driver-path ./bin/geckodriver test/integration
 .PHONY: browsertest
 
 doctest:
