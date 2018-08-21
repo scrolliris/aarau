@@ -80,7 +80,7 @@ start:
 # unit, functional tests
 test:
 	ENV=test py.test -c 'config/testing.ini' -s -q \
-	  testunit test/func
+	  test/unit test/func
 .PHONY: test
 
 routetest:
