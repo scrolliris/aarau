@@ -205,47 +205,53 @@ test:
   except:
     - tags
 
-browsertest:
-  stage: test
-  image: python:3.5.4
-  services:
-    - postgres:9.6
-    - redis:3.2
-  variables:
-    APT_CACHE_DIR: apt-cache
-    PIP_CACHE_DIR: pip-cache
-    ENV: test
-    POSTGRES_DB: aarau_test
-    POSTGRES_USER: aarau
-    POSTGRES_PASSWORD: aarau
-  dependencies:
-    - compile
-    - build
-  before_script:
-    - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
-    - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
-      gcc zlib1g zlib1g-dev libmemcached11 libmemcached-dev
-      xvfb libnss3 firefox-esr
-    - ln -s /opt/firefox/firefox /usr/local/bin/
-    - firefox --version
-    - ./bin/setup-geckodriver
-    - ./bin/geckodriver --version
-    - pip install --upgrade pip setuptools
-    - python --version
-    - pip --version
-    - make setup
-    - make db-init
-    - make db-migrate
-  script:
-    - xvfb-run make browsertest
-  cache:
-    untracked: true
-    paths:
-      - apt-cache
-      - pip-cache
-      - bin
-  except:
-    - tags
+# NOTE:
+# Run this locally for a while, It will fail on CI (Docker) for selenium driver.
+#
+# It may be useful:
+# https://gitlab.com/gitlab-org/gitlab-selenium-server
+#
+#browsertest:
+#  stage: test
+#  image: python:3.5.4
+#  services:
+#    - postgres:9.6
+#    - redis:3.2
+#  variables:
+#    APT_CACHE_DIR: apt-cache
+#    PIP_CACHE_DIR: pip-cache
+#    ENV: test
+#    POSTGRES_DB: aarau_test
+#    POSTGRES_USER: aarau
+#    POSTGRES_PASSWORD: aarau
+#  dependencies:
+#    - compile
+#    - build
+#  before_script:
+#    - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
+#    - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
+#      gcc zlib1g zlib1g-dev libmemcached11 libmemcached-dev
+#      xvfb libnss3 firefox-esr
+#    - ln -s /opt/firefox/firefox /usr/local/bin/
+#    - firefox --version
+#    - ./bin/setup-geckodriver
+#    - ./bin/geckodriver --version
+#    - pip install --upgrade pip setuptools
+#    - python --version
+#    - pip --version
+#    - make setup
+#    - make db-init
+#    - make db-migrate
+#  script:
+#    - xvfb-run make browsertest
+#  cache:
+#    untracked: true
+#    paths:
+#      - apt-cache
+#      - pip-cache
+#      - bin
+#  except:
+#    - tags
 
 codequality:
   stage: codequality
