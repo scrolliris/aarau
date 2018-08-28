@@ -26,13 +26,13 @@ https://gitlab.com/scrolliris/scrolliris-console)
 
 ## Requirements
 
-* Python `>= 3.5.4`
+* Python `>= 3.5.5`
 * PostgreSQL `>= 9.6.3`
 * Redis `>= 3.2.0`
 * Memcached `>= 1.4.33`
   * libmemcached (via pylibmc) (worker)
 * Datastore (emulator)
-* Node.js `>= 8.11.3` (build)
+* Node.js `>= 8.11.4` (build)
 * GNU gettext `>= 0.19.8.1` (translation)
 * [Scrolliris Console Translation (Neuchâtel)](https://gitlab.com/scrolliris/scrolliris-console-translation) as git subtree
 * Graphviz (document)
@@ -55,12 +55,12 @@ TODO
 
 : Node.js (e.g. nodeenv)
 (venv) % pip install nodeenv
-(venv) % nodeenv --python-virtualenv --with-npm --node=8.9.0
+(venv) % nodeenv --python-virtualenv --with-npm --node=8.11.4
 : re-activate for node.js at this time
 (venv) % source venv/bin/activate
 (venv) % npm update --global npm
 (venv) % npm --version
-5.5.1
+6.4.0
 ```
 
 ### Dependencies
@@ -135,7 +135,7 @@ Check `Makefile`
 (venv) % make setup
 
 : install node modules & run gulp task
-(venv) % npm install --global gulp-cli i18next-conv
+(venv) % npm install --global gulp-cli i18next-conv karma-cli eslint
 (venv) % npm install
 
 : run gulp
@@ -178,6 +178,7 @@ Create manually by your self for now.
 
 * flake8
 * flake8-docstrings (pep257)
+* pycodestyle
 * pylint
 * eslint
 * codeclimate
