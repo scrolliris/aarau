@@ -13,164 +13,180 @@ endif
 
 app := aarau
 
-# -- installation
+.DEFAULT_GOAL = test\:coverage
+default: test\:coverage
 
-setup:
+# -- setup
+
+setup:  ## Install Python packages
 	pip install -e '.[${env}]' -c constraints.txt
 .PHONY: setup
 
-setup-force:
+setup\:force:  ## Install Python packages with `--force-reinstall`
 	pip install --upgrade --force-reinstall -e '.[${env}]' -c constraints.txt
-.PHONY: setup-force
+.PHONY: setup\:force
 
-update:
+setup\:update:  ## Update Python packages
 	pip install --upgrade -e '.[${env}]' -c constraints.txt
-.PHONY: update
+.PHONY: setup\:update
 
-# -- database
+# -- db
 
-db-init:
+db\:init:  ## Create database
 	ENV=$(ENV) ${app}_manage 'config/${env}.ini#${app}' db init
-.PHONY: db-init
+.PHONY: db\:init
 
-db-migrate:
+db\:migrate:  ## Run migrations
 	ENV=$(ENV) ${app}_manage 'config/${env}.ini#${app}' db migrate
-.PHONY: db-migrate
+.PHONY: db\:migrate
 
-db-rollback:
+db\:rollback:  ## Rollback latest migration
 	ENV=$(ENV) ${app}_manage 'config/${env}.ini#${app}' db rollback
-.PHONY: db-rollback
+.PHONY: db\:rollback
 
-db-seed:
+db\:seed:  ## Put seed records for development (See db/seeds)
 	ENV=$(ENV) ${app}_manage 'config/${env}.ini#${app}' db seed
-.PHONY: db-seed
+.PHONY: db\:seed
 
-db-drop:
+db\:drop:  ## Drop database
 	ENV=$(ENV) ${app}_manage 'config/${env}.ini#${app}' db drop
-.PHONY: db-drop
+.PHONY: db\:drop
 
-db-reset:
+db\:reset:  ## Reset database
 	${app}_manage 'config/${env}.ini#${app}' db drop
 	${app}_manage 'config/${env}.ini#${app}' db init
 	${app}_manage 'config/${env}.ini#${app}' db migrate
 ifneq (test, $(ENV))
 	${app}_manage 'config/${env}.ini#${app}' db seed
 endif
-.PHONY: db-reset
+.PHONY: db\:reset
 
-# -- application
 
-# server (development)
-serve:
+# -- serve
+
+serve:  ## Run server process (development)
 	./bin/serve --env development --config config/development.ini --reload
 .PHONY: serve
 
-# worker (development)
-worker:
+serve\:worker:  ## Run worker process (development)
 	ENV=$(ENV) ${app}_worker 'config/${env}.ini#${app}'
-.PHONY: worker
+.PHONY: serve\:worker
 
-# both, use `bin/start` via honcho. see Procfile
-start:
+serve\:production:  ## Run {server,worker} process both in production mode (see Procfile)
 	honcho start
-.PHONY: start
+.PHONY: serve\:production
 
-# -- testing
 
-# unit, functional tests
-test:
+# -- test
+
+test:  ## Run unit tests and functional tests both
 	ENV=test py.test -c 'config/testing.ini' -s -q \
-	  test/unit test/func
+	  test/unit test/func test/route_test.py
 .PHONY: test
 
-routetest:
+test\:unit:  ## Run unit tests
+	ENV=test py.test -c 'config/testing.ini' -s -q \
+	  test/unit
+.PHONY: test\:unit
+
+test\:func:  ## Run functional tests
+	ENV=test py.test -c 'config/testing.ini' -s -q \
+	  test/func
+.PHONY: test\:func
+
+test\:route:  ## Run only route tests
 	ENV=test py.test -c 'config/testing.ini' -s -q \
 	  test/route_test.py
+.PHONY: test\:route
 
-# integration tests
-browsertest:
+test\:integration:  ## Run integration tests on browser (Firefox Headless)
 	ENV=test TEST_DOMAIN=localhost TEST_SESSION_COOKIE_DOMAIN=localhost \
 	  py.test -c 'config/testing.ini' -s -v \
 	  --driver Firefox --driver-path ./bin/geckodriver test/integration
-.PHONY: browsertest
+.PHONY: test\:integration
 
-doctest:
+test\:doc:  ## Run doctest in Python code
 	ENV=test ./bin/run_doctest
-.PHONY: doctest
+.PHONY: test\:doc
 
-jstest:
+test\:js:  ## Run JavaScript unit tests
 	NODE_ENV=development karma start
-.PHONY: jstest
+.PHONY: test\:js
 
-coverage:
+test\:coverage:  ## Run `test` with coverage outputs
 	ENV=test py.test -c 'config/testing.ini' -s -q \
 	  test/unit test/func \
 	  --cov=${app} --cov-report term-missing:skip-covered
-.PHONY: coverage
+.PHONY: test\:coverage
 
-# -- translation
 
-catalog-extract:
+# -- i18n (translation)
+
+i18n: | i18n\:compile  ## An alias of `i18n:compile`
+.PHONY: i186
+
+i18n\:extract:  ## Extract translation targets from code
 	./bin/linguine extract message
 	./bin/linguine extract form
-.PHONY: catalog-extract
+.PHONY: i18n\:extract
 
-catalog-compile:
+i18n\:compile:  ## Make translation files (catalog)
 	for ns in message form console\.json ; do \
 	  for locale in en ; do \
 	    ./bin/linguine compile $$ns $$locale; \
 	  done; \
 	done
-.PHONY: catalog-compile
+.PHONY: i18n\:compile
 
-catalog-update:
+i18n\:update:  ## Update catalog (pot)
 	for ns in message form console\.json ; do \
 	  for locale in en ; do \
 	    ./bin/linguine update $$ns $$locale; \
 	  done; \
 	done
-.PHONY: catalog-update
+.PHONY: i18n\:update
 
-catalog-sync:
+i18n\:sync:  ## Fetch translation updates from upstrm (scrolliris/scrolliris-console-translation)
 	./bin/sync-catalog
-.PHONY: catalog-sync
+.PHONY: local\:sync
 
-catalog: | catalog-compile
-.PHONY: catalog
 
-# -- utility
+# -- vet
 
-check:
-	pycodestyle --ignore=E402 test aarau
-	flake8
-.PHONY: check
-
-lint:
-	pylint test ${app}
-.PHONY: lint
-
-vet: | check lint
+vet: | vet\:code vet\:lint  ## Run `ven:code` and `vet:lint` both (without vet:quality)
 .PHONY: vet
 
-analyze:
+vet\:code:  ## Check pycode code style (pycodestyle)
+	pycodestyle --ignore=E402 test aarau
+	flake8
+.PHONY: vet\:code
+
+vet\:lint:  ## Lint python codes
+	pylint test ${app}
+.PHONY: vet\:lint
+
+vet\:quality:  ## Generate codequality.txt using codeclimate (require Docker)
 	docker run --interactive --tty --rm --env CODECLIMATE_CODE="${PWD}" \
 	  --volume "${PWD}":/code \
 	  --volume /var/run/docker.sock:/var/run/docker.sock \
 	  --volume /tmp/cc:/tmp/cc \
 	  codeclimate/codeclimate analyze -f text > tmp/codequality.txt
 	cat tmp/codequality.txt
-.PHONY: analyze
+.PHONY: vet\:quality
 
-build:
+
+# -- utilities
+
+pack:  ## Build assets using gulp-cli
 ifeq (, $(shell which gulp 2>/dev/null))
 	$(info gulp command not found. run `npm install -g gulp-cli`)
 	$(info )
 else
 	NODE_ENV=$(NODE_ENV) gulp
 endif
-.PHONY: build
+.PHONY: pack
 
-clean:
+clean:  ## Delete unnecessary cache etc.
 	find . ! -readable -prune -o \
 	  ! -path "./.git/*" ! -path "./node_modules/*" ! -path "./venv*" \
 	  ! -path "./doc/*" ! -path "./locale/*" ! -path "./tmp/*" \
@@ -185,18 +201,19 @@ else
 endif
 .PHONY: clean
 
-# prints untracked (volatile) files
-expose:
+expose:  ## Print untracked (volatile) files
 	git ls-files --others | \
 	  grep -vE '(lib|tmp|test|static|db|locale|node_modules|\.?cache)/' | \
 	  grep -vE '(__pycache__|\.egg-info|venv)/' | \
 	  grep -vE '(\.coverage|\.*-version|bin\/gitlab*)'
 .PHONY: expose
 
-# -- deployment
-plate:
+deploy:  ## Deploy app to production server
 	./bin/plate $(ACTION) $(VERSION)
 .PHONY: plate
 
-.DEFAULT_GOAL = coverage
-default: coverage
+help:  ## Display this message
+	@grep -E '^[0-9a-z\:\\]+: ' $(MAKEFILE_LIST) | grep -E '  ##' | \
+		sed -e 's/\(\s|\(\s[0-9a-z\:\\]*\)*\)  /  /' | tr -d \\\\ | sort | \
+		awk 'BEGIN {FS = ":  ## "}; {printf "\033[36m%-16s\033[0m %s\n", $$1, $$2}'
+.PHONY: help

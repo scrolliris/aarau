@@ -9,7 +9,7 @@ if [ "$ENV" = "" ]; then
 fi
 
 if [ "$1" = "server" ]; then
-  make db-migrate
+  make db:migrate
 
   $root_dir/bin/serve --env ${ENV} --install \
     --config "${root_dir}/config/${ENV}.ini#${app_name}"

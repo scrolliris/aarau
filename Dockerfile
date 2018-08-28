@@ -28,7 +28,7 @@ ENV ENV production
 ENV WSGI_URL_SCHEME http
 
 RUN make setup
-RUN make catalog-compile
+RUN make i18n:compile
 
 EXPOSE 8080
 

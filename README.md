@@ -38,11 +38,6 @@ https://gitlab.com/scrolliris/scrolliris-console)
 * Graphviz (document)
 
 
-## Integrations
-
-TODO
-
-
 ## Setup
 
 ```zsh
@@ -61,6 +56,13 @@ TODO
 (venv) % npm update --global npm
 (venv) % npm --version
 6.4.0
+```
+
+Then, check `make help`.
+
+```zsh
+(venv) % make help
+...
 ```
 
 ### Dependencies
@@ -93,12 +95,12 @@ Setup PostgreSQL database.
 (venv) % psql -U xxx -c "CREATE USER <user> WITH PASSWORD '<password>';"
 (venv) % psql -U xxx -c "ALTER USER <user> WITH CREATEDB LOGIN;"
 : create database
-(venv) % make db-init
+(venv) % make db:init
 : or create it manually
 (venv) % psql -U <user> postgres -c "CREATE DATABASE <datname>;"
 
 : prepare database (default env: development)
-(venv) % make db-migrate
+(venv) % make db:migrate
 ```
 
 #### Redis
@@ -108,14 +110,6 @@ TODO
 #### Memcached
 
 TODO
-
-#### Datastore
-
-See GCP datastore [document]().
-
-```zsh
-TODO
-```
 
 
 ## Development
@@ -139,16 +133,17 @@ Check `Makefile`
 (venv) % npm install
 
 : run gulp
-(venv) % make build
+(venv) % make pack
 
 : compile translation data (gettext .mo in locale and .json in static/locale)
-(venv) % make compile
+(venv) % make i18n:compile
 
 : import seed data into database for development
-(venv) % make db-seed
+(venv) % make db:seed
 
 : use runner script
 (venv) % make serve
+(venv) % make serve:worker
 ```
 
 ### Migration
@@ -156,8 +151,8 @@ Check `Makefile`
 Create migration file manually into `db/migrations`.
 
 ```zsh
-(venv) % make db-migrate # migrate remains all migrations
-(venv) % make db-rollback  # rollback latest migration
+(venv) % make db:migrate # migrate remains all migrations
+(venv) % make db:rollback # rollback latest migration
 ```
 
 #### Note
@@ -174,7 +169,7 @@ Create manually by your self for now.
   --database 'postgresql://user:pass@localhost:5432/dbname' NAME
 ```
 
-### Style Check, Lint and Analyze
+### Style, Lint and Analyze
 
 * flake8
 * flake8-docstrings (pep257)
@@ -189,11 +184,18 @@ Create manually by your self for now.
 : add hook
 (venv) % flake8 --install-hook git
 
-(venv) % make check
-(venv) % make lint
+(venv) % make vet:code
+(venv) % make vet:lint
 
 : run both
 (venv) % make vet
+```
+
+##### Codequality
+
+```zsh
+: run codeclimate in docker
+(venv) % make vet:quality
 ```
 
 #### JavaScript
@@ -203,13 +205,6 @@ Create manually by your self for now.
 
 (venv) % eslint gulpfile.js
 (venv) % eslint aarau/assets
-```
-
-#### Codequality
-
-```zsh
-: run codeclimate in docker
-(venv) % make analyze
 ```
 
 
@@ -227,7 +222,7 @@ Use `CherryPy` as wsgi server.
 (venv) % honcho start
 ```
 
-### Delivery
+### Deployment
 
 E.g. Google App Engine
 
@@ -250,13 +245,13 @@ E.g. Google App Engine
 
 ```zs
 : check current versions (default service)
-(venv) % ACTION=list make plate
+(venv) % ACTION=list make deploy
 
 : see delivery script `plate`
-(venv) % ACTION=deliver VERSION=v9 make plate
+(venv) % ACTION=deliver VERSION=v9 make deploy
 
 : put plate (delete)
-(venv) % ACTION=clean VERSION=v8 make plate
+(venv) % ACTION=clean VERSION=v8 make deploy
 ```
 
 
@@ -271,16 +266,17 @@ See also `.gitlab-ci.yml`.
 : or manually install packages
 (venv) % pip install -e ".[testing]" -c constraints.txt
 
-(venv) % ENV=test make db-init
-(venv) % ENV=test make db-migrate
+(venv) % ENV=test make db:init
+(venv) % ENV=test make db:migrate
 
 : build assets
-(venv) % make build
+(venv) % make pack
 
-: use make
+: compile translation files
+(venv) % make i18n:compile
+
+: use make (unit tests and functional tests)
 (venv) % make test
-: or run manually
-(venv) % ENV=test py.test -c config/testing.ini -q
 
 : run a test case
 (venv) % ENV=test py.test -c config/testing.ini \
@@ -291,7 +287,14 @@ See also `.gitlab-ci.yml`.
 Check test coverage
 
 ```zsh
-(venv) % make coverage
+(venv) % make test:coverage
+```
+
+See also
+
+```zsh
+(venv) % make test:js
+(venv) % make test:integration
 ```
 
 ### CI
@@ -334,37 +337,39 @@ Generate `xxx.pot` file.
 
 ```zsh
 : edit Makefile (see also `bin/linguine` script)
-(venv) % make catalog-extract
+(venv) % make i18n:extract
 ```
 
 ### Update and Compile translation catalog
 
 See `Makefile`.
-The translation catalog needs GNU gettext.
+The translation needs GNU gettext.
 
 ```zsh
-(venv) % make catalog-update
+(venv) % make i18n:update
 
-: alias `make catalog` is also available
-(venv) % make catalog-compile
+: alias `make i18n` is also available
+(venv) % make i18n:compile
 ```
 
 Translations for frontend (json) needs `i18next-conv`.
 
 ```zsh
 % npm install -g i18next-conv
-% make catalog-compile
+% make i18n:compile
 ```
 
 ### Work-flow
 
-0. extract
-1. generate
+0. sync
+1. extract
 2. update
 3. compile
 
 
 ## Note
+
+Subdomains
 
 * carrell
 * console

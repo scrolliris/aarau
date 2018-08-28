@@ -1,12 +1,11 @@
 # https://docs.gitlab.com/ce/ci/yaml/
 stages:
   - vet
-  - compile
   - build
   - test
   - codequality
 
-check:
+code:
   stage: vet
   image: python:3.5.4
   variables:
@@ -19,7 +18,7 @@ check:
     - pip install flake8 flake8-docstrings -c constraints.txt
     - make clean
   script:
-    - make check
+    - make vet:code
   cache:
     untracked: true
     paths:
@@ -43,7 +42,7 @@ lint:
     - ENV=development make setup
     - ENV=test make setup
   script:
-    - make lint
+    - make vet:lint
   cache:
     untracked: true
     paths:
@@ -52,8 +51,8 @@ lint:
   except:
     - tags
 
-compile:
-  stage: compile
+i18n:
+  stage: build
   image: node:8.11.3
   variables:
     APT_CACHE_DIR: apt-cache
@@ -69,7 +68,7 @@ compile:
     - npm install --only=dev
     - npm install --global i18next-conv
   script:
-    - make catalog
+    - make i18n:compile
   cache:
     untracked: true
     paths:
@@ -83,7 +82,7 @@ compile:
   except:
     - tags
 
-build:
+pack:
   stage: build
   image: node:8.11.3
   variables:
@@ -98,7 +97,7 @@ build:
     - npm install --only=dev
     - npm install --ignore-scripts
   script:
-    - make build
+    - make pack
   cache:
     untracked: true
     paths:
@@ -126,7 +125,7 @@ doctest:
     - ENV=development make setup
     - ENV=test make setup
   script:
-    - make doctest
+    - make test:doc
   cache:
     untracked: true
     paths:
@@ -183,8 +182,8 @@ test:
     POSTGRES_USER: aarau
     POSTGRES_PASSWORD: aarau
   dependencies:
-    - compile
-    - build
+    - build:i18n
+    - build:pack
   before_script:
     - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
     - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
@@ -193,10 +192,10 @@ test:
     - python --version
     - pip --version
     - make setup
-    - make db-init
-    - make db-migrate
+    - make db:init
+    - make db:migrate
   script:
-    - make coverage
+    - make test:coverage
   cache:
     untracked: true
     paths:
@@ -242,10 +241,10 @@ test:
 #    - python --version
 #    - pip --version
 #    - make setup
-#    - make db-init
-#    - make db-migrate
+#    - make db:init
+#    - make db:migrate
 #  script:
-#    - xvfb-run make browsertest
+#    - xvfb-run make test:integration
 #  cache:
 #    untracked: true
 #    paths:
