@@ -78,7 +78,7 @@ def new_extra_environ(domain) -> dict:
 
 @pytest.fixture(scope='session')
 def extra_environ(env) -> dict:
-    domain = env.get('DOMAIN', 'localhost')
+    domain = env.get('DOMAIN', 'example.org')
     return new_extra_environ(domain)
 
 

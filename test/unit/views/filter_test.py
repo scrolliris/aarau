@@ -15,7 +15,7 @@ def test_forbidden_redirect_as_logged_in_user(users, dummy_request):
 
     assert isinstance(res, HTTPFound)
     assert '302 Found' == res.status
-    assert 'http://localhost/' == res.location
+    assert 'http://example.org/' == res.location
 
 
 def test_forbidden_redirect(dummy_request):
@@ -28,4 +28,4 @@ def test_forbidden_redirect(dummy_request):
     assert isinstance(res, HTTPFound)
     assert '302 Found' == res.status
     assert dummy_request.session.pop_flash('failure')
-    assert 'http://localhost/login' == res.location
+    assert 'http://example.org/login' == res.location

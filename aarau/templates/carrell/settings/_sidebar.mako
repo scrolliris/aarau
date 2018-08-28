@@ -2,30 +2,26 @@
   <% locked = cookie.get('carrell.sidebar') %>
   <%include file='aarau:templates/shared/_sidebar_navi.mako' args="locked=locked,"/>
 
-  % if util.route_name == 'carrell.read':
-  <div class="publication item">
-    <div class="cover">COVER IMAGE</div>
-    <h6 class="name">${publication.name}</h6>
-    <p></p>
-  </div>
-
-  <hr>
-  <h6 class="section-title">CHAPTERS</h6>
-
-  <hr>
-  <h6 class="section-title">HEADINGS</h6>
-
-  <hr>
-
-  <h6 class="section-title">PREFERENCES</h6>
-
-  <hr>
-  % endif
-
   <h6 class="section-title">ACTIONS IN CARRELL</h6>
   <a class="item${' active' if util.route_name.startswith('carrell.bookmark') or util.route_name == 'carrell.top' else ''}" href="${req.route_path('carrell.top')}">Bookmarks</a>
   <a class="disabled item" href="#">Preferences</a>
-  <a class="item" href="${req.route_url('carrell.settings')}">Settings</a>
+
+  <span class="item active expanded">
+    <%def name="link_to(route_name, text, matchdict={})">
+      %if util.route_name == route_name and req.matchdict == matchdict:
+        <a class="active item" href="${req.route_url(route_name, **matchdict)}">${text}</a>
+      %else:
+        <a class="item" href="${req.route_url(route_name, **matchdict)}">${text}</a>
+      %endif
+    </%def>
+
+    <span class="item">Settings</span>
+    <span class="item-container">
+      ${link_to('carrell.settings', 'Account')}
+      ${link_to('carrell.settings.section', 'Email', matchdict={'section': 'email'})}
+      ${link_to('carrell.settings.section', 'Password', matchdict={'section': 'password'})}
+    </span>
+  </span>
 
   <hr>
   <h6 class="section-title">LEAVE CARRELL</h6>

@@ -11,6 +11,7 @@ BASE_URL = 'http://{}:{}'.format(TEST_HOST, TEST_PORT)
 class ServerThread(threading.Thread):
     def __init__(self, app):
         threading.Thread.__init__(self)
+
         self.app = app
         self.srv = None
 

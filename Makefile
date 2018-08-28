@@ -89,7 +89,8 @@ routetest:
 
 # integration tests
 browsertest:
-	ENV=test py.test -c 'config/testing.ini' -s -v \
+	ENV=test TEST_DOMAIN=localhost TEST_SESSION_COOKIE_DOMAIN=localhost \
+	  py.test -c 'config/testing.ini' -s -v \
 	  --driver Firefox --driver-path ./bin/geckodriver test/integration
 .PHONY: browsertest
 

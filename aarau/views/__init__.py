@@ -47,7 +47,6 @@ def includeme(config):
     """
     config.include('.signup')
 
-    config.include('.settings')
     config.include('.project')
 
     config.include('.site')

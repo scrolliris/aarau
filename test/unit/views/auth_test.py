@@ -13,7 +13,7 @@ def setup(config):  # pylint: disable=unused-argument
 def test_login(dummy_request):
     from aarau.views.auth import login
 
-    referrer = 'http://localhost/'
+    referrer = 'http://example.org/'
     dummy_request.user = None
     dummy_request.referrer = referrer
     res = login(dummy_request)
@@ -25,7 +25,7 @@ def test_login_as_logged_in_user_with_referrer(
         users, dummy_request):
     from aarau.views.auth import login
 
-    referrer = 'http://localhost/settings'
+    referrer = 'http://example.org/settings'
     dummy_request.user = users['oswald']
     dummy_request.referrer = referrer
     res = login(dummy_request)
@@ -137,6 +137,6 @@ def test_logout_as_logged_in_user(users, dummy_request):
     res = logout(dummy_request)
 
     assert '302 Found' == res.status
-    assert 'http://localhost/' == res.location
+    assert 'http://example.org/' == res.location
     # it should be empty
     assert 'auth_tkt=;' in res.headers['Set-Cookie']

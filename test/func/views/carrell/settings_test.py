@@ -19,6 +19,7 @@ def setup(request, config, mailbox):  # pylint: disable=unused-argument
 def test_settings(users, login_as, dummy_app):
     user = users['oswald']
     with login_as(user):
+        dummy_app = dummy_app.switch_target('carrell')
         res = dummy_app.get('/settings', status=200)
         assert b'Account' in res.body
 
@@ -26,6 +27,7 @@ def test_settings(users, login_as, dummy_app):
 def test_settings_account_with_empty_params(users, login_as, dummy_app):
     user = users['oswald']
     with login_as(user):
+        dummy_app = dummy_app.switch_target('carrell')
         res = dummy_app.get('/settings/account', status=200)
         assert b'Account' in res.body
 
@@ -33,6 +35,7 @@ def test_settings_account_with_empty_params(users, login_as, dummy_app):
 def test_settings_email_with_empty_params(users, login_as, dummy_app):
     user = users['oswald']
     with login_as(user):
+        dummy_app = dummy_app.switch_target('carrell')
         res = dummy_app.get('/settings/email', status=200)
         assert b'Email' in res.body
 
@@ -46,6 +49,7 @@ def test_settings_email_with_invalid_csrf(users, login_as, params, dummy_app):
     with login_as(user):
         params['new_email'] = user.email
         params['submit'] = '1'
+        dummy_app = dummy_app.switch_target('carrell')
         res = dummy_app.post('/settings/email', params=params, status=400)
 
         assert 'text/plain' == res.content_type
@@ -57,6 +61,7 @@ def test_settings_email_with_pending_email(users, login_as, dummy_app):
 
     user = users['henry']
     with login_as(user):
+        dummy_app = dummy_app.switch_target('carrell')
         user_email = user.emails.where(  # pending
             UserEmail.type == 'normal',
             UserEmail.activation_state == 'pending').get()
@@ -71,7 +76,7 @@ def test_settings_email_with_pending_email(users, login_as, dummy_app):
         }
 
         res = dummy_app.post('/settings/email', params=params, status=302)
-        assert 'http://localhost/settings/email' == res.location
+        assert 'http://carrell.example.org/settings/email' == res.location
         res = res.follow(status=200)
         assert '200 OK' == res.status
         res.charset = None
@@ -84,6 +89,7 @@ def test_settings_email_with_invalid_email(users, login_as, dummy_app):
 
     user = users['oswald']
     with login_as(user):
+        dummy_app = dummy_app.switch_target('carrell')
         res = dummy_app.get('/settings/email', status=200)
         res.charset = None
         token = res.html.select_one('input[name=csrf_token]')['value']
@@ -111,6 +117,7 @@ def test_settings_email_with_valid_email(users, login_as, dummy_app):
 
     user = users['oswald']
     with login_as(user):
+        dummy_app = dummy_app.switch_target('carrell')
         res = dummy_app.get('/settings/email', status=200)
         res.charset = None
         token = res.html.select_one('input[name=csrf_token]')['value']
@@ -152,6 +159,7 @@ def test_settings_email_activate_with_expired_token(
 
         params = {'token': user_email.activation_token}
 
+        dummy_app = dummy_app.switch_target('carrell')
         res = dummy_app.get(
             '/settings/email/confirm/{0:s}'.format(params['token']),
             status=302)
@@ -185,6 +193,7 @@ def test_settings_email_activate_with_badsignature_error(
 
         params = {'token': user_email.activation_token}
 
+        dummy_app = dummy_app.switch_target('carrell')
         res = dummy_app.get(
             '/settings/email/confirm/{0:s}'.format(params['token']),
             status=302)
@@ -207,6 +216,7 @@ def test_settings_email_activate_with_valid_token(users, login_as, dummy_app):
 
         params = {'token': user_email.activation_token}
 
+        dummy_app = dummy_app.switch_target('carrell')
         res = dummy_app.get(
             '/settings/email/confirm/{0:s}'.format(params['token']),
             status=302)
@@ -229,6 +239,7 @@ def test_settings_email_delete_with_invalid_email(
         users, login_as, user_email, dummy_app):
     user = users['henry']
     with login_as(user):
+        dummy_app = dummy_app.switch_target('carrell')
         res = dummy_app.get('/settings/email', status=200)
         res.charset = None
         token = res.html.select_one('input[name=csrf_token]')['value']
@@ -258,6 +269,7 @@ def test_settings_email_delete_with_valid_email(
             UserEmail.type == 'normal',
             UserEmail.activation_state == 'pending').get()
 
+        dummy_app = dummy_app.switch_target('carrell')
         res = dummy_app.get('/settings/email', status=200)
         res.charset = None
         token = res.html.select_one('input[name=csrf_token]')['value']
@@ -292,6 +304,7 @@ def test_settings_email_change_with_invalid_email(
             UserEmail.type == 'normal',
             UserEmail.activation_state == 'pending').get()
 
+        dummy_app = dummy_app.switch_target('carrell')
         res = dummy_app.get('/settings/email', status=200)
         res.charset = None
         token = res.html.select_one('input[name=csrf_token]')['value']
@@ -325,6 +338,7 @@ def test_settings_email_change_with_valid_email(
             UserEmail.type == 'normal',
             UserEmail.activation_state == 'active').get()
 
+        dummy_app = dummy_app.switch_target('carrell')
         res = dummy_app.get('/settings/email', status=200)
         res.charset = None
         token = res.html.select_one('input[name=csrf_token]')['value']
@@ -350,6 +364,7 @@ def test_settings_email_change_with_valid_email(
 def test_settings_password_with_empty_params(users, login_as, dummy_app):
     user = users['oswald']
     with login_as(user):
+        dummy_app = dummy_app.switch_target('carrell')
         res = dummy_app.get('/settings/password', status=200)
         assert b'Password' in res.body
 
@@ -366,6 +381,8 @@ def test_settings_password_with_invalid_csrf(
         params['new_password'] = 'wrong'
         params['new_password_confirmation'] = 'wrong'
         params['submit'] = '1'
+
+        dummy_app = dummy_app.switch_target('carrell')
         res = dummy_app.post('/settings/password', params=params, status=400)
 
         assert 'text/plain' == res.content_type
@@ -376,6 +393,7 @@ def test_settings_password_with_validation_errors(
         users, login_as, dummy_app):
     user = users['oswald']
     with login_as(user):
+        dummy_app = dummy_app.switch_target('carrell')
         res = dummy_app.get('/settings/password', status=200)
         res.charset = None
         form = res.forms['change_password']
@@ -397,6 +415,7 @@ def test_settings_password_with_valid_credentials(
         users, login_as, dummy_app):
     user = users['oswald']
     with login_as(user):
+        dummy_app = dummy_app.switch_target('carrell')
         res = dummy_app.get('/settings/password', status=200)
         res.charset = None
         form = res.forms['change_password']
@@ -406,7 +425,7 @@ def test_settings_password_with_valid_credentials(
         res = form.submit('submit', value='Change')
 
         assert '302 Found' == res.status
-        assert 'http://localhost/settings/password' == res.location
+        assert 'http://carrell.example.org/settings/password' == res.location
 
         res = res.follow(status=200)
         res.charset = None

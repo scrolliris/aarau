@@ -20,7 +20,7 @@ def setup(request, config, mailer_outbox):  # pylint: disable=unused-argument
 
 
 def assert_user_email_forms(user_emails, email_forms):
-    from aarau.views.settings.form import (
+    from aarau.views.carrell.settings.form import (
         FailureForm,
         ChangeEmailForm,
         DeleteEmailForm,
@@ -39,7 +39,7 @@ def assert_user_email_forms(user_emails, email_forms):
 
 
 def test_settings_account(users, dummy_request):
-    from aarau.views.settings.action import settings_account
+    from aarau.views.carrell.settings.action import settings_account
 
     dummy_request.user = users['oswald']
     res = settings_account(dummy_request)
@@ -48,8 +48,8 @@ def test_settings_account(users, dummy_request):
 
 
 def test_settings_email_with_empty_params(users, dummy_request):
-    from aarau.views.settings.action import settings_email
-    from aarau.views.settings.form import NewEmailForm
+    from aarau.views.carrell.settings.action import settings_email
+    from aarau.views.carrell.settings.form import NewEmailForm
 
     user = users['oswald']
     dummy_request.user = user
@@ -63,8 +63,8 @@ def test_settings_email_with_empty_params(users, dummy_request):
 
 
 def test_settings_email_with_missing_csrf(users, dummy_request):
-    from aarau.views.settings.action import settings_email
-    from aarau.views.settings.form import NewEmailForm
+    from aarau.views.carrell.settings.action import settings_email
+    from aarau.views.carrell.settings.form import NewEmailForm
 
     user = users['oswald']
     new_email = 'new.oswald@example.org'
@@ -86,8 +86,8 @@ def test_settings_email_with_missing_csrf(users, dummy_request):
 
 
 def test_settings_email_with_invalid_csrf(users, dummy_request):
-    from aarau.views.settings.action import settings_email
-    from aarau.views.settings.form import NewEmailForm
+    from aarau.views.carrell.settings.action import settings_email
+    from aarau.views.carrell.settings.form import NewEmailForm
 
     user = users['oswald']
     new_email = 'new.oswald@example.org'
@@ -110,7 +110,7 @@ def test_settings_email_with_invalid_csrf(users, dummy_request):
 
 def test_settings_email_with_pending_email(
         users, dummy_request):
-    from aarau.views.settings.action import settings_email
+    from aarau.views.carrell.settings.action import settings_email
 
     user = users['henry']
     dummy_request.user = user
@@ -128,8 +128,8 @@ def test_settings_email_with_pending_email(
 
 
 def test_settings_email_with_invalid_email(users, dummy_request):
-    from aarau.views.settings.action import settings_email
-    from aarau.views.settings.form import NewEmailForm
+    from aarau.views.carrell.settings.action import settings_email
+    from aarau.views.carrell.settings.form import NewEmailForm
 
     user = users['oswald']
     dummy_request.user = user
@@ -150,7 +150,7 @@ def test_settings_email_with_invalid_email(users, dummy_request):
 
 
 def test_settings_email_with_valid_email(users, dummy_request):
-    from aarau.views.settings.action import settings_email
+    from aarau.views.carrell.settings.action import settings_email
 
     dummy_request.user = users['oswald']
     dummy_request.POST = MultiDict({
@@ -171,7 +171,7 @@ def test_settings_email_with_valid_email(users, dummy_request):
 def test_settings_email_activate_with_invalid_token(
         users, dummy_request):
     from pyramid.httpexceptions import HTTPNotFound
-    from aarau.views.settings.action import settings_email_activate
+    from aarau.views.carrell.settings.action import settings_email_activate
 
     dummy_request.user = users['oswald']
     dummy_request.matchdict = {
@@ -186,7 +186,7 @@ def test_settings_email_activate_with_invalid_token(
 
 def test_settings_email_activate_with_expired_token(
         users, dummy_request):
-    from aarau.views.settings.action import settings_email_activate
+    from aarau.views.carrell.settings.action import settings_email_activate
     from aarau.models.user_email import UserEmail
 
     user_email = users['henry'].emails.where(
@@ -205,7 +205,7 @@ def test_settings_email_activate_with_expired_token(
 
 def test_settings_email_activate_with_unexpected_error(
         users, dummy_request):
-    from aarau.views.settings.action import settings_email_activate
+    from aarau.views.carrell.settings.action import settings_email_activate
     from aarau.models.user_email import UserEmail
 
     user_email = users['weenie'].emails.where(
@@ -235,7 +235,7 @@ def test_settings_email_activate_with_unexpected_error(
 
 def test_settings_email_activate_with_valid_token(
         users, dummy_request):
-    from aarau.views.settings.action import settings_email_activate
+    from aarau.views.carrell.settings.action import settings_email_activate
     from aarau.models.user_email import UserEmail
 
     user_email = users['weenie'].emails.where(
@@ -255,7 +255,7 @@ def test_settings_email_activate_with_valid_token(
 
 def test_settings_email_delete_with_primary_email(
         users, dummy_request):
-    from aarau.views.settings.action import settings_email_delete
+    from aarau.views.carrell.settings.action import settings_email_delete
     from aarau.models.user_email import UserEmail
 
     user_email = users['weenie'].emails.where(
@@ -276,7 +276,7 @@ def test_settings_email_delete_with_primary_email(
 
 def test_settings_email_delete_with_valid_email(
         users, dummy_request):
-    from aarau.views.settings.action import settings_email_delete
+    from aarau.views.carrell.settings.action import settings_email_delete
     from aarau.models.user_email import UserEmail
 
     user_email = users['henry'].emails.where(
@@ -298,7 +298,7 @@ def test_settings_email_delete_with_valid_email(
 
 def test_settings_email_change_with_missing_csrf(
         users, dummy_request):
-    from aarau.views.settings.action import settings_email_change
+    from aarau.views.carrell.settings.action import settings_email_change
     from aarau.models.user_email import UserEmail
 
     user = users['oswald']
@@ -319,7 +319,7 @@ def test_settings_email_change_with_missing_csrf(
 
 def test_settings_email_change_with_invalid_csrf(
         users, dummy_request):
-    from aarau.views.settings.action import settings_email_change
+    from aarau.views.carrell.settings.action import settings_email_change
     from aarau.models.user_email import UserEmail
 
     user = users['oswald']
@@ -340,7 +340,7 @@ def test_settings_email_change_with_invalid_csrf(
 
 def test_settings_email_change_with_current_primary_email(
         users, dummy_request):
-    from aarau.views.settings.action import settings_email_change
+    from aarau.views.carrell.settings.action import settings_email_change
 
     user = users['oswald']
     dummy_request.user = user
@@ -357,7 +357,7 @@ def test_settings_email_change_with_current_primary_email(
 
 
 def test_settings_email_change(users, dummy_request):
-    from aarau.views.settings.action import settings_email_change
+    from aarau.views.carrell.settings.action import settings_email_change
     from aarau.models.user_email import UserEmail
 
     user = users['oswald']
@@ -377,8 +377,8 @@ def test_settings_email_change(users, dummy_request):
 
 
 def test_settings_password_with_empty_params(users, dummy_request):
-    from aarau.views.settings.action import settings_password
-    from aarau.views.settings.form import ChangePasswordForm
+    from aarau.views.carrell.settings.action import settings_password
+    from aarau.views.carrell.settings.form import ChangePasswordForm
 
     dummy_request.user = users['oswald']
     dummy_request.POST = MultiDict({})
@@ -388,8 +388,8 @@ def test_settings_password_with_empty_params(users, dummy_request):
 
 
 def test_settings_password_with_invalid_csrf(users, dummy_request):
-    from aarau.views.settings.action import settings_password
-    from aarau.views.settings.form import ChangePasswordForm
+    from aarau.views.carrell.settings.action import settings_password
+    from aarau.views.carrell.settings.form import ChangePasswordForm
 
     dummy_request.user = users['oswald']
     dummy_request.POST = MultiDict({
@@ -408,8 +408,8 @@ def test_settings_password_with_invalid_csrf(users, dummy_request):
 
 def test_settings_password_with_wrong_current_password(
         users, dummy_request):
-    from aarau.views.settings.action import settings_password
-    from aarau.views.settings.form import ChangePasswordForm
+    from aarau.views.carrell.settings.action import settings_password
+    from aarau.views.carrell.settings.form import ChangePasswordForm
 
     dummy_request.user = users['oswald']
     dummy_request.POST = MultiDict({
@@ -428,8 +428,8 @@ def test_settings_password_with_wrong_current_password(
 
 def test_settings_password_with_invalid_new_password(
         users, dummy_request):
-    from aarau.views.settings.action import settings_password
-    from aarau.views.settings.form import ChangePasswordForm
+    from aarau.views.carrell.settings.action import settings_password
+    from aarau.views.carrell.settings.form import ChangePasswordForm
 
     dummy_request.user = users['oswald']
     dummy_request.POST = MultiDict({
@@ -450,8 +450,8 @@ def test_settings_password_with_invalid_new_password(
 
 def test_settings_password_with_invalid_new_password_confirmation(
         users, dummy_request):
-    from aarau.views.settings.action import settings_password
-    from aarau.views.settings.form import ChangePasswordForm
+    from aarau.views.carrell.settings.action import settings_password
+    from aarau.views.carrell.settings.form import ChangePasswordForm
 
     dummy_request.user = users['oswald']
     dummy_request.POST = MultiDict({
@@ -471,7 +471,7 @@ def test_settings_password_with_invalid_new_password_confirmation(
 
 
 def test_settings_password_with_valid_params(users, dummy_request):
-    from aarau.views.settings.action import settings_password
+    from aarau.views.carrell.settings.action import settings_password
 
     dummy_request.user = users['oswald']
     dummy_request.POST = MultiDict({

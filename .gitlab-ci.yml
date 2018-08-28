@@ -221,6 +221,8 @@ test:
 #    APT_CACHE_DIR: apt-cache
 #    PIP_CACHE_DIR: pip-cache
 #    ENV: test
+#    TEST_DOMAIN: localhost
+#    TEST_SESSION_COOKIE_DOMAIN: localhost
 #    POSTGRES_DB: aarau_test
 #    POSTGRES_USER: aarau
 #    POSTGRES_PASSWORD: aarau

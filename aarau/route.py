@@ -82,6 +82,16 @@ def define_carrell_routes(c):
     c.add_route('carrell.top', '/')
     c.add_route('carrell.read', '/read')
 
+    # settings
+    c.add_route('carrell.settings', '/settings')
+    c.add_route('carrell.settings.section', '/settings/{section}')
+    c.add_route('carrell.settings.email_delete',
+                '/settings/email/delete')
+    c.add_route('carrell.settings.email_change',
+                '/settings/email/change')
+    c.add_route('carrell.settings.email_activate',
+                '/settings/email/confirm/{token}')
+
 
 def define_registry_routes(c, namespace):
     c.add_route('registry.search', '/')
@@ -138,7 +148,7 @@ def define_console_routes(c, namespace):
                 '/{namespace}/{slug}/editor',
                 custom_predicates=(namespace,))
     c.add_route('console.article.editor.edit',
-                '/{namespace}/{slug}/editor',  # code={code}
+                '/{namespace}/{slug}/editor',
                 custom_predicates=(namespace,))
 
     # internal api - article
@@ -197,21 +207,10 @@ def includeme(config):
         c.add_route('reset_password.request', '/password/reset')
         c.add_route('reset_password', '/password/reset/{token}')
 
-        # -- login required
+        # login required
         c.add_route('project.new', '/projects/new')
 
-        c.add_route('settings', '/settings')
-        c.add_route('settings.section', '/settings/{section}')
-
-        c.add_route('settings.email_delete',
-                    '/settings/email/delete')
-        c.add_route('settings.email_change',
-                    '/settings/email/change')
-        c.add_route('settings.email_activate',
-                    '/settings/email/confirm/{token}')
-
     # public view
-    # TODO: move to org?
     with subdomain(None) as c:
         c.add_route('publication', '/{namespace}/{slug}')
         c.add_route('article', '/{namespace}/{slug}/{path}')

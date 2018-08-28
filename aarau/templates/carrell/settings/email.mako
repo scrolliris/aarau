@@ -2,9 +2,13 @@
 <%namespace file='aarau:templates/macro/_flash_message.mako' import="render_notice"/>
 <%namespace file='aarau:templates/macro/_title.mako' import="render_title"/>
 
-<%inherit file='aarau:templates/_layout.mako'/>
+<%inherit file='aarau:templates/carrell/_layout.mako'/>
 
 <%block name='title'>${render_title('Email - Settings')}</%block>
+
+<%block name='sidebar'>
+  <%include file='aarau:templates/carrell/settings/_sidebar.mako'/>
+</%block>
 
 <%
   is_failure = (len(req.session.peek_flash('failure')) > 0)
@@ -13,7 +17,7 @@
 
 <%def name="delete_email_form(f, ue)">
 % if f:
-  <form id="delete_email_${ue.id}" class="delete-email form" action="${req.route_url('settings.email_delete')}" method="post">
+  <form id="delete_email_${ue.id}" class="delete-email form" action="${req.route_url('carrell.settings.email_delete')}" method="post">
     ${f.csrf_token}
     ${f.email(value=ue.email)}
     <button type="submit" name="submit" class="flat petit button" data-tooltip="Cannot undo this action">Delete</button>
@@ -23,7 +27,7 @@
 
 <%def name="change_email_form(f, ue)">
   % if f:
-    <form id="change_email_${ue.id}" class="change-email form" action="${req.route_url('settings.email_change')}" method="post">
+    <form id="change_email_${ue.id}" class="change-email form" action="${req.route_url('carrell.settings.email_change')}" method="post">
       ${f.csrf_token}
       ${f.email(value=ue.email)}
       <button type="submit" name="submit" class="flat petit button">Set as primary</button>
@@ -35,11 +39,7 @@
   <div id="settings">
     <div class="grid">
       <div class="row">
-        <div class="column-3 offset-2 column-v-4 offset-v-1 column-l-16">
-          <%include file='aarau:templates/settings/_menu.mako'/>
-        </div>
-
-        <div class="column-8 column-v-10 column-l-16">
+        <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16">
           ${render_notice()}
 
           <div class="attached header"><h6>Email</h6></div>
@@ -79,7 +79,7 @@
               </tbody>
             </table>
 
-            <form id="add_new_email" class="form${' error' if is_failure else ' success' if is_success else ''}" action="${req.route_url('settings.section', section='email')}" method="post">
+            <form id="add_new_email" class="form${' error' if is_failure else ' success' if is_success else ''}" action="${req.route_url('carrell.settings.section', section='email')}" method="post">
               ${form.csrf_token}
               <div class="row">
                 <div class="required field-10 field-n-16${' error' if form.new_email.errors else ''}">

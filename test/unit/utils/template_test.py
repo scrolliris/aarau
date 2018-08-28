@@ -21,7 +21,7 @@ def setup(config, monkeypatch):  # pylint: disable=unused-argument
 def test_static_url_in_development(dummy_request):
     template_util = TemplateUtil({}, dummy_request)
 
-    expected = 'http://localhost/assets/img/touch-icon-120.png?x=1508764197'
+    expected = 'http://example.org/assets/img/touch-icon-120.png?x=1508764197'
     assert expected == template_util.static_url('img/touch-icon-120.png')
 
 

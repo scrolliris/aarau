@@ -43,7 +43,7 @@
             <a class="item" href="${req.route_url('login', subdomain=None)}">Login</a>
             % else:
               % if req.user.projects:
-                <a class="item" href="${req.route_url('settings')}">Settings</a>
+                <a class="item" href="${req.route_url('carrell.settings')}">Settings</a>
                 <a class="item" href="${req.route_url('console.top')}">Console</a>
               % else:
                 <div class="dropdown-container" align="left">
@@ -51,10 +51,6 @@
                   <label for="getting_started"></label>
                   <a class="action" href="#new_project">New Project</a>
                   <div class="dropdown">
-                    <a class="item" href="${req.route_url('settings')}">
-                      <h6>Settings</h6>
-                      <p class="description">Account Management</p>
-                    </a>
                     <a class="item" href="${req.route_url('carrell.top')}">
                       <h6>Carrell</h6>
                       <p class="description">Reading Room</p>
@@ -62,7 +58,6 @@
                     <a class="disabled item" href="${req.route_url('console.top')}" disabled=disabled>
                       <h6>Console</h6>
                       <p class="description">Writing Workspace.</p>
-                      <span class="note">Create new project, at first.</span>
                     </a>
                   </div>
                 </div>

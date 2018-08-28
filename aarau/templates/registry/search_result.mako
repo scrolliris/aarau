@@ -24,11 +24,6 @@
             % if not req.user:
             <a class="item" href="${req.route_url('signup', subdomain=None)}">Signup</a>
             <a class="item" href="${req.route_url('login', subdomain=None)}">Login</a>
-            % else:
-              <a class="item" href="${req.route_url('settings')}">Settings</a>
-              % if req.user.projects:
-                <a class="item" href="${req.route_url('console.top')}">Console</a>
-              % endif
             % endif
           </div>
         </div>
