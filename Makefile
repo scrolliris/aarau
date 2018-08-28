@@ -141,6 +141,7 @@ catalog: | catalog-compile
 # -- utility
 
 check:
+	pycodestyle --ignore=E402 test aarau
 	flake8
 .PHONY: check
 
