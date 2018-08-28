@@ -1,4 +1,5 @@
 Mon 28 Aug 2018 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
+	* Reorganize make targets (check make help for the descriptions)
 	* Move settings module into carrell
 
 Wed 25 Jul 2018 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
