@@ -3,7 +3,7 @@ stages:
   - vet
   - build
   - test
-  - codequality
+  - quality
 
 code:
   stage: vet
@@ -182,8 +182,8 @@ test:
     POSTGRES_USER: aarau
     POSTGRES_PASSWORD: aarau
   dependencies:
-    - build:i18n
-    - build:pack
+    - i18n
+    - pack
   before_script:
     - mkdir -pv $APT_CACHE_DIR && apt-get -qq update
     - apt-get -qq -o dir::cache::archives="$APT_CACHE_DIR" install -y
@@ -254,8 +254,8 @@ test:
 #  except:
 #    - tags
 
-codequality:
-  stage: codequality
+quality:
+  stage: quality
   image: docker:latest
   services:
     - docker:dind
