@@ -45,6 +45,7 @@ ignore-patterns=
   build*,
   db/seeds/*.yml,
   test/data/*.yml,
+  test/*cache,
   \.env*,
   \.coverage*,
   .*.yml,

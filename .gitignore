@@ -2,6 +2,7 @@ __pycache__/
 *.egg-info/
 *.egg
 .cache
+*_cache
 
 .*-version
 

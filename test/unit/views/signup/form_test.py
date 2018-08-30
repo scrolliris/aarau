@@ -51,11 +51,9 @@ def test_validate_username_uniqueness_with_new_username(mocker, dummy_request):
     dummy_request.params = dummy_request.POST = MultiDict()
     form = build_signup_form(dummy_request)
 
-    # not raised
-    with pytest.raises(Exception):
-        with pytest.raises(ValidationError):
-            field = mocker.Mock('field', data='oswald2')
-            validate_email_uniqueness(form, field)
+    # valid
+    field = mocker.Mock('field', data='oswald2')
+    assert validate_email_uniqueness(form, field) is None
 
 
 def test_validate_email_uniqueness_with_existing_email(
@@ -101,22 +99,18 @@ def test_validate_email_uniqueness_with_pending_expired_email(
     dummy_request.params = dummy_request.POST = MultiDict()
     form = build_signup_form(dummy_request)
 
-    # not raised
-    with pytest.raises(Exception):
-        with pytest.raises(ValidationError):
-            field = mocker.Mock('field', data=user_email.email)
-            validate_email_uniqueness(form, field)
+    # valid
+    field = mocker.Mock('field', data=user_email.email)
+    assert validate_email_uniqueness(form, field) is None
 
 
 def test_validate_email_uniqueness_with_new_email(mocker, dummy_request):
     dummy_request.params = dummy_request.POST = MultiDict()
     form = build_signup_form(dummy_request)
 
-    # not raised
-    with pytest.raises(Exception):
-        with pytest.raises(ValidationError):
-            field = mocker.Mock('field', data='oswald.new@example.org')
-            validate_email_uniqueness(form, field)
+    # valid
+    field = mocker.Mock('field', data='oswald.new@example.org')
+    assert validate_email_uniqueness(form, field) is None
 
 
 def test_username_availability_check(mocker, dummy_request):
