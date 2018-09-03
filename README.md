@@ -26,7 +26,7 @@ https://gitlab.com/scrolliris/scrolliris-console)
 
 ## Requirements
 
-* Python `>= 3.5.5`
+* Python `>= 3.6.6`
 * PostgreSQL `>= 9.6.3`
 * Redis `>= 3.2.0`
 * Memcached `>= 1.4.33`
@@ -44,7 +44,7 @@ https://gitlab.com/scrolliris/scrolliris-console)
 % cd /path/to/aarau
 
 : use python\'s virtualenv
-% python3.5 -m venv venv
+% python3.6 -m venv venv
 % source venv/bin/activate
 (venv) % pip install --upgrade pip setuptools
 
@@ -55,7 +55,7 @@ https://gitlab.com/scrolliris/scrolliris-console)
 (venv) % source venv/bin/activate
 (venv) % npm update --global npm
 (venv) % npm --version
-6.4.0
+6.4.1
 ```
 
 Then, check `make help`.
