@@ -7,6 +7,7 @@
 
 <%block name='breadcrumb'>
 <div class="breadcrumb">
+  <span class="divider">/</span>
   <a class="item" href="${req.route_path('console.top')}">Projects</a>
   <span class="divider">/</span>
   <a class="item" href="${req.route_url('console.project.overview', namespace=project.namespace)}">${project.name}</a>

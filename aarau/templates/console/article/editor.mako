@@ -8,6 +8,7 @@
 
 <%block name='breadcrumb'>
 <div class="breadcrumb">
+  <span class="divider">/</span>
   <%include file='aarau:templates/console/article/_breadcrumb_parent_items.mako'/>
   <a class="item" href="${req.route_path('console.article.list', namespace=project.namespace, slug=site.slug)}">Articles</a>
   <span class="divider">/</span>
@@ -21,6 +22,7 @@
 
 <%block name='right_menu'>
 <div class="right menu">
+  <a class="item" href="${req.route_url('logout')}">Log out</a>
   <label class="item toolbar-show-button" for="toolbar_checkbox" title="Show Toolbar">&#9881;</label>
 </div>
 </%block>

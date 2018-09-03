@@ -7,6 +7,7 @@
 
 <%block name='breadcrumb'>
 <div class="breadcrumb">
+  <span class="divider">/</span>
   <%include file='aarau:templates/console/article/_breadcrumb_parent_items.mako'/>
   <span class="item active">Articles</span>
 </div>

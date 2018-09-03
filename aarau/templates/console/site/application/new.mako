@@ -7,6 +7,7 @@
 
 <%block name='breadcrumb'>
 <div class="breadcrumb">
+  <span class="divider">/</span>
   <%include file='aarau:templates/console/site/application/_breadcrumb_parent_items.mako'/>
   <span class="active item">New Publication</span>
 </div>
@@ -14,8 +15,12 @@
 
 <%block name='sidebar'>
 <div class="sidebar">
-  <%include file='aarau:templates/shared/_sidebar_navi.mako'/>
+  <% locked = cookie.get('console.sidebar') %>
+  <%include file='aarau:templates/shared/_sidebar_navi.mako' args="locked=locked,"/>
   <a class="item active">New Publication</a>
+
+  <hr class="divider">
+  <%include file='aarau:templates/shared/_sidebar_bottom_console.mako' />
 </div>
 </%block>
 

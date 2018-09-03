@@ -8,10 +8,8 @@
 
 <%block name='breadcrumb'>
 <div class="breadcrumb">
-  <a class="item" href="${req.route_path('console.project.overview', namespace=project.namespace)}">${project.name}</a>
   <span class="divider">/</span>
-  <a class="item" href="${req.route_path('console.site.overview', namespace=project.namespace, slug=site.slug)}">${instance.name}</a>
-  <span class="divider">/</span>
+  <%include file='aarau:templates/console/site/application/_breadcrumb_parent_items.mako'/>
   <span class="item active">Insights</span>
 </div>
 </%block>
@@ -33,7 +31,7 @@
 
     <div class="row">
       <div class="column-16">
-        <h3>${instance.name}</h3>
+        <h4>${instance.name}</h4>
         <label class="secondary label">${site.domain}</label>
       </div>
     </div>

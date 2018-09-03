@@ -58,7 +58,11 @@
             <div class="item">
               <%block name='breadcrumb'/>
             </div>
-            <%block name='right_menu'/>
+            <%block name='right_menu'>
+              <div class="right menu">
+                <a class="item" href="${req.route_url('logout')}">Log out</a>
+              </div>
+            </%block>
           </div>
         </header>
 

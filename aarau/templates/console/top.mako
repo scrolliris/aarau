@@ -6,6 +6,10 @@
 <%block name='title'>${render_title('Console')}</%block>
 
 <%block name='breadcrumb'>
+<div class="breadcrumb">
+  <span class="divider">/</span>
+  <span class="active item">Projects</span>
+</div>
 </%block>
 
 <div id="top" class="content">
