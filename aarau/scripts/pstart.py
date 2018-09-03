@@ -1,7 +1,6 @@
 import os
 import sys
 
-import cherrypy
 from pyramid.paster import (
     get_app,
     setup_logging
@@ -31,10 +30,13 @@ def main(argv=None):
     wsgi_app = get_app(config_uri)
     setup_logging(config_uri)
 
+    import cherrypy
+
     cherrypy.tree.graft(wsgi_app, '/')
     cherrypy.server.unsubscribe()
 
     from cherrypy._cpserver import Server
+
     server = Server()
     server.socket_host = env.host
     server.socket_port = env.port
