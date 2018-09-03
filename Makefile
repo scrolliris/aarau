@@ -125,7 +125,7 @@ test\:coverage:  ## Run `test` with coverage outputs
 # -- i18n (translation)
 
 i18n: | i18n\:compile  ## An alias of `i18n:compile`
-.PHONY: i186
+.PHONY: i18n
 
 i18n\:extract:  ## Extract translation targets from code
 	./bin/linguine extract message
@@ -150,12 +150,12 @@ i18n\:update:  ## Update catalog (pot)
 
 i18n\:sync:  ## Fetch translation updates from upstrm (scrolliris/scrolliris-console-translation)
 	./bin/sync-catalog
-.PHONY: local\:sync
+.PHONY: i18n\:sync
 
 
 # -- vet
 
-vet: | vet\:code vet\:lint  ## Run `ven:code` and `vet:lint` both (without vet:quality)
+vet: | vet\:code vet\:lint  ## Run `vet:code` and `vet:lint` both (without vet:quality)
 .PHONY: vet
 
 vet\:code:  ## Check pycode code style (pycodestyle)
@@ -212,7 +212,7 @@ expose:  ## Print untracked (volatile) files
 
 deploy:  ## Deploy app to production server
 	./bin/plate $(ACTION) $(VERSION)
-.PHONY: plate
+.PHONY: deploy
 
 help:  ## Display this message
 	@grep -E '^[0-9a-z\:\\]+: ' $(MAKEFILE_LIST) | grep -E '  ##' | \
