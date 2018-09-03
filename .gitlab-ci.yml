@@ -41,6 +41,7 @@ lint:
     - pip --version
     - ENV=development make setup
     - ENV=test make setup
+    - ENV=production make setup
   script:
     - make vet:lint
   cache:
