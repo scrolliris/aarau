@@ -32,3 +32,27 @@ msgstr ""
 
 msgid "page.table.header.total_count"
 msgstr ""
+
+# -- aarau/assets/component/console/article_config_form.js
+msgid "article.path.description"
+msgstr ""
+
+msgid "article.path.label"
+msgstr ""
+
+msgid "article.title.description"
+msgstr ""
+
+msgid "article.title.label"
+msgstr ""
+
+# -- aarau/assets/component/console/article_config_form.js
+# -- aarau/assets/component/console/article_editor_form.js
+msgid "message.sending"
+msgstr ""
+
+msgid "validation.error.max_length"
+msgstr ""
+
+msgid "validation.error.min_length"
+msgstr ""
