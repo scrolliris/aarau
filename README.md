@@ -77,10 +77,10 @@ Don't commit directly the changes on above translation project into this repo.
 ```zsh
 : setup `locale`
 % git remote add translation https://gitlab.com/scrolliris/scrolliris-console-translation.git
-% git subtree add --prefix locale translation master
+% git subtree add --prefix locale console-translation master
 
 : synchronize with updates into specified branch
-% git  pull -s subtree -Xsubtree=locale translation master
+% git  pull -s subtree -Xsubtree=locale console-translation master
 
 : subtree list
 % git log | grep git-subtree-dir | tr -d ' ' | cut -d ":" -f2 | sort | uniq

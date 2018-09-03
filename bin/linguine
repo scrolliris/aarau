@@ -12,7 +12,7 @@ Options:
   -h, --help   display this help and exit
 
 Arguments:
-  <action>   {compile|c},{extract|e},{generate|g},{update|u}
+  <action>   {compile|c},{extract|e},{generate|g},{update|u},{sync|s}
   <domain>   {message,form}
   [locale]   en
 
@@ -21,18 +21,24 @@ Actions:
   extract    extract msgid(s) into *.pot
   generate   create new *.po file with latest *.pot
   update     update *.po using *.pot (template)
+  sync       sync git repo
 
 Examples:
-  % linguine e message
-  % linguine g message en
-  % linguine u form en
-  % linguine c form en
+  % linguine compile message en
+  % linguine extract message
+  % linguine generate message en
+  % linguine update message en
+  % linguine sync
 USG
 }
 
-# see https://gitlab.com/scrolliris/neuchatel
+# see https://gitlab.com/scrolliris/scrolliris-console-translation
 package_name="Neuchâtel"
 package_version="0.1"
+remote_name="console-translation"
+remote_url="https://gitlab.com/scrolliris/scrolliris-console-translation.git"
+remote_branch="master"
+subtree_dir="locale"
 msgid_bugs_address="support@scrolliris.com"
 copyright="Lupine Software LLC"
 
@@ -66,7 +72,7 @@ while [ $# -gt 0 ]; do
       print_usage `basename $0`
       exit 0
       ;;
-    "compile"|"c"|"extract"|"e"|"generate"|"g"|"update"|"u")
+    "compile"|"c"|"extract"|"e"|"generate"|"g"|"update"|"u"|"sync"|"s")
       action="${1}"
       shift
       ;;
@@ -138,11 +144,36 @@ run_compile_command() {
   fi
 }
 
+run_sync_command() {
+  git remote get-url $remote_name
+
+  if [ "${?}" -ne "0" ]; then
+    git remote add $remote_name $remote_url
+  fi
+
+  subtree=$( \
+    git log | \
+    grep git-subtree-dir | \
+    tr -d ' ' | \
+    cut -d ":" -f2 | \
+    sort | \
+    uniq |
+    grep $subtree_dir
+  )
+
+  if [ "${subtree}" = "" ]; then
+    git subtree add --prefix $subtree_dir $remote_name $remote_branch
+  fi
+
+  git pull -s subtree -Xsubtree=$subtree_dir $remote_name $remote_branch
+}
+
 case $action in
   "c") action="compile"  ;;
   "e") action="extract"  ;;
   "g") action="generate" ;;
   "u") action="update"   ;;
+  "s") action="sync"     ;;
 esac
 
 
@@ -152,13 +183,14 @@ if [ "${action}" = "" ]; then
   exit 2
 fi
 
-if [ "${domain}" = "" ]; then
+if [ "${action}" != "sync" ] && [ "${domain}" = "" ]; then
   echo "<domain> is missing"
   print_usage `basename $0`
   exit 2
 fi
 
-if [ "${action}" != "extract" ] && [ "${locale}" = "" ]; then
+if [ "${action}" != "extract" ] && [ "${action}" != "sync" ] && \
+   [ "${locale}" = "" ]; then
   echo "<locale> is missing"
   print_usage `basename $0`
   exit 2
@@ -169,5 +201,6 @@ case $action in
   "extract")  run_extract_command  ;;
   "generate") run_generate_command ;;
   "update")   run_update_command   ;;
+  "sync")     run_sync_command     ;;
   *)          echo 'unknown action'; exit 1 ;;
 esac
