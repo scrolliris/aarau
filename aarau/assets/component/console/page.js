@@ -104,8 +104,8 @@ class PageTable extends Component {
     const { data, page, pageCount } = this.state;
     if (!data) {
       return h('.info.message', null, [
-        h('h6', null, i18n.t('pageEmptyMessageTitle'))
-      , h('p', null, i18n.t('pageEmptyMessageDescription'))
+        h('h6', null, i18n.t('page.empty.message.title'))
+      , h('p', null, i18n.t('page.empty.message.description'))
       ]);
     } else {
       return h('div', null, [
