@@ -7,7 +7,7 @@ stages:
 
 code:
   stage: vet
-  image: python:3.5.4
+  image: python:3.6
   variables:
     ENV: development
     PIP_CACHE_DIR: pip-cache
@@ -28,7 +28,7 @@ code:
 
 lint:
   stage: vet
-  image: python:3.5.4
+  image: python:3.6
   variables:
     APT_CACHE_DIR: apt-cache
     PIP_CACHE_DIR: pip-cache
@@ -63,7 +63,7 @@ i18n:
       gettext
     - node --version
     #- npm cache clean --force
-    - npm install --global npm@6.2.0
+    - npm install --global npm@6.4.1
     - npm --version
     - npm install --only=dev
     - npm install --global i18next-conv
@@ -84,12 +84,12 @@ i18n:
 
 pack:
   stage: build
-  image: node:8.11.3
+  image: node:8.11.4
   variables:
     NODE_ENV: production
   before_script:
     - node --version
-    - npm install --global npm@6.2.0
+    - npm install --global npm@6.4.1
     - npm --version
     #- npm cache clean --force
     - npm install --global gulp-cli
@@ -111,7 +111,7 @@ pack:
 
 doctest:
   stage: test
-  image: python:3.5.4
+  image: python:3.6
   variables:
     APT_CACHE_DIR: apt-cache
     PIP_CACHE_DIR: pip-cache
@@ -147,7 +147,7 @@ jstest:
     - ln -s /opt/firefox/firefox /usr/local/bin/
     - firefox --version
     - node --version
-    - npm install --global npm@6.2.0
+    - npm install --global npm@6.4.1
     - npm --version
     #- npm cache clean --force
     - npm install --global karma-cli
@@ -170,7 +170,7 @@ jstest:
 
 test:
   stage: test
-  image: python:3.5.4
+  image: python:3.6
   services:
     - postgres:9.6
     - redis:3.2
@@ -212,7 +212,7 @@ test:
 #
 #browsertest:
 #  stage: test
-#  image: python:3.5.4
+#  image: python:3.6
 #  services:
 #    - postgres:9.6
 #    - redis:3.2
