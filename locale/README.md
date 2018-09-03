@@ -1,6 +1,6 @@
-# Neuchâtel
+# Scrolliris Console Translation
 
-`/nøʃatɛl/`
+Code Name: `Neuchâtel /nøʃatɛl/`
 
 [![pipeline status][pipeline]][commit]
 
@@ -14,14 +14,13 @@
 Neuchâtel; translatioN projEct Using gnu gettext, it's called neuCHÂTEL
 ```
 
-This is translation project for the Scrolliris [Application](
-https://scrolliris.com/) which called as [Aarau](
-https://gitlab.com/scrolliris/aarau) (code name).
+This is translation project for the [Scrolliris Console](
+https://gitlab.com/scrolliris/scrolliris-console) application.
 
 
 ## Repository
 
-https://gitlab.com/scrolliris/neuchatel
+https://gitlab.com/scrolliris/scrolliris-console-translation
 
 
 ## Requirements
@@ -107,7 +106,7 @@ Open your `terminal` application, follow these steps, normally.
 ```
 
 And then, create a merge request on this [repository](
-https://gitlab.com/scrolliris/neuchatel.git).
+https://gitlab.com/scrolliris/scrolliris-console-translation.git).
 
 ### How to generate new `*.po` file
 
@@ -208,7 +207,7 @@ contact [@scrolliris](https://twitter.com/scrolliris) on Twitter.
 This project is distributed as various licenses by parts.
 
 ```txt
-Neuchâtel
+Scrolliris Console Translation (Neuchâtel)
 Copyright (c) 2017 Lupine Software LLC
 ```
 
@@ -253,5 +252,5 @@ Free Documentation License".
 See [LICENSE](LICENSE).
 
 
-[pipeline]: https://gitlab.com/scrolliris/neuchatel/badges/master/pipeline.svg
-[commit]: https://gitlab.com/scrolliris/neuchatel/commits/master
+[pipeline]: https://gitlab.com/scrolliris/scrolliris-console-translation/badges/master/pipeline.svg
+[commit]: https://gitlab.com/scrolliris/scrolliris-console-translation/commits/master
