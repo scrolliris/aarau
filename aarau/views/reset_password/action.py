@@ -35,10 +35,10 @@ def reset_password_request(request):
                                   allow_duplicate=False)
             return HTTPFound(location=request.route_path(
                 'reset_password.request'))
-        else:
-            request.session.flash(_('reset_password.request.failure'),
-                                  queue='failure',
-                                  allow_duplicate=False)
+
+        request.session.flash(_('reset_password.request.failure'),
+                              queue='failure',
+                              allow_duplicate=False)
     return dict(form=form)
 
 
@@ -72,7 +72,7 @@ def reset_password(request):
             request.session.flash(_('reset_password.update.success'),
                                   queue='success', allow_duplicate=False)
             return HTTPFound(location=request.route_path('login'))
-        else:
-            request.session.flash(_('reset_password.update.failure'),
-                                  queue='failure', allow_duplicate=False)
+
+        request.session.flash(_('reset_password.update.failure'),
+                              queue='failure', allow_duplicate=False)
     return dict(token=token, form=form)

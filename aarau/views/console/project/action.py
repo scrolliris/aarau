@@ -70,9 +70,9 @@ def project_new(req):
             next_path = req.route_path(
                 'console.project.overview', namespace=project.namespace)
             return HTTPFound(location=next_path)
-        else:
-            req.session.flash(_('project.creation.failure'),
-                              queue='failure', allow_duplicate=False)
+
+        req.session.flash(_('project.creation.failure'),
+                          queue='failure', allow_duplicate=False)
     return dict(form=form)
 
 
@@ -105,7 +105,7 @@ def project_edit(req):
                               queue='success', allow_duplicate=False)
             return HTTPFound(location=req.route_path(
                 'console.project.overview', namespace=project.namespace))
-        else:
-            req.session.flash(_('project.update.failure'),
-                              queue='failure', allow_duplicate=False)
+
+        req.session.flash(_('project.update.failure'),
+                          queue='failure', allow_duplicate=False)
     return dict(form=form, project=project)

@@ -171,9 +171,8 @@ Create manually by your self for now.
 
 ### Style, Lint and Analyze
 
-* flake8
-* flake8-docstrings (pep257)
 * pycodestyle
+* pydocstyle
 * pylint
 * eslint
 * codeclimate
@@ -181,10 +180,7 @@ Create manually by your self for now.
 #### Python
 
 ```zsh
-: add hook
-(venv) % flake8 --install-hook git
-
-(venv) % make vet:code
+(venv) % make vet:style
 (venv) % make vet:lint
 
 : run both

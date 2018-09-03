@@ -1,7 +1,7 @@
 from google.cloud import datastore
 
 
-class SiteReplicator(object):
+class SiteReplicator():
     """Service object for checking site cache replication status."""
 
     KIND = 'site'

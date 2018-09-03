@@ -45,11 +45,8 @@ development_requires = [
     'colorlog',
     'waitress',
 
-    'flake8',
-    'flake8_docstrings',
     'pydocstyle',
     'pycodestyle',
-    'pyflakes',
     'pylint',
 ]
 

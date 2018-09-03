@@ -21,6 +21,7 @@ NAMESPACE_PATTERN_INVALID = r'\A((?!--).)*\Z'
 def namespace_duplication_check(form, field):
     from aarau.models.project import Project
 
+    # pylint: disable=assignment-from-no-return
     query = Project.select().where(
         Project.namespace == field.data)
 
@@ -38,7 +39,7 @@ def namespace_availability_check(form, field):
     return checker(form, field)
 
 
-class ProjectFormBaseMixin(object):
+class ProjectFormBaseMixin():
     name = StringField('Name', [
         v.Required(),
         v.Length(min=6, max=32),

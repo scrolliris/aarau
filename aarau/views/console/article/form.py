@@ -19,8 +19,10 @@ PATH_PATTERN_INVALID = r'\A((?!--).)*\Z'
 def path_duplication_check(form, field):
     from aarau.models.article import Article
 
+    # pylint: disable=assignment-from-no-return
     query = Article.select().where(
         Article.path == field.data)
+
     if hasattr(form, 'current_article') and form.current_article:
         # allow itself
         query = query.where(
@@ -34,7 +36,7 @@ def path_availability_check(form, field):
     return checker(form, field)
 
 
-class ArticleBaseMixin(object):
+class ArticleBaseMixin():
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._article = None

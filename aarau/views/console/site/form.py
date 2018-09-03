@@ -25,7 +25,7 @@ def slug_availability_check(form, field):
     return checker(form, field)
 
 
-class SiteInstanceMixin(object):
+class SiteInstanceMixin():
     slug = StringField('Slug', [
         v.Required(),
         v.Regexp(SLUG_PATTERN),
@@ -49,17 +49,20 @@ class SiteInstanceMixin(object):
     def validate_slug(self, field):   # pylint: disable=no-self-use
         from aarau.models.site import Site
 
+        # pylint: disable=assignment-from-no-return
         query = Site.select().where(
             Site.slug == field.data)
+
         if hasattr(self, 'current_site') and self.current_site:
             # allow itself
             query = query.where(
                 Site.id != self.current_site.id)
+
         if query.first():
             raise ValidationError('Slug is already taken.')
 
 
-class SiteForm(object):
+class SiteForm():
     class ApplicationBaseMixin(SiteInstanceMixin):
         domain = StringField('Domain', [
             v.Required(),
@@ -204,11 +207,11 @@ def build_site_form(req, site=None):
         if site.is_dirty():
             if site.type == 'application':
                 return build_new_application_site_form(req)
-            elif site.type == 'publication':
+            if site.type == 'publication':
                 return build_new_publication_site_form(req)
         if site.type == 'application':
             return build_edit_application_site_form(req, site)
-        elif site.type == 'publication':
+        if site.type == 'publication':
             return build_edit_publication_site_form(req, site)
         return None
     except AttributeError:

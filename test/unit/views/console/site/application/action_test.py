@@ -141,7 +141,7 @@ def test_application_site_new_post(mocker, users, dummy_request):
         'namespace': project.namespace
     }
 
-    class DummyService(object):
+    class DummyService():
         # pylint: disable=no-self-use
         def assign(self, *_args, **_kwargs):
             pass
@@ -165,8 +165,8 @@ def test_application_site_new_post(mocker, users, dummy_request):
     project.refresh()
     applications = project.applications
     assert 2 == len(applications)
-    assert 1 == len(list(filter(lambda s: s.application.name ==
-                                'New Test Application', applications)))
+    assert 1 == len(list(filter(
+        lambda s: s.application.name == 'New Test Application', applications)))
 
     # pylint: disable=no-member
     assert 1 == dummy_service.assign.call_count
@@ -326,7 +326,7 @@ def test_application_site_settings_scripts_missing_project(
         'slug': site.slug,
     }
 
-    class DummyService(object):
+    class DummyService():
         # pylint: disable=no-self-use
         def assign(self, *_args, **_kwargs):
             pass
@@ -364,7 +364,7 @@ def test_application_site_settings_scripts_missing_site(
         'slug': '',  # invalid
     }
 
-    class DummyService(object):
+    class DummyService():
         # pylint: disable=no-self-use
         def assign(self, *_args, **_kwargs):
             pass
@@ -402,7 +402,7 @@ def test_application_site_settings_scripts(mocker, users, dummy_request):
         'slug': site.slug,
     }
 
-    class DummyService(object):
+    class DummyService():
         # pylint: disable=no-self-use
         def assign(self, *_args, **_kwargs):
             pass

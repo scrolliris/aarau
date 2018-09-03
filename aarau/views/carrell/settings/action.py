@@ -50,9 +50,9 @@ def settings_email(request):
             request.session.flash(_('settings.email.addition.success'),
                                   queue='success', allow_duplicate=False)
             return HTTPFound(location=next_path)
-        else:
-            request.session.flash(_('settings.email.addition.failure'),
-                                  queue='failure', allow_duplicate=False)
+
+        request.session.flash(_('settings.email.addition.failure'),
+                              queue='failure', allow_duplicate=False)
 
     email_forms = {}
     for user_email in user_emails:
@@ -108,9 +108,9 @@ def settings_email_delete(request):
             user_email.delete_instance()
             request.session.flash(_('settings.email.deletion.success'),
                                   queue='success', allow_duplicate=False)
-        else:
-            request.session.flash(_('settings.email.deletion.failure'),
-                                  queue='failure', allow_duplicate=False)
+
+        request.session.flash(_('settings.email.deletion.failure'),
+                              queue='failure', allow_duplicate=False)
 
     return HTTPFound(location=request.route_path(
         'carrell.settings.section', section='email'))
@@ -137,9 +137,9 @@ def settings_email_change(req):
 
             req.session.flash(_('settings.email.change.success'),
                               queue='success', allow_duplicate=False)
-        else:
-            req.session.flash(_('settings.email.change.failure'),
-                              queue='failure', allow_duplicate=False)
+
+        req.session.flash(_('settings.email.change.failure'),
+                          queue='failure', allow_duplicate=False)
 
     return HTTPFound(location=req.route_path(
         'carrell.settings.section', section='email'))
@@ -165,10 +165,10 @@ def settings_password(request):
                                       queue='success', allow_duplicate=False)
                 return HTTPFound(location=request.route_path(
                     'carrell.settings.section', section='password'))
-            else:
-                request.session.flash(_('settings.password.change.invalid'),
-                                      queue='failure', allow_duplicate=False)
-        else:
-            request.session.flash(_('settings.password.change.failure'),
+
+            request.session.flash(_('settings.password.change.invalid'),
                                   queue='failure', allow_duplicate=False)
+
+        request.session.flash(_('settings.password.change.failure'),
+                              queue='failure', allow_duplicate=False)
     return dict(form=form)

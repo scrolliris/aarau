@@ -7,7 +7,7 @@ from pyramid.static import QueryStringConstantCacheBuster
 from aarau.env import Env
 
 
-class SubdomainPredicate(object):
+class SubdomainPredicate():
     def __init__(self, val, _config):
         self.val = val
 

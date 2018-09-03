@@ -30,7 +30,6 @@ def dotenv() -> None:
     # same as aarau:main
     dotenv_file = os.path.join(TEST_DIR, '..', '.env')
     load_dotenv_vars(dotenv_file)
-    return
 
 
 @pytest.fixture(scope='session')
@@ -225,10 +224,10 @@ def config(request, settings) -> Configurator:
 
 
 @pytest.fixture(scope='function')
-def dummy_request(db, settings, extra_environ) -> Request:
+def dummy_request(config, db, settings, extra_environ) -> Request:
     from pyramid import testing
-    from pyramid_services import find_service
-    from zope.interface.adapter import AdapterRegistry
+    from pyramid.interfaces import IRequest
+    from pyramid_services import find_service, IServiceRegistry
     from aarau.utils.localization import get_translator_function
 
     locale_name = 'en'
@@ -249,8 +248,12 @@ def dummy_request(db, settings, extra_environ) -> Request:
         host_url=url,
         path_url=url,
     )
+
     # for service objects
-    req.service_cache = AdapterRegistry()
+    registry = config.registry.getUtility(IServiceRegistry)
+    container = registry.create_container()
+    container.set(req, IRequest)
+    req.services = container
     req.find_service = (lambda *args, **kwargs:
                         find_service(req, *args, **kwargs))
 
@@ -364,7 +367,7 @@ def dummy_app(router, extra_environ) -> 'function':
 def mailbox(dummy_app, get_mailer):
     """Returns mailbox user interface for out going emails."""
     # TODO: Mock `http` type.
-    class Mailbox(object):
+    class Mailbox():
         def __init__(self, request):
             # pylint: disable=too-many-function-args
             self._mailer = get_mailer(dummy_app.app.registry)

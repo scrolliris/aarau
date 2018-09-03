@@ -145,7 +145,7 @@ def before_delete_deleted_at_mixin(_model_class, instance):
     instance.deleted_at = datetime.utcnow()
 
 
-class TokenizerMixin(object):
+class TokenizerMixin():
     """Mixin for token fiels and utilities."""
 
     @reify
@@ -174,7 +174,7 @@ class TokenizerMixin(object):
             return {}
 
 
-class CodeMixin(object):
+class CodeMixin():
     """Mixin has utility methods to treat code field."""
 
     @classmethod
@@ -197,7 +197,7 @@ class CodeMixin(object):
         return code
 
 
-class KeyMixin(object):
+class KeyMixin():
     """Mixin has has key fields which are generated with UUID."""
 
     @classmethod

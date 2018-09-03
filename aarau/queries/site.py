@@ -1,6 +1,6 @@
 from pyramid.httpexceptions import HTTPNotFound
 
-from aarau.models import (  # noqa  # pylint: disable=unused-import
+from aarau.models import (  # pylint: disable=unused-import
     Site,
     Project,
     Application,

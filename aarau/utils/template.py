@@ -79,7 +79,7 @@ def formatting(*args: tuple) -> 'function':
     return __formatting
 
 
-class TemplateUtil(object):
+class TemplateUtil():
     # pylint: disable=no-self-use
     """The utility for templates.
 

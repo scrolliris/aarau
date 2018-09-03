@@ -137,7 +137,7 @@ def test_publication_site_new_post(mocker, users, dummy_request):
     submit_body = {
         'csrf_token': dummy_request.session.get_csrf_token(),
         'slug': 'new-piano-publication',
-        'publication-name': 'New Piano Publication',
+        'publication-name': 'New Test Publication',
         'publication-license': license_id,
         'publication-classification': classification_id,
         'publication-copyright': '2017 Oswald & Weenie',
@@ -153,7 +153,7 @@ def test_publication_site_new_post(mocker, users, dummy_request):
         'namespace': project.namespace
     }
 
-    class DummyService(object):
+    class DummyService():
         # pylint: disable=no-self-use
         def assign(self, *_args, **_kwargs):
             pass
@@ -177,8 +177,8 @@ def test_publication_site_new_post(mocker, users, dummy_request):
     project.refresh()
     publications = project.publications
     assert 2 == len(publications)
-    assert 1 == len(list(filter(lambda s: s.publication.name ==
-                                'New Piano Publication', publications)))
+    assert 1 == len(list(filter(
+        lambda s: s.publication.name == 'New Test Publication', publications)))
 
     # pylint: disable=no-member
     assert 1 == dummy_service.assign.call_count
@@ -225,7 +225,7 @@ def test_publication_site_settings_get_missing_site(
         'slug': ''  # invalid
     }
 
-    class DummyService(object):
+    class DummyService():
         # pylint: disable=no-self-use
         def assign(self, *_args, **_kwargs):
             pass
@@ -267,7 +267,7 @@ def test_publication_site_settings_get(mocker, users, dummy_request):
         'slug': site.slug,
     }
 
-    class DummyService(object):
+    class DummyService():
         # pylint: disable=no-self-use
         def assign(self, *_args, **_kwargs):
             pass
@@ -421,7 +421,7 @@ def test_publication_site_settings_post(mocker, users, dummy_request):
         'slug': site.slug,
     }
 
-    class DummyService(object):
+    class DummyService():
         # pylint: disable=no-self-use
         def assign(self, *_args, **_kwargs):
             pass

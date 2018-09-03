@@ -8,7 +8,7 @@ from datetime import datetime
 from aarau.models.user_email import UserEmail
 
 
-class ActivatorMixin(object):
+class ActivatorMixin():
     def __init__(self, request):
         self.request = request
         self._user = None

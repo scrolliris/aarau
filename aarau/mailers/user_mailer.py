@@ -20,7 +20,7 @@ class Message(BaseMessage):
         super().__init__(**kw)
 
 
-class Mailer(object):
+class Mailer():
     def __init__(self, mailer, message):
         self.mailer = mailer
         self.message = message
@@ -53,7 +53,7 @@ def mail_to(user_email):
     yield [user_email.email]
 
 
-class UserMailer(object):
+class UserMailer():
     def __init__(self, request):
         self.request = request
         self.template = '../templates/user_mailer/{}.text.mako'

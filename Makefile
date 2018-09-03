@@ -155,13 +155,13 @@ i18n\:sync:  ## Fetch translation updates from upstrm (scrolliris/scrolliris-con
 
 # -- vet
 
-vet: | vet\:code vet\:lint  ## Run `vet:code` and `vet:lint` both (without vet:quality)
+vet: | vet\:style vet\:lint  ## Run `vet:style` and `vet:lint` both (without vet:quality)
 .PHONY: vet
 
-vet\:code:  ## Check pycode code style (pycodestyle)
-	pycodestyle --ignore=E402 test aarau
-	flake8
-.PHONY: vet\:code
+vet\:style:  ## Check style using py{code,doc}style (see setup.cfg)
+	pycodestyle test aarau
+	pydocstyle test aarau
+.PHONY: vet\:style
 
 vet\:lint:  ## Lint python codes
 	pylint test ${app}

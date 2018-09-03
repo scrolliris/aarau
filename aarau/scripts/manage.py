@@ -28,7 +28,7 @@ def usage(argv):
     sys.exit(1)
 
 
-class DbCli(object):
+class DbCli():
     """CLI for database (PostgreSQL) management."""
 
     def __init__(self, settings):

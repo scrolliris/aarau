@@ -172,5 +172,5 @@ def test_project_new_post(users, dummy_request):
 
     user.refresh()
     assert 2 == len(user.projects)
-    assert 1 == len(list(filter(lambda p: p.namespace ==
-                                'my-new-project', user.projects)))
+    assert 1 == len(list(filter(
+        lambda p: p.namespace == 'my-new-project', user.projects)))

@@ -64,10 +64,10 @@ def site_new(req):
             next_path = req.route_path(
                 'console.project.overview', namespace=project.namespace)
             return HTTPFound(location=next_path)
-        else:
-            req.session.flash(
-                _('site.{:s}.creation.failure'.format(site.type)),
-                queue='failure', allow_duplicate=False)
+
+        req.session.flash(
+            _('site.{:s}.creation.failure'.format(site.type)),
+            queue='failure', allow_duplicate=False)
 
     req.override_renderer = tpl('new.mako', type_=site.type)
     return dict(form=form, project=project, site=site)

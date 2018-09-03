@@ -15,7 +15,7 @@ def activator_factory(activation_type='user_email'):
     def _activator_factory(_, req):
         if activation_type == 'user_email':
             return UserEmailActivator(req)
-        elif activation_type == 'account':
+        if activation_type == 'account':
             return AccountActivator(req)
         return None
 

@@ -8,7 +8,7 @@ def add_user_renderer_globals(_evt) -> None:
     pass
 
 
-class UserUtil(object):
+class UserUtil():
     """User utility/decorator for templates."""
 
     def __init__(self, context, request, **kwargs):
