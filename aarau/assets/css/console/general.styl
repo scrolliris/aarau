@@ -3,25 +3,29 @@
 @import '../shared/_toolbar.styl'
 
 #console
-  header
-    background-color #ffffff
   .top.menu
+    min-height 2.72rem
     margin 0
-    margin-left 3.33rem
     padding-top 0
     padding-left 0
     padding-right 0
+
     > a.item,
     > span.item
       display block
+
+    // breadcrumbs
     > .item:first-child
-      padding-left 0
+      padding 0.52rem 0 0 1.31rem
+      margin 0
       &:hover
         background none
+
     .right.menu
       .item:first-child
         padding-right 1.62rem
         margin 0
+
   .secondary.menu
     padding-left 0.02rem
 
@@ -37,7 +41,6 @@
       padding-left 0
 
   section.container
-    padding 0.78rem 1.42rem
     // header
     > .row .column-13
       padding-top 0

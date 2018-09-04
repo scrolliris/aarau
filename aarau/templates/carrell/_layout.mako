@@ -48,6 +48,8 @@
 
       ## main container
       <section class="content container">
+        <div class="inner-header"></div>
+
         <header>
           <label class="sidebar-show-button" for="sidebar_checkbox" title="Show Sidebar">&#9776;</label>
           <div class="top menu">

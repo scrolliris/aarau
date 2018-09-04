@@ -5,7 +5,7 @@
 
 <%block name='title'>${render_title('')}</%block>
 
-<div class="site content">
+<div class="article content">
   <div class="site grid">
 
     <div class="row">

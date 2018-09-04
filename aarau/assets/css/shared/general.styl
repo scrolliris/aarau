@@ -1,3 +1,5 @@
+@import './_colour.styl'
+
 // general
 *
   box-sizing border-box
@@ -93,8 +95,28 @@ pre
     border-top 4px solid #888888
     border-radius 0.186rem 0.186rem 0.133rem 0.133rem
 
+header
+  background-color $paper2
+
+.inner-header
+  border-top 3px solid $purple2
+  min-height 2.42rem
+  color $paper2
+  background-color lighten(#565656, 3%)
+  margin 0
+  padding 0.6rem 0 0.6rem 0.6rem
 
 .sidebar
+  .inner-header
+    background-color darken(#565656, 3%)
+    padding 0.5rem 0 0.5rem 0.6rem
+
+.sidebar
+  > .item:not(a):not(span):not(.publication)
+    margin 0
+    padding 0.42rem 0.42rem 0.42rem 0
+    background-color $paper2
+
   .publication.item
     display block
     position relative

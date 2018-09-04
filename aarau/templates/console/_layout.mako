@@ -51,6 +51,8 @@
 
       ## main container
       <section class="content container">
+        <div class="inner-header"></div>
+
         <header>
           <label class="sidebar-show-button" for="sidebar_checkbox" title="Show Sidebar">&#9776;</label>
 
@@ -66,7 +68,7 @@
           </div>
         </header>
 
-        <main>
+        <main style="padding:0 0.9rem;">
           ${render_announcement()}
 
           ${self.body()}
