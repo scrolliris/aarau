@@ -1,7 +1,7 @@
 <%namespace file='aarau:templates/macro/_flash_message.mako' import="render_notice"/>
 <%namespace file='aarau:templates/macro/_title.mako' import="render_title"/>
 
-<%inherit file='aarau:templates/_layout-basic.mako'/>
+<%inherit file='aarau:templates/_layout-plain.mako'/>
 
 <%block name='title'>${render_title('')}</%block>
 
@@ -15,7 +15,7 @@
     </div>
 
     <div class="content row">
-      <div class="offset-4 column-8 offset-v-2 column-v-12 column-l-16" align="center">
+      <div class="offset-2 column-12 offset-v-2 column-v-12 column-l-16" align="center">
         <h1>${publication.name}</h1>
         <p>${publication.description}</p>
 
@@ -28,8 +28,6 @@
           % else:
             <p>${members_count} members</p>
           % endif
-
-          <p><a href="${req.route_url('registry.site.overview', namespace=site.project.namespace, slug=site.slug)}">Overview</a></p>
         </div>
 
         <span class="license">${publication.license.fullname}</span>
@@ -40,11 +38,7 @@
           % for article in articles:
             <article>
               <h5>
-              % if req.user:
-                <a href="${req.route_url('carrell.read', _query={'namespace': site.project.namespace, 'slug':site.slug, 'path': article.path})}">${article.title}</a>
-              % else:
                 <a href="${req.route_url('article', namespace=site.project.namespace, slug=site.slug, path=article.path)}">${article.title}</a>
-              % endif
               </h5>
             </article>
           % endfor

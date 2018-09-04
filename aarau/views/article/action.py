@@ -1,11 +1,9 @@
 from pyramid.view import view_config
-from pyramid.httpexceptions import (
-    HTTPFound,
-    HTTPNotFound
-)
+from pyramid.httpexceptions import HTTPNotFound
 
 from aarau.models import (
     Article,
+    Project,
     Site,
 )
 from aarau.views import tpl
@@ -14,16 +12,17 @@ from aarau.queries.site import get_sites
 
 @view_config(route_name='article', renderer=tpl('article/view.mako'))
 def article_view(req):
+    namespace = req.matchdict.get('namespace')
     slug = req.matchdict.get('slug')
     path = req.matchdict.get('path')
 
-    if req.user:
-        next_path = req.route_url('carrell.top')
-        raise HTTPFound(location=next_path)
-
     try:
+        project = Project.select().where(
+            Project.namespace == namespace).get()
+
         site = get_sites('publication', limit=1).where(
-            Site.slug == slug
+            Site.slug == slug,
+            Site.project_id == project.id,
         ).get()
         publication = site.instance
         article = publication.articles.where(

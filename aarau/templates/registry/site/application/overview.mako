@@ -19,8 +19,6 @@
       <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16 breadcrumb">
         <span class="item"><a href="${req.route_path('registry.search')}">Registry</a></span>
         <span class="diviber">/</span>
-        <a class="item" href="${req.route_path('registry.project.overview', namespace=site.project.namespace, _query={'type': 'application'})}">${site.project.name}</a>
-        <span class="diviber">/</span>
         <span class="item">${application.name}</a>
         <span class="diviber">/</span>
         <span class="item">Overview</a>

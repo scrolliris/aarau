@@ -80,7 +80,6 @@ def namespace_predicator():
 
 def define_carrell_routes(c):
     c.add_route('carrell.top', '/')
-    c.add_route('carrell.read', '/read')
 
     # settings
     c.add_route('carrell.settings', '/settings')
@@ -96,9 +95,6 @@ def define_carrell_routes(c):
 def define_registry_routes(c, namespace):
     c.add_route('registry.search', '/')
 
-    c.add_route('registry.project.overview',
-                '/{namespace}',
-                custom_predicates=(namespace,))
     c.add_route('registry.site.overview',
                 '/{namespace}/{slug}',
                 custom_predicates=(namespace,))

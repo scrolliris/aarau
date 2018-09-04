@@ -1,7 +1,7 @@
 <%namespace file='aarau:templates/macro/_flash_message.mako' import="render_notice"/>
 <%namespace file='aarau:templates/macro/_title.mako' import="render_title"/>
 
-<%inherit file='aarau:templates/article/_layout.mako'/>
+<%inherit file='aarau:templates/_layout-plain.mako'/>
 
 <%block name='title'>${render_title('')}</%block>
 
@@ -22,7 +22,7 @@
                 a = c.user
                 yield '<span title="{}">{}</span>'.format(c.role, a.username)
       %>
-      <div class="offset-4 column-8 offset-v-2 column-v-12 column-l-16" align="left">
+      <div class="offset-2 column-10 offset-v-2 column-v-12 column-l-16" align="left">
         <article>
           <h1>${article.title}</h1>
           <div class="extra_info">

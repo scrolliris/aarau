@@ -41,12 +41,14 @@ def test_routing_to_favicon_on_registry_as_logged_in_user(
 
 
 @pytest.mark.usefixtures('login')
-def test_routing_to_project_on_registry_as_logged_in_user(
+def test_routing_to_site_overview_on_registry_as_logged_in_user(
         dummy_app, login_as, users):
     user = users['oswald']
     with login_as(user):
         project = user.projects[0]
-        url = '/{namespace:s}'.format(namespace=project.namespace)
+        site = project.applications[0]
+        url = '/{namespace:s}/{slug:s}'.format(
+            namespace=project.namespace, slug=site.slug)
         app = dummy_app.switch_target('registry')
         res = app.get(url, status=200)
         assert 200 == res.status_code

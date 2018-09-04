@@ -22,12 +22,11 @@
   <hr>
   % endif
 
-  <h6 class="section-title">ACTIONS IN CARRELL</h6>
   <a class="item${' active' if util.route_name.startswith('carrell.bookmark') or util.route_name == 'carrell.top' else ''}" href="${req.route_path('carrell.top')}">Bookmarks</a>
   <a class="disabled item" href="#">Preferences</a>
   <a class="item" href="${req.route_url('carrell.settings')}">Settings</a>
 
-  <hr>
+  <hr class="divider">
   <h6 class="section-title">LEAVE CARRELL</h6>
   % if req.user.projects:
   <a class="item" href="${req.route_url('console.top')}">
