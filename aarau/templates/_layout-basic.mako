@@ -36,6 +36,10 @@
   </head>
   <body id="basic">
     <div class="wrapper">
+      <%block name='header'>
+        <%include file='aarau:templates/_header.mako'/>
+      </%block>
+
       <section class="container">
         ${render_announcement()}
 

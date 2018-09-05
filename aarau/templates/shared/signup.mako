@@ -88,23 +88,45 @@
       </div>
 
       <div class="mobile hidden column-4 offset-1 column-v-5 offset-v-1 column-l-16">
-        <div class="primary box">
-          <h6>You&apos;ll love Scrolliris</h6>
-          <div class="list">
-            <div class="item">
-              <div class="content">
-                <div class="header">Readability Analysis</div>
-                <div class="description">You can know which part of your text is read eagerly by readers</div>
+
+        <div class="description container">
+          <div class="attached flat header logo">
+            <a href="${req.route_url("top")}" class="logo-item">
+              <h1 class="logo item">
+              <img class="logo-mark" width="26" height="26" src="${util.static_url('img/scrolliris-logo-fbfaf8-64x64.png')}">
+              <span class="logo-type"><span class="scroll">Scroll</span><span class="iris">iris</span></span>
+              </h1>
+            </a>
+          </div>
+          <div class="grouped flat box">
+            <p>You&apos;ll love Scrolliris...</p>
+            <div class="list">
+              <div class="item">
+                <div class="content">
+                  <div class="header">Anonymous Tracking</div>
+                  <div class="description">Readability tracking works only using anonymous data. Every user can access/disable the data.</div>
+                </div>
               </div>
-            </div>
-            <div class="item">
-              <div class="content">
-                <div class="header">Publishing your scroll</div>
-                <div class="description">Create owned scroll in minutes, publish your articles to the world.</div>
+              <div class="item">
+                <div class="content">
+                  <div class="header">Open Data with Transparency</div>
+                  <div class="description">Every user can download the data for any publications.</div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="content">
+                  <div class="header">Readability Analysis</div>
+                  <div class="description">You can know which part of the texts is read eagerly by readers.</div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="content">
+                  <div class="header">Free Hosting</div>
+                  <div class="description">Create owned publication in minutes, publish your texts to the world.</div>
+                </div>
               </div>
             </div>
           </div>
-          <p class="text">Scrolliris is currentyl public <code>BETA</code></p>
         </div>
 
         <p class="text">
