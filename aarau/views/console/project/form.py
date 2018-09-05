@@ -82,7 +82,8 @@ class EditProjectForm(ProjectFormBaseMixin, SecureForm):
     submit = SubmitField('Update')
 
     def __init__(self, *args, **kwargs):
-        self.__class__.plan.choices = Plan.as_choices
+        # pylint: disable=no-member
+        self.__class__.plan.kwargs['choices'] = Plan.as_choices
 
         super().__init__(*args, **kwargs)
 
