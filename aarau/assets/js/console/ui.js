@@ -2,7 +2,9 @@ import { render } from 'inferno.js';
 import { h } from 'inferno-hyperscript.js';
 
 import { loadI18n } from './i18n.js';
+
 // components
+import Metrics from '../../component/console/metrics.js';
 import PageTable from '../../component/console/page.js';
 import ArticleEditorForm from '../../component/console/article_editor_form.js';
 import ArticleConfigForm from '../../component/console/article_config_form.js';
@@ -25,10 +27,17 @@ import handleToolbar from '../shared/_toolbar.js';
         // console.log(err)
       }
 
-      { // application insights
-        let container = doc.getElementById('page_table_container');
+      { // application insights (logs)
+        let container = doc.getElementById('logs_container');
         if (container !== null) {
           render(h(PageTable, container.dataset), container);
+        }
+      }
+
+      { // application insights (metrics)
+        let container = doc.getElementById('metrics_container');
+        if (container !== null) {
+          // pass
         }
       }
 

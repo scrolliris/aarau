@@ -156,7 +156,7 @@ def define_console_routes(c, namespace):
                 custom_predicates=(namespace,))
     # internal api - insights
     c.add_route('api.console.site.insights',
-                '/api/projects/{namespace}/{slug}/insights.json',
+                '/api/{namespace}/{slug}/insights.json',
                 custom_predicates=(namespace,))
 
 

@@ -36,16 +36,22 @@
       </div>
     </div>
     <div class="row">
+      <%
+      container_type = 'metrics'
+      if 'tab' in req.params and req.params['tab'] == 'logs':
+          container_type = 'logs'
+      %>
       <div class="column-16">
         <div class="tabbed menu">
-          <a class="active item">Data</a>
-          <a class="disabled item">Graph</a>
+          <a class="${'active ' if container_type == 'metrics' else ''}item" href="?tab=metrics">Metrics</a>
+          <a class="${'active ' if container_type == 'logs' else ''}item" href="?tab=logs">Logs</a>
         </div>
       </div>
 
       <div class="column-16">
-        <h5>Pages</h5>
-        <div id="page_table_container" data-namespace="${project.namespace}", data-slug="${site.slug}"></div>
+        % if container_type != None:
+        <div id="${container_type}_container" data-namespace="${project.namespace}" data-slug="${site.slug}"></div>
+        % endif
       </div>
     </div>
   </div>
