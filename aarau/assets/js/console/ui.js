@@ -27,17 +27,17 @@ import handleToolbar from '../shared/_toolbar.js';
         // console.log(err)
       }
 
+      { // application insights (metrics)
+        let container = doc.getElementById('metrics_container');
+        if (container !== null) {
+          render(h(Metrics, container.dataset), container);
+        }
+      }
+
       { // application insights (logs)
         let container = doc.getElementById('logs_container');
         if (container !== null) {
           render(h(PageTable, container.dataset), container);
-        }
-      }
-
-      { // application insights (metrics)
-        let container = doc.getElementById('metrics_container');
-        if (container !== null) {
-          // pass
         }
       }
 

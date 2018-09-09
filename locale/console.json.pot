@@ -56,3 +56,16 @@ msgstr ""
 
 msgid "validation.error.min_length"
 msgstr ""
+
+# -- aarau/assets/component/console/metrics.js
+msgid "metrics.title.time_of_day"
+msgstr ""
+
+msgid "metrics.title.total_duration"
+msgstr ""
+
+msgid "metrics.title.finish_reading_rate"
+msgstr ""
+
+msgid "metrics.title.date"
+msgstr ""

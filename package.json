@@ -12,6 +12,8 @@
     "postinstall": "gulp"
   },
   "dependencies": {
+    "crossfilter2": "1.4.6",
+    "d3": "5.7.0",
     "inferno": "4.0.6",
     "inferno-hyperscript": "4.0.6",
     "moment": "~> 2.19.3",

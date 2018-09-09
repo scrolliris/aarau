@@ -96,8 +96,13 @@ def site_insights(req):
     project = get_project(namespace, user=req.user)
     site = get_site(slug, project=project)
 
+    component_type = 'metrics'
+    if 'tab' in req.params and req.params['tab'] == 'logs':
+        component_type = 'logs'
+
     # only application
-    return dict(project=project, site=site, instance=site.instance)
+    return dict(project=project, site=site, instance=site.instance,
+                component_type=component_type)
 
 
 @view_config(route_name='console.site.settings',

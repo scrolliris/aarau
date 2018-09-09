@@ -235,7 +235,8 @@ def test_application_site_insights(users, dummy_request):
     res = site_insights(dummy_request)
 
     assert isinstance(res, Mapping)
-    assert ('instance', 'project', 'site') == tuple(sorted(res.keys()))
+    assert ('component_type', 'instance', 'project', 'site') == \
+        tuple(sorted(res.keys()))
     assert project == res['project']
     assert site == res['site']
     assert site.application == res['instance']

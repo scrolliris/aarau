@@ -48,7 +48,9 @@ var config = {
 , resolve: {
     extensions: ['', '.css', '.js']
   , alias: {
-      'inferno.js': 'inferno/dist/inferno.min.js'
+      'crossfilter.js': 'crossfilter2/crossfilter.min.js'
+    , 'd3.js': 'd3/dist/d3.min.js'
+    , 'inferno.js': 'inferno/dist/inferno.min.js'
     , 'inferno-hyperscript.js':
        'inferno-hyperscript/dist/inferno-hyperscript.min.js'
     , 'i18next.js': 'i18next/i18next.min.js'

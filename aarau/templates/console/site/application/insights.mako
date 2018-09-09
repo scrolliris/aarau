@@ -36,22 +36,22 @@
       </div>
     </div>
     <div class="row">
-      <%
-      container_type = 'metrics'
-      if 'tab' in req.params and req.params['tab'] == 'logs':
-          container_type = 'logs'
-      %>
       <div class="column-16">
         <div class="tabbed menu">
-          <a class="${'active ' if container_type == 'metrics' else ''}item" href="?tab=metrics">Metrics</a>
-          <a class="${'active ' if container_type == 'logs' else ''}item" href="?tab=logs">Logs</a>
+          <a class="${'active ' if component_type == 'metrics' else ''}item" href="?tab=metrics">Metrics</a>
+          <a class="${'active ' if component_type == 'logs' else ''}item" href="?tab=logs">Logs</a>
         </div>
       </div>
 
       <div class="column-16">
-        % if container_type != None:
-        <div id="${container_type}_container" data-namespace="${project.namespace}" data-slug="${site.slug}"></div>
+        % if component_type == 'metrics':
+        <div class="secondary message wip">
+          <h4 class="header">NOTE</h4>
+          <p>Metrics view/graphs is still WIP. It shows dummy records ;)</p>
+        </div>
         % endif
+
+        <div id="${component_type}_container" data-namespace="${project.namespace}" data-slug="${site.slug}"></div>
       </div>
     </div>
   </div>

@@ -215,7 +215,7 @@ deploy:  ## Deploy app to production server
 .PHONY: deploy
 
 help:  ## Display this message
-	@grep -E '^[0-9a-z\:\\]+: ' $(MAKEFILE_LIST) | grep -E '  ##' | \
+	@grep -E '^[0-9a-z\:\\]+: ' $(MAKEFILE_LIST) | grep -E '  ## ' | \
 	  sed -e 's/\(\s|\(\s[0-9a-z\:\\]*\)*\)  /  /' | tr -d \\\\ | \
 	  awk 'BEGIN {FS = ":  ## "}; {printf "\033[36m%-17s\033[0m %s\n", $$1, $$2}' | \
 	  sort
