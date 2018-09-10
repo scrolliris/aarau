@@ -14,10 +14,10 @@ class IActivator(Interface):
         pass
 
 
-class IReplicator(Interface):
+class IManager(Interface):
     obj = Attribute("""object""")
 
-    def replicate(self):
+    def sync(self):
         pass
 
     def validate(self):

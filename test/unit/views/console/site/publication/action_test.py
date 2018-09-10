@@ -13,6 +13,18 @@ def setup(config):  # pylint: disable=unused-argument
     pass
 
 
+class DummyService():
+    # pylint: disable=no-self-use
+    def assign(self, *_args, **_kwargs):
+        pass
+
+    def sync(self, *_args, **_kwargs):
+        pass
+
+    def validate(self, *_args, **_kwargs):
+        return True
+
+
 # -- GET site_new (publication)
 
 def test_publication_site_new_get_missing_project(users, dummy_request):
@@ -153,17 +165,9 @@ def test_publication_site_new_post(mocker, users, dummy_request):
         'namespace': project.namespace
     }
 
-    class DummyService():
-        # pylint: disable=no-self-use
-        def assign(self, *_args, **_kwargs):
-            pass
-
-        def replicate(self, *_args, **_kwargs):
-            return True
-
     dummy_service = DummyService()
     mocker.spy(dummy_service, 'assign')
-    mocker.spy(dummy_service, 'replicate')
+    mocker.spy(dummy_service, 'sync')
 
     dummy_request.find_service = (lambda *args, **kwargs: dummy_service)
 
@@ -182,7 +186,7 @@ def test_publication_site_new_post(mocker, users, dummy_request):
 
     # pylint: disable=no-member
     assert 1 == dummy_service.assign.call_count
-    assert 1 == dummy_service.replicate.call_count
+    assert 1 == dummy_service.sync.call_count
 
 
 # -- GET site_overview (publication)
@@ -225,17 +229,9 @@ def test_publication_site_settings_get_missing_site(
         'slug': ''  # invalid
     }
 
-    class DummyService():
-        # pylint: disable=no-self-use
-        def assign(self, *_args, **_kwargs):
-            pass
-
-        def replicate(self, *_args, **_kwargs):
-            pass
-
     dummy_service = DummyService()
     mocker.spy(dummy_service, 'assign')
-    mocker.spy(dummy_service, 'replicate')
+    mocker.spy(dummy_service, 'sync')
 
     dummy_request.find_service = (lambda *args, **kwargs: dummy_service)
 
@@ -244,7 +240,7 @@ def test_publication_site_settings_get_missing_site(
 
     # pylint: disable=no-member
     assert 0 == dummy_service.assign.call_count
-    assert 0 == dummy_service.replicate.call_count
+    assert 0 == dummy_service.sync.call_count
 
 
 def test_publication_site_settings_get(mocker, users, dummy_request):
@@ -267,17 +263,9 @@ def test_publication_site_settings_get(mocker, users, dummy_request):
         'slug': site.slug,
     }
 
-    class DummyService():
-        # pylint: disable=no-self-use
-        def assign(self, *_args, **_kwargs):
-            pass
-
-        def replicate(self, *_args, **_kwargs):
-            pass
-
     dummy_service = DummyService()
     mocker.spy(dummy_service, 'assign')
-    mocker.spy(dummy_service, 'replicate')
+    mocker.spy(dummy_service, 'sync')
 
     dummy_request.find_service = (lambda *args, **kwargs: dummy_service)
 
@@ -294,7 +282,7 @@ def test_publication_site_settings_get(mocker, users, dummy_request):
 
     # pylint: disable=no-member
     assert 0 == dummy_service.assign.call_count
-    assert 0 == dummy_service.replicate.call_count
+    assert 0 == dummy_service.sync.call_count
 
 
 # -- POST site_settings (publication)
@@ -421,17 +409,9 @@ def test_publication_site_settings_post(mocker, users, dummy_request):
         'slug': site.slug,
     }
 
-    class DummyService():
-        # pylint: disable=no-self-use
-        def assign(self, *_args, **_kwargs):
-            pass
-
-        def replicate(self, *_args, **_kwargs):
-            return True
-
     dummy_service = DummyService()
     mocker.spy(dummy_service, 'assign')
-    mocker.spy(dummy_service, 'replicate')
+    mocker.spy(dummy_service, 'sync')
 
     dummy_request.find_service = (lambda *args, **kwargs: dummy_service)
 
@@ -450,4 +430,4 @@ def test_publication_site_settings_post(mocker, users, dummy_request):
 
     # pylint: disable=no-member
     assert 1 == dummy_service.assign.call_count
-    assert 1 == dummy_service.replicate.call_count
+    assert 1 == dummy_service.sync.call_count

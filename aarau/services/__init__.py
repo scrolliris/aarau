@@ -1,12 +1,12 @@
-from aarau.services.interface import IActivator, IReplicator
+from aarau.services.interface import IActivator, IManager
 from aarau.services.account_activator import AccountActivator
-from aarau.services.site_replicator import SiteReplicator
+from aarau.services.credentials_manager import CredentialsManager
 from aarau.services.user_email_activator import UserEmailActivator
 
 __all__ = (
     'AccountActivator',
     'UserEmailActivator',
-    'SiteReplicator',
+    'CredentialsManager',
 )
 
 
@@ -22,14 +22,14 @@ def activator_factory(activation_type='user_email'):
     return _activator_factory
 
 
-def replicator_factory(replication_obj='site'):
-    """Returns replicator service factory method."""
-    def _replicator_factory(_, req):
-        if replication_obj == 'site':
-            return SiteReplicator(req)
+def manager_factory(manage_obj='site'):
+    """Returns manager service factory method."""
+    def _manager_factory(_, req):
+        if manage_obj == 'credentials':
+            return CredentialsManager(req)
         return None
 
-    return _replicator_factory
+    return _manager_factory
 
 
 def includeme(config):
@@ -42,7 +42,7 @@ def includeme(config):
         config.register_service_factory(activator_factory(name),
                                         iface=IActivator, name=name)
 
-    # replicator services
-    for name in ('site',):
-        config.register_service_factory(replicator_factory(name),
-                                        iface=IReplicator, name=name)
+    # manager services
+    for name in ('credentials',):
+        config.register_service_factory(manager_factory(name),
+                                        iface=IManager, name=name)

@@ -31,7 +31,6 @@ https://gitlab.com/scrolliris/scrolliris-console)
 * Redis `>= 3.2.0`
 * Memcached `>= 1.4.33`
   * libmemcached (via pylibmc) (worker)
-* Datastore (emulator)
 * Node.js `>= 8.11.4` (build)
 * GNU gettext `>= 0.19.8.1` (translation)
 * [Scrolliris Console Translation (Neuchâtel)](https://gitlab.com/scrolliris/scrolliris-console-translation) as git subtree

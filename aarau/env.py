@@ -56,19 +56,16 @@ class Env():
             'session.password': 'SESSION_PASSWORD',
             'session.cookie_domain': 'SESSION_COOKIE_DOMAIN',
             'queue.url': 'QUEUE_URL',
+            'store.url': 'STORE_URL',
             'cache.url': 'CACHE_URL',
             'database.cardinal.url': 'DATABASE_CARDINAL_URL',
             'database.analysis.url': 'DATABASE_ANALYSIS_URL',
             'pyramid.csrf_trusted_origins': 'CSRF_TRUSTED_ORIGINS',
             'wsgi.url_scheme': 'WSGI_URL_SCHEME',
             'wsgi.auth_credentials': 'WSGI_AUTH_CREDENTIALS',
-            'datastore.emulator_host': 'DATASTORE_EMULATOR_HOST',
-            'datastore.project_id': 'DATASTORE_PROJECT_ID',
             'bucket.host': 'BUCKET_HOST',
             'bucket.name': 'BUCKET_NAME',
             'bucket.path': 'BUCKET_PATH',
-            # deployment
-            'google_cloud.project': 'GOOGLE_CLOUD_PROJECT',
         }
 
     def get(self, key, default=None):  # pylint: disable=no-self-use

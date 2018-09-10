@@ -44,7 +44,13 @@
         <div class="attached box">
           <div class="row">
             <div class="column-16">
-              <p class="description">Just copy paste these code snippets at the bottom of body of your article, otherwise please make sure setting your <code>PROJECT_ID</code> and <label class="positive label">READ_KEY</label> as `apiKey`. A small icon will appear on your site. These widgets are optional.</p>
+              % if credentials_state:
+                <label class="positive label">Ready</label>
+              % else:
+                <label class="label">In Sync...</label>
+              % endif
+
+              <p class="description">Just copy paste these code snippets at the bottom of body of your article, otherwise please make sure setting your <code>PROJECT_ID</code> and <label class="primary label">READ_KEY</label> as `apiKey`. A small icon will appear on your site. These widgets are optional.</p>
               <p class="description">The source code is available from also <a href="https://gitlab.com/scrolliris/sierre" target="_blank">our repository</a>. (codename: Sierre)</p>
 
               <h6>Minimap</h6>

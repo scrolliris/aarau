@@ -13,6 +13,18 @@ def setup(config):  # pylint: disable=unused-argument
     pass
 
 
+class DummyService():
+    # pylint: disable=no-self-use
+    def assign(self, *_args, **_kwargs):
+        pass
+
+    def sync(self, *_args, **_kwargs):
+        pass
+
+    def validate(self, *_args, **_kwargs):
+        return True
+
+
 # -- GET site_new (application)
 
 def test_application_site_new_get_missing_project(users, dummy_request):
@@ -141,17 +153,9 @@ def test_application_site_new_post(mocker, users, dummy_request):
         'namespace': project.namespace
     }
 
-    class DummyService():
-        # pylint: disable=no-self-use
-        def assign(self, *_args, **_kwargs):
-            pass
-
-        def replicate(self, *_args, **_kwargs):
-            return True
-
     dummy_service = DummyService()
     mocker.spy(dummy_service, 'assign')
-    mocker.spy(dummy_service, 'replicate')
+    mocker.spy(dummy_service, 'sync')
 
     dummy_request.find_service = (lambda *args, **kwargs: dummy_service)
 
@@ -170,7 +174,7 @@ def test_application_site_new_post(mocker, users, dummy_request):
 
     # pylint: disable=no-member
     assert 1 == dummy_service.assign.call_count
-    assert 1 == dummy_service.replicate.call_count
+    assert 1 == dummy_service.sync.call_count
 
 
 # -- GET site_overview (application)
@@ -327,14 +331,6 @@ def test_application_site_settings_scripts_missing_project(
         'slug': site.slug,
     }
 
-    class DummyService():
-        # pylint: disable=no-self-use
-        def assign(self, *_args, **_kwargs):
-            pass
-
-        def validate(self, *_args, **_kwargs):
-            return True
-
     dummy_service = DummyService()
     mocker.spy(dummy_service, 'assign')
     mocker.spy(dummy_service, 'validate')
@@ -364,14 +360,6 @@ def test_application_site_settings_scripts_missing_site(
         'namespace': project.namespace,
         'slug': '',  # invalid
     }
-
-    class DummyService():
-        # pylint: disable=no-self-use
-        def assign(self, *_args, **_kwargs):
-            pass
-
-        def validate(self, *_args, **_kwargs):
-            return True
 
     dummy_service = DummyService()
     mocker.spy(dummy_service, 'assign')
@@ -403,14 +391,6 @@ def test_application_site_settings_scripts(mocker, users, dummy_request):
         'slug': site.slug,
     }
 
-    class DummyService():
-        # pylint: disable=no-self-use
-        def assign(self, *_args, **_kwargs):
-            pass
-
-        def validate(self, *_args, **_kwargs):
-            return True
-
     dummy_service = DummyService()
     mocker.spy(dummy_service, 'assign')
     mocker.spy(dummy_service, 'validate')
@@ -420,12 +400,112 @@ def test_application_site_settings_scripts(mocker, users, dummy_request):
     res = site_settings_scripts(dummy_request)
 
     assert isinstance(res, Mapping)
-    assert ('instance', 'project', 'replication_state', 'site') == \
+    assert ('credentials_state', 'instance', 'project', 'site') == \
         tuple(sorted(res.keys()))
     assert project == res['project']
     assert site == res['site']
     assert site.application == res['instance']
-    assert res['replication_state']
+    assert res['credentials_state']
+
+    # pylint: disable=no-member
+    assert 1 == dummy_service.assign.call_count
+    assert 1 == dummy_service.validate.call_count
+
+
+# -- GET site_settings_widgets (application)
+
+def test_application_site_settings_widgets_missing_project(
+        mocker, users, dummy_request):
+    from aarau.views.console.site.action import site_settings_widgets
+
+    user = users['oswald']
+    project = user.projects[0]
+    site = project.applications[0]
+    dummy_request.subdomain = 'console'
+    dummy_request.user = user
+    dummy_request.params = dummy_request.GET = NestedMultiDict({
+        'type': 'application',
+    })
+    dummy_request.matchdict = {
+        'namespace': '',  # invalid
+        'slug': site.slug,
+    }
+
+    dummy_service = DummyService()
+    mocker.spy(dummy_service, 'assign')
+    mocker.spy(dummy_service, 'validate')
+
+    dummy_request.find_service = (lambda *args, **kwargs: dummy_service)
+
+    with pytest.raises(HTTPNotFound):
+        site_settings_widgets(dummy_request)
+
+    # pylint: disable=no-member
+    assert 0 == dummy_service.assign.call_count
+    assert 0 == dummy_service.validate.call_count
+
+
+def test_application_site_settings_widgets_missing_site(
+        mocker, users, dummy_request):
+    from aarau.views.console.site.action import site_settings_widgets
+
+    user = users['oswald']
+    project = user.projects[0]
+    dummy_request.console = 'console'
+    dummy_request.user = user
+    dummy_request.params = dummy_request.GET = NestedMultiDict({
+        'type': 'application',
+    })
+    dummy_request.matchdict = {
+        'namespace': project.namespace,
+        'slug': '',  # invalid
+    }
+
+    dummy_service = DummyService()
+    mocker.spy(dummy_service, 'assign')
+    mocker.spy(dummy_service, 'validate')
+
+    dummy_request.find_service = (lambda *args, **kwargs: dummy_service)
+
+    with pytest.raises(HTTPNotFound):
+        site_settings_widgets(dummy_request)
+
+    # pylint: disable=no-member
+    assert 0 == dummy_service.assign.call_count
+    assert 0 == dummy_service.validate.call_count
+
+
+def test_application_site_settings_widgets(mocker, users, dummy_request):
+    from aarau.views.console.site.action import site_settings_widgets
+
+    user = users['oswald']
+    project = user.projects[0]
+    site = project.applications[0]
+    dummy_request.subdomain = 'console'
+    dummy_request.user = user
+    dummy_request.params = dummy_request.GET = NestedMultiDict({
+        'type': 'application',
+    })
+    dummy_request.matchdict = {
+        'namespace': project.namespace,
+        'slug': site.slug,
+    }
+
+    dummy_service = DummyService()
+    mocker.spy(dummy_service, 'assign')
+    mocker.spy(dummy_service, 'validate')
+
+    dummy_request.find_service = (lambda *args, **kwargs: dummy_service)
+
+    res = site_settings_widgets(dummy_request)
+
+    assert isinstance(res, Mapping)
+    assert ('credentials_state', 'instance', 'project', 'site') == \
+        tuple(sorted(res.keys()))
+    assert project == res['project']
+    assert site == res['site']
+    assert site.application == res['instance']
+    assert res['credentials_state']
 
     # pylint: disable=no-member
     assert 1 == dummy_service.assign.call_count

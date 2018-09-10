@@ -44,8 +44,14 @@
         <div class="attached box">
           <div class="row">
             <div class="column-16">
-              <p class="description">Set <code>PROJECT_ID</code> and configure <label class="negative label">WRITE_KEY</label> as `apiKey` with yours. You can just paste this snippet at the bottom of body of your article. The script will work based on user&apos;s scroll. At least, you need to include this for readability analysis of your texts.</p>
-              <p class="description">The source code is available from also <a href="https://gitlab.com/scrolliris/staefa" target="_blank">our repository</a>. (codename: Stäfa)</p>
+              % if credentials_state:
+                <label class="positive label">Ready</label>
+              % else:
+                <label class="label">In Sync...</label>
+              % endif
+
+              <p class="description">Set <code>PROJECT_ID</code> and configure <label class="primary label">WRITE_KEY</label> as `apiKey` with yours. You can just paste this snippet at the bottom of body of your article. The script will work based on user&apos;s scroll. At least, you need to include this for readability analysis of your texts.</p>
+              <p class="description">The source code is available from also <a href="https://gitlab.com/scrolliris/scrolliris-readability-tracker" target="_blank">our repository</a>. (Code Name: Stäfa)</p>
 
               <h6>Position</h6>
               <pre class="inverted">(function(d, w) {

@@ -76,8 +76,8 @@
             </div>
             <div class="column-8 column-v-16">
               <br>
-              <p><label class="negative label">WRITE_KEY</label><code>${site.write_key}</code></p>
-              <p><label class="positive label">READ_KEY</label><code>${site.read_key}</code></p>
+              <p><label class="primary label">WRITE_KEY</label><code>${site.write_key}</code></p>
+              <p><label class="primary label">READ_KEY</label><code>${site.read_key}</code></p>
             </div>
           </div>
         </div>

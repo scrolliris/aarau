@@ -3,7 +3,7 @@ from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 
 from aarau.views.filter import login_required
 from aarau.models import Site
-from aarau.services.interface import IReplicator
+from aarau.services.interface import IManager
 
 from aarau.views import get_site_type
 
@@ -54,9 +54,9 @@ def site_new(req):
                 site.write_key = Site.grab_unique_key('write_key')
                 site.save()
 
-            replicator = req.find_service(iface=IReplicator, name='site')
-            replicator.assign(obj=site)
-            replicator.replicate()
+            manager = req.find_service(iface=IManager, name='credentials')
+            manager.assign(obj=site)
+            manager.sync()
 
             req.session.flash(
                 _('site.{:s}.creation.success'.format(site.type)),
@@ -145,9 +145,9 @@ def site_settings(req):
 
                 site.save()
 
-            replicator = req.find_service(iface=IReplicator, name='site')
-            replicator.assign(obj=site)
-            replicator.replicate()
+            manager = req.find_service(iface=IManager, name='credentials')
+            manager.assign(obj=site)
+            manager.sync()
 
             req.session.flash(_('site.{:s}.update.success'.format(site.type)),
                               queue='success', allow_duplicate=False)
@@ -177,12 +177,12 @@ def site_settings_scripts(req):
     if site.type != 'application':
         raise HTTPNotFound
 
-    replicator = req.find_service(iface=IReplicator, name='site')
-    replicator.assign(obj=site)
+    manager = req.find_service(iface=IManager, name='credentials')
+    manager.assign(obj=site)
 
     # only application
     return dict(project=project, site=site, instance=site.instance,
-                replication_state=replicator.validate())
+                credentials_state=manager.validate())
 
 
 @view_config(route_name='console.site.settings.widgets',
@@ -198,8 +198,12 @@ def site_settings_widgets(req):
     if site.type != 'application':
         raise HTTPNotFound
 
+    manager = req.find_service(iface=IManager, name='credentials')
+    manager.assign(obj=site)
+
     # only application
-    return dict(project=project, site=site, instance=site.instance)
+    return dict(project=project, site=site, instance=site.instance,
+                credentials_state=manager.validate())
 
 
 @view_config(route_name='console.site.settings.badges',
