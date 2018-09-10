@@ -133,11 +133,16 @@ i18n\:extract:  ## Extract translation targets from code
 .PHONY: i18n\:extract
 
 i18n\:compile:  ## Make translation files (catalog)
+ifeq (, $(shell which i18next-conv 2>/dev/null))
+	$(info i18next-conv command not found. run `npm install -g i18next-conv`)
+	$(info )
+else
 	for ns in message form console\.json ; do \
 	  for locale in en ; do \
 	    ./bin/linguine compile $$ns $$locale; \
 	  done; \
 	done
+endif
 .PHONY: i18n\:compile
 
 i18n\:update:  ## Update catalog (pot)
@@ -179,7 +184,7 @@ vet\:quality:  ## Generate codequality.txt using codeclimate (require Docker)
 
 # -- utilities
 
-pack:  ## Build assets using gulp-cli
+pack:  ## Assemble assets using gulp-cli
 ifeq (, $(shell which gulp 2>/dev/null))
 	$(info gulp command not found. run `npm install -g gulp-cli`)
 	$(info )
@@ -187,6 +192,9 @@ else
 	NODE_ENV=$(NODE_ENV) gulp
 endif
 .PHONY: pack
+
+build: | setup pack i18n  ## (Re) Run setup, pack and i18n:compile at once
+.PHONY: build
 
 clean:  ## Delete unnecessary cache etc.
 	find . ! -readable -prune -o \
