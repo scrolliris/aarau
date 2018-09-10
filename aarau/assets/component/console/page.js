@@ -56,7 +56,7 @@ class PageTable extends Component {
   constructor(props) {
     super(props);
     this.props['url'] = '/api/' + this.props.namespace +
-                        '/' + this.props.slug + '/insights.json';
+                        '/' + this.props.slug + '/insights/data.json';
     this.props['pageWindow'] = 2;
     this.state = {
       data: []
