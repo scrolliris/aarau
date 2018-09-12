@@ -23,37 +23,39 @@ class CredentialsManager():
         if not self.site:
             raise Exception()
 
-        project = self.site.project
-        name = '{}-{}'.format(project.id, self.site.id)
+        site = self.site
+        project = site.project
 
-        # name: project.id-site.id
-        return self.client.hmset(name, {
-            'project_access_key_id': project.access_key_id,
-            'site_id': self.site.id,
-            'read_key': self.site.read_key,
-            'write_key': self.site.write_key,
-        })
+        for ctx in ('read', 'write'):
+            # project.access_key_id-read: {...}
+            name = '{}-{}'.format(project.access_key_id, ctx)
+            values = self.client.hgetall(name)
 
-    def validate(self) -> bool:
+            # {read_key: site_id, ...}
+            for k, v in values.items():
+                if v.decode() == site.id:
+                    values.pop(k, None)
+
+            key = site.__dict__['__data__']['{}_key'.format(ctx)]
+            values[key] = site.id
+            self.client.hmset(name, values)
+
+        return True
+
+    def validate(self, ctx) -> bool:
         """Checks credentials stored in db are valid."""
         if not self.site:
             return False
 
-        project = self.site.project
-        name = '{}-{}'.format(project.id, self.site.id)
+        site = self.site
+        project = site.project
 
-        expected = {
-            'project_access_key_id': project.access_key_id,
-            'site_id': self.site.id,
-            'read_key': self.site.read_key,
-            'write_key': self.site.write_key,
-        }
-        values = {k: self.client.hget(name, k) for k in expected}
-        result_set = list({
-            v is not None and str(expected[k]) == v.decode()
-            for k, v in values.items()
-        })
-        return [True] == result_set
+        name = '{}-{}'.format(project.access_key_id, ctx)
+
+        key = site.__dict__['__data__']['{}_key'.format(ctx)]
+
+        site_id = self.client.hget(name, key)
+        return site_id is not None and str(site.id) == site_id.decode()
 
     def destroy(self) -> bool:  # pylint: disable=no-self-use
         # TODO

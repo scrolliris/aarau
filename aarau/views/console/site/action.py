@@ -182,7 +182,7 @@ def site_settings_scripts(req):
 
     # only application
     return dict(project=project, site=site, instance=site.instance,
-                credentials_state=manager.validate())
+                credentials_state=manager.validate('write'))
 
 
 @view_config(route_name='console.site.settings.widgets',
@@ -203,7 +203,7 @@ def site_settings_widgets(req):
 
     # only application
     return dict(project=project, site=site, instance=site.instance,
-                credentials_state=manager.validate())
+                credentials_state=manager.validate('read'))
 
 
 @view_config(route_name='console.site.settings.badges',

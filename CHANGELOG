@@ -1,3 +1,6 @@
+Wed 12 Sep 2018 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
+	* Change credentials store (datastore -> redis hash)
+
 Mon 28 Aug 2018 Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>
 	* Reorganize make targets (check make help for the descriptions)
 	* Move settings module into carrell
