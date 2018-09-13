@@ -98,6 +98,7 @@ setup(
     [console_scripts]
     aarau_manage = aarau.scripts.manage:main
     aarau_pserve = aarau.scripts.pserve:main
+    aarau_pshell = aarau.scripts.pshell:main
     aarau_pstart = aarau.scripts.pstart:main
     aarau_worker = aarau.scripts.worker:main
     """,
