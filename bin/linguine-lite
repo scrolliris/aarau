@@ -13,7 +13,7 @@ Options:
 
 Arguments:
   <action>   {compile|c},{generate|g},{update|u}
-  <domain>   {message,form}
+  <domain>   {classification,form,message}
   <locale>   en
 
 Actions:
@@ -62,7 +62,7 @@ while [ $# -gt 0 ]; do
       ACTION="${1}"
       shift
       ;;
-    "message"|"form")
+    "classification"|"form"|"message")
       DOMAIN="${1}"
       shift
       ;;

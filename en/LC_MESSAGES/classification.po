@@ -1,0 +1,48 @@
+# Neuchâtel
+# Copyright (C) 2018 Lupine Software LLC
+# This file is distributed under the same license as the Neuchâtel project.
+# Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Neuchâtel 0.1\n"
+"Report-Msgid-Bugs-To: support@scrolliris.com\n"
+"POT-Creation-Date: 2018-09-14 12:53+0900\n"
+"PO-Revision-Date: 2018-09-14 12:53+0900\n"
+"Last-Translator: Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>\n"
+"Language-Team: Scrolliris Translation Team <support@scrolliris.com>\n"
+"Language: en \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: db/seeds/classifications.yml
+msgid "classification.notation.0"
+msgstr "Science and Knowledge. Organization. Computer Science. Information. Documentation. Librarianship. Institutions. Publications"
+
+msgid "classification.notation.1"
+msgstr "Philosophy. Psychology"
+
+msgid "classification.notation.2"
+msgstr "Religion. Theology"
+
+msgid "classification.notation.3"
+msgstr "Social sciences"
+
+msgid "classification.notation.4"
+msgstr "Vacant"
+
+msgid "classification.notation.5"
+msgstr "Mathematics. Natural sciences"
+
+msgid "classification.notation.6"
+msgstr "Applied sciences. Medicine. Technology"
+
+msgid "classification.notation.7"
+msgstr "The arts. Recreation. Entertainment. Sport"
+
+msgid "classification.notation.8"
+msgstr "Language. Linguistics. Literature"
+
+msgid "classification.notation.9"
+msgstr "Geography. Biography. History"

@@ -133,7 +133,7 @@ Options:
 
 Positional arguments:
   <action>   {compile|c},{generate|g},{update|u}
-  <domain>   {message,form}
+  <domain>   {classification,form,message}
   <locale>   en
 
 Actions:
