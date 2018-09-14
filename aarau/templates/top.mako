@@ -103,8 +103,7 @@
           <div class="warn message">
             <h5 class="header">NOTE</h5>
             <div class="description">
-              <p>Scrolliris is developed by <a href="https://lupine-software.com/">Lupine Software LLC</a>. It's still <span class="secondary label">PUBLIC BETA</span>. If you have any questions, please contact us <a href="mailto:support@scrolliris.com">support@scrolliris.com</a></p>
-              <p></p>
+              <p>Scrolliris is developed by <a href="https://lupine-software.com/">Lupine Software LLC</a>. It&apos;s still <span class="secondary label">PUBLIC BETA</span>. If you have any questions, please contact us <a href="mailto:support@scrolliris.com">support@scrolliris.com</a></p>
             </div>
           </div>
         </div>

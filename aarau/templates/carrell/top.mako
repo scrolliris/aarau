@@ -17,7 +17,7 @@
 
     <div class="row">
       <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16" align="center">
-        <p>You don't have bookmark yet. Please find something to read on the <a href="${req.route_url('registry.search')}">Registry</a>.<br>
+        <p>You don&apos;t have bookmark yet. Please find something to read on the <a href="${req.route_url('registry.search')}">Registry</a>.<br>
           Happy scrolling !-)</p>
       </div>
     </div>
