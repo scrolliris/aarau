@@ -4,7 +4,6 @@ var path = require('path')
   , webpack = require('webpack')
   , ExtractTextPlugin = require('extract-text-webpack-plugin')
   , ManifestPlugin = require('webpack-manifest-plugin')
-  , LicenseWebpackPlugin = require('license-webpack-plugin')
   ;
 
 var nodeEnv = process.env.NODE_ENV || 'production';
@@ -37,6 +36,9 @@ var config = {
         path.resolve(__dirname, appName + '/assets')
       ]
     }, {
+      test: /\.json$/
+    , loader: 'json-loader'
+    }, {
       test: /\.js$/
     , loader: 'babel-loader'
     , include: [
@@ -48,7 +50,7 @@ var config = {
 , resolve: {
     extensions: ['', '.css', '.js']
   , alias: {
-      'crossfilter.js': 'crossfilter2/crossfilter.min.js'
+      'crossfilter.js': 'crossfilter2/index.js'
     , 'd3.js': 'd3/dist/d3.min.js'
     , 'inferno.js': 'inferno/dist/inferno.min.js'
     , 'inferno-hyperscript.js':
@@ -58,7 +60,7 @@ var config = {
     , 'i18next-browser-languagedetector.js':
        'i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js'
     , 'vergil.js': 'vergil/dst/index.min.js'
-    , 'moment\.js$': 'moment/moment.js'
+    , 'moment\.js$': 'moment/min/moment.min.js'
     , 'moment-locale-en-gb\.js$': 'moment/locale/en-gb.js'
     , 'styr\.css$': 'styr/dst/styr.min.css'
     }
@@ -86,20 +88,6 @@ var config = {
       _plugins.push(
         new ManifestPlugin({
           fileName: 'manifest.json'
-        })
-      );
-      _plugins.push(
-        new LicenseWebpackPlugin({
-          pattern: /^(MIT|ISC|BSD.*)$/
-        , filename: 'freesoftware-licenses.txt'
-        , addLicenseText: false
-        , licenseFilenames: [
-          // These filese are needed to check license in package.json.
-            'LICENSE', 'LICENSE.md', 'LICENSE.txt'
-          , 'license', 'license.md', 'license.txt'
-          , 'README', 'README.md', 'README.txt'
-          , 'readme', 'readme.md', 'readme.txt'
-          ]
         })
       );
       _plugins.push(
