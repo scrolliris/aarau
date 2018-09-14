@@ -27,6 +27,7 @@ from .application import Application
 from .article import Article
 from .contribution import Contribution
 from .classification import Classification
+from .classification_hierarchy import ClassificationHierarchy
 from .license import License
 from .membership import Membership
 from .page import Page
@@ -42,7 +43,8 @@ from .reading_result import ReadingResult
 __all__ = (
     'Project', 'Membership', 'Plan',
     'Site',
-    'Publication', 'Article', 'Classification', 'License', 'Contribution',
+    'Publication', 'Article', 'Classification', 'ClassificationHierarchy',
+    'License', 'Contribution',
     'Application', 'Page',
     'User', 'UserEmail',
     # analysis

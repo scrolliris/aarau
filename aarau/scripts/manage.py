@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 from contextlib import contextmanager
 
@@ -10,7 +11,8 @@ from aarau.env import load_dotenv_vars
 from aarau.models import (
     Project, Membership, Plan,
     Site,
-    Publication, Article, Classification, License, Contribution,
+    Publication, Article, Classification, ClassificationHierarchy,
+    License, Contribution,
     Application, Page,
     User, UserEmail,
 )
@@ -28,8 +30,8 @@ def usage(argv):
     sys.exit(1)
 
 
-class DbCli():
-    """CLI for database (PostgreSQL) management."""
+class CLI():
+    """Command line interface to manage database (PostgreSQL)."""
 
     def __init__(self, settings):
         self.settings = settings
@@ -118,7 +120,7 @@ class DbCli():
                 # TODO: import all files in db/seeds/*.yml
                 # `order` sensitive
                 models = [
-                    Plan, Classification, License,
+                    Plan, Classification, ClassificationHierarchy, License,
                     Project,
                     Publication, Article,
                     Application, Page,
@@ -129,12 +131,20 @@ class DbCli():
                 for model in models:
                     # pylint: disable=no-member,protected-access
                     table = model._meta.table_name
-                    seed_yml = os.path.join(os.getcwd(), 'db', 'seeds',
-                                            '{}.yml'.format(table))
-                    if os.path.isfile(seed_yml):
-                        data = loader(seed_yml)
-                        for attributes in data[table]:
-                            load_data(model, attributes)
+                    seeds_dir = os.path.join(os.getcwd(), 'db', 'seeds')
+                    files = [f for f in os.listdir(seeds_dir) if
+                             f.startswith(table) and f.endswith('.yml') and
+                             'sample' not in f]
+
+                    # e.g. classification.yml, classification.1.yml...
+                    for f in sorted(files, key=(lambda v: int(
+                            re.sub(r'[a-z\_]', '', v).replace('.', '0')))):
+                        seed_yml = os.path.join(seeds_dir, f)
+                        if os.path.isfile(seed_yml):
+                            print(os.path.basename(seed_yml))
+                            data = loader(seed_yml)
+                            for attributes in data[table]:
+                                load_data(model, attributes)
 
     def drop(self):
         """Drops entire database."""
@@ -161,20 +171,16 @@ def main(argv=None):
     setup_logging(config_uri)
     load_dotenv_vars()
 
-    # TODO: parse command and actions
     if command not in ('db',):
         raise Exception('Run with valid command {db} :\'(')
-
-    shared_actions = ('help', 'init', 'drop')
-    err_msg = 'Run with valid action {0!s} :\'('
-    if command == 'db':
-        actions = shared_actions + ('migrate', 'rollback', 'seed')
+    else:
+        actions = ('help', 'init', 'drop', 'migrate', 'rollback', 'seed')
         if action not in actions:
+            err_msg = 'Run with valid action {0!s} :\'('
             raise Exception(err_msg.format('|'.join(actions)))
 
     settings = get_appsettings(config_uri, options=options)
     settings = resolve_env_vars(dict(settings))
 
-    cli = '{0}{1}'.format(command.capitalize(), 'Cli')
-    c = globals()[cli](settings)
-    getattr(c, action.lower())()
+    cli = CLI(settings)
+    getattr(cli, action.lower())()

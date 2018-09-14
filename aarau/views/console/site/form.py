@@ -5,8 +5,8 @@ from wtforms import (
     SubmitField,
     TextAreaField,
 )
+from wtforms import Form
 from wtforms import validators as v, ValidationError
-from wtforms.form import Form
 
 from aarau.views.form import (
     SecureForm,
@@ -62,20 +62,8 @@ class SiteInstanceMixin():
             raise ValidationError('Slug is already taken.')
 
 
-class SiteForm():
-    class ApplicationBaseMixin(SiteInstanceMixin):
-        domain = StringField('Domain', [
-            v.Required(),
-            v.Regexp(DOMAIN_PATTERN),
-            v.Length(min=3, max=64),
-        ])
-
-    class PublicationBaseMixin(SiteInstanceMixin):
-        pass
-
-
-# nested form
-class ApplicationForm(Form):
+# nested form (for FormField)
+class ApplicationInnerForm(Form):
     name = StringField('Name', [
         v.Required(),
         v.Length(min=3, max=64),
@@ -86,8 +74,8 @@ class ApplicationForm(Form):
     ])
 
 
-# nested form
-class PublicationForm(Form):
+# nested form (for FormField)
+class PublicationInnerForm(Form):
     classification = SelectField('Classification', [
         v.Required(),
     ], choices=(...))
@@ -131,18 +119,23 @@ class PublicationForm(Form):
 
         return list(License.as_choices)
 
-    def __init__(self, formdata=None, obj=None, prefix='', **kwargs):
+    def __init__(self, *args, **kwargs):
         # pylint: disable=no-member
         self.classification.kwargs['choices'] = self.__classification_choices()
         self.license.kwargs['choices'] = self.__license_choices()
 
-        super().__init__(formdata, obj, prefix, **kwargs)
+        super().__init__(*args, **kwargs)
 
 
 # application
 
-class NewApplicationSiteForm(SiteForm.ApplicationBaseMixin, SecureForm):
-    application = FormField(ApplicationForm)
+class NewApplicationSiteForm(SecureForm, SiteInstanceMixin):
+    domain = StringField('Domain', [
+        v.Required(),
+        v.Regexp(DOMAIN_PATTERN),
+        v.Length(min=3, max=64),
+    ])
+    application = FormField(ApplicationInnerForm)
     submit = SubmitField('Create')
 
     @property
@@ -150,8 +143,13 @@ class NewApplicationSiteForm(SiteForm.ApplicationBaseMixin, SecureForm):
         return getattr(self, 'application')  # alias
 
 
-class EditApplicationSiteForm(SiteForm.ApplicationBaseMixin, SecureForm):
-    application = FormField(ApplicationForm)
+class EditApplicationSiteForm(SecureForm, SiteInstanceMixin):
+    domain = StringField('Domain', [
+        v.Required(),
+        v.Regexp(DOMAIN_PATTERN),
+        v.Length(min=3, max=64),
+    ])
+    application = FormField(ApplicationInnerForm)
     submit = SubmitField('Update')
 
     @property
@@ -171,8 +169,8 @@ def build_edit_application_site_form(req, site):
 
 # publication
 
-class NewPublicationSiteForm(SiteForm.PublicationBaseMixin, SecureForm):
-    publication = FormField(PublicationForm)
+class NewPublicationSiteForm(SiteInstanceMixin, SecureForm):
+    publication = FormField(PublicationInnerForm)
     submit = SubmitField('Create')
 
     @property
@@ -180,8 +178,8 @@ class NewPublicationSiteForm(SiteForm.PublicationBaseMixin, SecureForm):
         return getattr(self, 'publication')  # alias
 
 
-class EditPublicationSiteForm(SiteForm.PublicationBaseMixin, SecureForm):
-    publication = FormField(PublicationForm)
+class EditPublicationSiteForm(SiteInstanceMixin, SecureForm):
+    publication = FormField(PublicationInnerForm)
     submit = SubmitField('Update')
 
     @property

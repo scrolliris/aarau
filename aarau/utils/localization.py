@@ -24,12 +24,15 @@ def add_localizer(event):
 def add_localizer_renderer_globals(event):
     req = event['request']
 
+    # __('classification.notation.0', 'classification')
+    # __(TranslationStringFactory('form')('form.label.name'))
     if req and hasattr(req, 'localizer'):
         __ = req.localizer.translate
         if __:
             event['__'] = __  # util method for translation string
 
+    # _('signup.email.placeholder')
     if req and hasattr(req, 'translate'):
         _ = req.translate
         if _:
-            event['_'] = _  # shortcut method for template
+            event['_'] = _  # shortcut method for template (message)

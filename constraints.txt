@@ -8,7 +8,7 @@ mako==1.0.7
 MarkupSafe==1.0
 Paste==2.0.3
 PasteScript==2.0.2
-peewee==3.6.3
+peewee==3.7.0
 peewee-migrate==1.0.0
 --no-binary :all: psycopg2==2.7.5
 pylibmc==1.5.2

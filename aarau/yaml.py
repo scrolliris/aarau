@@ -49,7 +49,7 @@ def tag_datetime_utcnow_plus_timedelta(_loader, node):
     return datetime.utcnow() + timedelta(seconds=literal_eval(node.value))
 
 
-BY_NAMES = [
+TAGS = [
     ('user', 'username'),
     ('plan', 'name'),
     ('license', 'identifier'),
@@ -61,8 +61,8 @@ BY_NAMES = [
 ]
 
 
-def ref_functions():
-    """Foreign key reference lookup function generator (xxx_id column).
+def build_constructors(tags):
+    """Foreign key lookup constructors.
 
     E.g. `!user.username "'john'"`
     """
@@ -70,23 +70,23 @@ def ref_functions():
         module = importlib.import_module(module_name)
         return getattr(module, klass_name)
 
-    def _ref_function_factory(k, a):
-        klass, field = import_by_name('aarau.models', k.title()), a
+    def build_constructor(klass, field):
+        def f(_loader, node):
+            value = literal_eval(node.value)
+            # ScalarNode
+            if not isinstance(value, str):
+                raise ValueError
+            data = klass.select().where(
+                getattr(klass, field) == value).get()
+            yield data
 
-        def f():
-            def _f(_loader, node):
-                value = literal_eval(node.value)
-                if not isinstance(value, str):
-                    raise ValueError
-                return klass.select().where(
-                    getattr(klass, field) == value).get()
-
-            return _f
         return f
 
-    for k, a in BY_NAMES:
-        name = '!{0:s}.{1:s}'.format(k, a)
-        yield (name, _ref_function_factory(k, a))
+    for k, a in tags:
+        klass, field = import_by_name('aarau.models', k.title()), a
+        tag = '!{0:s}.{1:s}'.format(k, a)
+
+        yield (tag, build_constructor(klass, field))
 
 
 @contextmanager
@@ -112,7 +112,7 @@ def yaml_loader(settings=None):
             '!datetime.utcnow+timedelta',
             tag_datetime_utcnow_plus_timedelta)
 
-        for tag, f in ref_functions():
-            yaml.add_constructor(tag, f())
+        for tag, c in build_constructors(TAGS):
+            yaml.add_constructor(tag, c)
 
     yield load_yaml

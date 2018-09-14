@@ -17,3 +17,45 @@ classifications:
     name: Religion. Theology
     created_at: !datetime.utcnow+timedelta -10800
     updated_at: !datetime.utcnow+timedelta -10800
+
+  - parent: null
+    notation: '3'
+    name: Social sciences
+    created_at: !datetime.utcnow+timedelta -10800
+    updated_at: !datetime.utcnow+timedelta -10800
+
+  - parent: null
+    notation: '4'
+    name: Vacant
+    created_at: !datetime.utcnow+timedelta -10800
+    updated_at: !datetime.utcnow+timedelta -10800
+
+  - parent: null
+    notation: '5'
+    name: Mathematics. Natural sciences
+    created_at: !datetime.utcnow+timedelta -10800
+    updated_at: !datetime.utcnow+timedelta -10800
+
+  - parent: null
+    notation: '6'
+    name: Applied sciences. Medicine. Technology
+    created_at: !datetime.utcnow+timedelta -10800
+    updated_at: !datetime.utcnow+timedelta -10800
+
+  - parent: null
+    notation: '7'
+    name: The arts. Recreation. Entertainment. Sport
+    created_at: !datetime.utcnow+timedelta -10800
+    updated_at: !datetime.utcnow+timedelta -10800
+
+  - parent: null
+    notation: '8'
+    name: Language. Linguistics. Literature
+    created_at: !datetime.utcnow+timedelta -10800
+    updated_at: !datetime.utcnow+timedelta -10800
+
+  - parent: null
+    notation: '9'
+    name: Geography. Biography. History
+    created_at: !datetime.utcnow+timedelta -10800
+    updated_at: !datetime.utcnow+timedelta -10800

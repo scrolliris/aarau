@@ -13,7 +13,7 @@ Options:
 
 Arguments:
   <action>   {compile|c},{extract|e},{generate|g},{update|u},{sync|s}
-  <domain>   {message,form}
+  <domain>   {classification,form,message}
   [locale]   en
 
 Actions:
@@ -76,7 +76,7 @@ while [ $# -gt 0 ]; do
       action="${1}"
       shift
       ;;
-    "message"|"form"|"console.json")
+    "classification"|"form"|"message"|"console.json")
       domain="${1}"
       shift
       ;;
@@ -99,6 +99,8 @@ run_extract_command() {
       ! -path "./**/*/form.py" -print`"
   elif [ "${domain}" = "form" ]; then
     file_list="`find ./aarau/**/*/form.py -type f \( -name '*.py' \) -print`"
+  elif [ "${domain}" = "classification" ]; then
+    echo "see db/seeds/classification*.yml"
   elif [ "${domain}" = "console.json" ]; then
     echo "[info] not supported; update it manually."
   fi

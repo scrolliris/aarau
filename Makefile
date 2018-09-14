@@ -128,8 +128,9 @@ i18n: | i18n\:compile  ## An alias of `i18n:compile`
 .PHONY: i18n
 
 i18n\:extract:  ## Extract translation targets from code
-	./bin/linguine extract message
+	./bin/linguine extract classification
 	./bin/linguine extract form
+	./bin/linguine extract message
 .PHONY: i18n\:extract
 
 i18n\:compile:  ## Make translation files (catalog)
@@ -137,7 +138,7 @@ ifeq (, $(shell which i18next-conv 2>/dev/null))
 	$(info i18next-conv command not found. run `npm install -g i18next-conv`)
 	$(info )
 else
-	for ns in message form console\.json ; do \
+	for ns in classification form message console\.json ; do \
 	  for locale in en ; do \
 	    ./bin/linguine compile $$ns $$locale; \
 	  done; \
@@ -146,7 +147,7 @@ endif
 .PHONY: i18n\:compile
 
 i18n\:update:  ## Update catalog (pot)
-	for ns in message form console\.json ; do \
+	for ns in classification form message console\.json ; do \
 	  for locale in en ; do \
 	    ./bin/linguine update $$ns $$locale; \
 	  done; \

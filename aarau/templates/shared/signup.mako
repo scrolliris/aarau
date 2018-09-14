@@ -29,7 +29,7 @@
           </div>
         % else:
           <div class="required field-16${' error' if form.email.errors else ''}">
-            <label class="label" for="email">${__(form.email.label.text)}</label>
+            <label class="label" for="email">${__(form.email.label.text, 'form')}</label>
             <p class="description">${_('signup.email.description')}</p>
 
             <div class="field-13 field-n-16">
@@ -39,7 +39,7 @@
           </div>
 
           <div class="field-16${' error' if form.name.errors else ''}">
-            <label class="label" for="name">${__(form.name.label.text)}</label>
+            <label class="label" for="name">${__(form.name.label.text, 'form')}</label>
             <p class="description">${_('signup.name.description')}</p>
 
             <div class="field-11 field-n-13">
@@ -49,7 +49,7 @@
           </div>
 
           <div class="field-16${' error' if form.username.errors else ''}">
-            <label class="label" for="username">${__(form.username.label.text)}</label>
+            <label class="label" for="username">${__(form.username.label.text, 'form')}</label>
             <p class="description">${_('signup.username.description')}</p>
 
             <div class="field-8 field-n-11">
@@ -59,7 +59,7 @@
           </div>
 
           <div class="required field-16${' error' if form.password.errors else ''}">
-            <label class="label" for="password">${__(form.password.label.text)}</label>
+            <label class="label" for="password">${__(form.password.label.text, 'form')}</label>
             <p class="description">${_('signup.password.description', mapping={
               'letters': '<code>{}</code>'.format(_('misc.letters')),
               'numbers': '<code>{}</code>'.format(_('misc.numbers'))
@@ -74,14 +74,14 @@
           <div class="field-16">
             <div class="petit info message">
               <p class="content">${_('signup.agreement', mapping={
-                'button': __(form.submit.label.text),
+                'button': __(form.submit.label.text, 'form'),
                 'tos': '<a href="{}" target="_blank">{}</a>'.format('https://doc.scrolliris.com/terms.html', _('link.text.tos')),
                 'pp': '<a href="{}" target="_blank">{}</a>'.format('https://doc.scrolliris.com/policy.html', _('link.text.pp'))})|n,trim,clean(tags=['a'], attributes=['href', 'target'])}</p>
             </div>
           </div>
 
           <div class="field-13">
-            ${form.submit(class_='ui large primary flat button', value=__(form.submit.label.text))}
+            ${form.submit(class_='ui large primary flat button', value=__(form.submit.label.text, 'form'))}
           </div>
         % endif
         </form>

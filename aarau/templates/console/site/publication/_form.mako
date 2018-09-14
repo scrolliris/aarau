@@ -32,6 +32,9 @@
   <div class="row">
     <div class="required field-12${' error' if _f.classification.errors else ''}">
       <label class="label" for="publication-classification">Classification</label>
+      <%
+        _f.classification.choices = [(i, __(t, 'classification')) for (i, t) in _f.classification.choices]
+      %>
       ${_f.classification(class_='control')}
       ${render_error_message(_f.classification)}
     </div>

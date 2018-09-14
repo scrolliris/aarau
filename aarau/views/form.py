@@ -1,7 +1,6 @@
 import itertools
 import yaml
 
-from pyramid.i18n import TranslationStringFactory
 from pyramid.path import AssetResolver
 from wtforms import ValidationError
 from wtforms.form import Form
@@ -34,9 +33,6 @@ def availability_checker(key):
             pass
 
     return _check_availability
-
-
-_ = TranslationStringFactory('form')
 
 
 class CSRF(_CSRF):
@@ -84,4 +80,8 @@ def build_form(klass, req, obj=None):
         'csrf_context': req.session,
         'locales': ['en_US', 'en'],
     })
+
+    # all form has `req` instance
+    form.req = req
+
     return form
