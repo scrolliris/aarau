@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Neuchâtel 0.1\n"
 "Report-Msgid-Bugs-To: support@scrolliris.com\n"
-"POT-Creation-Date: 2018-09-04 06:36+0900\n"
+"POT-Creation-Date: 2018-09-14 15:44+0900\n"
 "PO-Revision-Date: 2017-06-16 01:09+0900\n"
 "Last-Translator: Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>\n"
 "Language-Team: Scrolliris Translation Team <support@scrolliris.com>\n"
@@ -213,13 +213,13 @@ msgstr "Your signup has been failed"
 msgid "site.{:s}.creation.success"
 msgstr "Your signup has been successfully requested"
 
-#: aarau/views/console/site/action.py:155
+#: aarau/views/console/site/action.py:160
 #, fuzzy
 #| msgid "site.application.update.failure"
 msgid "site.{:s}.update.failure"
 msgstr "Application could not been updated"
 
-#: aarau/views/console/site/action.py:147
+#: aarau/views/console/site/action.py:152
 #, fuzzy
 #| msgid "site.application.update.success"
 msgid "site.{:s}.update.success"
