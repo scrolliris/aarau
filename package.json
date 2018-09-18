@@ -5,7 +5,7 @@
   "private": true,
   "engines": {
     "node": "8.11.3",
-    "npm": "6.2.0"
+    "npm": "6.4.0"
   },
   "scripts": {
     "test": "node --version",
@@ -17,7 +17,7 @@
     "inferno": "4.0.6",
     "inferno-hyperscript": "4.0.6",
     "moment": "~> 2.19.3",
-    "npm": "6.4.0",
+    "npm": "^6.4.0",
     "styr": "0.0.32",
     "vergil": "0.0.7"
   },
