@@ -3,6 +3,19 @@
 @import '../shared/_toolbar.styl'
 
 #console
+  // -- fixed-header option
+  section.container.with-fixed-header
+    height 100%
+    overflow hidden
+
+    main
+      height calc(100% - (2.72rem * 2))
+      overflow-y scroll
+
+  header,
+  .inner-header
+    height 2.72rem
+
   .top.menu
     min-height 2.72rem
     margin 0

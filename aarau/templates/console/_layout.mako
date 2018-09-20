@@ -50,7 +50,7 @@
       <%block name='toolbar_checkbox'/>
 
       ## main container
-      <section class="content container">
+      <section class="content container with-fixed-header">
         <div class="inner-header"></div>
 
         <header>
@@ -68,7 +68,7 @@
           </div>
         </header>
 
-        <main style="padding:0 0.9rem;">
+        <main>
           ${render_announcement()}
 
           ${self.body()}
