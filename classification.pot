@@ -18,32 +18,220 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: db/seeds/classifications.yml
-msgid "classification.notation.0"
+msgid "classification.name.0"
 msgstr ""
 
-msgid "classification.notation.1"
+msgid "classification.name.1"
 msgstr ""
 
-msgid "classification.notation.2"
+msgid "classification.name.2"
 msgstr ""
 
-msgid "classification.notation.3"
+msgid "classification.name.3"
 msgstr ""
 
-msgid "classification.notation.4"
+msgid "classification.name.4"
 msgstr ""
 
-msgid "classification.notation.5"
+msgid "classification.name.5"
 msgstr ""
 
-msgid "classification.notation.6"
+msgid "classification.name.6"
 msgstr ""
 
-msgid "classification.notation.7"
+msgid "classification.name.7"
 msgstr ""
 
-msgid "classification.notation.8"
+msgid "classification.name.8"
 msgstr ""
 
-msgid "classification.notation.9"
+msgid "classification.name.9"
+msgstr ""
+
+#: db/seeds/classifications.1.yml
+msgid "classification.name.00"
+msgstr ""
+
+msgid "classification.name.01"
+msgstr ""
+
+msgid "classification.name.02"
+msgstr ""
+
+msgid "classification.name.030"
+msgstr ""
+
+msgid "classification.name.040"
+msgstr ""
+
+msgid "classification.name.050"
+msgstr ""
+
+msgid "classification.name.06"
+msgstr ""
+
+msgid "classification.name.07"
+msgstr ""
+
+msgid "classification.name.08"
+msgstr ""
+
+msgid "classification.name.09"
+msgstr ""
+
+#: db/seeds/classifications.2.yml
+msgid "classification.name.001"
+msgstr ""
+
+msgid "classification.name.002"
+msgstr ""
+
+msgid "classification.name.003"
+msgstr ""
+
+msgid "classification.name.004"
+msgstr ""
+
+msgid "classification.name.005"
+msgstr ""
+
+msgid "classification.name.006"
+msgstr ""
+
+msgid "classification.name.007"
+msgstr ""
+
+msgid "classification.name.008"
+msgstr ""
+
+#: db/seeds/classification.3.yml
+msgid "classification.name.001.1"
+msgstr ""
+
+msgid "classification.name.001.32"
+msgstr ""
+
+msgid "classification.name.001.8"
+msgstr ""
+
+msgid "classification.name.001.9"
+msgstr ""
+
+msgid "classification.name.003.01/.09"
+msgstr ""
+
+msgid "classification.name.003.2"
+msgstr ""
+
+msgid "classification.name.003.5"
+msgstr ""
+
+msgid "classification.name.003.6"
+msgstr ""
+
+msgid "classification.name.004.01/.08"
+msgstr ""
+
+msgid "classification.name.004.2"
+msgstr ""
+
+msgid "classification.name.004.3"
+msgstr ""
+
+#: db/seeds/classification.4.yml
+msgid "classification.name.001.18"
+msgstr ""
+
+msgid "classification.name.001.89"
+msgstr ""
+
+msgid "classification.name.003.01"
+msgstr ""
+
+msgid "classification.name.003.02"
+msgstr ""
+
+msgid "classification.name.003.03"
+msgstr ""
+
+msgid "classification.name.003.05"
+msgstr ""
+
+msgid "classification.name.003.07"
+msgstr ""
+
+msgid "classification.name.003.08"
+msgstr ""
+
+msgid "classification.name.003.09"
+msgstr ""
+
+msgid "classification.name.003.21/.23"
+msgstr ""
+
+msgid "classification.name.004.01"
+msgstr ""
+
+msgid "classification.name.004.02"
+msgstr ""
+
+msgid "classification.name.004.03"
+msgstr ""
+
+msgid "classification.name.004.04"
+msgstr ""
+
+msgid "classification.name.004.05"
+msgstr ""
+
+msgid "classification.name.004.07"
+msgstr ""
+
+msgid "classification.name.004.08"
+msgstr ""
+
+msgid "classification.name.004.22"
+msgstr ""
+
+msgid "classification.name.004.23"
+msgstr ""
+
+msgid "classification.name.004.24"
+msgstr ""
+
+msgid "classification.name.004.27"
+msgstr ""
+
+msgid "classification.name.004.3`1/`2"
+msgstr ""
+
+msgid "classification.name.004.31"
+msgstr ""
+
+msgid "classification.name.004.32"
+msgstr ""
+
+msgid "classification.name.004.33"
+msgstr ""
+
+msgid "classification.name.004.35"
+msgstr ""
+
+msgid "classification.name.004.38"
+msgstr ""
+
+#: db/seeds/classification.5.yml
+msgid "classification.name.003.21"
+msgstr ""
+
+msgid "classification.name.003.22"
+msgstr ""
+
+msgid "classification.name.003.23"
+msgstr ""
+
+msgid "classification.name.004.3`1"
+msgstr ""
+
+msgid "classification.name.004.3`2"
 msgstr ""

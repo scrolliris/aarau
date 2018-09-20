@@ -17,34 +17,222 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: db/seeds/classifications.yml
-msgid "classification.notation.0"
+msgid "classification.name.0"
 msgstr ""
 "Science and Knowledge. Organization. Computer Science. Information. "
 "Documentation. Librarianship. Institutions. Publications"
 
-msgid "classification.notation.1"
+msgid "classification.name.1"
 msgstr "Philosophy. Psychology"
 
-msgid "classification.notation.2"
+msgid "classification.name.2"
 msgstr "Religion. Theology"
 
-msgid "classification.notation.3"
+msgid "classification.name.3"
 msgstr "Social sciences"
 
-msgid "classification.notation.4"
+msgid "classification.name.4"
 msgstr "Vacant"
 
-msgid "classification.notation.5"
+msgid "classification.name.5"
 msgstr "Mathematics. Natural sciences"
 
-msgid "classification.notation.6"
+msgid "classification.name.6"
 msgstr "Applied sciences. Medicine. Technology"
 
-msgid "classification.notation.7"
+msgid "classification.name.7"
 msgstr "The arts. Recreation. Entertainment. Sport"
 
-msgid "classification.notation.8"
+msgid "classification.name.8"
 msgstr "Language. Linguistics. Literature"
 
-msgid "classification.notation.9"
+msgid "classification.name.9"
 msgstr "Geography. Biography. History"
+
+#: db/seeds/classifications.1.yml
+msgid "classification.name.00"
+msgstr "Prolegomena. Fundamentals of knowledge and culture. Propaedeutics"
+
+msgid "classification.name.01"
+msgstr "Bibliography and bibliographies. Catalogues"
+
+msgid "classification.name.02"
+msgstr "Librarianship"
+
+msgid "classification.name.030"
+msgstr "General reference works (as subject)"
+
+msgid "classification.name.050"
+msgstr "Serial publications, periodicals (as subject)"
+
+msgid "classification.name.06"
+msgstr "Organizations of a general nature"
+
+msgid "classification.name.07"
+msgstr "Newspapers. The Press. Journalism"
+
+msgid "classification.name.08"
+msgstr "Polygraphies. Collective works"
+
+msgid "classification.name.09"
+msgstr "Manuscripts. Rare and remarkable works"
+
+#: db/seeds/classifications.2.yml
+msgid "classification.name.001"
+msgstr "Science and knowledge in general. Organization of intellectual work"
+
+msgid "classification.name.002"
+msgstr "Documentation. Books. Writings. Authorship"
+
+msgid "classification.name.003"
+msgstr "Writing systems and scripts"
+
+msgid "classification.name.004"
+msgstr "Computer science and technology. Computing. Data processing"
+
+msgid "classification.name.005"
+msgstr "Management"
+
+msgid "classification.name.006"
+msgstr "Standardization of products, operations, weights, measures and time"
+
+msgid "classification.name.007"
+msgstr "Activity and organizing. Communication and control theory generally (cybernetics). 'Human engineering'"
+
+msgid "classification.name.008"
+msgstr "Civilization. Culture. Progress"
+
+#: db/seeds/classification.3.yml
+msgid "classification.name.001.1"
+msgstr "Concepts of science and knowledge"
+
+msgid "classification.name.001.32"
+msgstr "Learned, scientific societies. Academies"
+
+msgid "classification.name.001.8"
+msgstr "Methodology"
+
+msgid "classification.name.001.9"
+msgstr "Dissemination of ideas"
+
+msgid "classification.name.003.01/.09"
+msgstr "Special auxiliary subdivision for writing systems and scripts"
+
+msgid "classification.name.003.2"
+msgstr "Writing systems. Graphic representations of concepts"
+
+msgid "classification.name.003.3"
+msgstr "Scripts"
+
+msgid "classification.name.003.5"
+msgstr "Writing materials and equipment"
+
+msgid "classification.name.003.6"
+msgstr "Other kinds of graphic representation of thought"
+
+msgid "classification.name.004.01/.08"
+msgstr "Special auxiliary subdivision for computing"
+
+msgid "classification.name.004.2"
+msgstr "Computer architecture"
+
+msgid "classification.name.004.3"
+msgstr "Computer hardware"
+
+#: db/seeds/classification.4.yml
+msgid "classification.name.001.18"
+msgstr "Future of knowledge"
+
+msgid "classification.name.001.89"
+msgstr "Organization of science and scientific work"
+
+msgid "classification.name.003.01"
+msgstr "Origins, precursors of scripts. Early forms of scripts"
+
+msgid "classification.name.003.02"
+msgstr "Emergence of writing"
+
+msgid "classification.name.003.03"
+msgstr "Graphic expression of language"
+
+msgid "classification.name.003.05"
+msgstr "Means of producing signs and scripts"
+
+msgid "classification.name.003.07"
+msgstr "Uses and styles of writing"
+
+msgid "classification.name.003.08"
+msgstr "Characteristics of writing"
+
+msgid "classification.name.003.09"
+msgstr "Techniques and methods of deciphering scripts"
+
+msgid "classification.name.003.21/.23"
+msgstr "Origins, precursors of scripts. Early forms of scripts"
+
+msgid "classification.name.004.01"
+msgstr "Documentation"
+
+msgid "classification.name.004.02"
+msgstr "Problem-solving methods"
+
+msgid "classification.name.004.03"
+msgstr "System types and characteristics"
+
+msgid "classification.name.004.04"
+msgstr "Processing orientation"
+
+msgid "classification.name.004.05"
+msgstr "System and software quality"
+
+msgid "classification.name.004.07"
+msgstr "Memory characteristics"
+
+msgid "classification.name.004.08"
+msgstr "Input, output and storage media"
+
+msgid "classification.name.004.22"
+msgstr "Data representation"
+
+msgid "classification.name.004.23"
+msgstr "Instruction set architecture"
+
+msgid "classification.name.004.24"
+msgstr "Memory system"
+
+msgid "classification.name.004.27"
+msgstr "Advanced architectures. Non-Von Neumann architectures"
+
+msgid "classification.name.004.3`1/`2"
+msgstr "Special auxiliary subdivision for hardware"
+
+msgid "classification.name.004.31"
+msgstr "Processing units. Processing circuits"
+
+msgid "classification.name.004.32"
+msgstr "Computer pathways"
+
+msgid "classification.name.004.33"
+msgstr "Memory units. Storage units"
+
+msgid "classification.name.004.35"
+msgstr "Peripherals. Input-output units"
+
+msgid "classification.name.004.38"
+msgstr "Computers. Kinds of computer"
+
+#: db/seeds/classification.5.yml
+msgid "classification.name.003.21"
+msgstr "Picture writing"
+
+msgid "classification.name.003.22"
+msgstr "Syllabic writing systems"
+
+msgid "classification.name.003.23"
+msgstr "Alphabetic writing systems"
+
+msgid "classification.name.004.3`1"
+msgstr "Production of computers"
+
+msgid "classification.name.004.3`2"
+msgstr "Computer installations"
