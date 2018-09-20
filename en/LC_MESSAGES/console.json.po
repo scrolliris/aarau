@@ -73,3 +73,16 @@ msgstr "This field must be maximum {{max}} characters long."
 
 msgid "validation.error.min_length"
 msgstr "This field must be at least {{min}} characters long."
+
+# metrics
+msgid "metrics.title.time_of_day"
+msgstr "Time of Day"
+
+msgid "metrics.title.total_duration"
+msgstr "Total Duration (sec.)"
+
+msgid "metrics.title.finish_reading_rate"
+msgstr "Finish Reading Rate (%)"
+
+msgid "metrics.title.date"
+msgstr "Date"
