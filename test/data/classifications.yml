@@ -2,60 +2,60 @@
 classifications:
   - parent: null
     notation: '0'
-    name: Science and Knowledge. Organization. Computer Science. Information. Documentation. Librarianship. Institutions. Publications
+    name: 'classification.name.0'
     created_at: !datetime.utcnow+timedelta -10800
     updated_at: !datetime.utcnow+timedelta -10800
 
   - parent: null
     notation: '1'
-    name: Philosophy. Psychology
+    name: 'classification.name.1'
     created_at: !datetime.utcnow+timedelta -10800
     updated_at: !datetime.utcnow+timedelta -10800
 
   - parent: null
     notation: '2'
-    name: Religion. Theology
+    name: 'classification.name.2'
     created_at: !datetime.utcnow+timedelta -10800
     updated_at: !datetime.utcnow+timedelta -10800
 
   - parent: null
     notation: '3'
-    name: Social sciences
+    name: 'classification.name.3'
     created_at: !datetime.utcnow+timedelta -10800
     updated_at: !datetime.utcnow+timedelta -10800
 
   - parent: null
     notation: '4'
-    name: Vacant
+    name: 'classification.name.4'
     created_at: !datetime.utcnow+timedelta -10800
     updated_at: !datetime.utcnow+timedelta -10800
 
   - parent: null
     notation: '5'
-    name: Mathematics. Natural sciences
+    name: 'classification.name.5'
     created_at: !datetime.utcnow+timedelta -10800
     updated_at: !datetime.utcnow+timedelta -10800
 
   - parent: null
     notation: '6'
-    name: Applied sciences. Medicine. Technology
+    name: 'classification.name.6'
     created_at: !datetime.utcnow+timedelta -10800
     updated_at: !datetime.utcnow+timedelta -10800
 
   - parent: null
     notation: '7'
-    name: The arts. Recreation. Entertainment. Sport
+    name: 'classification.name.7'
     created_at: !datetime.utcnow+timedelta -10800
     updated_at: !datetime.utcnow+timedelta -10800
 
   - parent: null
     notation: '8'
-    name: Language. Linguistics. Literature
+    name: 'classification.name.8'
     created_at: !datetime.utcnow+timedelta -10800
     updated_at: !datetime.utcnow+timedelta -10800
 
   - parent: null
     notation: '9'
-    name: Geography. Biography. History
+    name: 'classification.name.9'
     created_at: !datetime.utcnow+timedelta -10800
     updated_at: !datetime.utcnow+timedelta -10800

@@ -54,15 +54,69 @@ class Classification(CardinalBase, TimestampMixin):
         for root in cls.roots:  # pylint: disable=not-an-iterable
             root.rebuild()
 
+    @classmethod
+    def subtree_all(cls, limit_depth=None):
+        return cls.get_subtree(limit_depth=limit_depth)
+
+    @classmethod
+    def get_subtree(cls, scope=None, limit_depth=None):
+        from peewee import fn
+        from .classification_hierarchy import ClassificationHierarchy
+
+        having_clause = fn.MAX(ClassificationHierarchy.generations) <= \
+            limit_depth - 1 if limit_depth is not None else None
+
+        generation_depth = (ClassificationHierarchy.select(
+            ClassificationHierarchy.descendant_id,
+            fn.MAX(ClassificationHierarchy.generations).alias('depth')
+        ).group_by(
+            ClassificationHierarchy.descendant_id
+        ).having(
+            having_clause
+        ).alias('generation_depth').order_by(
+            ClassificationHierarchy.descendant_id.asc()))
+
+        predicate = ((Classification.id == generation_depth.c.descendant_id))
+        return (scope if scope else cls).select().join(
+            generation_depth, on=predicate)
+
     @property
     def is_root(self) -> bool:
         return self.parent_id is None
 
+    @property
+    def ancestor_ids(self):
+        from .classification_hierarchy import ClassificationHierarchy
+        return [a.ancestor_id for a in
+                self.ancestor_hierarchies.select().order_by(
+                    ClassificationHierarchy.generations.asc())]
+
+    @property
+    def ancestors(self):
+        return self.__class__.select().where(
+            self.__class__.id << self.ancestor_ids)
+
+    @property
+    def descendant_ids(self):
+        from .classification_hierarchy import ClassificationHierarchy
+        return [a.descendant_id for a in
+                self.descendant_hierarchies.select().order_by(
+                    ClassificationHierarchy.generations.asc())]
+
+    @property
+    def descendants(self):
+        """All descendants incl. itself. """
+        return self.__class__.select().where(
+            self.__class__.id << self.descendant_ids)
+
+    def subtree(self, limit_depth=None):
+        return self.__class__.get_subtree(
+            scope=self.descendants, limit_depth=limit_depth)
+
     def rebuild(self) -> None:  # pylint: disable=function-redefined
         # pylint: disable=protected-access
         """Rebuilds hierarchies recursively."""
-        from aarau.models.classification_hierarchy import \
-            ClassificationHierarchy
+        from .classification_hierarchy import ClassificationHierarchy
 
         # delete hierarchy
         q = '''

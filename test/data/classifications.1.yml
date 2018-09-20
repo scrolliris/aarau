@@ -1,0 +1,14 @@
+---
+classifications:
+  # 0
+  - parent: !classification.notation "'0'"
+    notation: '00'
+    name: 'classification.name.00'
+    created_at: !datetime.utcnow+timedelta -10800
+    updated_at: !datetime.utcnow+timedelta -10800
+
+  - parent: !classification.notation "'0'"
+    notation: '01'
+    name: 'classification.name.01'
+    created_at: !datetime.utcnow+timedelta -10800
+    updated_at: !datetime.utcnow+timedelta -10800

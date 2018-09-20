@@ -18,6 +18,7 @@ def add_console_renderer_globals(evt) -> None:
 
 
 def includeme(config):
+    config.include('.classification')
     config.include('.project')
     config.include('.site')
     config.include('.article')

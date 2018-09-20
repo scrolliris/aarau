@@ -1,5 +1,6 @@
 from wtforms import (
     FormField,
+    HiddenField,
     SelectField,
     StringField,
     SubmitField,
@@ -76,9 +77,9 @@ class ApplicationInnerForm(Form):
 
 # nested form (for FormField)
 class PublicationInnerForm(Form):
-    classification = SelectField('Classification', [
+    classification = HiddenField('Classification', [
         v.Required(),
-    ], choices=(...))
+    ])
     name = StringField('Name', [
         v.Required(),
         v.Length(min=3, max=64),
@@ -96,18 +97,6 @@ class PublicationInnerForm(Form):
     ])
 
     @staticmethod
-    def __classification_choices():
-        """Returns classification choices generator as list.
-
-        Because it seems that wtforms SelectField's choices needs list.
-        If returns just iterable or generator, it does not work at re-rendering
-        after submit.
-        """
-        from aarau.models import Classification
-
-        return list(Classification.as_choices)
-
-    @staticmethod
     def __license_choices():
         """Returns license choices generator as list.
 
@@ -121,7 +110,6 @@ class PublicationInnerForm(Form):
 
     def __init__(self, *args, **kwargs):
         # pylint: disable=no-member
-        self.classification.kwargs['choices'] = self.__classification_choices()
         self.license.kwargs['choices'] = self.__license_choices()
 
         super().__init__(*args, **kwargs)

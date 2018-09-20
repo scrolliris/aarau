@@ -1,0 +1,8 @@
+---
+classifications:
+  # 00
+  - parent: !classification.notation "'00'"
+    notation: '001'
+    name: 'classification.name.001'
+    created_at: !datetime.utcnow+timedelta -10800
+    updated_at: !datetime.utcnow+timedelta -10800

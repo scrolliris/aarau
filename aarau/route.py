@@ -147,6 +147,11 @@ def define_console_routes(c, namespace):
                 '/{namespace}/{slug}/editor',
                 custom_predicates=(namespace,))
 
+    # internal api - classification
+    c.add_route('api.console.classification.tree',
+                '/api/{namespace}/{slug}/classification/tree.json',
+                custom_predicates=(namespace,))
+
     # internal api - article
     c.add_route('api.console.article.editor',
                 '/api/{namespace}/{slug}/article/editor.json',

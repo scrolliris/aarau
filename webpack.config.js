@@ -44,6 +44,7 @@ var config = {
     , include: [
         path.resolve(__dirname, appName + '/assets')
       , path.resolve(__dirname, 'node_modules/vergil/dst')
+      , path.resolve(__dirname, 'node_modules/inferno-tree-select/dst')
       ]
     }]
   }
@@ -55,6 +56,7 @@ var config = {
     , 'inferno.js': 'inferno/dist/inferno.min.js'
     , 'inferno-hyperscript.js':
        'inferno-hyperscript/dist/inferno-hyperscript.min.js'
+    , 'inferno-tree-select.js': 'inferno-tree-select/dst/index.min.js'
     , 'i18next.js': 'i18next/i18next.min.js'
     , 'i18next-xhr-backend.js': 'i18next-xhr-backend/i18nextXHRBackend.min.js'
     , 'i18next-browser-languagedetector.js':

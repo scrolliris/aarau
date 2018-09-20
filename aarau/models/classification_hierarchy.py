@@ -10,10 +10,10 @@ from aarau.models.classification import Classification
 class ClassificationHierarchy(CardinalBase):
     ancestor = ForeignKeyField(
         model=Classification, column_name='ancestor_id', field='id',
-        backref='descendants', null=False)
+        backref='descendant_hierarchies', null=False)
     descendant = ForeignKeyField(
         model=Classification, column_name='descendant_id', field='id',
-        backref='ancestors', null=False)
+        backref='ancestor_hierarchies', null=False)
     generations = SmallIntegerField(null=False)
 
     class Meta:

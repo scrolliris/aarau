@@ -1,4 +1,5 @@
-from os import path
+import os
+import re
 
 from mixer.backend.peewee import Mixer
 
@@ -30,25 +31,25 @@ def import_data(settings):
                         fixture.save()
 
         # tests/data/*.yml
-        data_fixtures = [
-            ('plans', Plan),
-            ('classifications', Classification),
-            ('licenses', License),
-            ('projects', Project),
-            ('publications', Publication),
-            ('articles', Article),
-            ('applications', Application),
-            ('pages', Page),
-            ('sites', Site),
-            ('users', User),
-            ('user_emails', UserEmail),
-            ('memberships', Membership),
-            ('contributions', Contribution),
+        fixtures = [
+            Plan, Classification, License, Project, Publication,
+            Article, Application, Page, Site, User, UserEmail,
+            Membership, Contribution,
         ]
-        for table, klass in data_fixtures:
-            yml_file = path.join(path.dirname(__file__), 'data',
-                                 '{0:s}.yml'.format(table))
-            data = loader(yml_file)
 
-            for attributes in data[table]:
-                blend_data(klass, attributes)
+        for model in fixtures:
+            # pylint: disable=no-member,protected-access
+            table = model._meta.table_name
+            fixtures_dir = os.path.join(os.path.dirname(__file__), 'data')
+            files = [f for f in os.listdir(fixtures_dir) if
+                     f.startswith(table) and f.endswith('.yml')]
+
+            # e.g. classification.yml, classification.1.yml...
+            for f in sorted(files, key=(lambda v: int(
+                    re.sub(r'[a-z\_]', '', v).replace('.', '0')))):
+                fixture_yml = os.path.join(fixtures_dir, f)
+                if os.path.isfile(fixture_yml):
+                    print(os.path.basename(fixture_yml))
+                    data = loader(fixture_yml)
+                    for attributes in data[table]:
+                        blend_data(model, attributes)

@@ -4,6 +4,8 @@ import { h } from 'inferno-hyperscript.js';
 import { loadI18n } from './i18n.js';
 
 // components
+import ClassificationTree from
+  '../../component/console/classification_tree.js';
 import Metrics from '../../component/console/metrics.js';
 import PageTable from '../../component/console/page.js';
 import ArticleEditorForm from '../../component/console/article_editor_form.js';
@@ -25,6 +27,13 @@ import handleToolbar from '../shared/_toolbar.js';
       if (err) {
         // pass
         // console.log(err)
+      }
+
+      { // publication settings
+        let container = doc.getElementById('classification_tree');
+        if (container !== null) {
+          render(h(ClassificationTree, container.dataset), container);
+        }
       }
 
       { // application insights (metrics)

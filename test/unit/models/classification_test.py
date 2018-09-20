@@ -10,27 +10,14 @@ def setup(config):  # pylint: disable=unused-argument
 
 
 def test_as_choices_as_classproperty():
+    # pylint: disable=not-an-iterable
     from types import GeneratorType
 
     choices = Classification.as_choices
     assert isinstance(choices, GeneratorType)
 
-    # TODO: only roots
-    expected_names = [
-        'Science and Knowledge. Organization. Computer Science. Information. '
-        'Documentation. Librarianship. Institutions. Publications',
-        'Philosophy. Psychology',
-        'Religion. Theology',
-        'Social sciences',
-        'Vacant',
-        'Mathematics. Natural sciences',
-        'Applied sciences. Medicine. Technology',
-        'The arts. Recreation. Entertainment. Sport',
-        'Language. Linguistics. Literature',
-        'Geography. Biography. History',
-    ]
-    # pylint: disable=not-an-iterable
-    assert expected_names == [n for _, n in choices]
+    # only roots
+    assert [c.name for c in Classification.roots] == [n for _, n in choices]
 
 
 def test_roots():
@@ -44,9 +31,16 @@ def test_rebuild_all():
 
     Classification.rebuild_all()
 
-    # NOTE: no children
-    assert 10 == ClassificationHierarchy.select(
+    assert 0 != ClassificationHierarchy.select(
         fn.COUNT(ClassificationHierarchy.ancestor)).scalar()
+
+
+def test_subtree_all():
+    Classification.rebuild_all()
+
+    # pylint: disable=no-value-for-parameter
+    assert Classification.select(fn.COUNT(Classification.id)).scalar() == \
+        len([c.id for c in Classification.subtree_all()])
 
 
 def test_is_root():
@@ -66,8 +60,9 @@ def test_rebuild():
     assert 0 == ClassificationHierarchy.select(
         fn.COUNT(ClassificationHierarchy.ancestor)).scalar()
 
-    c = Classification.get()
+    c = Classification.select().where(Classification.notation == '0').get()
     c.rebuild()
 
-    assert 1 == ClassificationHierarchy.select(
-        fn.COUNT(ClassificationHierarchy.ancestor)).scalar()
+    assert 0 != ClassificationHierarchy.select(
+        fn.COUNT(ClassificationHierarchy.ancestor)
+    ).where(ClassificationHierarchy.ancestor_id == c.id).scalar()
