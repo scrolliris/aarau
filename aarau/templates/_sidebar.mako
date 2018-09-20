@@ -30,10 +30,10 @@
   % endif
 
   % if not req.user:
-  <div class="item">
+  <span class="item">
     <a href="${req.route_url('login')}">Login</a>&nbsp;or&nbsp;<a href="${req.route_url('signup')}">Signup</a>
     <span class="description">Scrolliris, a publication platform which utilizes text readability analysis</span>
-  </div>
+  </span>
   % endif
 
   <hr class="divider">
