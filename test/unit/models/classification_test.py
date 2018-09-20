@@ -17,7 +17,8 @@ def test_as_choices_as_classproperty():
     assert isinstance(choices, GeneratorType)
 
     # only roots
-    assert [c.name for c in Classification.roots] == [n for _, n in choices]
+    assert sorted([c.name for c in Classification.roots]) == \
+        sorted([n for _, n in choices])
 
 
 def test_roots():
