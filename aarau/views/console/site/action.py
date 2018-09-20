@@ -7,10 +7,29 @@ from aarau.services.interface import IManager
 
 from aarau.views import get_site_type
 
+from aarau.models import Classification
 from aarau.queries.project import get_project
 from aarau.queries.site import get_site
 from aarau.views.console.site import tpl
 from aarau.views.console.site.form import build_site_form
+
+
+def build_instance_of(site, form):
+    instance = site.instance
+
+    if instance is None:
+        instance = site.instantiate()
+
+    instance.name = form.name.data
+    instance.description = form.description.data
+
+    if site.type == 'publication':
+        c = Classification.find_by_notation(form.classification.data)
+        instance.classification = c.id
+        instance.license = form.license.data
+        instance.copyright = form.copyright.data
+
+    return instance
 
 
 @view_config(route_name='console.site.new', renderer='.mako')
@@ -32,26 +51,17 @@ def site_new(req):
         _ = req.translate
         if form.validate():
             with req.db.cardinal.atomic():
-                _f = form.instance.form
-
-                instance = site.instantiate(
-                    name=_f.name.data,
-                    description=_f.description.data)
-
-                # TODO
-                if site.type == 'publication':
-                    instance.classification = _f.classification.data
-                    instance.license = _f.license.data
-                    instance.copyright = _f.copyright.data
-                elif site.type == 'application':
-                    site.domain = form.domain.data
-
+                instance = build_instance_of(site, form.instance.form)
                 instance.save()
 
                 site.slug = form.slug.data
                 site.instance_id = instance.id
                 site.read_key = Site.grab_unique_key('read_key')
                 site.write_key = Site.grab_unique_key('write_key')
+
+                if site.type == 'application':
+                    site.domain = form.domain.data
+
                 site.save()
 
             manager = req.find_service(iface=IManager, name='credentials')
@@ -123,25 +133,15 @@ def site_settings(req):
             update_slug = False
 
             with req.db.cardinal.atomic():
-                _f = form.instance.form
-
-                instance = site.instance
-                instance.name = _f.name.data
-                instance.description = _f.description.data
-
-                # TODO: remove these blocks
-                if site.type == 'publication':
-                    instance.classification = _f.classification.data
-                    instance.license = _f.license.data
-                    instance.copyright = _f.copyright.data
-                elif site.type == 'application':
-                    site.domain = form.domain.data
-
+                instance = build_instance_of(site, form.instance.form)
                 instance.save()
 
                 if site.slug != form.slug.data:
                     update_slug = True
                     site.slug = form.slug.data
+
+                if site.type == 'application':
+                    site.domain = form.domain.data
 
                 site.save()
 

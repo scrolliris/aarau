@@ -80,6 +80,10 @@ class Classification(CardinalBase, TimestampMixin):
         return (scope if scope else cls).select().join(
             generation_depth, on=predicate)
 
+    @classmethod
+    def find_by_notation(cls, notation):
+        return cls.select().where(cls.notation == notation).get()
+
     @property
     def is_root(self) -> bool:
         return self.parent_id is None

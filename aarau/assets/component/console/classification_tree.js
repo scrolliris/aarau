@@ -86,7 +86,7 @@ class ClassificationTree extends Component {
 
   render() {
     const { data } = this.state;
-    const { selected } = this.props.selected;
+    const { selected } = this.props;
 
     if (typeof data === undefined || data === null || data.length === 0) {
       return  h('.loader', null);

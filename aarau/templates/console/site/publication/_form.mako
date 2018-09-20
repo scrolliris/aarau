@@ -33,7 +33,14 @@
     <div class="required field-12${' error' if _f.classification.errors else ''}">
       <label class="label" for="publication_classification">Classification</label>
       ${_f.classification(class_='control', id='publication_classification')}
-      <div id="classification_tree" data-selected="${obj.instance.classification_id}"></div>
+      <%
+        selected = ''
+        if obj.instance:
+          selected = obj.instance.classification.notation
+        elif 'publication-classification' in req.params:
+          selected = req.params['publication-classification']
+      %>
+      <div id="classification_tree" data-selected="${selected}"></div>
       ${render_error_message(_f.classification)}
     </div>
   </div>

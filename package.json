@@ -16,7 +16,7 @@
     "d3": "5.7.0",
     "inferno": "5.6.1",
     "inferno-hyperscript": "5.6.1",
-    "inferno-tree-select": "0.0.2",
+    "inferno-tree-select": "0.0.5",
     "moment": "~> 2.19.3",
     "npm": "^6.4.0",
     "styr": "0.0.32",

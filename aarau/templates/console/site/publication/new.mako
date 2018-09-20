@@ -4,6 +4,7 @@
 <%inherit file='aarau:templates/console/_layout.mako'/>
 
 <%block name='title'>${render_title('New Publication')}</%block>
+<%block name='body_attr'> data-locale-file="${req.util.static_url('{}')|unquote,formatting('locale/{{lng}}/{{ns}}.json'),h}"</%block>
 
 <%block name='breadcrumb'>
 <div class="breadcrumb">
@@ -33,7 +34,7 @@
     </div>
 
     <div class="row">
-      <div class="column-9">
+      <div class="column-16">
         <form id="site" class="form" action="" method="get">
           <div class="field-6">
             <label class="label" for="site_type">Type</label>
@@ -45,7 +46,7 @@
         </form>
       </div>
 
-      <div class="column-9">
+      <div class="column-16">
         <p class="description">Create new publication which is published on Scrolliris.</p>
         <%
           act = req.route_url('console.site.new', namespace=project.namespace, _query={'type':'publication'})
