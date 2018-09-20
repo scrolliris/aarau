@@ -216,6 +216,10 @@ shell:  ## Open python REPL in application context
 	ENV=$(ENV) ${app}_pshell 'config/${env}.ini#${app}' --python-shell ptpython
 .PHONY: shell
 
+routes:  ## Display all routes for the application
+	ENV=$(ENV) ${app}_proute 'config/${env}.ini#${app}'
+.PHONY: routes
+
 expose:  ## Print untracked (volatile) files
 	git ls-files --others | \
 	  grep -vE '(lib|tmp|test|static|db|locale|node_modules|\.?cache)/' | \
