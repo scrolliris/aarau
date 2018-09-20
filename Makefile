@@ -55,11 +55,11 @@ db\:drop:  ## Drop database
 .PHONY: db\:drop
 
 db\:reset:  ## Reset database
-	${app}_manage 'config/${env}.ini#${app}' db drop
-	${app}_manage 'config/${env}.ini#${app}' db init
-	${app}_manage 'config/${env}.ini#${app}' db migrate
+	ENV=$(ENV) ${app}_manage 'config/${env}.ini#${app}' db drop
+	ENV=$(ENV) ${app}_manage 'config/${env}.ini#${app}' db init
+	ENV=$(ENV) ${app}_manage 'config/${env}.ini#${app}' db migrate
 ifneq (test, $(ENV))
-	${app}_manage 'config/${env}.ini#${app}' db seed
+	ENV=$(ENV) ${app}_manage 'config/${env}.ini#${app}' db seed
 endif
 .PHONY: db\:reset
 

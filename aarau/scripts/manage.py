@@ -4,7 +4,6 @@ import sys
 from contextlib import contextmanager
 
 from pyramid.paster import get_appsettings, setup_logging
-from pyramid.scripts.common import parse_vars
 
 from aarau import resolve_env_vars
 from aarau.env import load_dotenv_vars
@@ -26,7 +25,7 @@ from aarau.yaml import (
 def usage(argv):
     cmd = os.path.basename(argv[0])
     print('usage: %s <config_uri> <command> <action> [var=value]\n'
-          '(example: "%s \'development.ini#\' db seed")' % (cmd, cmd))
+          '(example: "%s \'development.ini#\' db [ACTION-NAME]")' % (cmd, cmd))
     sys.exit(1)
 
 
@@ -62,12 +61,17 @@ class CLI():
 
         yield db[kind]
 
-    def help(self):  # pylint: disable=no-self-use
+    def help(self, _):  # pylint: disable=no-self-use
         print('usage: db {help|init|seed|drop} [var=value]')
         sys.exit(1)
 
-    def init(self):
+    def init(self, _):
         """Initializes database."""
+        if 'ENV' not in os.environ or \
+           os.environ['ENV'] not in ('development', 'test'):
+            print("Run in {development,test}")
+            sys.exit(1)
+
         with self._raw_db('cardinal') as (db, datname):
             q = "SELECT 1 FROM pg_database WHERE datname='{}'".format(datname)
             if db.execute_sql(q).rowcount != 0:
@@ -80,7 +84,7 @@ class CLI():
             )
             db.execute_sql(q)
 
-    def migrate(self):
+    def migrate(self, _):
         """Migrates database schema."""
         from peewee_migrate import Router
 
@@ -89,7 +93,7 @@ class CLI():
                             migrate_dir=self.migrate_dir)
             router.run()
 
-    def rollback(self):
+    def rollback(self, _):
         """Rollbacks a latest migration."""
         from peewee_migrate import Router
 
@@ -99,7 +103,7 @@ class CLI():
             if router.done:
                 router.rollback(router.done[-1])
 
-    def seed(self):
+    def seed(self, args):
         """Imports db seed records for development."""
         with self._db('cardinal') as db, db.atomic():
             with yaml_loader(self.settings) as loader:
@@ -136,6 +140,10 @@ class CLI():
                              f.startswith(table) and f.endswith('.yml') and
                              'sample' not in f]
 
+                    # e.g. aarau_manage db seed plans.yml plans.1.yml
+                    if args:
+                        files = list(filter(lambda f: f in args, files))
+
                     # e.g. classification.yml, classification.1.yml...
                     for f in sorted(files, key=(lambda v: int(
                             re.sub(r'[a-z\_]', '', v).replace('.', '0')))):
@@ -146,8 +154,30 @@ class CLI():
                             for attributes in data[table]:
                                 load_data(model, attributes)
 
-    def drop(self):
+    def truncate(self, args):
+        """Truncates a (master data) table."""
+        if not args or len(args) != 1:
+            print("Specify only a table as an arg")
+            sys.exit(1)
+
+        table = args[0]
+        # only master data tables
+        if table not in ('plans', 'classifications', 'licenses'):
+            print("Table not found")
+            sys.exit(1)
+
+        with self._db('cardinal') as db, db.atomic():
+            q = 'TRUNCATE table {0:s} CASCADE'.format(table)
+            db.execute_sql(q)
+
+
+    def drop(self, _):
         """Drops entire database."""
+        if 'ENV' not in os.environ or \
+           os.environ['ENV'] not in ('development', 'test'):
+            print("Run in {development,test}")
+            sys.exit(1)
+
         with self._raw_db('cardinal') as (db, datname):
             q = "SELECT 1 FROM pg_database WHERE datname='{}'".format(datname)
             if db.execute_sql(q).rowcount == 0:
@@ -166,7 +196,7 @@ def main(argv=None):
     config_uri = argv[1]
     command = argv[2]
     action = argv[3]
-    options = parse_vars(argv[4:])
+    args = argv[4:]
 
     setup_logging(config_uri)
     load_dotenv_vars()
@@ -174,13 +204,14 @@ def main(argv=None):
     if command not in ('db',):
         raise Exception('Run with valid command {db} :\'(')
     else:
-        actions = ('help', 'init', 'drop', 'migrate', 'rollback', 'seed')
+        actions = ('help', 'init', 'drop', 'migrate', 'rollback',
+                   'seed', 'truncate')
         if action not in actions:
             err_msg = 'Run with valid action {0!s} :\'('
             raise Exception(err_msg.format('|'.join(actions)))
 
-    settings = get_appsettings(config_uri, options=options)
+    settings = get_appsettings(config_uri)
     settings = resolve_env_vars(dict(settings))
 
     cli = CLI(settings)
-    getattr(cli, action.lower())()
+    getattr(cli, action.lower())(args)
