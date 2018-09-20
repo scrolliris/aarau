@@ -49,7 +49,6 @@ def import_data(settings):
                     re.sub(r'[a-z\_]', '', v).replace('.', '0')))):
                 fixture_yml = os.path.join(fixtures_dir, f)
                 if os.path.isfile(fixture_yml):
-                    print(os.path.basename(fixture_yml))
                     data = loader(fixture_yml)
                     for attributes in data[table]:
                         blend_data(model, attributes)
