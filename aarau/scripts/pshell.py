@@ -1,7 +1,6 @@
 import sys
 
 from pyramid.scripts.pshell import PShellCommand
-from webtest import TestApp
 
 from aarau.env import load_dotenv_vars
 
@@ -17,6 +16,8 @@ def main(argv=None, quiet=False):
 
 
 def setup(env):
+    from webtest import TestApp
+
     env['request'].host = 'example.org'
     env['request'].scheme = 'http'
     env['testapp'] = TestApp(env['app'])
