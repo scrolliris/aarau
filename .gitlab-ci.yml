@@ -20,7 +20,6 @@ style:
   script:
     - make vet:style
   cache:
-    untracked: true
     paths:
       - pip-cache
   except:
@@ -45,7 +44,6 @@ lint:
   script:
     - make vet:lint
   cache:
-    untracked: true
     paths:
       - apt-cache
       - pip-cache
@@ -71,12 +69,10 @@ i18n:
   script:
     - make i18n:compile
   cache:
-    untracked: true
     paths:
       - apt-cache
       - node_modules
   artifacts:
-    untracked: true
     paths:
       - locale
       - static/locale
@@ -100,11 +96,9 @@ pack:
   script:
     - make pack
   cache:
-    untracked: true
     paths:
       - node_modules
   artifacts:
-    untracked: true
     paths:
       - static
   except:
@@ -128,7 +122,6 @@ doctest:
   script:
     - make test:doc
   cache:
-    untracked: true
     paths:
       - apt-cache
       - pip-cache
@@ -158,12 +151,10 @@ jstest:
   script:
     - xvfb-run karma start
   cache:
-    untracked: true
     paths:
       - apt-cache
       - node_modules
   artifacts:
-    untracked: true
     paths:
       - static
   except:
@@ -198,7 +189,6 @@ test:
   script:
     - make test:coverage
   cache:
-    untracked: true
     paths:
       - apt-cache
       - pip-cache
@@ -247,7 +237,6 @@ test:
 #  script:
 #    - xvfb-run make test:integration
 #  cache:
-#    untracked: true
 #    paths:
 #      - apt-cache
 #      - pip-cache
