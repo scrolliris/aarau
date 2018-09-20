@@ -141,17 +141,13 @@ def test_publication_site_new_post(mocker, users, dummy_request):
     user = users['oswald']
     project = user.projects[0]
 
-    # pylint: disable=unsubscriptable-object
-    license_id = list(License.as_choices)[0][0]
-    classification_id = list(Classification.as_choices)[0][0]
-
     query_param = {'type': 'publication'}
     submit_body = {
         'csrf_token': dummy_request.session.get_csrf_token(),
         'slug': 'new-piano-publication',
         'publication-name': 'New Test Publication',
-        'publication-license': license_id,
-        'publication-classification': classification_id,
+        'publication-license': next(License.as_choices)[0],
+        'publication-classification': list(Classification.roots)[0].notation,
         'publication-copyright': '2017 Oswald & Weenie',
         'publication-description': '...',
         'submit': 'Create',
@@ -395,7 +391,7 @@ def test_publication_site_settings_post(mocker, users, dummy_request):
         'slug': site.slug,
         'publication-name': 'New Piano Club Changelog',
         'publication-license': publication.license.id,
-        'publication-classification': publication.classification.id,
+        'publication-classification': publication.classification.notation,
         'publication-copyright': publication.copyright,
         'publication-description': publication.description,
     }

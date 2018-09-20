@@ -1,5 +1,3 @@
-from types import GeneratorType
-
 from peewee import (
     CharField,
     ForeignKeyField,
@@ -28,14 +26,6 @@ class Classification(CardinalBase, TimestampMixin):
     def __repr__(self):
         return '<Classification id:{} notation:{} name: {}>'.format(
             self.id, self.notation, self.name)
-
-    @classproperty
-    def as_choices(cls) -> GeneratorType:  # pylint: disable=no-self-argument
-        """Returns classifications as choices."""
-        # TODO: (for now) roots only
-        return ((str(p.id), p.name) for p in
-                cls.select(cls.id, cls.name)
-                .where(cls.parent_id >> None).order_by(cls.notation.asc()))
 
     @classproperty
     def roots(cls):  # pylint: disable=no-self-argument

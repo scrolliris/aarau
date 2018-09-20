@@ -9,18 +9,6 @@ def setup(config):  # pylint: disable=unused-argument
     pass
 
 
-def test_as_choices_as_classproperty():
-    # pylint: disable=not-an-iterable
-    from types import GeneratorType
-
-    choices = Classification.as_choices
-    assert isinstance(choices, GeneratorType)
-
-    # only roots
-    assert sorted([c.name for c in Classification.roots]) == \
-        sorted([n for _, n in choices])
-
-
 def test_roots():
     assert 10 == len(Classification.roots)
 

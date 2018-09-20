@@ -40,17 +40,14 @@ def test_build_new_publication_site_form(dummy_request):
     'loooooooooooooooooooooooooooooong',  # too long
 ])
 def test_validate_slug_format_with_invalid_slug(slug, dummy_request):
-    classification_id = next(Classification.as_choices)[0]
-    license_id = next(License.as_choices)[0]
-
     dummy_request.params = dummy_request.POST = MultiDict({
         'csrf_token': dummy_request.session.get_csrf_token(),
         'slug': slug,
         'domain': None,
         'publication-name': 'New site',
         'publication-copyright': 'copyright',
-        'publication-classification': classification_id,
-        'publication-license': license_id,
+        'publication-classification': list(Classification.roots)[0].notation,
+        'publication-license': next(License.as_choices)[0],
     })
     form = build_new_publication_site_form(dummy_request)
     assert not form.validate()
@@ -66,17 +63,14 @@ def test_validate_slug_format_with_invalid_slug(slug, dummy_request):
     'looooooooooooooooooooooooooooong',
 ])
 def test_validate_slug_format_with_valid_slug(slug, dummy_request):
-    classification_id = next(Classification.as_choices)[0]
-    license_id = next(License.as_choices)[0]
-
     dummy_request.params = dummy_request.POST = MultiDict({
         'csrf_token': dummy_request.session.get_csrf_token(),
         'slug': slug,
         'domain': None,
         'publication-name': 'New site',
         'publication-copyright': 'copyright',
-        'publication-classification': classification_id,
-        'publication-license': license_id,
+        'publication-classification': list(Classification.roots)[0].notation,
+        'publication-license': next(License.as_choices)[0],
     })
     form = build_new_publication_site_form(dummy_request)
     assert form.validate()
