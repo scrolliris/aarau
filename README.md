@@ -28,6 +28,9 @@ https://gitlab.com/scrolliris/scrolliris-console)
 
 * Python `>= 3.6.6`
 * PostgreSQL `>= 9.6.3`
+  * hstore
+  * plpgsql
+  * (pg_stat_statements)
 * Redis `>= 3.2.0`
 * Memcached `>= 1.4.33`
   * libmemcached (via pylibmc) (worker)
