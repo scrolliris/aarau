@@ -134,16 +134,17 @@ i18n\:extract:  ## Extract translation targets from code
 .PHONY: i18n\:extract
 
 i18n\:compile:  ## Make translation files (catalog)
+ifneq (production, $(ENV))
 ifeq (, $(shell which i18next-conv 2>/dev/null))
 	$(info i18next-conv command not found. run `npm install -g i18next-conv`)
 	$(info )
-else
+endif
+endif
 	for ns in classification form message console\.json ; do \
 	  for locale in en ; do \
 	    ./bin/linguine compile $$ns $$locale; \
 	  done; \
 	done
-endif
 .PHONY: i18n\:compile
 
 i18n\:update:  ## Update catalog (pot)
