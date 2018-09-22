@@ -17,6 +17,8 @@ class ClassificationHierarchy(CardinalBase):
     generations = SmallIntegerField(null=False)
 
     class Meta:
+        primary_key = None
+        auto_increment = False
         table_name = 'classification_hierarchies'
 
     def __repr__(self):

@@ -112,7 +112,7 @@ class Classification(CardinalBase, TimestampMixin):
         """Rebuilds hierarchies recursively."""
         from .classification_hierarchy import ClassificationHierarchy
 
-        # delete hierarchy
+        # delete its hierarchies
         q = '''
 DELETE FROM {table_name:s}
 WHERE descendant_id IN (
@@ -129,8 +129,11 @@ WHERE descendant_id IN (
             q, params=(self.id, self.id,))
 
         # new
-        ClassificationHierarchy.create(
-            ancestor=self, descendant=self, generations=0)
+        # NOTE: `Model.create` will return "id" using returning clause even if
+        # the  Model does not have primary key field. Then use `insert` here.
+        ClassificationHierarchy.insert(
+            ancestor=self, descendant=self,
+            generations=0).returning(None).execute()
 
         if not self.is_root:
             q = '''
