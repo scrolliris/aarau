@@ -170,7 +170,6 @@ class CLI():
             q = 'TRUNCATE table {0:s} CASCADE'.format(table)
             db.execute_sql(q)
 
-
     def drop(self, _):
         """Drops entire database."""
         if 'ENV' not in os.environ or \
