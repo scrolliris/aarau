@@ -244,32 +244,20 @@ test:
 #  except:
 #    - tags
 
-quality:
+code_quality:
   stage: quality
-  image: docker:latest
+  image: docker:stable
   services:
-    - docker:dind
+    - docker:stable-dind
   variables:
-    DOCKER_DRIVER: overlay
-  before_script:
-    # 0.70.1 fails
-    - docker pull codeclimate/codeclimate:0.70.0
-    - docker run --env CODECLIMATE_CODE="$PWD"
-      --volume "$PWD":/code
-      --volume /var/run/docker.sock:/var/run/docker.sock
-      --volume /tmp/cc:/tmp/cc
-      codeclimate/codeclimate validate-config
-    - docker run --env CODECLIMATE_CODE="$PWD"
-      --volume "$PWD":/code
-      --volume /var/run/docker.sock:/var/run/docker.sock
-      --volume /tmp/cc:/tmp/cc
-      codeclimate/codeclimate engines:install
+    DOCKER_DRIVER: overlay2
+  allow_failure: true
   script:
-    - docker run --env CODECLIMATE_CODE="$PWD"
+    - export SP_VERSION=$(echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/')
+    - docker run
+      --env CODECLIMATE_CODE="$PWD"
       --volume "$PWD":/code
       --volume /var/run/docker.sock:/var/run/docker.sock
-      --volume /tmp/cc:/tmp/cc
-      codeclimate/codeclimate analyze -f json > codequality.json
+      "registry.gitlab.com/gitlab-org/security-products/codequality:$SP_VERSION" /code
   artifacts:
-    paths:
-      - codequality.json
+    paths: [gl-code-quality-report.json]
