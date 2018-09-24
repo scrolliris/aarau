@@ -80,6 +80,7 @@ msgid "classification.name.09"
 msgstr ""
 
 #: db/seeds/classifications.2.yml
+# 00
 msgid "classification.name.001"
 msgstr ""
 
@@ -105,6 +106,7 @@ msgid "classification.name.008"
 msgstr ""
 
 #: db/seeds/classification.3.yml
+# 001
 msgid "classification.name.001.1"
 msgstr ""
 
@@ -117,6 +119,7 @@ msgstr ""
 msgid "classification.name.001.9"
 msgstr ""
 
+# 003
 msgid "classification.name.003.01/.09"
 msgstr ""
 
@@ -129,6 +132,7 @@ msgstr ""
 msgid "classification.name.003.6"
 msgstr ""
 
+# 004
 msgid "classification.name.004.01/.08"
 msgstr ""
 
@@ -138,6 +142,63 @@ msgstr ""
 msgid "classification.name.004.3"
 msgstr ""
 
+msgid "classification.name.004.4"
+msgstr ""
+
+msgid "classification.name.004.5"
+msgstr ""
+
+msgid "classification.name.004.6"
+msgstr ""
+
+msgid "classification.name.004.7"
+msgstr ""
+
+msgid "classification.name.004.8"
+msgstr ""
+
+msgid "classification.name.004.9"
+msgstr ""
+
+# 005
+msgid "classification.name.005.1"
+msgstr ""
+
+msgid "classification.name.005.2"
+msgstr ""
+
+msgid "classification.name.005.3"
+msgstr ""
+
+msgid "classification.name.005.4"
+msgstr ""
+
+msgid "classification.name.005.5"
+msgstr ""
+
+msgid "classification.name.005.6"
+msgstr ""
+
+msgid "classification.name.005.7"
+msgstr ""
+
+msgid "classification.name.005.9"
+msgstr ""
+
+# 006
+msgid "classification.name.006.3/.8"
+msgstr ""
+
+msgid "classification.name.006.91"
+msgstr ""
+
+msgid "classification.name.006.92"
+msgstr ""
+
+# 007
+msgid "classification.name.007.5"
+msgstr ""
+
 #: db/seeds/classification.4.yml
 msgid "classification.name.001.18"
 msgstr ""
@@ -145,6 +206,7 @@ msgstr ""
 msgid "classification.name.001.89"
 msgstr ""
 
+# 003.01/.09
 msgid "classification.name.003.01"
 msgstr ""
 
@@ -166,9 +228,11 @@ msgstr ""
 msgid "classification.name.003.09"
 msgstr ""
 
+# 003.2
 msgid "classification.name.003.21/.23"
 msgstr ""
 
+# 004.01/.08
 msgid "classification.name.004.01"
 msgstr ""
 
@@ -190,6 +254,7 @@ msgstr ""
 msgid "classification.name.004.08"
 msgstr ""
 
+# 004.2
 msgid "classification.name.004.22"
 msgstr ""
 
@@ -202,6 +267,7 @@ msgstr ""
 msgid "classification.name.004.27"
 msgstr ""
 
+# 004.3
 msgid "classification.name.004.3`1/`2"
 msgstr ""
 
@@ -220,7 +286,111 @@ msgstr ""
 msgid "classification.name.004.38"
 msgstr ""
 
+# 004.4
+msgid "classification.name.004.4`2/`6"
+msgstr ""
+
+msgid "classification.name.004.41"
+msgstr ""
+
+msgid "classification.name.004.42"
+msgstr ""
+
+msgid "classification.name.004.43"
+msgstr ""
+
+msgid "classification.name.004.45"
+msgstr ""
+
+msgid "classification.name.004.49"
+msgstr ""
+
+# 004.5
+msgid "classification.name.004.51"
+msgstr ""
+
+msgid "classification.name.004.52"
+msgstr ""
+
+msgid "classification.name.004.55"
+msgstr ""
+
+msgid "classification.name.004.58"
+msgstr ""
+
+# 004.6
+msgid "classification.name.004.62"
+msgstr ""
+
+msgid "classification.name.004.63"
+msgstr ""
+
+msgid "classification.name.004.65"
+msgstr ""
+
+msgid "classification.name.004.67"
+msgstr ""
+
+# 004.7
+msgid "classification.name.004.71"
+msgstr ""
+
+msgid "classification.name.004.72"
+msgstr ""
+
+msgid "classification.name.004.73"
+msgstr ""
+
+msgid "classification.name.004.75"
+msgstr ""
+
+msgid "classification.name.004.77"
+msgstr ""
+
+msgid "classification.name.004.78"
+msgstr ""
+
+# 004.9
+msgid "classification.name.004.91"
+msgstr ""
+
+msgid "classification.name.004.92"
+msgstr ""
+
+msgid "classification.name.004.93"
+msgstr ""
+
+msgid "classification.name.004.94"
+msgstr ""
+
+# 005.3
+msgid "classification.name.005.31"
+msgstr ""
+
+msgid "classification.name.005.32"
+msgstr ""
+
+msgid "classification.name.005.33"
+msgstr ""
+
+# 005.9
+msgid "classification.name.005.91"
+msgstr ""
+
+msgid "classification.name.005.92"
+msgstr ""
+
+msgid "classification.name.005.93"
+msgstr ""
+
+msgid "classification.name.005.94"
+msgstr ""
+
+msgid "classification.name.005.95/.96"
+msgstr ""
+
 #: db/seeds/classification.5.yml
+# 003.2
 msgid "classification.name.003.21"
 msgstr ""
 
@@ -230,8 +400,23 @@ msgstr ""
 msgid "classification.name.003.23"
 msgstr ""
 
+# 004.3
 msgid "classification.name.004.3`1"
 msgstr ""
 
 msgid "classification.name.004.3`2"
+msgstr ""
+
+# 004.4`2/`6
+msgid "classification.name.004.4`2"
+msgstr ""
+
+msgid "classification.name.004.4`4"
+msgstr ""
+
+msgid "classification.name.004.4`6"
+msgstr ""
+
+# 004.7
+msgid "classification.name.004.738"
 msgstr ""
