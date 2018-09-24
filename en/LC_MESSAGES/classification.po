@@ -139,6 +139,60 @@ msgstr "Computer architecture"
 msgid "classification.name.004.3"
 msgstr "Computer hardware"
 
+msgid "classification.name.004.4"
+msgstr "Software"
+
+msgid "classification.name.004.5"
+msgstr "Human-computer interaction. Man-machine interface. User interface. User environment"
+
+msgid "classification.name.004.6"
+msgstr "Data"
+
+msgid "classification.name.004.7"
+msgstr "Computer communication. Computer networks"
+
+msgid "classification.name.004.8"
+msgstr "Artificial intelligence"
+
+msgid "classification.name.004.9"
+msgstr "Application-oriented computer-based techniques"
+
+msgid "classification.name.005.1"
+msgstr "Management theory"
+
+msgid "classification.name.005.2"
+msgstr "Management agents. Mechanisms. Measures"
+
+msgid "classification.name.005.3"
+msgstr "Management activities"
+
+msgid "classification.name.005.4"
+msgstr "Processes in management"
+
+msgid "classification.name.005.5"
+msgstr "Management operations. Direction"
+
+msgid "classification.name.005.6"
+msgstr "Quality management. Total quality management (TQM)"
+
+msgid "classification.name.005.7"
+msgstr "Organizational management (OM)"
+
+msgid "classification.name.005.9"
+msgstr "Fields of management"
+
+msgid "classification.name.006.3/.8"
+msgstr "Standards"
+
+msgid "classification.name.006.91"
+msgstr "Metrology. Weights and measures in general"
+
+msgid "classification.name.006.92"
+msgstr "Horology. Determination and standardization of time"
+
+msgid "classification.name.007.5"
+msgstr "Self-acting systems"
+
 #: db/seeds/classification.4.yml
 msgid "classification.name.001.18"
 msgstr "Future of knowledge"
@@ -221,6 +275,104 @@ msgstr "Peripherals. Input-output units"
 msgid "classification.name.004.38"
 msgstr "Computers. Kinds of computer"
 
+msgid "classification.name.004.4`2/`6"
+msgstr "Special auxiliary subdivision for software"
+
+msgid "classification.name.004.41"
+msgstr "Software engineering"
+
+msgid "classification.name.004.42"
+msgstr "Computer programming. Computer programs"
+
+msgid "classification.name.004.43"
+msgstr "Computer languages"
+
+msgid "classification.name.004.45"
+msgstr "System software"
+
+msgid "classification.name.004.49"
+msgstr "Computer infections"
+
+msgid "classification.name.004.51"
+msgstr "Display interface"
+
+msgid "classification.name.004.52"
+msgstr "Sound interface"
+
+msgid "classification.name.004.55"
+msgstr "Hypermedia. Hypertext"
+
+msgid "classification.name.004.58"
+msgstr "User help"
+
+msgid "classification.name.004.62"
+msgstr "Data handling"
+
+msgid "classification.name.004.63"
+msgstr "Files"
+
+msgid "classification.name.004.65"
+msgstr "Databases and their structures"
+
+msgid "classification.name.004.67"
+msgstr "Systems for numeric data"
+
+msgid "classification.name.004.71"
+msgstr "Computer communication hardware"
+
+msgid "classification.name.004.72"
+msgstr "Network architecture"
+
+msgid "classification.name.004.73"
+msgstr "Networks according to area covered"
+
+msgid "classification.name.004.75"
+msgstr "Distributed processing systems"
+
+msgid "classification.name.004.77"
+msgstr "General networking applications and services"
+
+msgid "classification.name.004.78"
+msgstr "Online computing systems for specific use"
+
+msgid "classification.name.004.91"
+msgstr "Document processing and production"
+
+msgid "classification.name.004.92"
+msgstr "Computer graphics"
+
+msgid "classification.name.004.93"
+msgstr "Pattern information processing"
+
+msgid "classification.name.004.94"
+msgstr "Simulation"
+
+# 005.3
+msgid "classification.name.005.31"
+msgstr "Operational research (OR)"
+
+msgid "classification.name.005.32"
+msgstr "Organizational behaviour. Management psychology"
+
+msgid "classification.name.005.33"
+msgstr "Management conditions. Factors"
+
+# 005.9
+msgid "classification.name.005.91"
+msgstr "Administrative management. Secretariat"
+
+msgid "classification.name.005.92"
+msgstr "Records management"
+
+msgid "classification.name.005.93"
+msgstr "Plant management. Physical resources management"
+
+msgid "classification.name.005.94"
+msgstr "Knowledge management"
+
+msgid "classification.name.005.95/.96"
+msgstr "Personnel management. Human Resources management"
+
 #: db/seeds/classification.5.yml
 msgid "classification.name.003.21"
 msgstr "Picture writing"
@@ -236,3 +388,15 @@ msgstr "Production of computers"
 
 msgid "classification.name.004.3`2"
 msgstr "Computer installations"
+
+msgid "classification.name.004.4`2"
+msgstr "Software development tools"
+
+msgid "classification.name.004.4`4"
+msgstr "Programming language translation"
+
+msgid "classification.name.004.4`6"
+msgstr "Runtime environment"
+
+msgid "classification.name.004.738"
+msgstr "Network interconnection. Internetworking"
