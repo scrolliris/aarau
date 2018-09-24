@@ -18,7 +18,7 @@ build-sidebar()
       color lighten($gray2, 13%)
 
     > .item.active
-      border-left 4px solid darken($gray1, 3%)
+      border-left 4px solid $dark-gray2
       padding-left 1.06rem
       padding-right 0
       color $black1
@@ -28,25 +28,36 @@ build-sidebar()
       > .item:last-child
         padding-bottom 0
 
+    > a.item.active,
+    > .item.active.expanded .item-container a.item.active
+    .item-container a.item.active
+      color $black2
+      background-color lighten($gray2, 87%)
+
+    > a.item:hover,
+    > .item.active.expanded .item-container a.item:hover
+      color $black2
+      background-color lighten($gray2, 82%)
+
+    a.item.disabled,
+    a.item.disabled:hover
+      color lighten($gray1, 48%) !important
+
     > .item.active.expanded
       padding-left 0
       padding-right 0
+      background-color lighten($gray2, 94%)
       .item
         padding-left 1.06rem
         padding-right 0
-        color $black1
+        color lighten($black1, 13%)
       .item-container
         font-weight normal
         .item
           padding-left 1.78rem
-          &.active
-            color $black2
-            background-color darken($gray0, 8%)
-          &.disabled
-            color lighten($gray1, 48%)
-            &:hover
-              background-color inherit !important
-              cursor not-allowed
+          &.disabled:hover
+            background-color inherit !important
+            cursor not-allowed
 
     .divider
       margin 3rem 0 1.8rem 0
