@@ -40,6 +40,7 @@
         elif 'publication-classification' in req.params:
           selected = req.params['publication-classification']
       %>
+      <p>This is based on UDC (Universal Decimal Classification). See details on <a href="http://www.udcsummary.info/about.htm" target="_blank">their site</a>.</p>
       <div id="classification_tree" data-selected="${selected}"></div>
       ${render_error_message(_f.classification)}
     </div>
