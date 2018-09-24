@@ -154,22 +154,6 @@ class CLI():
                             for attributes in data[table]:
                                 load_data(model, attributes)
 
-    def truncate(self, args):
-        """Truncates a (master data) table."""
-        if not args or len(args) != 1:
-            print("Specify only a table as an arg")
-            sys.exit(1)
-
-        table = args[0]
-        # only master data tables
-        if table not in ('plans', 'classifications', 'licenses'):
-            print("Table not found")
-            sys.exit(1)
-
-        with self._db('cardinal') as db, db.atomic():
-            q = 'TRUNCATE table {0:s} CASCADE'.format(table)
-            db.execute_sql(q)
-
     def drop(self, _):
         """Drops entire database."""
         if 'ENV' not in os.environ or \
@@ -203,8 +187,8 @@ def main(argv=None):
     if command not in ('db',):
         raise Exception('Run with valid command {db} :\'(')
     else:
-        actions = ('help', 'init', 'drop', 'migrate', 'rollback',
-                   'seed', 'truncate')
+        actions = ('help', 'seed', 'migrate', 'rollback',
+                   'init', 'drop')
         if action not in actions:
             err_msg = 'Run with valid action {0!s} :\'('
             raise Exception(err_msg.format('|'.join(actions)))
