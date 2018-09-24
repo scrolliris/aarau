@@ -7,7 +7,7 @@
   <h4 class="header">${ctx.upper()}</h4>
 
   <div class="row">
-    <div class="required field-12${' error' if f.name.errors else ''}">
+    <div class="required field-8 field-v-16${' error' if f.name.errors else ''}">
       <label class="label" for="name">Name</label>
       <p class="description">It must be 6-32 characters long.</p>
       ${f.name(class_='', placeholder='My Project')}
@@ -16,7 +16,7 @@
   </div>
 
   <div class="row">
-    <div class="required field-12${' error' if f.namespace.errors else ''}">
+    <div class="required field-8 field-v-16${' error' if f.namespace.errors else ''}">
       <label class="label" for="namespace">Namespace</label>
       <p class="description">It must be unique in our system.
         You can use <code>a-z0-9</code> and <code>-</code> in 4-16 characters length. Start with alphabet.</p>
@@ -27,7 +27,7 @@
 
   % if ctx == 'edit':
   <div class="row">
-    <div class="required field-5${' error' if f.plan.errors else ''}">
+    <div class="required field-6 field-v-10 field-l-16${' error' if f.plan.errors else ''}">
       <label class="label" for="plan">Plan</label>
       <select id="plan" name="plan">
       % for p in f.plan:
@@ -42,7 +42,7 @@
 
   % endif
   <div class="row">
-    <div class="field-12${' error' if f.description.errors else ''}">
+    <div class="field-8 field-v-16${' error' if f.description.errors else ''}">
       <label class="label" for="description">Description</label>
       ${f.description(class_='', rows=2, cols=50, placeholder='A note for subscribers, collaborators and new readers...')}
       ${render_error_message(f.description)}

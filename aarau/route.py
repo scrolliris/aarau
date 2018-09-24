@@ -105,7 +105,7 @@ def define_console_routes(c, namespace):
 
     # project
     c.add_route('console.project.new', '/projects/new')
-    c.add_route('console.project.edit', '/{namespace}/edit',
+    c.add_route('console.project.settings', '/{namespace}/settings',
                 custom_predicates=(namespace,))
     c.add_route('console.project.overview', '/{namespace}',
                 custom_predicates=(namespace,))

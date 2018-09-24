@@ -23,14 +23,20 @@
     </div>
 
     <div class="row">
-      <div class="column-8">
-        <%
-          act = req.route_path('console.project.new')
-          ctx = 'new'
-          err = ''
-          obj = None
-        %>
-        <%include file="aarau:templates/console/project/_form.mako" args="f=form, act=act, ctx=ctx, err=err, obj=obj"/>
+      <div class="container column-16">
+        <div class="attached header">
+          <h5>New Project</h5>
+        </div>
+
+        <div class="attached box">
+          <%
+            act = req.route_path('console.project.new')
+            ctx = 'new'
+            err = ''
+            obj = None
+          %>
+          <%include file="aarau:templates/console/project/_form.mako" args="f=form, act=act, ctx=ctx, err=err, obj=obj"/>
+        </div>
       </div>
     </div>
   </div>

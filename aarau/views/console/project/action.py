@@ -76,18 +76,19 @@ def project_new(req):
     return dict(form=form)
 
 
-@view_config(route_name='console.project.edit',
+@view_config(route_name='console.project.settings',
              request_method=('GET', 'POST'),
-             renderer=tpl('edit.mako'))
+             renderer=tpl('settings.mako'))
 @login_required
-def project_edit(req):
-    """Renders a form for project/Update a project."""
+def project_settings(req):
+    """Renders a form and updates the project."""
     user = req.user
-    project = Project.select().join(Membership).join(User).where(
-        User.id == user.id,
-        Project.namespace == req.matchdict.get('namespace', '')
-    ).get()
-    if not project:
+    try:
+        project = Project.select().join(Membership).join(User).where(
+            User.id == user.id,
+            Project.namespace == req.matchdict.get('namespace', '')
+        ).get()
+    except Project.DoesNotExist:
         raise HTTPNotFound
 
     # update
@@ -104,7 +105,7 @@ def project_edit(req):
             req.session.flash(_('project.update.success'),
                               queue='success', allow_duplicate=False)
             return HTTPFound(location=req.route_path(
-                'console.project.overview', namespace=project.namespace))
+                'console.project.settings', namespace=project.namespace))
 
         req.session.flash(_('project.update.failure'),
                           queue='failure', allow_duplicate=False)

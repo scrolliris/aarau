@@ -11,3 +11,15 @@ projects:
     created_at: !datetime.utcnow+timedelta -7200
     updated_at: !datetime.utcnow+timedelta -7200
     deleted_at:
+
+  - access_key_id: iFzJMDgQTe24Ve0Rwdezik0X8Bj12GAj9
+    plan: !plan.name "'plan.essential.name'"
+    subscription_id: 16890
+    namespace: walking-method
+    name: Weenie's Walking Method
+    description: >-
+      Many articles about the walking techniques.
+    billing_state: none
+    created_at: !datetime.utcnow+timedelta -7200
+    updated_at: !datetime.utcnow+timedelta -7200
+    deleted_at:

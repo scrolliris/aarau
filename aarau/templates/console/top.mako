@@ -28,12 +28,14 @@
       <div class="column-4 column-v-8 column-l-16">
         <div class="attached box">
           <a href="${req.route_url('console.project.overview', namespace=project.namespace)}"><h4 class="header">${project.name}</h4></a>
-          <label class="primary label">${project.plan.name}</label>
           <p>${project.description}</p>
-          <a class="petit flat button" href="${req.route_path('console.project.edit', namespace=project.namespace)}">Edit</a>
+          <%
+            members_count = len(project.users)
+          %>
+          <span>${members_count} ${'members' if members_count > 1 else 'member'}</span>
         </div>
         <div class="attached message">
-          <p class="text">${project.namespace}</p>
+          <pre>${project.namespace}</pre>
         </div>
       </div>
     % endfor
