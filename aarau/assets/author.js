@@ -10,8 +10,6 @@ import './css/shared/overwrite.styl'
 import './css/console/general.styl'
 import './css/console/project.styl'
 import './css/console/site.styl'
-import './css/console/application.styl'
-import './css/console/publication.styl'
 import './css/console/article.styl'
 
 import './js/console/ui.js'
