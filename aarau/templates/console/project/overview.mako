@@ -38,7 +38,7 @@
 
         <p class="description">${project.description}</p>
         <div class="dropdown-container">
-          <a class="action" href="${req.route_path('console.site.new', namespace=project.namespace)}">New Publication</a>
+          <a class="action" href="${req.route_path('console.site.new', namespace=project.namespace, _query={'type': 'publication'})}">New Publication</a>
           <input id="site_type" type="checkbox">
           <label for="site_type"></label>
           <div class="dropdown">
