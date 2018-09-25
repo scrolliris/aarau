@@ -11,10 +11,6 @@ from webtest.app import TestApp
 from .data import import_data
 from .server import ServerThread
 
-# NOTE:
-# The request variable in py.test is special context of testing.
-# See http://doc.pytest.org/en/latest/fixture.html#request-context
-
 TEST_DIR = os.path.dirname(__file__)
 INI_FILE = os.path.join(TEST_DIR, '..', 'config', 'testing.ini')
 
