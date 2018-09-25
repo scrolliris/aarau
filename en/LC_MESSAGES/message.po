@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Neuchâtel 0.1\n"
 "Report-Msgid-Bugs-To: support@scrolliris.com\n"
-"POT-Creation-Date: 2018-09-14 15:44+0900\n"
+"POT-Creation-Date: 2018-09-26 04:46+0900\n"
 "PO-Revision-Date: 2017-06-16 01:09+0900\n"
 "Last-Translator: Yasuhiro Asaka <yasuhiro.asaka@grauwoelfchen.net>\n"
 "Language-Team: Scrolliris Translation Team <support@scrolliris.com>\n"
@@ -62,11 +62,11 @@ msgstr ""
 msgid "project.creation.success"
 msgstr ""
 
-#: aarau/views/console/project/action.py:109
+#: aarau/views/console/project/action.py:110
 msgid "project.update.failure"
 msgstr ""
 
-#: aarau/views/console/project/action.py:104
+#: aarau/views/console/project/action.py:105
 msgid "project.update.success"
 msgstr ""
 
@@ -201,13 +201,13 @@ msgstr "This is your personal username."
 msgid "signup.username.placeholder"
 msgstr "william (optional)"
 
-#: aarau/views/console/site/action.py:69
+#: aarau/views/console/site/action.py:79
 #, fuzzy
 #| msgid "signup.creation.failure"
 msgid "site.{:s}.creation.failure"
 msgstr "Your signup has been failed"
 
-#: aarau/views/console/site/action.py:62
+#: aarau/views/console/site/action.py:72
 #, fuzzy
 #| msgid "signup.creation.success"
 msgid "site.{:s}.creation.success"
@@ -225,11 +225,70 @@ msgstr "Application could not been updated"
 msgid "site.{:s}.update.success"
 msgstr "Application has been successfully updated"
 
+#: aarau/templates/console/site/application/insights.mako:6
+msgid "title.application.insights"
+msgstr "Insights"
+
+#: aarau/templates/console/site/application/new.mako:6
+msgid "title.application.new"
+msgstr "Create a New Application"
+
+#: aarau/templates/console/article/list.mako:6
+msgid "title.article.list"
+msgstr "Articles"
+
+#: aarau/templates/console/article/editor.mako:6
+msgid "title.article.new"
+msgstr "Create a New Article"
+
+#: aarau/templates/console/top.mako:6
+msgid "title.console"
+msgstr "Console"
+
+#: aarau/templates/console/project/new.mako:6
+msgid "title.project.new"
+msgstr "Create a New Project"
+
+#: aarau/templates/console/site/publication/new.mako:6
+msgid "title.publication.new"
+msgstr "Create a New Publication"
+
+#: aarau/templates/console/project/settings.mako:6
+#: aarau/templates/console/project/settings.mako:15
+msgid "title.settings"
+msgstr "Settings"
+
+#: aarau/templates/console/site/application/_sidebar_settings.mako:23
+#: aarau/templates/console/site/application/settings_badges.mako:6
+#: aarau/templates/console/site/application/settings_badges.mako:12
+msgid "title.settings.badges"
+msgstr "Status Badges"
+
+#: aarau/templates/console/site/publication/settings.mako:6
+#: aarau/templates/console/site/publication/settings.mako:13
+#: aarau/templates/console/site/application/settings.mako:6
+#: aarau/templates/console/site/application/settings.mako:12
+msgid "title.settings.general"
+msgstr "General Settings"
+
+#: aarau/templates/console/site/application/_sidebar_settings.mako:21
+#: aarau/templates/console/site/application/settings_scripts.mako:6
+#: aarau/templates/console/site/application/settings_scripts.mako:12
+msgid "title.settings.scripts"
+msgstr "Measure Scripts"
+
+#: aarau/templates/console/site/application/_sidebar_settings.mako:22
+#: aarau/templates/console/site/application/settings_widgets.mako:6
+#: aarau/templates/console/site/application/settings_widgets.mako:12
+msgid "title.settings.widgets"
+msgstr "Heatmap Widgets"
+
+#: aarau/templates/console/article/editor.mako:6
+msgid "title.untitled"
+msgstr "Untitled"
+
 #~ msgid "site.application.creation.failure"
 #~ msgstr "Application could not been created"
-
-#~ msgid "site.application.creation.success"
-#~ msgstr "Application has been successfully created"
 
 #~ msgid "site.publication.creation.failure"
 #~ msgstr "Publication could not been created"
