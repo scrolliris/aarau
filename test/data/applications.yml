@@ -2,7 +2,7 @@
 applications:
   - name: How to score music playing piano
     description: ->
-      (Blog Version)
+      (External Website Version)
     created_at: !datetime.utcnow+timedelta -7200
     updated_at: !datetime.utcnow+timedelta -7200
     deleted_at:

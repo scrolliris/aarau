@@ -2,7 +2,7 @@
 sites:
   - project: !project.namespace "'piano-music-club'"
     domain: example.org
-    slug: playing-piano-blog
+    slug: playing-piano-notes
     instance_id: !application.name "'How to score music playing piano'"
     instance_type: Application
     calculation_state: 'on'
