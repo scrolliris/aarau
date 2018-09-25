@@ -3,7 +3,7 @@
 
 <%inherit file='aarau:templates/console/_layout.mako'/>
 
-<%block name='title'>${render_title('Project Settings')}</%block>
+<%block name='title'>${render_title('{:s} - {:s}'.format(_('title.settings'), project.name))}</%block>
 
 <%block name='breadcrumb'>
 <div class="breadcrumb">
@@ -12,7 +12,7 @@
   <span class="divider">/</span>
   <a class="item" href="${req.route_url('console.project.overview', namespace=project.namespace)}">${project.name}</a>
   <span class="divider">/</span>
-  <span class="active item">Settings</span>
+  <span class="active item">${_('title.settings')}</span>
 </div>
 </%block>
 

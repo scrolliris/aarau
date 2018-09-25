@@ -3,7 +3,7 @@
 
 <%inherit file='aarau:templates/console/_layout.mako'/>
 
-<%block name='title'>${render_title('New Publication')}</%block>
+<%block name='title'>${render_title('{:s} - {:s}'.format(_('title.publication.new'), project.name))}</%block>
 <%block name='body_attr'> data-locale-file="${req.util.static_url('{}')|unquote,formatting('locale/{{lng}}/{{ns}}.json'),h}"</%block>
 
 <%block name='breadcrumb'>

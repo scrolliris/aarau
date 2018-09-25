@@ -3,13 +3,13 @@
 
 <%inherit file='aarau:templates/console/_layout.mako'/>
 
-<%block name='title'>${render_title('Site | Project')}</%block>
+<%block name='title'>${render_title('{:s} - {:s} - {:s}'.format(_('title.settings.general'), site.instance.name, project.name))}</%block>
 
 <%block name='breadcrumb'>
 <div class="breadcrumb">
   <span class="divider">/</span>
   <%include file='aarau:templates/console/site/application/_breadcrumb_parent_items.mako'/>
-  <span class="item active">General Settings</span>
+  <span class="item active">${_('title.settings.general')}</span>
 </div>
 </%block>
 
@@ -54,7 +54,7 @@
 
       <div class="column-16">
         <div class="attached header">
-          <h5>API KEYS</h5>
+          <h5>API Keys</h5>
         </div>
 
         <div class="attached box">

@@ -3,7 +3,7 @@
 
 <%inherit file='aarau:templates/console/_layout.mako'/>
 
-<%block name='title'>${render_title('Console')}</%block>
+<%block name='title'>${render_title(_('title.console'))}</%block>
 
 <%block name='breadcrumb'>
 <div class="breadcrumb">

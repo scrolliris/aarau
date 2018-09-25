@@ -3,13 +3,13 @@
 
 <%inherit file='aarau:templates/console/_layout.mako'/>
 
-<%block name='title'>${render_title('Site | Project')}</%block>
+<%block name='title'>${render_title('{:s} - {:s} - {:s}'.format(_('title.settings.badges'), site.instance.name, project.name))}</%block>
 
 <%block name='breadcrumb'>
 <div class="breadcrumb">
   <span class="divider">/</span>
   <%include file='aarau:templates/console/site/application/_breadcrumb_parent_items.mako'/>
-  <span class="item active">Status Badges</span>
+  <span class="item active">${_('title.settings.badges')}</span>
 </div>
 </%block>
 
@@ -38,7 +38,7 @@
     <div class="row">
       <div class="column-16">
         <div class="attached header">
-          <h5>Status Badges</h5>
+          <h5>Tracking Status Badges</h5>
         </div>
 
         <div class="attached box">

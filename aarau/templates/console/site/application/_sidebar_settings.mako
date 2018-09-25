@@ -18,9 +18,9 @@
     <span class="item">Settings</span>
     <span class="item-container">
       ${link_to('console.site.settings', 'General')}
-      ${link_to('console.site.settings.scripts', 'Measure Scripts')}
-      ${link_to('console.site.settings.widgets', 'Heatmap Widgets')}
-      ${link_to('console.site.settings.badges', 'Status Badges')}
+      ${link_to('console.site.settings.scripts', _('title.settings.scripts'))}
+      ${link_to('console.site.settings.widgets', _('title.settings.widgets'))}
+      ${link_to('console.site.settings.badges', _('title.settings.badges'))}
     </span>
   </span>
 

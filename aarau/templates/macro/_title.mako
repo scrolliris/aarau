@@ -1,4 +1,4 @@
-<%def name="render_title(title, separator='|')">
+<%def name="render_title(title, separator='-')">
   <%
     if isinstance(title, list):
       title = ' {} '.format(separator).join(title)

@@ -3,7 +3,7 @@
 
 <%inherit file='aarau:templates/console/_layout.mako'/>
 
-<%block name='title'>${render_title('Articles | Site | Project')}</%block>
+<%block name='title'>${render_title('{:s} - {:s} - {:s}'.format(_('title.article.list'), site.instance.name, project.name))}</%block>
 
 <%block name='breadcrumb'>
 <div class="breadcrumb">
