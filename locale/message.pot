@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Neuchâtel 0.1\n"
 "Report-Msgid-Bugs-To: support@scrolliris.com\n"
-"POT-Creation-Date: 2018-09-26 04:09+0900\n"
+"POT-Creation-Date: 2018-09-26 04:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -213,4 +213,66 @@ msgstr ""
 
 #: aarau/views/console/site/action.py:152
 msgid "site.{:s}.update.success"
+msgstr ""
+
+#: aarau/templates/console/site/application/insights.mako:6
+msgid "title.application.insights"
+msgstr ""
+
+#: aarau/templates/console/site/application/new.mako:6
+msgid "title.application.new"
+msgstr ""
+
+#: aarau/templates/console/article/list.mako:6
+msgid "title.article.list"
+msgstr ""
+
+#: aarau/templates/console/article/editor.mako:6
+msgid "title.article.new"
+msgstr ""
+
+#: aarau/templates/console/top.mako:6
+msgid "title.console"
+msgstr ""
+
+#: aarau/templates/console/project/new.mako:6
+msgid "title.project.new"
+msgstr ""
+
+#: aarau/templates/console/site/publication/new.mako:6
+msgid "title.publication.new"
+msgstr ""
+
+#: aarau/templates/console/project/settings.mako:6
+#: aarau/templates/console/project/settings.mako:15
+msgid "title.settings"
+msgstr ""
+
+#: aarau/templates/console/site/application/_sidebar_settings.mako:23
+#: aarau/templates/console/site/application/settings_badges.mako:6
+#: aarau/templates/console/site/application/settings_badges.mako:12
+msgid "title.settings.badges"
+msgstr ""
+
+#: aarau/templates/console/site/publication/settings.mako:6
+#: aarau/templates/console/site/publication/settings.mako:13
+#: aarau/templates/console/site/application/settings.mako:6
+#: aarau/templates/console/site/application/settings.mako:12
+msgid "title.settings.general"
+msgstr ""
+
+#: aarau/templates/console/site/application/_sidebar_settings.mako:21
+#: aarau/templates/console/site/application/settings_scripts.mako:6
+#: aarau/templates/console/site/application/settings_scripts.mako:12
+msgid "title.settings.scripts"
+msgstr ""
+
+#: aarau/templates/console/site/application/_sidebar_settings.mako:22
+#: aarau/templates/console/site/application/settings_widgets.mako:6
+#: aarau/templates/console/site/application/settings_widgets.mako:12
+msgid "title.settings.widgets"
+msgstr ""
+
+#: aarau/templates/console/article/editor.mako:6
+msgid "title.untitled"
 msgstr ""
