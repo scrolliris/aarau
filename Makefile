@@ -83,7 +83,7 @@ serve\:production:  ## Run {server,worker} process both in production mode (see 
 
 test:  ## Run unit tests and functional tests both
 	ENV=test py.test -c 'config/testing.ini' -s -q \
-	  test/unit test/func test/route_test.py
+	  test/unit test/func test/routes_test.py
 .PHONY: test
 
 test\:unit:  ## Run unit tests
@@ -98,7 +98,7 @@ test\:func:  ## Run functional tests
 
 test\:route:  ## Run only route tests
 	ENV=test py.test -c 'config/testing.ini' -s -q \
-	  test/route_test.py
+	  test/routes_test.py
 .PHONY: test\:route
 
 test\:integration:  ## Run integration tests on browser (Firefox Headless)
