@@ -34,8 +34,8 @@ honcho==1.0.1
 
 # development
 waitress==1.1.0
-pydocstyle==2.1.1
 pycodestyle==2.4.0
+pydocstyle==2.1.1
 pylint==2.1.1
 
 # development,testing
