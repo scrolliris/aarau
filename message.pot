@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Neuchâtel 0.1\n"
 "Report-Msgid-Bugs-To: support@scrolliris.com\n"
-"POT-Creation-Date: 2018-09-14 15:44+0900\n"
+"POT-Creation-Date: 2018-09-26 04:09+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,11 +63,11 @@ msgstr ""
 msgid "project.creation.success"
 msgstr ""
 
-#: aarau/views/console/project/action.py:109
+#: aarau/views/console/project/action.py:110
 msgid "project.update.failure"
 msgstr ""
 
-#: aarau/views/console/project/action.py:104
+#: aarau/views/console/project/action.py:105
 msgid "project.update.success"
 msgstr ""
 
@@ -199,11 +199,11 @@ msgstr ""
 msgid "signup.username.placeholder"
 msgstr ""
 
-#: aarau/views/console/site/action.py:69
+#: aarau/views/console/site/action.py:79
 msgid "site.{:s}.creation.failure"
 msgstr ""
 
-#: aarau/views/console/site/action.py:62
+#: aarau/views/console/site/action.py:72
 msgid "site.{:s}.creation.success"
 msgstr ""
 
