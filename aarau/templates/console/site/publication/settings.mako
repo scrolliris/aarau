@@ -32,7 +32,7 @@
     <div class="row">
       <div class="column-16">
         <h4>${instance.name}</h4>
-        <label class="primary label">scrolliris.com</label>
+        <label class="publication label">scrolliris.com</label>
       </div>
     </div>
 

@@ -31,7 +31,7 @@
     <div class="row">
       <div class="column-16">
         <h4>${instance.name}</h4>
-        <label class="secondary label">${site.domain}</label>
+        <label class="application label">${site.domain}</label>
       </div>
     </div>
 

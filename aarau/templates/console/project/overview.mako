@@ -34,7 +34,6 @@
     <div class="row">
       <div class="column-16">
         <h4>${project.name}</h4>
-        <label class="primary label">${project.namespace}</label>
 
         <p class="description">${project.description}</p>
         <div class="dropdown-container">
@@ -57,23 +56,13 @@
 
     <div class="row">
     % for site in sites:
-      % if site.type == 'application':
-        <div class="column-4 column-v-8 column-l-16">
-          <div class="blue flat site box">
-            <a href="${req.route_path('console.site.overview', namespace=project.namespace, slug=site.slug)}"><h5 class="header">${util.truncate(site.instance.name, 25)}</h5></a>
-            <label class="secondary label">${site.domain}</label>
-            <p class="text">${util.truncate(site.instance.description, 30)}</p>
-          </div>
-        </div>
-      % elif site.type == 'publication':
-        <div class="column-4 column-v-8 column-l-16">
-          <div class="gray flat site box">
-            <a href="${req.route_path('console.site.overview', namespace=project.namespace, slug=site.slug)}"><h5 class="header">${util.truncate(site.instance.name, 25)}</h5></a>
-            <label class="primary label">scrolliris.com</label>
-            <p class="text">${util.truncate(site.instance.description, 30)}</p>
-          </div>
-        </div>
-      % endif
+    <div class="column-4 column-v-8 column-l-16">
+      <div class="${site.type} flat site box">
+        <a href="${req.route_path('console.site.overview', namespace=project.namespace, slug=site.slug)}"><h5 class="header">${util.truncate(site.instance.name, 25)}</h5></a>
+        <label class="${site.type} label">${'scrolliris.com' if site.type == 'publication' else site.domain}</label>
+        <p class="text">${util.truncate(site.instance.description, 30)}</p>
+      </div>
+    </div>
     % endfor
     </div>
   </div>

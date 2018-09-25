@@ -29,23 +29,24 @@
     </div>
 
     <div class="row">
-      <div class="column-2">
-        <h3>Articles</h3>
+      <div class="column-8">
+        <h4>${site.instance.name}</h4>
+        <label class="publication label">scrolliris.com</label>
       </div>
-      <div class="column-14" align="right">
+      <div class="column-8" align="right">
         <a class="primary flat button" href="${req.route_path('console.article.editor.new', namespace=project.namespace, slug=site.slug)}">New Article</a>
       </div>
     </div>
 
     <div class="row">
-      <div class="column-16">
+      <div class="article-list column-16">
         % for article in articles:
         <div class="embedded flat article box" align="left">
           <a href="${req.route_path('console.article.editor.edit', namespace=project.namespace, slug=site.slug, _query={'code': article.code})}">
             <h5 class="title">${article.title or 'Untitled'}</h5>
           </a>
           <p class="path">${article.path or 'none'}</p>
-          <span class="secondary label">${article.progress_state}</span>
+          <span class="state">${article.progress_state}</span>
         </div>
         % endfor
       </div>
