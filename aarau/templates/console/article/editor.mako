@@ -58,6 +58,7 @@
 </%block>
 <%block name='toolbar'>
   <div class="toolbar sidebar">
+    <div class="inner-header"></div>
     <%include file='aarau:templates/shared/_toolbar_navi.mako'/>
     <h6 class="section-title">Configuration</h6>
     <hr>

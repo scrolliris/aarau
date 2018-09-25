@@ -13,7 +13,8 @@
       overflow-y auto
 
   header,
-  .inner-header
+  .inner-header,
+  .sidebar .inner-header + .right.item
     height 2.72rem
 
   .top.menu
@@ -29,15 +30,14 @@
 
     // breadcrumbs
     > .item:first-child
-      padding 0.52rem 0 0 1.31rem
+      padding 0.42rem 0 0 1.31rem
       margin 0
       &:hover
         background none
 
     .right.menu
       .item:first-child
-        padding-right 1.62rem
-        margin 0
+        margin 0 0.82rem 0 0
 
   .secondary.menu
     padding-left 0.02rem
