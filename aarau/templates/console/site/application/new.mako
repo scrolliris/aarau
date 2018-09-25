@@ -33,10 +33,9 @@
     </div>
 
     <div class="row">
-      <div class="column-9">
+      <div class="column-16">
         <form id="site" class="form" action="" method="get">
           <div class="field-6">
-            <label class="label" for="site_type">Type</label>
             <select id="site_type">
               <option value="publication">Hosted on Scrolliris.com</option>
               <option value="application" selected>Integration to Your Site</option>
@@ -45,15 +44,21 @@
         </form>
       </div>
 
-      <div class="column-9">
-        <p class="description">Enter your external web application (or website) which is integrated with Scrolliris&apos;s readability analysis.</p>
-        <%
-          act = req.route_url('console.site.new', namespace=project.namespace, _query={'type':'application'})
-          ctx = 'new'
-          err = form.errors
-          obj = site
-        %>
-        <%include file="aarau:templates/console/site/application/_form.mako" args="f=form, act=act, ctx=ctx, err=err, obj=obj"/>
+      <div class="container column-16">
+        <div class="attached header">
+          <h5>New Application</h5>
+        </div>
+
+        <div class="attached box">
+          <p class="description">Enter your external web application (or website) which is integrated with Scrolliris&apos;s readability analysis.</p>
+          <%
+            act = req.route_url('console.site.new', namespace=project.namespace, _query={'type':'application'})
+            ctx = 'new'
+            err = form.errors
+            obj = site
+          %>
+          <%include file="aarau:templates/console/site/application/_form.mako" args="f=form, act=act, ctx=ctx, err=err, obj=obj"/>
+        </div>
       </div>
     </div>
   </div>

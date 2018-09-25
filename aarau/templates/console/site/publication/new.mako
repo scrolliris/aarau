@@ -37,7 +37,6 @@
       <div class="column-16">
         <form id="site" class="form" action="" method="get">
           <div class="field-6">
-            <label class="label" for="site_type">Type</label>
             <select id="site_type">
               <option value="publication" selected>Hosted on Scrolliris.com</option>
               <option value="application">Integration to Your Site</option>
@@ -46,15 +45,21 @@
         </form>
       </div>
 
-      <div class="column-16">
-        <p class="description">Create new publication which is published on Scrolliris.</p>
-        <%
-          act = req.route_url('console.site.new', namespace=project.namespace, _query={'type':'publication'})
-          ctx = 'new'
-          err = form.errors
-          obj = site
-        %>
-        <%include file="aarau:templates/console/site/publication/_form.mako" args="f=form, act=act, ctx=ctx, err=err, obj=obj"/>
+      <div class="container column-16">
+        <div class="attached header">
+          <h5>New Publication</h5>
+        </div>
+
+        <div class="attached box">
+          <p class="description">Create new publication which is published on Scrolliris.</p>
+          <%
+            act = req.route_url('console.site.new', namespace=project.namespace, _query={'type':'publication'})
+            ctx = 'new'
+            err = form.errors
+            obj = site
+          %>
+          <%include file="aarau:templates/console/site/publication/_form.mako" args="f=form, act=act, ctx=ctx, err=err, obj=obj"/>
+        </div>
       </div>
     </div>
   </div>
