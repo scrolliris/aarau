@@ -79,7 +79,8 @@ def extra_environ(env) -> dict:
 
 @pytest.fixture(scope='session')
 def db(settings):
-    from aarau.models import DB, init_db
+    from aarau.models.db import DB
+    from aarau.models import init_db
 
     return DB({
         'cardinal': init_db(settings, 'cardinal'),

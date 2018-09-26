@@ -1,28 +1,7 @@
 from urllib.parse import urlparse, parse_qs
 
-from playhouse.pool import PooledPostgresqlDatabase
+from .db import db
 
-
-class DB(dict):
-    """Database connections."""
-
-    __getattr__ = dict.get
-    __setattr__ = dict.__setitem__
-    __delattr__ = dict.__delitem__
-
-
-# pylint: disable=invalid-name
-db = DB({  # proxies
-    'cardinal': PooledPostgresqlDatabase(None, field_types={
-        'e_user_activation_state': 'enum'
-    }),
-    'analysis': PooledPostgresqlDatabase(None, field_types={
-        'e_user_activation_state': 'enum'})
-})
-# pylint: enable=invalid-name
-
-
-# pylint: disable=wrong-import-position
 from .application import Application
 from .article import Article
 from .contribution import Contribution
@@ -38,7 +17,7 @@ from .site import Site
 from .user import User
 from .user_email import UserEmail
 from .reading_result import ReadingResult
-# pylint: enable=wrong-import-position
+
 
 __all__ = (
     'Project', 'Membership', 'Plan',
