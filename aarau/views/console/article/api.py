@@ -60,7 +60,7 @@ def handle_post(req):
         article = Article(
             code=code,
             path=code,
-            title='',
+            title='Untitled',
             copyright='',
             publication=publication)
 

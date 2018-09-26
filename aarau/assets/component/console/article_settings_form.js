@@ -128,6 +128,7 @@ function notifyCodeOnChange(instance) {
   const form = document.getElementById('article_settings_form');
   let code = form.querySelector('#settings_form_code');
 
+  // update url
   let url = new URL(document.location);
   url.searchParams.set('code', code.value);
   document.location = url;

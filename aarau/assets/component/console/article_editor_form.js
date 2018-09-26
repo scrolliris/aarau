@@ -150,6 +150,11 @@ function notifyCodeOnChange(instance) {
   const form = document.getElementById('article_editor_form');
   let code = form.querySelector('#editor_form_code');
 
+  // update url
+  let url = new URL(document.location);
+  url.searchParams.set('code', code.value);
+  document.location = url;
+
   instance.state.code.value = code.value;
 }
 
