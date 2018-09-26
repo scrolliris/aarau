@@ -3,7 +3,7 @@ import { h } from 'inferno-hyperscript.js';
 
 import { i18n } from '../../js/console/i18n.js';
 
-import './article_config_form.styl';
+import './article_settings_form.styl';
 
 
 function handleOnInput(instance, event) {
@@ -64,7 +64,7 @@ function handleOnSubmit(instance, event) {
 
   let data = {
     csrf_token: instance.state.csrfToken.value
-  , context: 'config'
+  , context: 'settings'
   , code: instance.state.code.value
   , path: instance.state.path.value
   , scope: instance.state.scope.value
@@ -118,7 +118,7 @@ function handleOnFocusOut(instance, event) {
 
   const name = event.target.name;
   if (instance.state.hasOwnProperty(name)) {
-    const form = document.getElementById('article_config_form');
+    const form = document.getElementById('article_settings_form');
 
     // TODO: save in local
   }
@@ -126,8 +126,8 @@ function handleOnFocusOut(instance, event) {
 
 // called via update by editor form
 function notifyCodeOnChange(instance) {
-  const form = document.getElementById('article_config_form');
-  let code = form.querySelector('#config_form_code');
+  const form = document.getElementById('article_settings_form');
+  let code = form.querySelector('#settings_form_code');
 
   instance.state.code.value = code.value;
 }
@@ -165,12 +165,12 @@ function buildQueryString(data) {
   return params.join('&');
 }
 
-class ArticleConfigForm extends Component {
+class ArticleSettingsForm extends Component {
   constructor(props) {
     super(props);
 
     this.props['action'] = '/api/' + this.props.namespace + '/' +
-      this.props.slug + '/article/config.json';
+      this.props.slug + '/article/settings.json';
 
     this.props['validations'] = {
       path: {
@@ -209,20 +209,20 @@ class ArticleConfigForm extends Component {
   }
 
   render() {
-    return h('form#article_config_form.form', {
+    return h('form#article_settings_form.form', {
       action: this.props.action || ''
     , method: 'POST'
     , onSubmit: linkEvent(this, handleOnSubmit)
     }, [
       h('input', {
         type: 'hidden', name: 'csrf_token', value: this.state.csrfToken.value})
-    , h('input#config_form_code', {
+    , h('input#settings_form_code', {
         type: 'hidden'
       , name: 'code'
       , value: this.state.code.value
       , onChange: linkEvent(this, notifyCodeOnChange)
       })
-    , h('input', {type: 'hidden', name: 'context', value: 'config'})
+    , h('input', {type: 'hidden', name: 'context', value: 'settings'})
     , h('.row', [
         h('.field-16', [
           h('label.label', {for: 'path'}, i18n.t('article.path.label'))
@@ -290,4 +290,4 @@ class ArticleConfigForm extends Component {
   }
 }
 
-module.exports = ArticleConfigForm;
+module.exports = ArticleSettingsForm;

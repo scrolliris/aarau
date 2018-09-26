@@ -156,8 +156,8 @@ def define_console_routes(c, namespace):
     c.add_route('api.console.article.editor',
                 '/api/{namespace}/{slug}/article/editor.json',
                 custom_predicates=(namespace,))
-    c.add_route('api.console.article.config',
-                '/api/{namespace}/{slug}/article/config.json',
+    c.add_route('api.console.article.settings',
+                '/api/{namespace}/{slug}/article/settings.json',
                 custom_predicates=(namespace,))
 
     # internal api - insights

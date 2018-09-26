@@ -8,7 +8,7 @@ from aarau.queries.site import get_site
 from aarau.views.filter import login_required
 from aarau.views.console.article.form import (
     build_article_editor_form,
-    build_article_config_form,
+    build_article_settings_form,
 )
 
 
@@ -25,7 +25,7 @@ def save_content(req, article):
 
 
 def save_meta(req, article):
-    form = build_article_config_form(req, article)
+    form = build_article_settings_form(req, article)
 
     if form.validate():
         with req.db.cardinal.atomic():
@@ -68,7 +68,7 @@ def handle_post(req):
     _ = req.translate
     if context == 'editor':
         (article, errors) = save_content(req, article)
-    elif context == 'config':
+    elif context == 'settings':
         (article, errors) = save_meta(req, article)
     else:
         raise HTTPNotFound
@@ -84,11 +84,11 @@ def handle_post(req):
         message=message)
 
 
-@view_config(route_name='api.console.article.config',
+@view_config(route_name='api.console.article.settings',
              request_method='POST',
              renderer='json')
 @login_required
-def api_article_config(req):
+def api_article_settings(req):
     try:
         return handle_post(req)
     except HTTPNotFound:

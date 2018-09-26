@@ -60,12 +60,12 @@
   <div class="toolbar sidebar">
     <div class="inner-header"></div>
     <%include file='aarau:templates/shared/_toolbar_navi.mako'/>
-    <h6 class="section-title">Configuration</h6>
+    <h6 class="section-title">Settings</h6>
     <hr>
-    ## Config
-    <div id="article_config_form_container"
-      data-action="${req.route_path('api.console.article.config', namespace=project.namespace, slug=site.slug)}"
-      data-csrf-token="${config_form.csrf_token.current_token}"
+    ## Settings
+    <div id="article_settings_form_container"
+      data-action="${req.route_path('api.console.article.settings', namespace=project.namespace, slug=site.slug)}"
+      data-csrf-token="${settings_form.csrf_token.current_token}"
       data-namespace="${project.namespace}"
       data-slug="${site.slug}"
       data-code="${article.code or ''}"

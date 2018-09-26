@@ -73,7 +73,7 @@ def build_article_editor_form(req, article=None):
     return form
 
 
-class ArticleConfigForm(ArticleBaseMixin, SecureForm):
+class ArticleSettingsForm(ArticleBaseMixin, SecureForm):
     code = HiddenField([
         v.Required(),
     ])
@@ -95,12 +95,12 @@ class ArticleConfigForm(ArticleBaseMixin, SecureForm):
 
     context = HiddenField([
         v.Required(),
-        v.AnyOf(('config',))
+        v.AnyOf(('settings',))
     ])
     submit = SubmitField('Save')
 
 
-def build_article_config_form(req, article=None):
-    form = build_form(ArticleConfigForm, req, article)
+def build_article_settings_form(req, article=None):
+    form = build_form(ArticleSettingsForm, req, article)
     form.current_article = article
     return form

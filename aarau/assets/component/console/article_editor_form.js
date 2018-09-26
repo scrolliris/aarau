@@ -85,9 +85,9 @@ function handleOnSubmit(instance, event) {
       if (client.status === 200 && res.status === 'ok') {
         if (Object.keys(errors).length === 0) { // created/updated
           newState['code'] = {errors: [], value: res.code};
-          // update config form
-          const form = document.getElementById('article_config_form');
-          let code = form.querySelector('#config_form_code');
+          // update settings form
+          const form = document.getElementById('article_settings_form');
+          let code = form.querySelector('#settings_form_code');
           if (code.value === null || code.value === "") {
             code.value = res.code;
             // notify
@@ -145,7 +145,7 @@ function handleOnFocusOut(instance, event) {
   }
 }
 
-// called via update by config form
+// called via update by settings form
 function notifyCodeOnChange(instance) {
   const form = document.getElementById('article_editor_form');
   let code = form.querySelector('#editor_form_code');

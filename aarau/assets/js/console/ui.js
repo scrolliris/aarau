@@ -9,7 +9,7 @@ import ClassificationTree from
 import Metrics from '../../component/console/metrics.js';
 import PageTable from '../../component/console/page.js';
 import ArticleEditorForm from '../../component/console/article_editor_form.js';
-import ArticleConfigForm from '../../component/console/article_config_form.js';
+import ArticleSettingsForm from '../../component/console/article_settings_form.js';
 
 import handleSidebar from '../shared/_sidebar.js';
 import handleToolbar from '../shared/_toolbar.js';
@@ -57,10 +57,10 @@ import handleToolbar from '../shared/_toolbar.js';
         }
       }
 
-      {  // article config form
-        let container = doc.getElementById('article_config_form_container');
+      {  // article settings form
+        let container = doc.getElementById('article_settings_form_container');
         if (container !== null) {
-          render(h(ArticleConfigForm, container.dataset), container);
+          render(h(ArticleSettingsForm, container.dataset), container);
         }
       }
     }, loadPath);

@@ -8,7 +8,7 @@ from aarau.views.filter import login_required
 from aarau.views.console.article import tpl
 from aarau.views.console.article.form import (
     build_article_editor_form,
-    build_article_config_form,
+    build_article_settings_form,
 )
 
 
@@ -60,11 +60,11 @@ def article_editor(req):
         article = Article(path=path)
 
     editor_form = build_article_editor_form(req, article)
-    config_form = build_article_config_form(req, article)
+    settings_form = build_article_settings_form(req, article)
 
     return dict(
-        config_form=config_form,
         editor_form=editor_form,
+        settings_form=settings_form,
         project=project,
         site=site,
         publication=publication,
