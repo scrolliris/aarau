@@ -4,12 +4,12 @@ from wtforms import ValidationError
 
 from aarau.models.article import Article
 from aarau.views.console.article.form import (
-    build_article_config_form,
+    build_article_settings_form,
     build_article_editor_form,
     path_duplication_check,
     path_availability_check,
-    ArticleConfigForm,
     ArticleEditorForm,
+    ArticleSettingsForm,
 )
 
 
@@ -25,11 +25,11 @@ def setup(request, config, monkeypatch):  # pylint: disable=unused-argument
     request.addfinalizer(teardown)
 
 
-def test_build_article_config_form(dummy_request):
+def test_build_article_settings_form(dummy_request):
     dummy_request.params = dummy_request.POST = MultiDict()
     article = Article()
-    form = build_article_config_form(dummy_request, article)
-    assert isinstance(form, ArticleConfigForm)
+    form = build_article_settings_form(dummy_request, article)
+    assert isinstance(form, ArticleSettingsForm)
 
 
 def test_build_article_editor_form(dummy_request):
@@ -44,7 +44,7 @@ def test_path_duplication_check(mocker, users, dummy_request):
     article = Article()
 
     dummy_request.params = dummy_request.POST = MultiDict()
-    form = build_article_config_form(dummy_request, article)
+    form = build_article_settings_form(dummy_request, article)
 
     with pytest.raises(ValidationError):
         user = users['oswald']
@@ -57,7 +57,7 @@ def test_path_availability_check(mocker, dummy_request):
     article = Article(path='scrolliris')
 
     dummy_request.params = dummy_request.POST = MultiDict()
-    form = build_article_config_form(dummy_request, article)
+    form = build_article_settings_form(dummy_request, article)
 
     with pytest.raises(ValidationError):
         field = mocker.Mock('field', data=article.path)
@@ -86,7 +86,7 @@ def test_path_validations_with_invalid_path_inputs(path, scope, dummy_request):
         'path': path,
         'scope': scope,
     })
-    form = build_article_config_form(dummy_request, article)
+    form = build_article_settings_form(dummy_request, article)
     assert not form.validate()
     assert form.path.errors
 
@@ -109,6 +109,6 @@ def test_path_validations_with_valid_path_inputs(path, scope, dummy_request):
         'path': path,
         'scope': scope,
     })
-    form = build_article_config_form(dummy_request, article)
+    form = build_article_settings_form(dummy_request, article)
     assert form.validate()
     assert not form.path.errors
