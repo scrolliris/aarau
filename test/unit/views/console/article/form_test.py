@@ -76,13 +76,15 @@ def test_path_availability_check(mocker, dummy_request):
     # too long
     'super-looooooooooooooooooooooooooooooooooooooooooooooooooong-path',
 ])
-def test_path_validations_with_invalid_inputs(path, dummy_request):
+@pytest.mark.parametrize('scope', ['public', 'private'])
+def test_path_validations_with_invalid_path_inputs(path, scope, dummy_request):
     article = Article(path=path)
 
     dummy_request.params = dummy_request.POST = MultiDict({
         'csrf_token': dummy_request.session.get_csrf_token(),
         'title': 'Title',
         'path': path,
+        'scope': scope,
     })
     form = build_article_config_form(dummy_request, article)
     assert not form.validate()
@@ -97,13 +99,15 @@ def test_path_validations_with_invalid_inputs(path, dummy_request):
     '001-article-title',
     'super-loooooooooooooooooooooooooooooooooooooooooooooooooong-path',
 ])
-def test_path_validations_with_valid_inputs(path, dummy_request):
+@pytest.mark.parametrize('scope', ['public', 'private'])
+def test_path_validations_with_valid_path_inputs(path, scope, dummy_request):
     article = Article(path=path)
 
     dummy_request.params = dummy_request.POST = MultiDict({
         'csrf_token': dummy_request.session.get_csrf_token(),
         'title': 'Title',
         'path': path,
+        'scope': scope,
     })
     form = build_article_config_form(dummy_request, article)
     assert form.validate()

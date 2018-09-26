@@ -30,7 +30,9 @@ def save_meta(req, article):
     if form.validate():
         with req.db.cardinal.atomic():
             article.title = form.title.data
-            article.path = form.path.data  # optional
+            article.scope = 'private' if not form.scope.data else 'public'
+            # optional
+            article.path = form.path.data
 
             article.save()
 

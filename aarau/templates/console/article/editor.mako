@@ -70,6 +70,7 @@
       data-slug="${site.slug}"
       data-code="${article.code or ''}"
       data-path="${article.path or ''}"
+      data-scope="${article.scope or 'public'}"
       data-title="${article.title or ''}"></div>
   </div>
 </%block>

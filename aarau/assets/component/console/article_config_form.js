@@ -3,6 +3,8 @@ import { h } from 'inferno-hyperscript.js';
 
 import { i18n } from '../../js/console/i18n.js';
 
+import './article_config_form.styl';
+
 
 function handleOnInput(instance, event) {
   const name = event.target.name;
@@ -44,6 +46,15 @@ function handleOnInput(instance, event) {
   instance.setState(newState);
 }
 
+function handleOnChange(instance, event) {
+  const name = event.target.name;
+  const value = event.target.checked;
+
+  let newState = {};
+  newState[name] = {'value': value};
+  instance.setState(newState);
+}
+
 function handleOnSubmit(instance, event) {
   instance.setState({message: i18n.t('message.sending')});
 
@@ -56,8 +67,10 @@ function handleOnSubmit(instance, event) {
   , context: 'config'
   , code: instance.state.code.value
   , path: instance.state.path.value
+  , scope: instance.state.scope.value
   , title: instance.state.title.value
   };
+  console.log(data);
 
   let client = new XMLHttpRequest();
   client.onreadystatechange = () => {
@@ -184,6 +197,10 @@ class ArticleConfigForm extends Component {
         errors: []
       , value: props.path || props.code
       }
+    , scope: {
+        errors: []
+      , value: props.scope === 'public'
+      }
     , title: {
         errors: []
       , value: props.title
@@ -246,6 +263,21 @@ class ArticleConfigForm extends Component {
           , onFocusOut: linkEvent(this, handleOnFocusOut)
           })
         , buildErrorMessage(this.state.title)
+        ])
+      ])
+    , h('.row', [
+        h('.field-16', [
+          h('label.label', {for: 'scope'}, 'Scope')
+        , h('span.description', 'Public Access')
+        , h('.checkbox.right', [
+            h('input#scope', {
+              type: 'checkbox'
+            , name: 'scope'
+            , defaultChecked: this.state.scope.value
+            , onChange: linkEvent(this, handleOnChange)
+            })
+          , h('label.label.scope', {for: 'scope'}, '')
+          ])
         ])
       ])
     , h('.row', [

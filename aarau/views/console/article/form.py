@@ -1,4 +1,5 @@
 from wtforms import (
+    BooleanField,
     HiddenField,
     StringField,
     SubmitField,
@@ -79,6 +80,9 @@ class ArticleConfigForm(ArticleBaseMixin, SecureForm):
     title = StringField('Title', [
         v.Required(),
         v.Length(min=3, max=128),
+    ])
+    scope = BooleanField('Scope', [
+        v.Required(),
     ])
     path = StringField('Path', [
         v.Required(),
