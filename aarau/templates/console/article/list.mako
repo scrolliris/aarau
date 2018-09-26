@@ -45,7 +45,7 @@
           <a href="${req.route_path('console.article.editor.edit', namespace=project.namespace, slug=site.slug, _query={'code': article.code})}">
             <h5 class="title">${article.title or 'Untitled'}</h5>
           </a>
-          <p class="path">${article.path or 'none'}</p>
+          <p class="description">${util.truncate(article.content, 90)}</p>
           <span class="state">${article.progress_state}</span>
         </div>
         % endfor
