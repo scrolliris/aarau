@@ -70,7 +70,6 @@ function handleOnSubmit(instance, event) {
   , scope: instance.state.scope.value
   , title: instance.state.title.value
   };
-  console.log(data);
 
   let client = new XMLHttpRequest();
   client.onreadystatechange = () => {
@@ -128,6 +127,10 @@ function handleOnFocusOut(instance, event) {
 function notifyCodeOnChange(instance) {
   const form = document.getElementById('article_settings_form');
   let code = form.querySelector('#settings_form_code');
+
+  let url = new URL(document.location);
+  url.searchParams.set('code', code.value);
+  document.location = url;
 
   instance.state.code.value = code.value;
 }
