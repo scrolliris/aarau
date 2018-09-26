@@ -270,7 +270,8 @@ class ArticleSettingsForm extends Component {
           h('label.label', {for: 'scope'}, 'Scope')
         , h('span.description', 'Public Access')
         , h('.checkbox.right', [
-            h('input#scope', {
+            h('span.value', this.state.scope.value ? 'On' : 'Off')
+          , h('input#scope', {
               type: 'checkbox'
             , name: 'scope'
             , defaultChecked: this.state.scope.value
