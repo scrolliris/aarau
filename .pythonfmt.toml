@@ -1,0 +1,21 @@
+[tool.black]
+line-length = 80
+py36 = true
+diff = true
+skip-string-normalization = true
+exclude = '''
+/(
+    \.git
+  | \.cache
+  | \.pytest_cache
+  | bin
+  | config
+  | db
+  | doc
+  | lib
+  | node_modules
+  | static
+  | tmp
+  | venv
+)/
+'''

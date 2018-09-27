@@ -45,6 +45,7 @@ development_requires = [
     'colorlog',
     'waitress',
 
+    'black',
     'pydocstyle',
     'pycodestyle',
     'pylint',

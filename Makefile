@@ -166,8 +166,8 @@ vet: | vet\:style vet\:lint  ## Run `vet:style` and `vet:lint` both (without vet
 .PHONY: vet
 
 vet\:style:  ## Check style using py{code,doc}style (see setup.cfg)
-	pycodestyle test aarau
-	pydocstyle test aarau
+	pycodestyle --config=config/development.ini test aarau
+	pydocstyle --config=config/development.ini test aarau
 .PHONY: vet\:style
 
 vet\:lint:  ## Lint python codes
@@ -182,6 +182,12 @@ vet\:quality:  ## Generate codequality.txt using codeclimate (require Docker)
 	  codeclimate/codeclimate analyze -f text > tmp/codequality.txt
 	cat tmp/codequality.txt
 .PHONY: vet\:quality
+
+
+# -- fmt
+fmt:  ## Apply python formatter (black) with --diff option
+	black --config=.pythonfmt.toml aarau test
+.PHONY: fmt
 
 
 # -- utilities

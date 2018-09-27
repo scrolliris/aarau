@@ -33,6 +33,7 @@ CherryPy==18.0.0
 honcho==1.0.1
 
 # development
+black==18.9b0
 waitress==1.1.0
 pycodestyle==2.4.0
 pydocstyle==2.1.1
