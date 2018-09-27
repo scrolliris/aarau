@@ -166,8 +166,8 @@ vet: | vet\:style vet\:lint  ## Run `vet:style` and `vet:lint` both (without vet
 .PHONY: vet
 
 vet\:style:  ## Check style using py{code,doc}style (see setup.cfg)
-	pycodestyle --config=config/development.ini test aarau
-	pydocstyle --config=config/development.ini test aarau
+	pycodestyle test aarau
+	pydocstyle test aarau
 .PHONY: vet\:style
 
 vet\:lint:  ## Lint python codes
