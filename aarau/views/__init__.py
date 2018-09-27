@@ -34,9 +34,11 @@ def subdomain(request):
 
 
 def get_site_type(params):
+    # fmt: off
     site_type = 'publication' if (
         'type' not in params or params['type'] == 'publication'
     ) else 'application'
+    # fmt: on
     return site_type
 
 

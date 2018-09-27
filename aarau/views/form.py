@@ -21,14 +21,17 @@ def availability_checker(key):
         try:
             with open(resolver.abspath(), 'r') as f:
                 data = yaml.safe_load(f).get('reserved_words', {})
+                # fmt: off
                 reserved_words = set(itertools.chain(
                     data.get('common', []),
                     data.get(keys[0], {}).get(keys[1], []),
                 ))
+                # fmt: on
                 # TODO: translate
                 if field.data in reserved_words:
                     raise ValidationError(
-                        '{} is unavailable.'.format(keys[1].title()))
+                        '{} is unavailable.'.format(keys[1].title())
+                    )
         except FileNotFoundError:
             pass
 
@@ -76,10 +79,11 @@ class FailureForm(SecureForm):
 
 def build_form(klass, req, obj=None):
     """Builder method builds a form."""
-    form = klass(req.POST, obj, meta={
-        'csrf_context': req.session,
-        'locales': ['en_US', 'en'],
-    })
+    form = klass(
+        req.POST,
+        obj,
+        meta={'csrf_context': req.session, 'locales': ['en_US', 'en']},
+    )
 
     # all form has `req` instance
     form.req = req

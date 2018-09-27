@@ -1,11 +1,7 @@
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPNotFound
 
-from aarau.models import (
-    Article,
-    Project,
-    Site,
-)
+from aarau.models import Article, Project, Site
 from aarau.views import tpl
 from aarau.queries.site import get_sites
 
@@ -17,13 +13,15 @@ def article_view(req):
     path = req.matchdict.get('path')
 
     try:
-        project = Project.select().where(
-            Project.namespace == namespace).get()
+        project = Project.select().where(Project.namespace == namespace).get()
 
+        # fmt: off
         site = get_sites('publication', limit=1).where(
             Site.slug == slug,
             Site.project_id == project.id,
         ).get()
+        # fmt: on
+
         publication = site.instance
         article = publication.articles.where(
             Article.path == path,

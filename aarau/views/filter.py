@@ -17,6 +17,7 @@ def login_required(f):
         if req.subdomain == 'console' and not user.projects:
             raise HTTPForbidden
         return f(req, **kwargs)
+
     return authentication_user
 
 
@@ -27,13 +28,15 @@ def forbidden_redirect(req):
         # return Response('forbidden')
         return HTTPFound(location=req.route_url('top', namespace=None))
 
-    req.session.flash(_('login.needed'),
-                      queue='failure', allow_duplicate=False)
+    req.session.flash(
+        _('login.needed'), queue='failure', allow_duplicate=False
+    )
     return HTTPFound(location=req.route_url('login', namespace=None))
 
 
 def namespace_filter():
     import re
+
     # reuse from a pattern for validator in form
     from aarau.views.console.project.form import NAMESPACE_PATTERN
 
@@ -43,4 +46,5 @@ def namespace_filter():
         if not namespace:
             return False
         return pattern.match(namespace)
+
     return filter_
