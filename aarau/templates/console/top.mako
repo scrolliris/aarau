@@ -27,12 +27,12 @@
     % for project in projects:
       <div class="column-4 column-v-8 column-l-16">
         <div class="attached box">
-          <a href="${req.route_url('console.project.overview', namespace=project.namespace)}"><h4 class="header">${project.name}</h4></a>
-          <p>${project.description}</p>
+          <a href="${req.route_url('console.project.overview', namespace=project.namespace)}"><h4 class="header">${util.truncate(project.name, 28)}</h4></a>
+          <p>${util.truncate(project.description, 120)}</p>
           <%
             members_count = len(project.users)
           %>
-          <span>${members_count} ${'members' if members_count > 1 else 'member'}</span>
+          <span class="members">${members_count} ${'members' if members_count > 1 else 'member'}</span>
         </div>
         <div class="attached message">
           <pre>${project.namespace}</pre>
