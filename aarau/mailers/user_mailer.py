@@ -96,7 +96,7 @@ class UserMailer():
 
     def email_activation_email(self, user_email=None):
         with mail_to(user_email) as recipients:
-            url = self.request.route_url('carrell.settings.email_activate',
+            url = self.request.route_url('console.settings.email_activate',
                                          token=user_email.activation_token)
             body = render(self.template.format('email_activation_email'), {
                 'url': url,

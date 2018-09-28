@@ -45,8 +45,8 @@ class API {
 class ClassificationTree extends Component {
   constructor(props) {
     super(props);
-    this.props['url'] = '/api/' + this.props.namespace +
-                        '/' + this.props.slug + '/classification/tree.json';
+    this.props['url'] = '/api/projects/' + this.props.namespace +
+      '/sites/' + this.props.slug + '/classifications/tree.json';
     this.state = {
       data: []
     };

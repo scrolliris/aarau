@@ -173,8 +173,8 @@ class ArticleSettingsForm extends Component {
   constructor(props) {
     super(props);
 
-    this.props['action'] = '/api/' + this.props.namespace + '/' +
-      this.props.slug + '/article/settings.json';
+    this.props['action'] = '/api/projects/' + this.props.namespace +
+      '/sites/' + this.props.slug + '/articles/settings.json';
 
     this.props['validations'] = {
       path: {

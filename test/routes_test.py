@@ -93,7 +93,7 @@ def test_routing_to_application_site_settings_badges_on_console(
     with login_as(user):
         project = user.projects[0]
         site = project.applications[0]
-        url = '/{namespace:s}/{slug:s}/settings/badges'.format(
+        url = '/projects/{namespace:s}/sites/{slug:s}/settings/badges'.format(
             namespace=project.namespace, slug=site.slug)
         app = dummy_app.switch_target('console')
         res = app.get(url, status=200)

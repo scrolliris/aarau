@@ -13,8 +13,7 @@ def login_required(f):
         if not user:
             raise HTTPForbidden
         # TODO: Check permission
-        # TODO: Check joined_projects (reduce a query)
-        if req.subdomain == 'console' and not user.projects:
+        if req.subdomain != 'console' and req.subdomain != 'carrell':
             raise HTTPForbidden
         return f(req, **kwargs)
 

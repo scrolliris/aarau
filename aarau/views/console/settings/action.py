@@ -4,8 +4,8 @@ from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from aarau.models.user_email import UserEmail
 from aarau.services.interface import IActivator
 from aarau.views.filter import login_required
-from aarau.views.carrell.settings import tpl
-from aarau.views.carrell.settings.form import (
+from aarau.views.console.settings import tpl
+from aarau.views.console.settings.form import (
     build_change_password_form,
     build_new_email_form,
     build_delete_email_form,
@@ -13,8 +13,8 @@ from aarau.views.carrell.settings.form import (
 )
 
 
-@view_config(route_name='carrell.settings', renderer=tpl('account.mako'))
-@view_config(route_name='carrell.settings.section',
+@view_config(route_name='console.settings', renderer=tpl('account.mako'))
+@view_config(route_name='console.settings.section',
              match_param='section=account', renderer=tpl('account.mako'))
 @login_required
 def settings_account(_request):
@@ -22,7 +22,7 @@ def settings_account(_request):
     return {}
 
 
-@view_config(route_name='carrell.settings.section',
+@view_config(route_name='console.settings.section',
              match_param='section=email',
              request_method=('GET', 'POST'),
              renderer=tpl('email.mako'))
@@ -31,7 +31,7 @@ def settings_email(request):
     """Renders email settings view and adds new email via POST."""
     user = request.user
 
-    next_path = request.route_path('carrell.settings.section', section='email')
+    next_path = request.route_path('console.settings.section', section='email')
     user_emails = user.emails.order_by(
         UserEmail.type.asc(), UserEmail.id.asc())
 
@@ -63,7 +63,7 @@ def settings_email(request):
     return dict(form=form, user_emails=user_emails, email_forms=email_forms)
 
 
-@view_config(route_name='carrell.settings.email_activate',
+@view_config(route_name='console.settings.email_activate',
              request_method='GET')
 @login_required
 def settings_email_activate(request):
@@ -88,10 +88,10 @@ def settings_email_activate(request):
             request.session.flash(_('settings.email.confirmation.success'),
                                   queue='success', allow_duplicate=False)
     return HTTPFound(location=request.route_path(
-        'carrell.settings.section', section='email'))
+        'console.settings.section', section='email'))
 
 
-@view_config(route_name='carrell.settings.email_delete', request_method='POST')
+@view_config(route_name='console.settings.email_delete', request_method='POST')
 @login_required
 def settings_email_delete(request):
     """Deletes user email."""
@@ -113,10 +113,10 @@ def settings_email_delete(request):
                               queue='failure', allow_duplicate=False)
 
     return HTTPFound(location=request.route_path(
-        'carrell.settings.section', section='email'))
+        'console.settings.section', section='email'))
 
 
-@view_config(route_name='carrell.settings.email_change', request_method='POST')
+@view_config(route_name='console.settings.email_change', request_method='POST')
 @login_required
 def settings_email_change(req):
     """Changes user email."""
@@ -142,10 +142,10 @@ def settings_email_change(req):
                           queue='failure', allow_duplicate=False)
 
     return HTTPFound(location=req.route_path(
-        'carrell.settings.section', section='email'))
+        'console.settings.section', section='email'))
 
 
-@view_config(route_name='carrell.settings.section',
+@view_config(route_name='console.settings.section',
              match_param='section=password',
              request_method=('GET', 'POST'),
              renderer=tpl('password.mako'))
@@ -164,7 +164,7 @@ def settings_password(request):
                 request.session.flash(_('settings.password.change.success'),
                                       queue='success', allow_duplicate=False)
                 return HTTPFound(location=request.route_path(
-                    'carrell.settings.section', section='password'))
+                    'console.settings.section', section='password'))
 
             request.session.flash(_('settings.password.change.invalid'),
                                   queue='failure', allow_duplicate=False)

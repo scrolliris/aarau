@@ -209,7 +209,7 @@ clean:  ## Delete unnecessary cache etc.
 	  ! -path "./.git/*" ! -path "./node_modules/*" ! -path "./venv*" \
 	  ! -path "./doc/*" ! -path "./locale/*" ! -path "./tmp/*" \
 	  ! -path "./lib/*" -print | \
-	  grep -E "(__pycache__|\.egg-info|\.pyc|\.pyo)" | \
+	  grep -E "(__pycache__|\.pytest_cache|\.cache|\.egg-info|\.pyc|\.pyo)" | \
 	  xargs rm -rf
 ifeq (, $(shell which gulp 2>/dev/null))
 	$(info gulp command not found. run `npm install -g gulp-cli`)

@@ -14,6 +14,7 @@ def test_classification_tree_without_data(users, dummy_request):
     from aarau.views.console.classification.api import api_classification_tree
 
     user = users['oswald']
+    dummy_request.subdomain = 'console'
     dummy_request.user = user
     dummy_request.matchdict = {}
 
@@ -27,6 +28,7 @@ def test_classification_tree(users, dummy_request):
     Classification.rebuild_all()
 
     user = users['oswald']
+    dummy_request.subdomain = 'console'
     dummy_request.user = user
     dummy_request.matchdict = {}
 

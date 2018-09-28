@@ -11,7 +11,7 @@ from aarau.views.filter import login_required
 ITEMS_PER_PAGE = 20
 
 
-@view_config(route_name='api.console.site.insights.data',
+@view_config(route_name='console.api.site.insights.data',
              request_method='GET',
              renderer='json')
 @login_required
@@ -34,7 +34,7 @@ def api_application_insights_data(req):
             'page_count': pq.page_count}
 
 
-@view_config(route_name='api.console.site.insights.metrics',
+@view_config(route_name='console.api.site.insights.metrics',
              request_method='GET',
              renderer='json')
 @login_required

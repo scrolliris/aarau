@@ -55,8 +55,8 @@ let handlePageLinkClick = (instance, page) => {
 class PageTable extends Component {
   constructor(props) {
     super(props);
-    this.props['url'] = '/api/' + this.props.namespace +
-                        '/' + this.props.slug + '/insights/data.json';
+    this.props['url'] = '/api/projects/' + this.props.namespace +
+      '/sites/' + this.props.slug + '/insights/data.json';
     this.props['pageWindow'] = 2;
     this.state = {
       data: []

@@ -384,8 +384,8 @@ class API {
 class Metrics extends Component {
   constructor(props) {
     super(props);
-    this.props['url'] = '/api/' + this.props.namespace +
-                        '/' + this.props.slug + '/insights/metrics.json';
+    this.props['url'] = '/api/projects/' + this.props.namespace +
+      '/sites/' + this.props.slug + '/insights/metrics.json';
     this.state = {
       data: []
     };

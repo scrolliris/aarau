@@ -84,7 +84,7 @@ def handle_post(req):
         message=message)
 
 
-@view_config(route_name='api.console.article.settings',
+@view_config(route_name='console.api.article.settings',
              request_method='POST',
              renderer='json')
 @login_required
@@ -97,7 +97,7 @@ def api_article_settings(req):
             'error': 'The resource was not found'})
 
 
-@view_config(route_name='api.console.article.editor',
+@view_config(route_name='console.api.article.editor',
              request_method='POST',
              renderer='json')
 @login_required

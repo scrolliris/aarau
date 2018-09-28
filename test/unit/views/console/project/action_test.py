@@ -177,7 +177,7 @@ def test_project_new(users, dummy_request):
     assert ['project.creation.success'] == \
         dummy_request.session.peek_flash('success')
     assert isinstance(res, HTTPFound)
-    assert '/my-new-project' == res.location
+    assert '/projects/my-new-project' == res.location
 
     user.refresh()
     assert 2 == len(user.projects)
@@ -281,7 +281,7 @@ def test_project_settings(users, dummy_request):
     assert ['project.update.success'] == \
         dummy_request.session.peek_flash('success')
     assert isinstance(res, HTTPFound)
-    assert '/{:s}/settings'.format(project.namespace) == res.location
+    assert '/projects/{:s}/settings'.format(project.namespace) == res.location
 
     user.refresh()
     assert 1 == len(user.projects)

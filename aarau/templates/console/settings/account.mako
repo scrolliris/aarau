@@ -1,11 +1,11 @@
 <%namespace file='aarau:templates/macro/_title.mako' import="render_title"/>
 
-<%inherit file='aarau:templates/carrell/_layout.mako'/>
+<%inherit file='aarau:templates/console/_layout.mako'/>
 
 <%block name='title'>${render_title('Settings - Account')}</%block>
 
 <%block name='sidebar'>
-  <%include file='aarau:templates/carrell/settings/_sidebar.mako'/>
+  <%include file='aarau:templates/console/_sidebar.mako'/>
 </%block>
 
 <div class="content">

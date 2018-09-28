@@ -81,16 +81,6 @@ def namespace_predicator():
 def define_carrell_routes(c):
     c.add_route('carrell.top', '/')
 
-    # settings
-    c.add_route('carrell.settings', '/settings')
-    c.add_route('carrell.settings.section', '/settings/{section}')
-    c.add_route('carrell.settings.email_delete',
-                '/settings/email/delete')
-    c.add_route('carrell.settings.email_change',
-                '/settings/email/change')
-    c.add_route('carrell.settings.email_activate',
-                '/settings/email/confirm/{token}')
-
 
 def define_registry_routes(c, namespace):
     c.add_route('registry.search', '/')
@@ -105,68 +95,78 @@ def define_console_routes(c, namespace):
 
     # project
     c.add_route('console.project.new', '/projects/new')
-    c.add_route('console.project.settings', '/{namespace}/settings',
+    c.add_route('console.project.settings', '/projects/{namespace}/settings',
                 custom_predicates=(namespace,))
-    c.add_route('console.project.overview', '/{namespace}',
+    c.add_route('console.project.overview', '/projects/{namespace}',
                 custom_predicates=(namespace,))
+
+    # settings
+    c.add_route('console.settings', '/settings')
+    c.add_route('console.settings.section', '/settings/{section}')
+    c.add_route('console.settings.email_delete',
+                '/settings/email/delete')
+    c.add_route('console.settings.email_change',
+                '/settings/email/change')
+    c.add_route('console.settings.email_activate',
+                '/settings/email/confirm/{token}')
 
     # site
     c.add_route('console.site.new',
-                '/{namespace}/new',
+                '/projects/{namespace}/sites/new',
                 custom_predicates=(namespace,))
     # site:application - insights
     c.add_route('console.site.insights',
-                '/{namespace}/{slug}/insights',
+                '/projects/{namespace}/sites/{slug}/insights',
                 custom_predicates=(namespace,))
     # site:application - settings
     c.add_route('console.site.settings.scripts',
-                '/{namespace}/{slug}/settings/scripts',
+                '/projects/{namespace}/sites/{slug}/settings/scripts',
                 custom_predicates=(namespace,))
     c.add_route('console.site.settings.widgets',
-                '/{namespace}/{slug}/settings/widgets',
+                '/projects/{namespace}/sites/{slug}/settings/widgets',
                 custom_predicates=(namespace,))
     c.add_route('console.site.settings.badges',
-                '/{namespace}/{slug}/settings/badges',
+                '/projects/{namespace}/sites/{slug}/settings/badges',
                 custom_predicates=(namespace,))
     c.add_route('console.site.settings',
-                '/{namespace}/{slug}/settings',
+                '/projects/{namespace}/sites/{slug}/settings',
                 custom_predicates=(namespace,))
     # site - overview
     c.add_route('console.site.overview',
-                '/{namespace}/{slug}',
+                '/projects/{namespace}/sites/{slug}',
                 custom_predicates=(namespace,))
 
     # article
     c.add_route('console.article.list',
-                '/{namespace}/{slug}/articles',
+                '/projects/{namespace}/sites/{slug}/articles',
                 custom_predicates=(namespace,))
     c.add_route('console.article.editor.new',
-                '/{namespace}/{slug}/editor',
+                '/projects/{namespace}/sites/{slug}/editor',
                 custom_predicates=(namespace,))
     c.add_route('console.article.editor.edit',
-                '/{namespace}/{slug}/editor',
+                '/projects/{namespace}/sites/{slug}/editor',
                 custom_predicates=(namespace,))
 
-    # internal api - classification
-    c.add_route('api.console.classification.tree',
-                '/api/{namespace}/{slug}/classification/tree.json',
-                custom_predicates=(namespace,))
+    # -- internal api
+    api_url_base = '/api/projects/{namespace}/sites/{slug}'
 
-    # internal api - article
-    c.add_route('api.console.article.editor',
-                '/api/{namespace}/{slug}/article/editor.json',
+    # classification
+    c.add_route('console.api.classification.tree',
+                '{0:s}/classifications/tree.json'.format(api_url_base),
                 custom_predicates=(namespace,))
-    c.add_route('api.console.article.settings',
-                '/api/{namespace}/{slug}/article/settings.json',
+    # article
+    c.add_route('console.api.article.editor',
+                '{0:s}/articles/editor.json'.format(api_url_base),
                 custom_predicates=(namespace,))
-
-    # internal api - insights
-    c.add_route('api.console.site.insights.data',
-                '/api/{namespace}/{slug}/insights/data.json',
+    c.add_route('console.api.article.settings',
+                '{0:s}/articles/settings.json'.format(api_url_base),
                 custom_predicates=(namespace,))
-
-    c.add_route('api.console.site.insights.metrics',
-                '/api/{namespace}/{slug}/insights/metrics.json',
+    # insights
+    c.add_route('console.api.site.insights.data',
+                '{0:s}/insights/data.json'.format(api_url_base),
+                custom_predicates=(namespace,))
+    c.add_route('console.api.site.insights.metrics',
+                '{0:s}/insights/metrics.json'.format(api_url_base),
                 custom_predicates=(namespace,))
 
 

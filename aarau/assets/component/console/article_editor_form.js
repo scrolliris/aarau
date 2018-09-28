@@ -195,8 +195,8 @@ class ArticleEditorForm extends Component {
   constructor(props) {
     super(props);
 
-    this.props['action'] = '/api/' + this.props.namespace + '/' +
-      this.props.slug + '/article/editor.json';
+    this.props['action'] = '/api/projects/' + this.props.namespace +
+      '/sites/' + this.props.slug + '/articles/editor.json';
 
     this.props['validations'] = {
       content: {

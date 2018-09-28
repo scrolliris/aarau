@@ -43,7 +43,7 @@
             <a class="item" href="${req.route_url('login', subdomain=None)}">Login</a>
             % else:
               % if req.user.projects:
-                <a class="item" href="${req.route_url('carrell.settings')}">Settings</a>
+                <a class="item" href="${req.route_url('console.settings')}">Settings</a>
                 <a class="item" href="${req.route_url('console.top')}">Console</a>
               % else:
                 <div class="dropdown-container" align="left">
@@ -55,7 +55,7 @@
                       <h6>Carrell</h6>
                       <p class="description">Reading Room</p>
                     </a>
-                    <a class="disabled item" href="${req.route_url('console.top')}" disabled=disabled>
+                    <a class="item" href="${req.route_url('console.top')}">
                       <h6>Console</h6>
                       <p class="description">Writing Workspace.</p>
                     </a>

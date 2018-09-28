@@ -25,7 +25,7 @@ users:
     password: Golly3Tamale
     activation_state: active
 
-  - name:
+  - name: Johnny
     email: johnny@example.org
     username: johnny
     password: 1ceCreame

@@ -14,5 +14,5 @@ def add_carrell_renderer_globals(evt) -> None:
             evt['cookie'][key] = str(req.cookies[key])
 
 
-def includeme(config):
-    config.include('.settings')
+def includeme(config):  # pylint: disable=unused-argument
+    pass

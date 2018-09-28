@@ -6,7 +6,7 @@ from aarau.views.filter import login_required
 from aarau.models import Classification
 
 
-@view_config(route_name='api.console.classification.tree',
+@view_config(route_name='console.api.classification.tree',
              request_method='GET',
              renderer='json')
 @login_required

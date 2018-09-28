@@ -1,5 +1,7 @@
 import json
 
+from pyramid.httpexceptions import HTTPForbidden
+
 import pytest
 
 
@@ -10,6 +12,19 @@ def setup(config):  # pylint: disable=unused-argument
 
 # GET api_application_insights_data
 
+def test_application_insights_data_with_invalid_subdomain(
+        users, dummy_request):
+    from aarau.views.console.site.api import api_application_insights_data
+
+    user = users['oswald']
+    dummy_request.subdomain = 'unknown'
+    dummy_request.user = user
+    dummy_request.matchdict = {}
+
+    with pytest.raises(HTTPForbidden):
+        api_application_insights_data(dummy_request)
+
+
 @pytest.mark.parametrize('params', [
     {},
     {'project_id': '0'}
@@ -19,6 +34,7 @@ def test_application_insights_data_with_invalid_project_id(
     from aarau.views.console.site.api import api_application_insights_data
 
     user = users['oswald']
+    dummy_request.subdomain = 'console'
     dummy_request.user = user
     dummy_request.matchdict = params
 
@@ -40,6 +56,7 @@ def test_application_insights_data_with_invalid_site_id(
 
     user = users['oswald']
     params['project_id'] = user.projects[0].id
+    dummy_request.subdomain = 'console'
     dummy_request.user = user
     dummy_request.matchdict = params
 
@@ -51,6 +68,19 @@ def test_application_insights_data_with_invalid_site_id(
 
 # GET api_application_insights_metrics
 
+def test_application_insights_metrics_with_invalid_subdomain(
+        users, dummy_request):
+    from aarau.views.console.site.api import api_application_insights_metrics
+
+    user = users['oswald']
+    dummy_request.subdomain = 'unknown'
+    dummy_request.user = user
+    dummy_request.matchdict = {}
+
+    with pytest.raises(HTTPForbidden):
+        api_application_insights_metrics(dummy_request)
+
+
 @pytest.mark.parametrize('params', [
     {},
     {'project_id': '0'}
@@ -60,6 +90,7 @@ def test_application_insights_metrics_with_invalid_project_id(
     from aarau.views.console.site.api import api_application_insights_metrics
 
     user = users['oswald']
+    dummy_request.subdomain = 'console'
     dummy_request.user = user
     dummy_request.matchdict = params
 
@@ -81,6 +112,7 @@ def test_application_insights_metrics_with_invalid_site_id(
 
     user = users['oswald']
     params['project_id'] = user.projects[0].id
+    dummy_request.subdomain = 'console'
     dummy_request.user = user
     dummy_request.matchdict = params
 

@@ -2,12 +2,12 @@
 <%namespace file='aarau:templates/macro/_flash_message.mako' import="render_notice"/>
 <%namespace file='aarau:templates/macro/_title.mako' import="render_title"/>
 
-<%inherit file='aarau:templates/carrell/_layout.mako'/>
+<%inherit file='aarau:templates/console/_layout.mako'/>
 
 <%block name='title'>${render_title('Password - Settings')}</%block>
 
 <%block name='sidebar'>
-  <%include file='aarau:templates/carrell/settings/_sidebar.mako'/>
+  <%include file='aarau:templates/console/_sidebar.mako'/>
 </%block>
 
 <div class="content">
@@ -20,7 +20,7 @@
 
           <div class="attached header"><h6>Password</h6></div>
           <div class="attached box">
-            <form id="change_password" class="form${' error' if err_msg else ' success' if suc_msg else ''}" action="${req.route_url('carrell.settings.section', section='password', subdomain='')}" method="post">
+            <form id="change_password" class="form${' error' if err_msg else ' success' if suc_msg else ''}" action="${req.route_url('console.settings.section', section='password', subdomain='')}" method="post">
               ${form.csrf_token}
               <div class="row">
                 <div class="required field-10 field-n-16${' error' if form.current_password.errors else ''}">

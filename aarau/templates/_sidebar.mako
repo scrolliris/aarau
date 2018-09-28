@@ -41,7 +41,6 @@
   % if req.user:
   <a class="item" href="${req.route_url('carrell.top')}">Bookmarks</a>
   <a class="item" href="${req.route_url('carrell.top')}">Preferences</a>
-  <a class="item" href="${req.route_url('carrell.settings')}">Settings</a>
 
   <br/>
   <h6 class="section-title">LEAVE CARRELL</h6>

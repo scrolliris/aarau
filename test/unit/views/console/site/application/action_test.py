@@ -351,7 +351,7 @@ def test_application_site_settings_scripts_missing_site(
 
     user = users['oswald']
     project = user.projects[0]
-    dummy_request.console = 'console'
+    dummy_request.subdomain = 'console'
     dummy_request.user = user
     dummy_request.params = dummy_request.GET = NestedMultiDict({
         'type': 'application',
@@ -451,7 +451,7 @@ def test_application_site_settings_widgets_missing_site(
 
     user = users['oswald']
     project = user.projects[0]
-    dummy_request.console = 'console'
+    dummy_request.subdomain = 'console'
     dummy_request.user = user
     dummy_request.params = dummy_request.GET = NestedMultiDict({
         'type': 'application',
