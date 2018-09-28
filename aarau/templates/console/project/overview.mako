@@ -58,9 +58,9 @@
     % for site in sites:
     <div class="column-4 column-v-8 column-l-16">
       <div class="${site.type} flat site box">
-        <a href="${req.route_path('console.site.overview', namespace=project.namespace, slug=site.slug)}"><h5 class="header">${util.truncate(site.instance.name, 25)}</h5></a>
+        <a href="${req.route_path('console.site.overview', namespace=project.namespace, slug=site.slug)}"><h5 class="header">${util.truncate(site.instance.name, 32)}</h5></a>
         <label class="${site.type} label">${'scrolliris.com' if site.type == 'publication' else site.domain}</label>
-        <p class="text">${util.truncate(site.instance.description, 30)}</p>
+        <p class="text">${util.truncate(site.instance.description, 64)}</p>
       </div>
     </div>
     % endfor
