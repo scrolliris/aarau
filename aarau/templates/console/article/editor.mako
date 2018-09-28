@@ -39,7 +39,7 @@
       <div class="column-16">
         ## Editor
         <div id="article_editor_form_container"
-          data-action="${req.route_path('api.console.article.editor', namespace=project.namespace, slug=site.slug)}"
+          data-action="${req.route_path('console.api.article.editor', namespace=project.namespace, slug=site.slug)}"
           data-csrf-token="${editor_form.csrf_token.current_token}"
           data-namespace="${project.namespace}"
           data-slug="${site.slug}"
@@ -64,7 +64,7 @@
     <hr>
     ## Settings
     <div id="article_settings_form_container"
-      data-action="${req.route_path('api.console.article.settings', namespace=project.namespace, slug=site.slug)}"
+      data-action="${req.route_path('console.api.article.settings', namespace=project.namespace, slug=site.slug)}"
       data-csrf-token="${settings_form.csrf_token.current_token}"
       data-namespace="${project.namespace}"
       data-slug="${site.slug}"
