@@ -95,6 +95,7 @@ def settings_email_activate(request):
 @login_required
 def settings_email_delete(request):
     """Deletes user email."""
+    next_path = request.route_path('console.settings.section', section='email')
     user = request.user
     user_email = user.emails.where(
         UserEmail.email == request.params['email'],
@@ -109,11 +110,11 @@ def settings_email_delete(request):
             request.session.flash(_('settings.email.deletion.success'),
                                   queue='success', allow_duplicate=False)
 
-        request.session.flash(_('settings.email.deletion.failure'),
-                              queue='failure', allow_duplicate=False)
+        else:
+            request.session.flash(_('settings.email.deletion.failure'),
+                                  queue='failure', allow_duplicate=False)
 
-    return HTTPFound(location=request.route_path(
-        'console.settings.section', section='email'))
+    return HTTPFound(location=next_path)
 
 
 @view_config(route_name='console.settings.email_change', request_method='POST')
@@ -138,8 +139,9 @@ def settings_email_change(req):
             req.session.flash(_('settings.email.change.success'),
                               queue='success', allow_duplicate=False)
 
-        req.session.flash(_('settings.email.change.failure'),
-                          queue='failure', allow_duplicate=False)
+        else:
+            req.session.flash(_('settings.email.change.failure'),
+                              queue='failure', allow_duplicate=False)
 
     return HTTPFound(location=req.route_path(
         'console.settings.section', section='email'))
@@ -168,7 +170,7 @@ def settings_password(request):
 
             request.session.flash(_('settings.password.change.invalid'),
                                   queue='failure', allow_duplicate=False)
-
-        request.session.flash(_('settings.password.change.failure'),
-                              queue='failure', allow_duplicate=False)
+        else:
+            request.session.flash(_('settings.password.change.failure'),
+                                  queue='failure', allow_duplicate=False)
     return dict(form=form)

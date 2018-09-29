@@ -20,7 +20,7 @@
   <form id="delete_email_${ue.id}" class="delete-email form" action="${req.route_url('console.settings.email_delete')}" method="post">
     ${f.csrf_token}
     ${f.email(value=ue.email)}
-    <button type="submit" name="submit" class="flat petit button" data-tooltip="Cannot undo this action">Delete</button>
+    <button type="submit" name="submit" class="flat petit secondary button" data-tooltip="Cannot undo this action">Delete</button>
   </form>
 % endif
 </%def>
@@ -39,62 +39,70 @@
   <div id="settings">
     <div class="grid">
       <div class="row">
-        <div class="offset-3 column-10 offset-v-2 column-v-12 column-l-16">
+        <div class="column-16">
           ${render_notice()}
+        </div>
+      </div>
 
-          <div class="attached header"><h6>Email</h6></div>
+      <div class="row">
+        <div class="column-16">
+          <div class="attached header"><h5>Email</h5></div>
           <div class="attached box">
-            <table class="table">
-              <tbody>
-                % for ue in user_emails:
-                <%
-                  email = req.util.truncate(ue.email, length=35)
-                  email_form = email_forms[ue.id]
-                %>
-                <tr>
-                  <td>
-                  % if ue.type == 'primary':
-                    <span class="small text">${email}</span>
-                    <span class="primary rounded label">Primary</span>
-                    <div class="action right">
-                      <button class="disabled flat petit button">Delete</button>
-                    </div>
-                  % elif ue.activation_state != 'pending':
-                    <span class="small text">${email}</span>
-                    <div class="action right">
-                      ${change_email_form(email_form['change'], ue)}
-                      ${delete_email_form(email_form['delete'], ue)}
-                    </div>
-                  % else:
-                    <span class="small text">${email}</span>
-                    <span class="negative rounded label">Pending</span>
-                    <div class="action right">
-                      ${delete_email_form(email_form['delete'], ue)}
-                      <button class="flat petit button">Resend confirmation email</button>
-                    </div>
-                  % endif
-                  </td>
-                </tr>
-                % endfor
-              </tbody>
-            </table>
+            <div class="row">
+              <div class="column-9 column-v-12 column-l-16">
+                <table class="emails table">
+                  <tbody>
+                    % for ue in user_emails:
+                    <%
+                      email = util.truncate(ue.email, length=35)
+                      email_form = email_forms[ue.id]
+                    %>
+                    <tr>
+                      <td>
+                      % if ue.type == 'primary':
+                        <span class="small text">${email}</span>
+                        <span class="primary label">Primary</span>
+                        <div class="action right">
+                          <button class="disabled flat petit secondary button">Delete</button>
+                        </div>
+                      % elif ue.activation_state != 'pending':
+                        <span class="small text">${email}</span>
+                        <div class="action right">
+                          ${change_email_form(email_form['change'], ue)}
+                          ${delete_email_form(email_form['delete'], ue)}
+                        </div>
+                      % else:
+                        <span class="small text">${email}</span>
+                        <span class="negative label">Pending</span>
+                        <div class="action right">
+                          <button class="flat petit button">Resend confirmation</button>
+                          ${delete_email_form(email_form['delete'], ue)}
+                        </div>
+                      % endif
+                      </td>
+                    </tr>
+                    % endfor
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
             <form id="add_new_email" class="form${' error' if is_failure else ' success' if is_success else ''}" action="${req.route_url('console.settings.section', section='email')}" method="post">
               ${form.csrf_token}
               <div class="row">
-                <div class="required field-10 field-n-16${' error' if form.new_email.errors else ''}">
+                <div class="required field-8 field-v-12 field-l-16${' error' if form.new_email.errors else ''}">
                   <label class="label" for="new_email">New email address</label>
 
                   ${form.new_email(class_='', placeholder='new@example.org')}
                   ${render_error_message(form.new_email)}
                 </div>
               </div>
-              ${form.submit(class_='primary button')}
+              ${form.submit(class_='primary flat button')}
             </form>
           </div>
           <div class="attached message">
             <div class="header"><h6>Note</h6></div>
-            <p><label class="rounded primary label">Primary</label> email address will be used for login to your account.</p>
+            <p>Primary email address will be used for login to your account.</p>
           </div>
         </div>
       </div>

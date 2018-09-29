@@ -10,7 +10,6 @@ import './css/shared/overwrite.styl'
 // -- standard
 import './css/top.styl'
 import './css/signup.styl'
-import './css/settings.styl'
 
 // -- public views
 import './css/site.styl'

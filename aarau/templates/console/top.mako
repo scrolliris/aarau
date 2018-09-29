@@ -27,8 +27,8 @@
     % for project in projects:
       <div class="column-4 column-v-8 column-l-16">
         <div class="attached project box">
-          <a href="${req.route_url('console.project.overview', namespace=project.namespace)}"><h4 class="header">${util.truncate(project.name, 28)}</h4></a>
-          <p>${util.truncate(project.description, 120)}</p>
+          <a href="${req.route_url('console.project.overview', namespace=project.namespace)}"><h5 class="header">${util.truncate(project.name, length=28)}</h5></a>
+          <p>${util.truncate(project.description, length=90)}</p>
           <%
             members_count = len(project.users)
           %>
