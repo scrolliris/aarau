@@ -136,16 +136,17 @@ def api_article_progress_states(req):
 
         article = publication.articles.where(
             Article.code == code).get()
-        states = article.available_progress_states_as_choices
     except (HTTPNotFound, Article.DoesNotExist):
-        article = None
-        states = Article.progress_state_as_choices
+        article = Article(progress_state='draft')
+
+    states = article.available_progress_states_as_choices
+    current_state = article.progress_state
 
     data = {}
-    current_state = article.progress_state if article else 'draft'
     for (i, v) in enumerate(Article.progress_states):
-        data[v] = {'value': i, 'label': v}
-        if (str(i), v) not in states:
+        n = str(i)
+        data[v] = {'value': n, 'label': v}
+        if (n, v) not in states:
             data[v]['disabled'] = True
         elif v == current_state:
             data[v]['selected'] = True
