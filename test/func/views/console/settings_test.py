@@ -408,7 +408,7 @@ def test_settings_password_with_validation_errors(
                 '') in res.html.select_one('.failure.message p')
         assert 'Field must be between 8 and 32 characters long.' in \
             res.html.form.text
-        assert 'Password' in res.html.select_one('.header > h6')
+        assert 'Password' in res.html.select_one('.header > h5')
 
 
 def test_settings_password_with_valid_credentials(
@@ -431,4 +431,4 @@ def test_settings_password_with_valid_credentials(
         res.charset = None
         assert ('Password has been successfully changed'
                 '') in res.html.select_one('.success.message p')
-        assert 'Password' in res.html.select_one('.header > h6')
+        assert 'Password' in res.html.select_one('.header > h5')
