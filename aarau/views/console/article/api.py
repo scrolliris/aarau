@@ -31,6 +31,8 @@ def save_meta(req, article):
         with req.db.cardinal.atomic():
             article.title = form.title.data
             article.scope = 'private' if not form.scope.data else 'public'
+            article.progress_state = Article.progress_states[
+                int(form.progress_state.data)]
             # optional
             article.path = form.path.data
 
@@ -53,9 +55,13 @@ def handle_post(req):
 
     publication = site.instance
     if code:
-        article = publication.articles.where(
-            Article.code == code).get()
-    else:
+        try:
+            article = publication.articles.where(
+                Article.code == code).get()
+        except Article.DoesNotExist:
+            article = None
+
+    if not article:
         code = Article.grab_unique_code()
         article = Article(
             code=code,
@@ -108,3 +114,44 @@ def api_article_editor(req):
         return Response(status=404, json_body={
             'status': 'error',
             'error': 'The resource was not found'})
+
+
+@view_config(route_name='console.api.article.progress_states',
+             request_method='GET',
+             renderer='json')
+@login_required
+def api_article_progress_states(req):
+    try:
+        namespace = req.matchdict.get('namespace')
+        slug = req.matchdict.get('slug')
+        code = req.matchdict.get('code')
+
+        project = get_project(namespace, user=req.user)
+        site = get_site(slug, project=project)
+
+        if site.type != 'publication':
+            raise HTTPNotFound
+
+        publication = site.instance
+
+        article = publication.articles.where(
+            Article.code == code).get()
+        states = article.available_progress_states_as_choices
+    except (HTTPNotFound, Article.DoesNotExist):
+        article = None
+        states = Article.progress_state_as_choices
+
+    data = {}
+    current_state = article.progress_state if article else 'draft'
+    for (i, v) in enumerate(Article.progress_states):
+        data[v] = {'value': i, 'label': v}
+        if (str(i), v) not in states:
+            data[v]['disabled'] = True
+        elif v == current_state:
+            data[v]['selected'] = True
+
+    return dict(
+        status='ok',
+        data=data,
+        errors=[],
+        message='')

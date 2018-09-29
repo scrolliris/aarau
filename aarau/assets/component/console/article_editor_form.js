@@ -1,8 +1,9 @@
-import {linkEvent, Component} from 'inferno.js';
-import {h} from 'inferno-hyperscript.js';
-import {Editor, setPlaceholder} from 'vergil.js';
+import { linkEvent, Component } from 'inferno.js';
+import { h } from 'inferno-hyperscript.js';
+import { Editor, setPlaceholder } from 'vergil.js';
 
-import {i18n} from '../../js/console/i18n.js';
+import { buildQueryString } from '../../js/shared/_utils.js';
+import { i18n } from '../../js/console/i18n.js';
 
 
 class Cookie {
@@ -174,21 +175,6 @@ function buildErrorMessage(prop) {
     }
   }
   return elements;
-}
-
-/**
- *
- *
- * @return String query string
- */
-function buildQueryString(data) {
-  let params = [];
-  for (let d in data) {
-    if (data.hasOwnProperty(d)) {
-      params.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]));
-    }
-  }
-  return params.join('&');
 }
 
 class ArticleEditorForm extends Component {

@@ -111,7 +111,7 @@ test\:doc:  ## Run doctest in Python code
 	ENV=test ./bin/run_doctest
 .PHONY: test\:doc
 
-test\:js:  ## Run JavaScript unit tests
+test\:js:  ## Run JavaScript (js,component) unit tests
 	NODE_ENV=development karma start
 .PHONY: test\:js
 

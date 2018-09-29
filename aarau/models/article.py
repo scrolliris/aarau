@@ -82,7 +82,7 @@ class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
         See classproperty implementation.
         """
         # pylint: disable=no-self-argument
-        return [(s, s) for s in cls.progress_states]
+        return [(str(i), v) for (i, v) in enumerate(cls.progress_states)]
 
     @classmethod
     def published_on(cls, publication):
@@ -90,6 +90,35 @@ class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
         # pylint: disable=no-member
         return Article.select().join(Publication).where(
             Publication.id == publication.id)
+
+    @property
+    def available_progress_states_as_choices(self) -> list:
+        """Returns a list contains tulples hold indices and values."""
+        # TODO: state machine?
+        next_states = self.next_progress_states()
+        return [  # pylint: disable=not-an-iterable
+            (i, v) for (i, v) in self.__class__.progress_state_as_choices
+            if self.progress_state == v or v in next_states
+        ]
+
+    def next_progress_states(self) -> tuple:
+        """Returns state names for next based on current progress_state."""
+        # pylint: disable=too-many-return-statements
+        if self.progress_state == 'draft':
+            return ('wip', 'ready', 'archived')
+        if self.progress_state == 'wip':
+            return ('draft', 'ready', 'archived')
+        if self.progress_state == 'ready':
+            return ('wip', 'scheduled', 'published', 'rejected', 'archived')
+        if self.progress_state == 'scheduled':
+            return ('ready', 'published', 'archived')
+        if self.progress_state == 'published':
+            return ('archived',)
+        if self.progress_state == 'rejected':
+            return ('wip', 'archived')
+        if self.progress_state == 'archived':
+            return ('draft', 'wip')
+        return self.__class__.progress_states
 
 
 @pre_save(sender=Article)

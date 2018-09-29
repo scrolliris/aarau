@@ -50,7 +50,7 @@
 </div>
 
 <%block name='toolbar_checkbox'>
-  % if article.code:
+  % if article.id:
     <input type="checkbox" id="toolbar_checkbox" class="toolbar-checkbox">
   % else:
     <input type="checkbox" id="toolbar_checkbox" class="toolbar-checkbox" checked>
@@ -71,6 +71,7 @@
       data-code="${article.code or ''}"
       data-path="${article.path or ''}"
       data-scope="${article.scope or 'public'}"
+      data-progress-state="${article.progress_state or 'draft'}"
       data-title="${article.title or ''}"></div>
   </div>
 </%block>

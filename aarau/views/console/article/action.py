@@ -56,8 +56,8 @@ def article_editor(req):
     if code:
         article = publication.articles.where(Article.code == code).get()
     else:
-        path = Article.grab_unique_code()  # as path
-        article = Article(path=path)
+        code = Article.grab_unique_code()  # as path
+        article = Article(path=code, code=code)
 
     editor_form = build_article_editor_form(req, article)
     settings_form = build_article_settings_form(req, article)

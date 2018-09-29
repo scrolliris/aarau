@@ -81,15 +81,83 @@ def test_published_at_assignment_by_save(users):
 
 def test_progress_state_as_choises():
     expected_choices = [
-        ('draft', 'draft'),
-        ('wip', 'wip'),
-        ('ready', 'ready'),
-        ('scheduled', 'scheduled'),
-        ('published', 'published'),
-        ('rejected', 'rejected'),
-        ('archived', 'archived'),
+        ('0', 'draft'),
+        ('1', 'wip'),
+        ('2', 'ready'),
+        ('3', 'scheduled'),
+        ('4', 'published'),
+        ('5', 'rejected'),
+        ('6', 'archived'),
     ]
     assert expected_choices == Article.progress_state_as_choices
+
+
+@pytest.mark.parametrize('progress_state,expected_states', (
+    ('draft', ('wip', 'ready', 'archived')),
+    ('wip', ('draft', 'ready', 'archived')),
+    ('ready', ('wip', 'scheduled', 'published', 'rejected', 'archived')),
+    ('scheduled', ('ready', 'published', 'archived')),
+    ('published', ('archived',)),
+    ('rejected', ('wip', 'archived')),
+    ('archived', ('draft', 'wip')),
+))
+def test_next_progress_states(progress_state, expected_states, articles):
+    article = articles['piano-lesson']
+    article.progress_state = progress_state
+    article.save()
+
+    assert expected_states == article.next_progress_states()
+
+
+@pytest.mark.parametrize('progress_state,expected_choices', (
+    ('draft', [
+        ('0', 'draft'),
+        ('1', 'wip'),
+        ('2', 'ready'),
+        ('6', 'archived'),
+    ]),
+    ('wip', [
+        ('0', 'draft'),
+        ('1', 'wip'),
+        ('2', 'ready'),
+        ('6', 'archived'),
+    ]),
+    ('ready', [
+        ('1', 'wip'),
+        ('2', 'ready'),
+        ('3', 'scheduled'),
+        ('4', 'published'),
+        ('5', 'rejected'),
+        ('6', 'archived'),
+    ]),
+    ('scheduled', [
+        ('2', 'ready'),
+        ('3', 'scheduled'),
+        ('4', 'published'),
+        ('6', 'archived'),
+    ]),
+    ('published', [
+        ('4', 'published'),
+        ('6', 'archived'),
+    ]),
+    ('rejected', [
+        ('1', 'wip'),
+        ('5', 'rejected'),
+        ('6', 'archived'),
+    ]),
+    ('archived', [
+        ('0', 'draft'),
+        ('1', 'wip'),
+        ('6', 'archived'),
+    ])
+))
+def test_available_progress_state_as_choises(
+        progress_state, expected_choices, articles):
+    article = articles['piano-lesson']
+    article.progress_state = progress_state
+    article.save()
+
+    assert expected_choices == article.available_progress_states_as_choices
 
 
 def test_published_on(publications):

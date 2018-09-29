@@ -1,13 +1,14 @@
 module.exports = (config) => {
   let preprocessors = {};
-  preprocessors['test/*/**/*_test.js'] = ['webpack'];
+  preprocessors['test/assets/conftest.js'] = ['webpack'];
+  preprocessors['test/assets/**/*_test.js'] = ['webpack'];
 
   config.set({
     basePath: ''
   , autoWatch: true
   , frameworks: ['qunit']
   , files: [
-      'test/js/*_test.js'
+      'test/assets/js/**/*_test.js'
     ]
   , preprocessors: preprocessors
   , webpack: {

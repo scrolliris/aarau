@@ -1,12 +1,14 @@
 from wtforms import (
     BooleanField,
     HiddenField,
+    SelectField,
     StringField,
     SubmitField,
     TextAreaField,
 )
 from wtforms import validators as v, ValidationError
 
+from aarau.models import Article
 from aarau.views.form import (
     SecureForm,
     build_form,
@@ -18,8 +20,6 @@ PATH_PATTERN_INVALID = r'\A((?!--).)*\Z'
 
 
 def path_duplication_check(form, field):
-    from aarau.models.article import Article
-
     # pylint: disable=assignment-from-no-return
     query = Article.select().where(
         Article.path == field.data)
@@ -84,6 +84,9 @@ class ArticleSettingsForm(ArticleBaseMixin, SecureForm):
     scope = BooleanField('Scope', [
         v.Required(),
     ])
+    progress_state = SelectField('Progress State', [
+        v.Required(),
+    ], choices=())  # delay
     path = StringField('Path', [
         v.Required(),
         v.Regexp(PATH_PATTERN),
@@ -92,12 +95,19 @@ class ArticleSettingsForm(ArticleBaseMixin, SecureForm):
         path_duplication_check,
         path_availability_check,
     ])
-
     context = HiddenField([
         v.Required(),
         v.AnyOf(('settings',))
     ])
     submit = SubmitField('Save')
+
+    def __init__(self, *args, **kwargs):
+        # pylint: disable=no-member
+        article = args[1]
+        self.__class__.progress_state.kwargs['choices'] = \
+            article.available_progress_states_as_choices
+
+        super().__init__(*args, **kwargs)
 
 
 def build_article_settings_form(req, article=None):

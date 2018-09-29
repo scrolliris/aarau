@@ -1,10 +1,10 @@
 import { linkEvent, Component } from 'inferno.js';
 import { h } from 'inferno-hyperscript.js';
 
+import { toCamelCase } from '../../js/shared/_utils.js';
 import { i18n } from '../../js/console/i18n.js';
 
 import './article_settings_form.styl';
-
 
 function handleOnInput(instance, event) {
   const name = event.target.name;
@@ -46,12 +46,33 @@ function handleOnInput(instance, event) {
   instance.setState(newState);
 }
 
+// checkbox
 function handleOnChange(instance, event) {
-  const name = event.target.name;
+  const name = toCamelCase(event.target.name);
   const value = event.target.checked;
 
-  let newState = {};
-  newState[name] = {'value': value};
+  let newState = instance.state[name];
+  newState['value'] = value;
+  instance.setState(newState);
+}
+
+// select
+function handleOnSelect(instance, event) {
+  const name = toCamelCase(event.target.name);
+  const value = event.target.value;
+
+  let newState = instance.state[name];
+  newState['value'] = value.toString();
+
+  // rebuild options
+  newState['options'] = newState['options'].map(o => {
+    return h('option', {
+      value: o.props.value
+    , disabled: o.props.disabled
+    , selected: o.props.value ? o.props.value.toString() === value :
+                progressStates['draft']
+    }, o.dom.innerText);
+  });
   instance.setState(newState);
 }
 
@@ -68,6 +89,7 @@ function handleOnSubmit(instance, event) {
   , code: instance.state.code.value
   , path: instance.state.path.value
   , scope: instance.state.scope.value
+  , progress_state: instance.state.progressState.value
   , title: instance.state.title.value
   };
 
@@ -75,7 +97,15 @@ function handleOnSubmit(instance, event) {
   client.onreadystatechange = () => {
     if (client.readyState === 4) { // DONE
       let res = JSON.parse(client.responseText);
-      let newState = {message: res.message};
+      let newState = instance.state;
+      newState['message'] = res.message;
+
+      let names = ['path', 'title', 'scope', 'progressState'];
+      for (let n in names) {
+        if (names.hasOwnProperty(n)) {
+          newState[names[n]]['errors'] = [];
+        }
+      }
 
       let errors = res.errors;
       if (client.status === 200 && res.status === 'ok') {
@@ -94,15 +124,17 @@ function handleOnSubmit(instance, event) {
         } else { // validation error
           for (let f in errors) {
             if (errors.hasOwnProperty(f)) {
+              let n = toCamelCase(f);
               newState[f] = {
                 errors: errors[f]
-              , value: instance.state[f].value
+              , value: instance.state[n].value
               };
             }
           }
         }
       }
       instance.setState(newState);
+      notifyProgressStateOnChange(instance);
     }
   };
   client.open('POST', instance.props.action || '', true);
@@ -136,14 +168,17 @@ function notifyCodeOnChange(instance) {
   instance.state.code.value = code.value;
 }
 
+function notifyProgressStateOnChange(instance) {
+  updateProgressStates(instance);
+}
+
 /**
  * Builds error message elements.
  *
- * @return {Array} error messages.
+ * @return {Array} error message texts.
  */
-function buildErrorMessage(prop) {
+function buildErrorMessage(errors) {
   let elements = [];
-  const errors = prop.errors;
   if (Array.isArray(errors) && errors.length) {
     for (let i in errors) {
       if (Object.prototype.hasOwnProperty.call(errors, i)) {
@@ -169,7 +204,68 @@ function buildQueryString(data) {
   return params.join('&');
 }
 
+function updateProgressStates(instance) {
+  let client = new XMLHttpRequest();
+
+  const props = instance.props;
+  let url = '/api/projects/' + props.namespace + '/sites/' + props.slug +
+    '/articles/' + instance.state.code.value + '/progress_states.json';
+
+  client.onreadystatechange = () => {
+    if (client.readyState === 4) { // DONE
+      let res = JSON.parse(client.responseText);
+      let newState = {message: res.message};
+
+      let errors = res.errors
+        , options = []
+        ;
+      let selected = instance.state.progressState.value;
+      if (client.status === 200 && res.status === 'ok') {
+        for (let key in res.data) {
+          if (res.data.hasOwnProperty(key)) {
+            let option = res.data[key];
+            let attrs = {value: option.value};
+
+            let boolAttrs = ['disabled', 'selected'];
+            for (let i in boolAttrs) {
+              if (boolAttrs.hasOwnProperty(i)) {
+                let attr = boolAttrs[i];
+                if (option.hasOwnProperty(attr) && option[attr]) {
+                  attrs[attr] = true;
+                  if (attr === 'selected') { selected = option.value; }
+                }
+              }
+            }
+            options.push(h('option', attrs, option.label));
+          }
+        }
+        newState['progressState'] = {
+          errors: errors
+        , value: selected
+        , options: options
+        };
+      }
+      instance.setState(newState);
+    }
+  };
+  client.open('GET', url || '', true);
+  client.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  client.send();
+  return false;
+}
+
+const progressStates = {
+  'draft': 0
+, 'wip': 1
+, 'ready': 2
+, 'scheduled': 3
+, 'published': 4
+, 'rejected': 5
+, 'archived': 6
+};
+
 class ArticleSettingsForm extends Component {
+
   constructor(props) {
     super(props);
 
@@ -205,11 +301,19 @@ class ArticleSettingsForm extends Component {
         errors: []
       , value: props.scope === 'public'
       }
+    , progressState: {
+        errors: []
+      , value: props.progressState in progressStates ?
+               progressStates[props.progressState] : progressStates['draft']
+      , options: [] // see api
+      }
     , title: {
         errors: []
       , value: props.title
       }
     };
+
+    updateProgressStates(this);
   }
 
   render() {
@@ -246,7 +350,7 @@ class ArticleSettingsForm extends Component {
           , onInput: linkEvent(this, handleOnInput)
           , onFocusOut: linkEvent(this, handleOnFocusOut)
           })
-        , buildErrorMessage(this.state.path)
+        , buildErrorMessage(this.state.path.errors)
         ])
       ])
     , h('.row', [
@@ -266,7 +370,7 @@ class ArticleSettingsForm extends Component {
           , onInput: linkEvent(this, handleOnInput)
           , onFocusOut: linkEvent(this, handleOnFocusOut)
           })
-        , buildErrorMessage(this.state.title)
+        , buildErrorMessage(this.state.title.errors)
         ])
       ])
     , h('.row', [
@@ -283,6 +387,15 @@ class ArticleSettingsForm extends Component {
             })
           , h('label.label.scope', {for: 'scope'}, '')
           ])
+        ])
+      ])
+    , h('.row', [
+        h('.field-16', [
+          h('label.label', {for: 'progress_state'}, 'Progress State')
+        , h('select.select', {
+            name: 'progress_state'
+          , onChange: linkEvent(this, handleOnSelect)
+          }, this.state.progressState.options)
         ])
       ])
     , h('.row', [

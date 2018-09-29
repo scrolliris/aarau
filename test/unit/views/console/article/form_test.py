@@ -77,7 +77,14 @@ def test_path_availability_check(mocker, dummy_request):
     'super-looooooooooooooooooooooooooooooooooooooooooooooooooong-path',
 ])
 @pytest.mark.parametrize('scope', ['public', 'private'])
-def test_path_validations_with_invalid_path_inputs(path, scope, dummy_request):
+@pytest.mark.parametrize('progress_state', (
+    {'value': '0', 'label': 'draft'},
+    {'value': '1', 'label': 'wip'},
+    {'value': '2', 'label': 'ready'},
+    {'value': '6', 'label': 'archived'},
+))
+def test_path_validations_with_invalid_path_inputs(
+        path, scope, progress_state, dummy_request):
     article = Article(path=path)
 
     dummy_request.params = dummy_request.POST = MultiDict({
@@ -85,10 +92,35 @@ def test_path_validations_with_invalid_path_inputs(path, scope, dummy_request):
         'title': 'Title',
         'path': path,
         'scope': scope,
+        'progress_state': progress_state['value'],
     })
     form = build_article_settings_form(dummy_request, article)
     assert not form.validate()
     assert form.path.errors
+
+
+@pytest.mark.parametrize('path', ['abcdef', 'a-b-c-d-e'])
+@pytest.mark.parametrize('scope', ['public', 'private'])
+@pytest.mark.parametrize('progress_state', (
+    {'value': '3', 'label': 'scheduled'},
+    {'value': '4', 'label': 'published'},
+    {'value': '5', 'label': 'rejected'},
+    {'value': '9', 'label': 'unknown'},
+))  # not available state for draft
+def test_path_validations_with_invalid_progress_state_inputs(
+        path, scope, progress_state, dummy_request):
+    article = Article(path=path)
+
+    dummy_request.params = dummy_request.POST = MultiDict({
+        'csrf_token': dummy_request.session.get_csrf_token(),
+        'title': 'Title',
+        'path': path,
+        'scope': scope,
+        'progress_state': progress_state['value'],
+    })
+    form = build_article_settings_form(dummy_request, article)
+    assert not form.validate()
+    assert form.progress_state.errors
 
 
 @pytest.mark.parametrize('path', [
@@ -100,7 +132,14 @@ def test_path_validations_with_invalid_path_inputs(path, scope, dummy_request):
     'super-loooooooooooooooooooooooooooooooooooooooooooooooooong-path',
 ])
 @pytest.mark.parametrize('scope', ['public', 'private'])
-def test_path_validations_with_valid_path_inputs(path, scope, dummy_request):
+@pytest.mark.parametrize('progress_state', (
+    {'value': '0', 'label': 'draft'},
+    {'value': '1', 'label': 'wip'},
+    {'value': '2', 'label': 'ready'},
+    {'value': '6', 'label': 'archived'},
+))  # draft
+def test_path_validations_with_valid_path_inputs(
+        path, scope, progress_state, dummy_request):
     article = Article(path=path)
 
     dummy_request.params = dummy_request.POST = MultiDict({
@@ -108,6 +147,7 @@ def test_path_validations_with_valid_path_inputs(path, scope, dummy_request):
         'title': 'Title',
         'path': path,
         'scope': scope,
+        'progress_state': progress_state['value'],
     })
     form = build_article_settings_form(dummy_request, article)
     assert form.validate()

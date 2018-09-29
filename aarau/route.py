@@ -148,25 +148,29 @@ def define_console_routes(c, namespace):
                 custom_predicates=(namespace,))
 
     # -- internal api
-    api_url_base = '/api/projects/{namespace}/sites/{slug}'
+    url_base = '/api/projects/{namespace}/sites/{slug}'
 
     # classification
     c.add_route('console.api.classification.tree',
-                '{0:s}/classifications/tree.json'.format(api_url_base),
+                '{0:s}/classifications/tree.json'.format(url_base),
                 custom_predicates=(namespace,))
     # article
     c.add_route('console.api.article.editor',
-                '{0:s}/articles/editor.json'.format(api_url_base),
+                '{0:s}/articles/editor.json'.format(url_base),
                 custom_predicates=(namespace,))
     c.add_route('console.api.article.settings',
-                '{0:s}/articles/settings.json'.format(api_url_base),
+                '{0:s}/articles/settings.json'.format(url_base),
+                custom_predicates=(namespace,))
+    c.add_route('console.api.article.progress_states',
+                '{0:s}/articles/{1:s}/progress_states.json'.format(
+                    url_base, '{code}'),
                 custom_predicates=(namespace,))
     # insights
     c.add_route('console.api.site.insights.data',
-                '{0:s}/insights/data.json'.format(api_url_base),
+                '{0:s}/insights/data.json'.format(url_base),
                 custom_predicates=(namespace,))
     c.add_route('console.api.site.insights.metrics',
-                '{0:s}/insights/metrics.json'.format(api_url_base),
+                '{0:s}/insights/metrics.json'.format(url_base),
                 custom_predicates=(namespace,))
 
 

@@ -1,4 +1,4 @@
-import Cookie from '../../aarau/assets/js/shared/_cookie.js';
+import Cookie from '../../../aarau/assets/js/shared/_cookie.js';
 
 QUnit.testDone(function() {
   Cookie.delete('key');
