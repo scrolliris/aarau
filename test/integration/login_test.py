@@ -27,7 +27,7 @@ def test_login_failure(selenium):
     form.find_element_by_name('submit').click()
 
     assert login_url == selenium.current_url
-    assert 'Log in | Scrolliris' == selenium.title
+    assert 'Log in - Scrolliris' == selenium.title
 
     assert 'The credential you\'ve entered is incorrect' \
         in selenium.page_source
