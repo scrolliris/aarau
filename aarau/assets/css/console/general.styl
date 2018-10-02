@@ -35,9 +35,15 @@
       &:hover
         background none
 
+  .top.menu,
+  .toolbar
     .right.menu
       .item:first-child
         margin 0 0.82rem 0 0
+    .right.menu .item,
+    .right.item button
+      &:hover
+        background-color darken($paper2, 3%)
 
   .secondary.menu
     padding-left 0.02rem
@@ -49,7 +55,10 @@
       background none
     > a.item,
     > span.item
-      padding 0.331rem 0.764rem
+      padding 0.541rem 0.264rem
+    > a.item:hover
+      background none !important
+      text-decoration underline
     > .item:first-child
       padding-left 0
 
