@@ -1,6 +1,6 @@
 @import '../shared/_colour.styl'
 
-#article
+#console #article
   div[align="right"]
     .button
       margin-top 0.8rem
@@ -9,18 +9,42 @@
     padding-left 0
     padding-right 0
 
-  .article.embedded.box
-    padding-left 0.68rem
-    padding-right 0.68rem
-    border 0
-    &:hover
-      background-color $gray0
+    .border
+      border-bottom 1px solid darken($gray0, 3%)
+
+    .embedded.box,
+    .embedded.footer
+      border none
+      box-shadow none !important
+      background-color white
+
+  .article.box
+    padding 0 0.45rem
     .title
       margin-top 0
-      font-size 1.23rem
     .description
-      font-size 0.82em
       color $gray2
-    .label
+
+  .article.box + .footer
+    padding 0.16rem 0.58rem 0.08rem 0.48rem
+    display table
+    width 100%
+
+    .col:first-child
+      margin 0
       margin-top 0.22em
       margin-left -0.16rem
+      display table-cell
+      text-align left
+      width 50%
+
+    .col:last-child
+      margin 0
+      display table-cell
+      width 50%
+      text-align right
+
+    .state
+      display inline-block
+      width 6rem
+      text-align center

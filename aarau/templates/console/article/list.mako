@@ -40,18 +40,23 @@
 
     <div class="row">
       <div class="article-list column-16">
-        % for article in articles:
-        <div class="embedded flat article box" align="left">
-          <a href="${req.route_path('console.article.editor.edit', namespace=project.namespace, slug=site.slug, _query={'code': article.code})}">
-            <h5 class="title">${article.title or 'Untitled'}</h5>
-          </a>
-          <p class="description">${util.truncate(article.content, length=90)}</p>
-          <span class="state">${article.progress_state}</span>
+        % for (i, article) in enumerate(articles):
+        % if i != 0:
+        <hr class="border">
+        % endif
+        <div class="container">
+          <div class="embedded attached article box" align="left">
+            <a href="${req.route_path('console.article.editor.edit', namespace=project.namespace, slug=site.slug, _query={'code': article.code})}">
+              <h5 class="title">${article.title or 'Untitled'}</h5>
+            </a>
+            <p class="description">${util.truncate(article.content, length=90)}</p>
+          </div>
+          <div class="embedded attached footer">
+            <div class="col"><span class="secondary label state ${article.progress_state}">${article.progress_state}</span></div>
+            <div class="col"><span class="updated_at">${article.updated_at}</span></div>
+          </div>
         </div>
         % endfor
-      </div>
-
-      <div class="column-16">
       </div>
     </div>
   </div>

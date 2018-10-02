@@ -26,7 +26,11 @@ def article_list(req):
         raise HTTPNotFound
 
     publication = site.instance
-    articles = publication.articles
+    articles = publication.articles.order_by(
+        Article.updated_at.desc(),
+        Article.progress_state.desc(),
+        Article.title,
+    )
 
     return dict(
         project=project,
