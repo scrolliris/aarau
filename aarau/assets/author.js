@@ -8,6 +8,7 @@ import './css/shared/overwrite.styl'
 
 // [console]
 import './css/console/article.styl'
+import './css/console/chapter.styl'
 import './css/console/general.styl'
 import './css/console/project.styl'
 import './css/console/settings.styl'

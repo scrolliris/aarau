@@ -1,6 +1,7 @@
 ---
 articles:
   - publication: !publication.name "'How to score music playing piano'"
+    chapter: null
     code: 268bb1d2cf760b51b9c348bc424dde5851c3649f
     path: piano-lesson
     title: Piano Lesson
@@ -17,6 +18,7 @@ articles:
     deleted_at:
 
   - publication: !publication.name "'How to score music playing piano'"
+    chapter: null
     code: a93c97b18dbfbbb243841e14fffa97227ecc37a9
     path: music-stand
     title: Music stand

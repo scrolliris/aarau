@@ -1,0 +1,49 @@
+@import '../shared/_colour.styl'
+
+#console #chapter
+  div[align="right"]
+    .button
+      margin-top 0.8rem
+
+  .chapter.box:first-child
+    margin-top 0.03rem
+    padding 0.69rem 1.05rem 0.79rem 0.35rem
+    border none
+
+    h6.name
+      padding-left 0
+      margin-left 0
+      display inline-block
+
+    .description
+      display inline-block
+      color $gray2
+
+    table
+      width 100%
+      td
+        vertical-align middle
+      td.name
+        min-width 95%
+        overflow hidden
+        position relative
+        &:after
+          padding-top 0.42em
+          vertical-align bottom
+          content '..................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................'
+          color $gray1
+          position absolute
+      td.count
+        text-align right
+        min-width 6.24rem
+
+  .chapter.box + .attached.footer.message
+    text-align right
+    border none
+    margin-bottom 0.69rem
+    padding 0.34rem 1.05rem
+    p
+      margin 0
+
+div.attached.footer
+  box-shadow none !important

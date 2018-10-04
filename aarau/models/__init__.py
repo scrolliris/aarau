@@ -3,6 +3,7 @@ from urllib.parse import urlparse, parse_qs
 from .db import db
 
 from .application import Application
+from .chapter import Chapter
 from .article import Article
 from .contribution import Contribution
 from .classification import Classification
@@ -22,7 +23,8 @@ from .reading_result import ReadingResult
 __all__ = (
     'Project', 'Membership', 'Plan',
     'Site',
-    'Publication', 'Article', 'Classification', 'ClassificationHierarchy',
+    'Publication', 'Chapter', 'Article',
+    'Classification', 'ClassificationHierarchy',
     'License', 'Contribution',
     'Application', 'Page',
     'User', 'UserEmail',

@@ -3,7 +3,15 @@
   <%include file='aarau:templates/shared/_sidebar_navi.mako' args="locked=locked,"/>
 
   <a class="item" href="${req.route_path('console.site.overview', namespace=project.namespace, slug=site.slug)}">Overview</a>
-  <a class="active item" href="${req.route_path('console.article.list', namespace=project.namespace, slug=site.slug)}">Articles</a>
+
+  <span class="item active expanded">
+    <span class="item">Documents</span>
+    <span class="item-container">
+      <a class="item" href="${req.route_path('console.chapter.tree', namespace=project.namespace, slug=site.slug)}">Chapters Tree</a>
+      <a class="${'active ' if not util.route_name.startswith('console.article.editor') else ''}item" href="${req.route_path('console.article.list', namespace=project.namespace, slug=site.slug)}">All Articles</a>
+    </span>
+  </span>
+
   <a class="disabled item">Insights</a>
   <a class="disabled item">Downloads</a>
   <a class="item" href="${req.route_path('console.site.settings', namespace=project.namespace, slug=site.slug)}">Settings</a>

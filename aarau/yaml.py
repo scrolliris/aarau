@@ -7,7 +7,7 @@ import importlib
 from aarau.models import (  # noqa,pylint: disable=unused-import
     Project, Plan,
     Site,
-    Publication, Article, Classification, License, Contribution,
+    Publication, Chapter, Article, Classification, License, Contribution,
     Application, Page,
     User, UserEmail,
 )
@@ -57,6 +57,7 @@ TAGS = [
     ('publication', 'name'),
     ('application', 'name'),
     ('classification', 'notation'),
+    ('chapter', 'slug'),
     ('article', 'path'),
 ]
 

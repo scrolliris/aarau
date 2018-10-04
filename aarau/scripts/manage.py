@@ -10,7 +10,7 @@ from aarau.env import load_dotenv_vars
 from aarau.models import (
     Project, Membership, Plan,
     Site,
-    Publication, Article, Classification, ClassificationHierarchy,
+    Publication, Chapter, Article, Classification, ClassificationHierarchy,
     License, Contribution,
     Application, Page,
     User, UserEmail,
@@ -114,7 +114,8 @@ class CLI():
                         obj.save()
 
                         with set_password(obj, attributes) as obj:
-                            obj.save()
+                            if obj.is_dirty():
+                                obj.save()
 
                             for k, f in tokens.items():
                                 setattr(obj, k, f(obj))
@@ -126,7 +127,7 @@ class CLI():
                 models = [
                     Plan, Classification, ClassificationHierarchy, License,
                     Project,
-                    Publication, Article,
+                    Publication, Chapter, Article,
                     Application, Page,
                     Site,
                     User, UserEmail, Membership, Contribution,

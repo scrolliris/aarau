@@ -19,12 +19,12 @@ def import_data(settings):
     with yaml_loader(settings) as loader:
         def blend_data(klass, attributes):
             with tokenize(attributes) as (tokens, attrs):
-
                 fixture = mixer.blend(klass, **attrs)
                 fixture.save()
 
                 with set_password(fixture, attrs) as fixture:
-                    fixture.save()
+                    if fixture.is_dirty:
+                        fixture.save()
 
                     for k, f in tokens.items():
                         setattr(fixture, k, f(fixture))
@@ -33,7 +33,7 @@ def import_data(settings):
         # tests/data/*.yml
         fixtures = [
             Plan, Classification, License, Project, Publication,
-            Article, Application, Page, Site, User, UserEmail,
+            Chapter, Article, Application, Page, Site, User, UserEmail,
             Membership, Contribution,
         ]
 

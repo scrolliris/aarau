@@ -40,20 +40,31 @@
 
     <div class="row">
       <div class="article-list column-16">
-        % for (i, article) in enumerate(articles):
-        % if i != 0:
-        <hr class="border">
-        % endif
+        % for article in articles:
         <div class="container">
           <div class="embedded attached article box" align="left">
-            <a href="${req.route_path('console.article.editor.edit', namespace=project.namespace, slug=site.slug, _query={'code': article.code})}">
-              <h5 class="title">${article.title or 'Untitled'}</h5>
-            </a>
-            <p class="description">${util.truncate(article.content, length=90)}</p>
+            <div class="col">
+              <a href="${req.route_path('console.article.editor.edit', namespace=project.namespace, slug=site.slug, _query={'code': article.code})}">
+                <h6 class="title">${article.title or 'Untitled'}</h6>
+                <span class="label progress_state ${article.progress_state}"></span>
+              </a>
+            </div>
+            <div class="col">
+              <p class="content">${util.truncate(article.content, length=80)}</p>
+            </div>
           </div>
-          <div class="embedded attached footer">
-            <div class="col"><span class="secondary label state ${article.progress_state}">${article.progress_state}</span></div>
-            <div class="col"><span class="updated_at">${article.updated_at}</span></div>
+          <div class="embedded attached article footer message">
+            <div class="col"></div>
+            <div class="col">
+              % if article.chapter:
+              <a href="${req.route_path('console.chapter.edit', namespace=project.namespace, slug=site.slug, chapter_slug=article.chapter.slug)}">
+                <span class="chapter-name">${article.chapter.name}</span>
+              </a>
+              % else:
+                <span class="chapter-name">None</span>
+              % endif
+              <span class="updated_at">${article.updated_at}</span>
+            </div>
           </div>
         </div>
         % endfor

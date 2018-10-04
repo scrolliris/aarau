@@ -6,29 +6,53 @@
       margin-top 0.8rem
 
   .article-list
-    padding-left 0
-    padding-right 0
+    padding 0.69rem 0.15rem 0.99rem 0.42rem
 
-    .border
-      border-bottom 1px solid darken($gray0, 3%)
-
-    .embedded.box,
-    .embedded.footer
+    .article.box,
+    .article.footer
       border none
       box-shadow none !important
-      background-color white
 
   .article.box
-    padding 0 0.45rem
-    .title
-      margin-top 0
-    .description
-      color $gray2
+    padding 0 0.45rem 0.11rem 0.45rem
 
-  .article.box + .footer
-    padding 0.16rem 0.58rem 0.08rem 0.48rem
+    .label.progress_state
+      margin -0.3rem 0.08rem 0.28rem 0.41rem
+      display inline-block
+      float left
+      border-radius 22rem
+      width 0.72rem
+      height 0.73rem
+      padding 0.18rem
+
+    .title
+      display inline-block
+      float left
+      padding-left 0
+      margin 0 0 0.9rem 0
+
+    .content
+      margin 0 0.34rem 0 1.66rem
+      padding 0
+      float right
+      display inline-block
+      color $gray1
+
+  .article.box + .attached.footer.message
+    margin-bottom 1.48rem
+    padding 0.34rem 1.05rem 0.34rem 0.32rem
+
+    .chapter-name
+      display inline-block
+      margin-right 0.82rem
+
+  .article.box,
+  .article.box + .attached.footer.message
     display table
     width 100%
+
+    .col
+      vertical-align top
 
     .col:first-child
       margin 0
@@ -42,9 +66,6 @@
       margin 0
       display table-cell
       width 50%
+      min-width 32rem
+      overflow hidden
       text-align right
-
-    .state
-      display inline-block
-      width 6rem
-      text-align center

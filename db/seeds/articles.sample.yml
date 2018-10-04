@@ -1,6 +1,7 @@
 ---
 articles:
   - publication: !publication.name "'Sample Publication'"
+    chapter: null
     code: a9a11643e9b89a16a15cd735aef1780f05fa893b
     path: lorem-ipsum-article
     title: Lorem ipsum
@@ -10,7 +11,24 @@ articles:
     progress_state: published
     scope: public
     license: !license.identifier "'CC-BY-NC-SA-4.0'"
-    copyright: 2017 Yasuhiro Asaka
+    copyright: 2018 Yasuhiro Asaka
+    published_at: !datetime.utcnow+timedelta -3600
+    created_at: !datetime.utcnow+timedelta -7200
+    updated_at: !datetime.utcnow+timedelta -7200
+    deleted_at:
+
+  - publication: !publication.name "'Sample Publication'"
+    chapter: !chapter.slug "'lorem-ipsum-chapter'"
+    code: b00116dh4OWxC1MJhOZm5YHttxAVLnk6IkO6Luns
+    path: lorem-ipsum-article-2
+    title: Lorem ipsum 2
+    content: >-
+    content_html: >-
+    content_updated_at: !datetime.utcnow+timedelta -7200
+    progress_state: wip
+    scope: public
+    license: !license.identifier "'CC-BY-NC-SA-4.0'"
+    copyright: 2018 Yasuhiro Asaka
     published_at: !datetime.utcnow+timedelta -3600
     created_at: !datetime.utcnow+timedelta -7200
     updated_at: !datetime.utcnow+timedelta -7200

@@ -20,6 +20,7 @@ from aarau.models.base import (
 
 from aarau.models.license import License
 from aarau.models.publication import Publication
+from aarau.models.chapter import Chapter
 
 
 # pylint: disable=too-many-ancestors
@@ -34,6 +35,9 @@ class Article(CardinalBase, TimestampMixin, DeletedAtMixin, CodeMixin):
 
     publication = ForeignKeyField(
         model=Publication, column_name='publication_id', field='id',
+        backref='articles', null=False)
+    chapter = ForeignKeyField(
+        model=Chapter, column_name='chapter_id', field='id',
         backref='articles', null=False)
     code = CharField(max_length=128, null=False)
     title = CharField(max_length=255, null=True)

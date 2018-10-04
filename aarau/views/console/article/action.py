@@ -2,6 +2,8 @@ from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPNotFound
 
 from aarau.models.article import Article
+from aarau.models.chapter import Chapter
+from aarau.models.publication import Publication
 from aarau.queries.project import get_project
 from aarau.queries.site import get_site
 from aarau.views.filter import login_required
@@ -26,7 +28,11 @@ def article_list(req):
         raise HTTPNotFound
 
     publication = site.instance
-    articles = publication.articles.order_by(
+    articles = Article.select(
+        Article, Chapter.name, Chapter.slug,
+    ).join(Chapter).join(Publication, on=(
+        Article.publication_id == publication.id
+    )).order_by(
         Article.updated_at.desc(),
         Article.progress_state.desc(),
         Article.title,

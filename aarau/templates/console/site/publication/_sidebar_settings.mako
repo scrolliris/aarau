@@ -3,7 +3,7 @@
   <%include file='aarau:templates/shared/_sidebar_navi.mako' args="locked=locked,"/>
 
   <a class="item" href="${req.route_path('console.site.overview', namespace=project.namespace, slug=site.slug)}">Overview</a>
-  <a class="item" href="${req.route_path('console.article.list', namespace=project.namespace, slug=site.slug)}">Articles</a>
+  <a class="item" href="${req.route_path('console.article.list', namespace=project.namespace, slug=site.slug)}">Documents</a>
   <a class="disabled item">Insights</a>
   <a class="disabled item">Downloads</a>
 

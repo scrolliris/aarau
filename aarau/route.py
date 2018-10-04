@@ -147,6 +147,18 @@ def define_console_routes(c, namespace):
                 '/projects/{namespace}/sites/{slug}/editor',
                 custom_predicates=(namespace,))
 
+    # chapters
+    c.add_route('console.chapter.tree',
+                '/projects/{namespace}/sites/{slug}/chapters',
+                custom_predicates=(namespace,))
+    c.add_route('console.chapter.edit',
+                '/projects/{namespace}/sites/{slug}/chapters'
+                '/{chapter_slug}/edit',
+                custom_predicates=(namespace,))
+    c.add_route('console.chapter.new',
+                '/projects/{namespace}/sites/{slug}/chapters/new',
+                custom_predicates=(namespace,))
+
     # -- internal api
     url_base = '/api/projects/{namespace}/sites/{slug}'
 

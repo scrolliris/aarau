@@ -1,0 +1,9 @@
+---
+chapters:
+  - publication: !publication.name "'How to score music playing piano'"
+    parent: null
+    slug: preface-and-foreword
+    name: Preface-and-foreword
+    description: >-
+    created_at: !datetime.utcnow+timedelta -7200
+    updated_at: !datetime.utcnow+timedelta -7200
