@@ -1,35 +1,35 @@
-FROM gcr.io/google-appengine/python
+FROM scrolliris/gentoo:latest
+LABEL maintainer "Scrolliris <support@scrolliris.com>"
 
-# venv
-RUN virtualenv /env -p python3.5
-ENV VIRTUAL_ENV /env
-ENV PATH /env/bin:$PATH
-
-# peewee
-ENV NO_SQLITE 1
-
-RUN apt-get update &&\
- apt-get install -y --no-install-recommends apt-utils &&\
- apt-get install -y --no-install-recommends gcc zlib1g zlib1g-dev &&\
- apt-get install -y --no-install-recommends gettext &&\
- apt-get install -y --no-install-recommends\
- libsasl2-dev libsasl2-modules sasl2-bin libmemcached11 libmemcached-dev &&\
- apt-get install -y --no-install-recommends libpq-dev
+ARG HOST
+ARG PORT
+ARG ENV
 
 ADD requirements.txt /app/requirements.txt
 ADD constraints.txt /app/constraints.txt
 ADD . app/
 
-WORKDIR app/
+WORKDIR /app
 
-ENV HOST 0.0.0.0
-ENV PORT 8080
-ENV ENV production
+# venv
+RUN python3.6 -m venv /env
+ENV VIRTUAL_ENV /env
+ENV PATH /env/bin:$PATH
+
+ENV HOST="${HOST}"
+ENV PORT="${PORT}"
+ENV ENV="${ENV}"
+
 ENV WSGI_URL_SCHEME http
+ENV NO_SQLITE 1
 
-RUN make setup
-RUN make i18n:compile
+# TODO
+RUN npm install && make setup
+RUN npm install -g npm i18next-conv && make i18n:compile
+RUN npm install -g gulp-cli && make pack
 
-EXPOSE 8080
+RUN make db:init && make db:migrate && make db:seed
 
-CMD honcho start
+EXPOSE 5000
+
+CMD make serve
