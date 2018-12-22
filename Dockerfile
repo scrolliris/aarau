@@ -28,8 +28,6 @@ RUN npm install && make setup
 RUN npm install -g npm i18next-conv && make i18n:compile
 RUN npm install -g gulp-cli && make pack
 
-RUN make db:init && make db:migrate && make db:seed
-
 EXPOSE 5000
 
-CMD make serve
+CMD make db:init && make db:migrate && make serve
