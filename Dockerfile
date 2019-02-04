@@ -30,4 +30,4 @@ RUN npm install -g gulp-cli && make pack
 
 EXPOSE 5000
 
-CMD make db:init && make db:migrate && make serve
+CMD ["make", "db:init", "db:migrate", "serve"]
